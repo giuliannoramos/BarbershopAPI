@@ -1,0 +1,50 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "Barbearia.Persistence/1.0.0": {
+        "dependencies": {
+          "Barbearia.Application": "1.0.0",
+          "Barbearia.Domain": "1.0.0"
+        },
+        "runtime": {
+          "Barbearia.Persistence.dll": {}
+        }
+      },
+      "Barbearia.Application/1.0.0": {
+        "dependencies": {
+          "Barbearia.Domain": "1.0.0"
+        },
+        "runtime": {
+          "Barbearia.Application.dll": {}
+        }
+      },
+      "Barbearia.Domain/1.0.0": {
+        "runtime": {
+          "Barbearia.Domain.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Barbearia.Persistence/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Barbearia.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Barbearia.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

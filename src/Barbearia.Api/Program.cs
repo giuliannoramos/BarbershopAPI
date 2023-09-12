@@ -1,4 +1,14 @@
+using Barbearia.Persistence.DbContexts;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<CustomerContext>(options => 
+{
+    options
+    .UseNpgsql("Host=localhost;Database=Barbearia;Username=postgres;Password=123456");
+}
+);
 
 // Add services to the container.
 

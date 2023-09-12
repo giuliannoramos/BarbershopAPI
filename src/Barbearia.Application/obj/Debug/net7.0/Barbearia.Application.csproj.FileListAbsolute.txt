@@ -1,0 +1,15 @@
+C:\Users\giule\Dev\Barbearia\src\Barbearia.Application\bin\Debug\net7.0\Barbearia.Application.deps.json
+C:\Users\giule\Dev\Barbearia\src\Barbearia.Application\bin\Debug\net7.0\Barbearia.Application.dll
+C:\Users\giule\Dev\Barbearia\src\Barbearia.Application\bin\Debug\net7.0\Barbearia.Application.pdb
+C:\Users\giule\Dev\Barbearia\src\Barbearia.Application\bin\Debug\net7.0\Barbearia.Domain.dll
+C:\Users\giule\Dev\Barbearia\src\Barbearia.Application\bin\Debug\net7.0\Barbearia.Domain.pdb
+C:\Users\giule\Dev\Barbearia\src\Barbearia.Application\obj\Debug\net7.0\Barbearia.Application.csproj.AssemblyReference.cache
+C:\Users\giule\Dev\Barbearia\src\Barbearia.Application\obj\Debug\net7.0\Barbearia.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\giule\Dev\Barbearia\src\Barbearia.Application\obj\Debug\net7.0\Barbearia.Application.AssemblyInfoInputs.cache
+C:\Users\giule\Dev\Barbearia\src\Barbearia.Application\obj\Debug\net7.0\Barbearia.Application.AssemblyInfo.cs
+C:\Users\giule\Dev\Barbearia\src\Barbearia.Application\obj\Debug\net7.0\Barbearia.Application.csproj.CoreCompileInputs.cache
+C:\Users\giule\Dev\Barbearia\src\Barbearia.Application\obj\Debug\net7.0\Barbearia.Application.csproj.CopyComplete
+C:\Users\giule\Dev\Barbearia\src\Barbearia.Application\obj\Debug\net7.0\Barbearia.Application.dll
+C:\Users\giule\Dev\Barbearia\src\Barbearia.Application\obj\Debug\net7.0\refint\Barbearia.Application.dll
+C:\Users\giule\Dev\Barbearia\src\Barbearia.Application\obj\Debug\net7.0\Barbearia.Application.pdb
+C:\Users\giule\Dev\Barbearia\src\Barbearia.Application\obj\Debug\net7.0\ref\Barbearia.Application.dll

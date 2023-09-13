@@ -10,6 +10,7 @@ public class Address
     public string State { get; set; } = string.Empty;
     public string Cep { get; set; } = string.Empty;
     public string Complement { get; set; } = string.Empty;
-    public Customer? Customer { get; set; }
-    public int CustomerId { get; set; }
+    public int PersonId { get; set; }
+    public Person? Person { get; set; }
+    
 }

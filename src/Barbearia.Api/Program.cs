@@ -12,7 +12,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<CustomerContext>(options => 
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=1973");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678");
 }
 );
 

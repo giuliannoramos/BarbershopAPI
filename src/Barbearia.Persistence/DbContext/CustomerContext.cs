@@ -7,48 +7,55 @@ namespace Barbearia.Persistence.DbContexts
     public class CustomerContext : DbContext
     {
         public CustomerContext(DbContextOptions<CustomerContext> options)
-        : base(options){}
+        : base(options) { }
 
-        public DbSet<Customer> Customers { get; set; } = null!;        
+        public DbSet<Person> Persons { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Customer>()
-                .ToTable("Customer");
 
-            modelBuilder.Entity<Customer>()
-                .Property(c => c.Name)
+            var person = modelBuilder.Entity<Person>();
+            var customer = modelBuilder.Entity<Customer>();
+
+            person
+            .ToTable("Persons")
+            .HasDiscriminator<int>("PersonType")
+            .HasValue<Person>(1)
+            .HasValue<Customer>(2);
+
+            person
+                .Property(p => p.Name)
                 .HasMaxLength(80)
                 .IsRequired();
 
-            modelBuilder.Entity<Customer>()
-                .Property(c => c.Cpf)
+            person
+                .Property(p => p.Cpf)
                 .HasMaxLength(11)
                 .IsRequired();
 
-            modelBuilder.Entity<Customer>()
-                .Property(c => c.BirthDate)
+            person
+                .Property(p => p.BirthDate)
                 .HasColumnType("date")
                 .IsRequired();
 
-            modelBuilder.Entity<Customer>()
-                .Property(c => c.Email)
+            person
+                .Property(p => p.Email)
                 .HasMaxLength(80)
                 .IsRequired();
 
-            modelBuilder.Entity<Customer>()
-                .Property(c => c.Gender)
+            person
+                .Property(p => p.Gender)
                 .IsRequired();
 
-            modelBuilder.Entity<Customer>()
-                .HasOne(c => c.Address) // Relacionamento um-para-um com Address
-                .WithOne(a => a.Customer)
-                .HasForeignKey<Address>(a => a.CustomerId);
+            person
+                .HasMany(p => p.Addresses) 
+                .WithOne(a => a.Person)
+                .HasForeignKey(a => a.PersonId);
 
-            modelBuilder.Entity<Customer>()
-                .HasOne(c => c.Telephone) // Relacionamento um-para-um com Telephone
-                .WithOne(t => t.Customer)
-                .HasForeignKey<Telephone>(t => t.CustomerId)
+            person
+                .HasMany(p => p.Telephones) 
+                .WithOne(t => t.Person)
+                .HasForeignKey(t => t.PersonId)
                 .IsRequired();
 
             modelBuilder.Entity<Address>()
@@ -56,35 +63,35 @@ namespace Barbearia.Persistence.DbContexts
 
             modelBuilder.Entity<Address>()
                 .Property(c => c.Street)
-                .HasMaxLength(80);                
+                .HasMaxLength(80);
 
             modelBuilder.Entity<Address>()
-                .Property(c => c.Number);                
+                .Property(c => c.Number);
 
             modelBuilder.Entity<Address>()
                 .Property(c => c.District)
-                .HasMaxLength(60);                
+                .HasMaxLength(60);
 
             modelBuilder.Entity<Address>()
                 .Property(c => c.City)
-                .HasMaxLength(60);                
+                .HasMaxLength(60);
 
             modelBuilder.Entity<Address>()
                 .Property(c => c.State)
-                .HasMaxLength(2);                
+                .HasMaxLength(2);
 
             modelBuilder.Entity<Address>()
                 .Property(c => c.Cep)
-                .HasMaxLength(8);                
+                .HasMaxLength(8);
 
             modelBuilder.Entity<Address>()
                 .Property(c => c.Complement)
-                .HasMaxLength(80);                
+                .HasMaxLength(80);
 
             modelBuilder.Entity<Address>()
-                .HasOne(a => a.Customer) // Relacionamento um-para-um com Customer
-                .WithOne(c => c.Address)
-                .HasForeignKey<Customer>(c => c.AddressId);                
+                .HasOne(p => p.Person) 
+                .WithMany(c => c.Addresses)
+                .HasForeignKey(a => a.PersonId);
 
             modelBuilder.Entity<Telephone>()
                 .ToTable("Telephone");
@@ -99,34 +106,30 @@ namespace Barbearia.Persistence.DbContexts
                 .IsRequired();
 
             modelBuilder.Entity<Telephone>()
-                .HasOne(t => t.Customer) // Relacionamento um-para-um com Customer
-                .WithOne(c => c.Telephone)
-                .HasForeignKey<Customer>(c => c.TelephoneId); 
-                
+                .HasOne(t => t.Person) 
+                .WithMany(c => c.Telephones)
+                .HasForeignKey(t => t.PersonId);
+
 
             modelBuilder.Entity<Customer>()
                 .HasData(
                     new Customer()
                     {
-                        CustomerId = 1,
+                        PersonId = 1,
                         Name = "Linus Torvalds",
-                        BirthDate = new DateTime(1999, 8, 7),
+                        BirthDate = new DateOnly(1999, 8, 7),
                         Gender = 1,
                         Cpf = "73473943096",
                         Email = "veio@hotmail.com",
-                        AddressId = 1,
-                        TelephoneId = 1
                     },
                     new Customer()
                     {
-                        CustomerId = 2,
+                        PersonId = 2,
                         Name = "Bill Gates",
-                        BirthDate = new DateTime(2000, 1, 1),
+                        BirthDate = new DateOnly(2000, 1, 1),
                         Gender = 2,
                         Cpf = "73473003096",
                         Email = "bill@gmail.com",
-                        AddressId = 2,
-                        TelephoneId = 2
                     });
 
             modelBuilder.Entity<Address>()
@@ -141,7 +144,7 @@ namespace Barbearia.Persistence.DbContexts
                         State = "SC",
                         Cep = "88888888",
                         Complement = "Perto de la",
-                        CustomerId = 1
+                        PersonId = 1
                     },
                     new Address()
                     {
@@ -153,7 +156,7 @@ namespace Barbearia.Persistence.DbContexts
                         State = "SC",
                         Cep = "88888888",
                         Complement = "Longe de la",
-                        CustomerId = 2
+                        PersonId = 2
                     });
 
             modelBuilder.Entity<Telephone>()
@@ -163,14 +166,14 @@ namespace Barbearia.Persistence.DbContexts
                         TelephoneId = 1,
                         Number = "47988887777",
                         Type = 1,
-                        CustomerId = 1                        
+                        PersonId = 1
                     },
                     new Telephone()
                     {
                         TelephoneId = 2,
                         Number = "47988887777",
                         Type = 2,
-                        CustomerId = 2  
+                        PersonId = 2
                     });
 
             base.OnModelCreating(modelBuilder);

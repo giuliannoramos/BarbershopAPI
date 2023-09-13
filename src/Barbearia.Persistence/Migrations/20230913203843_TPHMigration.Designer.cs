@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Barbearia.Persistence.Migrations
 {
     [DbContext(typeof(CustomerContext))]
-    [Migration("20230913163048_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20230913203843_TPHMigration")]
+    partial class TPHMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -48,15 +48,15 @@ namespace Barbearia.Persistence.Migrations
                         .HasMaxLength(80)
                         .HasColumnType("character varying(80)");
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("District")
                         .IsRequired()
                         .HasMaxLength(60)
                         .HasColumnType("character varying(60)");
 
                     b.Property<int>("Number")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PersonId")
                         .HasColumnType("integer");
 
                     b.Property<string>("State")
@@ -71,6 +71,9 @@ namespace Barbearia.Persistence.Migrations
 
                     b.HasKey("AddressId");
 
+                    b.HasIndex("PersonId")
+                        .IsUnique();
+
                     b.ToTable("Address", (string)null);
 
                     b.HasData(
@@ -80,9 +83,9 @@ namespace Barbearia.Persistence.Migrations
                             Cep = "88888888",
                             City = "Bc",
                             Complement = "Perto de la",
-                            CustomerId = 1,
                             District = "Teste",
                             Number = 100,
+                            PersonId = 1,
                             State = "SC",
                             Street = "Rua logo ali"
                         },
@@ -92,27 +95,28 @@ namespace Barbearia.Persistence.Migrations
                             Cep = "88888888",
                             City = "Itajaí",
                             Complement = "Longe de la",
-                            CustomerId = 2,
                             District = "Perto",
                             Number = 300,
+                            PersonId = 2,
                             State = "SC",
                             Street = "Rua longe"
                         });
                 });
 
-            modelBuilder.Entity("Barbearia.Domain.Entities.Customer", b =>
+            modelBuilder.Entity("Barbearia.Domain.Entities.Person", b =>
                 {
-                    b.Property<int>("CustomerId")
+                    b.Property<int>("PersonId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CustomerId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("PersonId"));
 
-                    b.Property<int?>("AddressId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("BirthDate")
+                    b.Property<DateOnly>("BirthDate")
                         .HasColumnType("date");
+
+                    b.Property<string>("Cnpj")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Cpf")
                         .IsRequired()
@@ -132,42 +136,16 @@ namespace Barbearia.Persistence.Migrations
                         .HasMaxLength(80)
                         .HasColumnType("character varying(80)");
 
-                    b.Property<int>("TelephoneId")
+                    b.Property<int>("PersonType")
                         .HasColumnType("integer");
 
-                    b.HasKey("CustomerId");
+                    b.HasKey("PersonId");
 
-                    b.HasIndex("AddressId")
-                        .IsUnique();
+                    b.ToTable("Persons", (string)null);
 
-                    b.HasIndex("TelephoneId")
-                        .IsUnique();
+                    b.HasDiscriminator<int>("PersonType").HasValue(1);
 
-                    b.ToTable("Customer", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            CustomerId = 1,
-                            AddressId = 1,
-                            BirthDate = new DateTime(1999, 8, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Cpf = "73473943096",
-                            Email = "veio@hotmail.com",
-                            Gender = 1,
-                            Name = "Linus Torvalds",
-                            TelephoneId = 1
-                        },
-                        new
-                        {
-                            CustomerId = 2,
-                            AddressId = 2,
-                            BirthDate = new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Cpf = "73473003096",
-                            Email = "bill@gmail.com",
-                            Gender = 2,
-                            Name = "Bill Gates",
-                            TelephoneId = 2
-                        });
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Telephone", b =>
@@ -178,18 +156,21 @@ namespace Barbearia.Persistence.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("TelephoneId"));
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Number")
                         .IsRequired()
                         .HasMaxLength(80)
                         .HasColumnType("character varying(80)");
 
+                    b.Property<int>("PersonId")
+                        .HasColumnType("integer");
+
                     b.Property<int>("Type")
                         .HasColumnType("integer");
 
                     b.HasKey("TelephoneId");
+
+                    b.HasIndex("PersonId")
+                        .IsUnique();
 
                     b.ToTable("Telephone", (string)null);
 
@@ -197,45 +178,75 @@ namespace Barbearia.Persistence.Migrations
                         new
                         {
                             TelephoneId = 1,
-                            CustomerId = 1,
                             Number = "47988887777",
+                            PersonId = 1,
                             Type = 1
                         },
                         new
                         {
                             TelephoneId = 2,
-                            CustomerId = 2,
                             Number = "47988887777",
+                            PersonId = 2,
                             Type = 2
                         });
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Customer", b =>
                 {
-                    b.HasOne("Barbearia.Domain.Entities.Address", "Address")
-                        .WithOne("Customer")
-                        .HasForeignKey("Barbearia.Domain.Entities.Customer", "AddressId");
+                    b.HasBaseType("Barbearia.Domain.Entities.Person");
 
-                    b.HasOne("Barbearia.Domain.Entities.Telephone", "Telephone")
-                        .WithOne("Customer")
-                        .HasForeignKey("Barbearia.Domain.Entities.Customer", "TelephoneId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasDiscriminator().HasValue(2);
 
-                    b.Navigation("Address");
-
-                    b.Navigation("Telephone");
+                    b.HasData(
+                        new
+                        {
+                            PersonId = 1,
+                            BirthDate = new DateOnly(1999, 8, 7),
+                            Cnpj = "",
+                            Cpf = "73473943096",
+                            Email = "veio@hotmail.com",
+                            Gender = 1,
+                            Name = "Linus Torvalds"
+                        },
+                        new
+                        {
+                            PersonId = 2,
+                            BirthDate = new DateOnly(2000, 1, 1),
+                            Cnpj = "",
+                            Cpf = "73473003096",
+                            Email = "bill@gmail.com",
+                            Gender = 2,
+                            Name = "Bill Gates"
+                        });
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Address", b =>
                 {
-                    b.Navigation("Customer");
+                    b.HasOne("Barbearia.Domain.Entities.Person", "Person")
+                        .WithOne("Address")
+                        .HasForeignKey("Barbearia.Domain.Entities.Address", "PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Telephone", b =>
                 {
-                    b.Navigation("Customer")
+                    b.HasOne("Barbearia.Domain.Entities.Person", "Person")
+                        .WithOne("Telephone")
+                        .HasForeignKey("Barbearia.Domain.Entities.Telephone", "PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Person");
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.Person", b =>
+                {
+                    b.Navigation("Address");
+
+                    b.Navigation("Telephone");
                 });
 #pragma warning restore 612, 618
         }

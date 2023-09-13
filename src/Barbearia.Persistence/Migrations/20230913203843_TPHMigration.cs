@@ -9,11 +9,30 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Barbearia.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class TPHMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Persons",
+                columns: table => new
+                {
+                    PersonId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: false),
+                    BirthDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    Gender = table.Column<int>(type: "integer", nullable: false),
+                    Cpf = table.Column<string>(type: "character varying(11)", maxLength: 11, nullable: false),
+                    Cnpj = table.Column<string>(type: "text", nullable: false),
+                    Email = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: false),
+                    PersonType = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Persons", x => x.PersonId);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Address",
                 columns: table => new
@@ -27,11 +46,17 @@ namespace Barbearia.Persistence.Migrations
                     State = table.Column<string>(type: "character varying(2)", maxLength: 2, nullable: false),
                     Cep = table.Column<string>(type: "character varying(8)", maxLength: 8, nullable: false),
                     Complement = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: false),
-                    CustomerId = table.Column<int>(type: "integer", nullable: false)
+                    PersonId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Address", x => x.AddressId);
+                    table.ForeignKey(
+                        name: "FK_Address_Persons_PersonId",
+                        column: x => x.PersonId,
+                        principalTable: "Persons",
+                        principalColumn: "PersonId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -42,80 +67,56 @@ namespace Barbearia.Persistence.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Number = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: false),
                     Type = table.Column<int>(type: "integer", nullable: false),
-                    CustomerId = table.Column<int>(type: "integer", nullable: false)
+                    PersonId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Telephone", x => x.TelephoneId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Customer",
-                columns: table => new
-                {
-                    CustomerId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: false),
-                    BirthDate = table.Column<DateTime>(type: "date", nullable: false),
-                    Gender = table.Column<int>(type: "integer", nullable: false),
-                    Cpf = table.Column<string>(type: "character varying(11)", maxLength: 11, nullable: false),
-                    Email = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: false),
-                    AddressId = table.Column<int>(type: "integer", nullable: true),
-                    TelephoneId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Customer", x => x.CustomerId);
                     table.ForeignKey(
-                        name: "FK_Customer_Address_AddressId",
-                        column: x => x.AddressId,
-                        principalTable: "Address",
-                        principalColumn: "AddressId");
-                    table.ForeignKey(
-                        name: "FK_Customer_Telephone_TelephoneId",
-                        column: x => x.TelephoneId,
-                        principalTable: "Telephone",
-                        principalColumn: "TelephoneId",
+                        name: "FK_Telephone_Persons_PersonId",
+                        column: x => x.PersonId,
+                        principalTable: "Persons",
+                        principalColumn: "PersonId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
-                table: "Address",
-                columns: new[] { "AddressId", "Cep", "City", "Complement", "CustomerId", "District", "Number", "State", "Street" },
+                table: "Persons",
+                columns: new[] { "PersonId", "BirthDate", "Cnpj", "Cpf", "Email", "Gender", "Name", "PersonType" },
                 values: new object[,]
                 {
-                    { 1, "88888888", "Bc", "Perto de la", 1, "Teste", 100, "SC", "Rua logo ali" },
-                    { 2, "88888888", "Itajaí", "Longe de la", 2, "Perto", 300, "SC", "Rua longe" }
+                    { 1, new DateOnly(1999, 8, 7), "", "73473943096", "veio@hotmail.com", 1, "Linus Torvalds", 2 },
+                    { 2, new DateOnly(2000, 1, 1), "", "73473003096", "bill@gmail.com", 2, "Bill Gates", 2 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Address",
+                columns: new[] { "AddressId", "Cep", "City", "Complement", "District", "Number", "PersonId", "State", "Street" },
+                values: new object[,]
+                {
+                    { 1, "88888888", "Bc", "Perto de la", "Teste", 100, 1, "SC", "Rua logo ali" },
+                    { 2, "88888888", "Itajaí", "Longe de la", "Perto", 300, 2, "SC", "Rua longe" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Telephone",
-                columns: new[] { "TelephoneId", "CustomerId", "Number", "Type" },
+                columns: new[] { "TelephoneId", "Number", "PersonId", "Type" },
                 values: new object[,]
                 {
-                    { 1, 1, "47988887777", 1 },
-                    { 2, 2, "47988887777", 2 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Customer",
-                columns: new[] { "CustomerId", "AddressId", "BirthDate", "Cpf", "Email", "Gender", "Name", "TelephoneId" },
-                values: new object[,]
-                {
-                    { 1, 1, new DateTime(1999, 8, 7, 0, 0, 0, 0, DateTimeKind.Unspecified), "73473943096", "veio@hotmail.com", 1, "Linus Torvalds", 1 },
-                    { 2, 2, new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "73473003096", "bill@gmail.com", 2, "Bill Gates", 2 }
+                    { 1, "47988887777", 1, 1 },
+                    { 2, "47988887777", 2, 2 }
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Customer_AddressId",
-                table: "Customer",
-                column: "AddressId",
+                name: "IX_Address_PersonId",
+                table: "Address",
+                column: "PersonId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Customer_TelephoneId",
-                table: "Customer",
-                column: "TelephoneId",
+                name: "IX_Telephone_PersonId",
+                table: "Telephone",
+                column: "PersonId",
                 unique: true);
         }
 
@@ -123,13 +124,13 @@ namespace Barbearia.Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Customer");
-
-            migrationBuilder.DropTable(
                 name: "Address");
 
             migrationBuilder.DropTable(
                 name: "Telephone");
+
+            migrationBuilder.DropTable(
+                name: "Persons");
         }
     }
 }

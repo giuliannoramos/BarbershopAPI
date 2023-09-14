@@ -11,6 +11,5 @@ public class Address
     public string Cep { get; set; } = string.Empty;
     public string Complement { get; set; } = string.Empty;
     public int PersonId { get; set; }
-    public Person? Person { get; set; }
-    
+    public Person? Person { get; set; }    
 }

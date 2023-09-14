@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Barbearia.Persistence.Migrations
 {
     [DbContext(typeof(CustomerContext))]
-    [Migration("20230913203843_TPHMigration")]
-    partial class TPHMigration
+    [Migration("20230914181539_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -71,8 +71,7 @@ namespace Barbearia.Persistence.Migrations
 
                     b.HasKey("AddressId");
 
-                    b.HasIndex("PersonId")
-                        .IsUnique();
+                    b.HasIndex("PersonId");
 
                     b.ToTable("Address", (string)null);
 
@@ -169,8 +168,7 @@ namespace Barbearia.Persistence.Migrations
 
                     b.HasKey("TelephoneId");
 
-                    b.HasIndex("PersonId")
-                        .IsUnique();
+                    b.HasIndex("PersonId");
 
                     b.ToTable("Telephone", (string)null);
 
@@ -223,8 +221,8 @@ namespace Barbearia.Persistence.Migrations
             modelBuilder.Entity("Barbearia.Domain.Entities.Address", b =>
                 {
                     b.HasOne("Barbearia.Domain.Entities.Person", "Person")
-                        .WithOne("Address")
-                        .HasForeignKey("Barbearia.Domain.Entities.Address", "PersonId")
+                        .WithMany("Addresses")
+                        .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -234,8 +232,8 @@ namespace Barbearia.Persistence.Migrations
             modelBuilder.Entity("Barbearia.Domain.Entities.Telephone", b =>
                 {
                     b.HasOne("Barbearia.Domain.Entities.Person", "Person")
-                        .WithOne("Telephone")
-                        .HasForeignKey("Barbearia.Domain.Entities.Telephone", "PersonId")
+                        .WithMany("Telephones")
+                        .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -244,9 +242,9 @@ namespace Barbearia.Persistence.Migrations
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Person", b =>
                 {
-                    b.Navigation("Address");
+                    b.Navigation("Addresses");
 
-                    b.Navigation("Telephone");
+                    b.Navigation("Telephones");
                 });
 #pragma warning restore 612, 618
         }

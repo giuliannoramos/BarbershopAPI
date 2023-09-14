@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v7.0": {
       "Barbearia.Api/1.0.0": {
         "dependencies": {
+          "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
           "Barbearia.Application": "1.0.0",
           "Barbearia.Persistence": "1.0.0",
           "Microsoft.AspNetCore.OpenApi": "7.0.5",

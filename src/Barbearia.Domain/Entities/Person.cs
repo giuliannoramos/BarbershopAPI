@@ -11,5 +11,4 @@ public class Person
     public string Email { get; set; } = string.Empty;
     public List<Address> Addresses {get; set;} = new();
     public List<Telephone> Telephones {get; set;} = new();
-
 }

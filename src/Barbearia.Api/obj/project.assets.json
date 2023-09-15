@@ -1757,6 +1757,7 @@
   },
   "projectFileDependencyGroups": {
     "net7.0": [
+      "AutoMapper.Extensions.Microsoft.DependencyInjection >= 12.0.1",
       "Barbearia.Application >= 1.0.0",
       "Barbearia.Persistence >= 1.0.0",
       "Microsoft.AspNetCore.OpenApi >= 7.0.5",
@@ -1765,26 +1766,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\lucas\\.nuget\\packages\\": {},
-    "C:\\Users\\lucas\\AppData\\Roaming\\Godot\\mono\\GodotNuGetFallbackFolder": {},
-    "D:\\visual studio componentes e ferramentas\\NuGetPackages": {}
+    "C:\\Users\\giule\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barbershopapi\\src\\barbearia.api\\Barbearia.Api.csproj",
+      "projectUniqueName": "C:\\Users\\giule\\Dev\\barbershopapi\\src\\barbearia.api\\Barbearia.Api.csproj",
       "projectName": "Barbearia.Api",
-      "projectPath": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barbershopapi\\src\\barbearia.api\\Barbearia.Api.csproj",
-      "packagesPath": "C:\\Users\\lucas\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barbershopapi\\src\\barbearia.api\\obj\\",
+      "projectPath": "C:\\Users\\giule\\Dev\\barbershopapi\\src\\barbearia.api\\Barbearia.Api.csproj",
+      "packagesPath": "C:\\Users\\giule\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\giule\\Dev\\barbershopapi\\src\\barbearia.api\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Users\\lucas\\AppData\\Roaming\\Godot\\mono\\GodotNuGetFallbackFolder",
-        "D:\\visual studio componentes e ferramentas\\NuGetPackages"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\lucas\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Users\\lucas\\AppData\\Roaming\\NuGet\\config\\Godot.Offline.Config",
+        "C:\\Users\\giule\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -1793,17 +1791,18 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj": {
-              "projectPath": "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj"
+            "C:\\Users\\giule\\Dev\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj": {
+              "projectPath": "C:\\Users\\giule\\Dev\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj"
             },
-            "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barbershopapi\\src\\Barbearia.Persistence\\Barbearia.Persistence.csproj": {
-              "projectPath": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barbershopapi\\src\\Barbearia.Persistence\\Barbearia.Persistence.csproj"
+            "C:\\Users\\giule\\Dev\\barbershopapi\\src\\Barbearia.Persistence\\Barbearia.Persistence.csproj": {
+              "projectPath": "C:\\Users\\giule\\Dev\\barbershopapi\\src\\Barbearia.Persistence\\Barbearia.Persistence.csproj"
             }
           }
         }
@@ -1818,6 +1817,10 @@
       "net7.0": {
         "targetAlias": "net7.0",
         "dependencies": {
+          "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+            "target": "Package",
+            "version": "[12.0.1, )"
+          },
           "Microsoft.AspNetCore.OpenApi": {
             "target": "Package",
             "version": "[7.0.5, )"
@@ -1852,7 +1855,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
       }
     }
   }

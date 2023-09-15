@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Barbearia.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class TPHMigration : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -110,14 +110,12 @@ namespace Barbearia.Persistence.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Address_PersonId",
                 table: "Address",
-                column: "PersonId",
-                unique: true);
+                column: "PersonId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Telephone_PersonId",
                 table: "Telephone",
-                column: "PersonId",
-                unique: true);
+                column: "PersonId");
         }
 
         /// <inheritdoc />

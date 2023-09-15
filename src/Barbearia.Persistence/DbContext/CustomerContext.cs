@@ -56,7 +56,7 @@ namespace Barbearia.Persistence.DbContexts
                 .HasMany(p => p.Telephones) 
                 .WithOne(t => t.Person)
                 .HasForeignKey(t => t.PersonId)
-                .IsRequired();
+                .IsRequired();            
 
             modelBuilder.Entity<Address>()
                 .ToTable("Address");

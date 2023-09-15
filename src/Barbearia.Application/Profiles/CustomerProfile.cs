@@ -14,10 +14,9 @@ public class CustomerProfile : Profile
         CreateMap<Customer, GetCustomerByIdDto>();
         CreateMap<Customer, GetAllCustomersDto>();
         CreateMap<CreateCustomerCommand, Customer>();        
-        CreateMap<Telephone, List<Telephone>>();
-        CreateMap<TelephoneDto, Telephone>().ReverseMap();
-        CreateMap<AddressDto, Address>().ReverseMap();
         CreateMap<Customer, CreateCustomerDto>();  
-        CreateMap<CustomerForCreationDto, Customer>();     
+        CreateMap<CustomerForCreationDto, Customer>();
+        CreateMap<TelephoneDto, Telephone>().ReverseMap();
+        CreateMap<AddressDto, Address>().ReverseMap();    
     }
 }

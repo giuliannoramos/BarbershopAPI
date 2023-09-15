@@ -9,9 +9,9 @@ namespace Barbearia.Api.Controllers;
 [Route("api/customers")]
 public class CustomersController : MainController
 {
-    private readonly IMediator _mediator; //Responsável para acessar a CQRS.
+    private readonly IMediator _mediator;
 
-    public CustomersController(IMediator mediator) //Injetor de dependencia.
+    public CustomersController(IMediator mediator)
     {
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
     }
@@ -55,5 +55,4 @@ public class CustomersController : MainController
             customerForReturn
         );
     }
-
 }

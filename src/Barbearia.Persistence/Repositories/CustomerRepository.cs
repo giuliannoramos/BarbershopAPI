@@ -24,16 +24,19 @@ public class CustomerRepository : ICustomerRepository
 
     public async Task<Customer?> GetCustomerByIdAsync(int customerId)
     {
-        return await _context.Persons.OfType<Customer>().FirstOrDefaultAsync(p => p.PersonId == customerId);
-    }    
+        return await _context.Persons.OfType<Customer>()
+            .Include(c => c.Telephones)
+            .Include(c => c.Addresses)
+            .FirstOrDefaultAsync(p => p.PersonId == customerId);
+    }
 
     public void AddCustomer(Customer customer)
-    {        
+    {
         _context.Persons.Add(customer);
-    }    
+    }
 
     public async Task<bool> SaveChangesAsync()
     {
         return await _context.SaveChangesAsync() > 0;
-    }    
+    }
 }

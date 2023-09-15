@@ -37,7 +37,7 @@ builder.Services.AddTransient<IValidator<CreateCustomerCommand>, CreateCustomerC
 //config banco de dados
 builder.Services.AddDbContext<CustomerContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=1973");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678");
 }
 );
 
@@ -55,5 +55,23 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    try
+    {
+        var customerContext = scope.ServiceProvider.GetService<CustomerContext>();
+
+        if (customerContext != null)
+        {
+            await customerContext.Database.EnsureDeletedAsync();
+            await customerContext.Database.MigrateAsync();
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Ocorreu um erro ao atualizar o banco de dados: {ex.Message}");
+    }
+}
 
 app.Run();

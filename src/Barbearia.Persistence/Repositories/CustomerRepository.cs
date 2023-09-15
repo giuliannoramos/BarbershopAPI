@@ -19,7 +19,10 @@ public class CustomerRepository : ICustomerRepository
 
     public async Task<IEnumerable<Customer>> GetAllCustomersAsync()
     {
-        return await _context.Persons.OfType<Customer>().OrderBy(p => p.PersonId).ToListAsync();
+        return await _context.Persons.OfType<Customer>()
+        .Include(c => c.Telephones)
+        .OrderBy(p => p.PersonId)
+        .ToListAsync();
     }
 
     public async Task<Customer?> GetCustomerByIdAsync(int customerId)

@@ -4,7 +4,7 @@ using Barbearia.Domain.Entities;
 using FluentValidation;
 using MediatR;
 
-namespace Barbearia.Application.Features.Customers.Commands;
+namespace Barbearia.Application.Features.Customers.Commands.CreateCustomer;
 
 public class CreateCustomerCommandHandler: IRequestHandler<CreateCustomerCommand, CreateCustomerCommandResponse>
 {

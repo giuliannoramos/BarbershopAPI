@@ -1,5 +1,3 @@
-
-
 namespace Barbearia.Application.Models;
 
 public class CustomerForCreationDto

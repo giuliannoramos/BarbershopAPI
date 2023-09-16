@@ -1,11 +1,11 @@
-
 using Barbearia.Application.Models;
 using MediatR;
 
-namespace Barbearia.Application.Features.Customers.Commands.CreateCustomer;
+namespace Barbearia.Application.Features.Customers.Commands.UpdateCustomer;
 
-public class CreateCustomerCommand : IRequest<CreateCustomerCommandResponse>
+public class UpdateCustomerCommand : IRequest<UpdateCustomerCommandResponse>
 {
+    public int Id{get;set;}
     public string Name{get;set;} = string.Empty;
     public DateOnly BirthDate{get;set;}
     public int Gender { get; set; }

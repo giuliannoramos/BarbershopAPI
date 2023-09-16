@@ -1,4 +1,4 @@
-namespace Barbearia.Application.Features.Customers.Commands;
+namespace Barbearia.Application.Features.Customers.Commands.CreateCustomer;
 
 public class CreateCustomerCommandResponse : BaseResponse
 {

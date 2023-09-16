@@ -1,5 +1,7 @@
 using Barbearia.Application.Contracts.Repositories;
-using Barbearia.Application.Features.Customers.Commands;
+using Barbearia.Application.Features.Customers.Commands.CreateCustomer;
+using Barbearia.Application.Features.Customers.Commands.RemoveCustomer;
+using Barbearia.Application.Features.Customers.Commands.UpdateCustomer;
 using Barbearia.Application.Features.Customers.Queries.GetAllCustomers;
 using Barbearia.Application.Features.Customers.Queries.GetCustomerById;
 using Barbearia.Persistence.DbContexts;
@@ -31,8 +33,14 @@ builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Program>());
 builder.Services.AddTransient<IRequestHandler<GetCustomerByIdQuery, GetCustomerByIdDto>, GetCustomerByIdQueryHandler>();
 builder.Services.AddTransient<IRequestHandler<GetAllCustomersQuery, IEnumerable<GetAllCustomersDto>>, GetAllCustomersQueryHandler>();
+
 builder.Services.AddTransient<IRequestHandler<CreateCustomerCommand, CreateCustomerCommandResponse>, CreateCustomerCommandHandler>();
 builder.Services.AddTransient<IValidator<CreateCustomerCommand>, CreateCustomerCommandValidator>();
+
+builder.Services.AddTransient<IRequestHandler<UpdateCustomerCommand, UpdateCustomerCommandResponse>, UpdateCustomerCommandHandler>();
+builder.Services.AddTransient<IValidator<UpdateCustomerCommand>, UpdateCustomerCommandValidator>();
+
+builder.Services.AddTransient<IRequestHandler<RemoveCustomerCommand, bool>, RemoveCustomerCommandHandler>();
 
 //config banco de dados
 builder.Services.AddDbContext<CustomerContext>(options =>

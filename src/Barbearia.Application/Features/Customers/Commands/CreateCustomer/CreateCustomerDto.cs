@@ -1,7 +1,7 @@
 using Barbearia.Application.Models;
 using Barbearia.Domain.Entities;
 
-namespace Barbearia.Application.Features.Customers.Commands;
+namespace Barbearia.Application.Features.Customers.Commands.CreateCustomer;
 
 public class CreateCustomerDto
 {

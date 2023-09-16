@@ -1,11 +1,14 @@
-using Barbearia.Application.Features.Customers.Commands;
+using Barbearia.Application.Features.Customers.Commands.RemoveCustomer;
+using Barbearia.Application.Features.Customers.Commands.CreateCustomer;
 using Barbearia.Application.Features.Customers.Queries.GetAllCustomers;
 using Barbearia.Application.Features.Customers.Queries.GetCustomerById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Barbearia.Application.Features.Customers.Commands.UpdateCustomer;
 
 namespace Barbearia.Api.Controllers;
 
+[ApiController]
 [Route("api/customers")]
 public class CustomersController : MainController
 {
@@ -39,7 +42,7 @@ public class CustomersController : MainController
     }
 
     [HttpPost]
-    public async Task<ActionResult<CreateCustomerCommandResponse>> CreateCustomer([FromBody]CreateCustomerCommand createCustomerCommand)
+    public async Task<ActionResult<CreateCustomerCommandResponse>> CreateCustomer(CreateCustomerCommand createCustomerCommand)
     {
         var createCustomerCommandResponse = await _mediator.Send(createCustomerCommand);
 
@@ -55,4 +58,43 @@ public class CustomersController : MainController
             customerForReturn
         );
     }
+
+    [HttpPut("{customerId}")]
+    public async Task<ActionResult> UpdateCustomer(int customerId, UpdateCustomerCommand updateCustomerCommand){
+        if(updateCustomerCommand.Id != customerId) return BadRequest();
+
+        var updateCustomerCommandResponse = await _mediator.Send(updateCustomerCommand);
+
+        if(!updateCustomerCommandResponse.IsSuccess)
+        {
+            foreach(var error in updateCustomerCommandResponse.Errors)
+            {
+                string key = error.Key;
+                string[] values = error.Value;
+
+                foreach(var value in values)
+                {
+                    ModelState.AddModelError(key, value);
+                }
+            }
+
+            return ValidationProblem(ModelState);
+        }
+
+        if(!updateCustomerCommandResponse.Exist) return NotFound();
+
+        return NoContent();
+    }
+
+    [HttpDelete("{customerId}")]
+    public async Task<ActionResult> DeleteCustomer(int customerId)
+    {
+        var result = await _mediator.Send(new RemoveCustomerCommand { Id = customerId});
+
+        if(!result) return NotFound();
+
+        return NoContent();
+    }
+
+
 }

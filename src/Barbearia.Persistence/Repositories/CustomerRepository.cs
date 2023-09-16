@@ -42,4 +42,9 @@ public class CustomerRepository : ICustomerRepository
     {
         return await _context.SaveChangesAsync() > 0;
     }
+
+    public void RemoveCustomer(Customer customer)
+    {
+        _context.Persons.Remove(customer);
+    }
 }

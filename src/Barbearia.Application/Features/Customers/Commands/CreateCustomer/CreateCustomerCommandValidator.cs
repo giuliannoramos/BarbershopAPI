@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Barbearia.Application.Features.Customers.Commands;
+namespace Barbearia.Application.Features.Customers.Commands.CreateCustomer;
 
 public class CreateCustomerCommandValidator : AbstractValidator<CreateCustomerCommand>
 {

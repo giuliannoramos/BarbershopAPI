@@ -41,9 +41,9 @@ public class CustomerRepository : ICustomerRepository
     public async Task<bool> SaveChangesAsync()
     {
         return await _context.SaveChangesAsync() > 0;
-    }
+    }    
 
-    public void RemoveCustomer(Customer customer)
+    public void DeleteCustomer(Customer customer)
     {
         _context.Persons.Remove(customer);
     }

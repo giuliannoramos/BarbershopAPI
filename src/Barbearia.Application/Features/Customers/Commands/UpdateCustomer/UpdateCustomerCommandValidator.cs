@@ -6,26 +6,100 @@ public class UpdateCustomerCommandValidator : AbstractValidator<UpdateCustomerCo
 {
     public UpdateCustomerCommandValidator()
     {
-        RuleFor(c => c.Id).NotEmpty()
-                          .WithMessage("You shoul fill the Id");
-        RuleFor(c => c.Name).NotEmpty()
-                           .WithMessage("You shoul fill the Name")
-                           .MaximumLength(100)
-                           .WithMessage("The name shouldn't have more than 100 characters.");
-        RuleFor(c => c.BirthDate).NotEmpty()
-                                 .WithMessage("You shoul fill the BirthDate");
-        RuleFor(c => c.Gender).NotEmpty()
-                              .WithMessage("You shoul fill the Gender");
-        RuleFor(c => c.Cpf).NotEmpty()
-                           .WithMessage("You shoul fill the Cpf")
-                           .Must(ValidateCPF)
-                        //    .When(c => c.Cpf != null, ApplyConditionTo.CurrentValidator)
-                           .WithMessage("The CPf should be a valid number");
-        RuleFor(c => c.Email).NotEmpty()
-                             .WithMessage("You shoul fill the Email");//botar mais pra frente um validador de email
+        RuleFor(c => c.PersonId)
+            .NotEmpty()
+                .WithMessage("You shoul fill the Id");
+        
+        RuleFor(c => c.Name)
+            .NotEmpty()
+                .WithMessage("You should fill out a Name")
+            .MaximumLength(50)
+                .WithMessage("The {PropertyName} shouldn't have more than 50 characteres");
+
+        RuleFor(c => c.Cpf)
+            .NotEmpty()
+                .WithMessage("You sould fill out a CPF")
+            .Must(ValidateCPF) //Validação do Cpf.
+                .When(c => c.Cpf != null, ApplyConditionTo.CurrentValidator)
+                .WithMessage("The CPf should be valid number");
+
+        RuleFor(c => c.BirthDate)
+            .NotEmpty()
+                .WithMessage("Person BirthDate cannot be empty");
+
+        RuleFor(c => c.Email)
+            .NotEmpty()
+                .WithMessage("Person Email cannot be empty")
+            .MaximumLength(80)
+                .WithMessage("Person Email should have at most 80 characters")
+            .EmailAddress()
+                .WithMessage("Person Email should be a valid email address");
+
+        RuleFor(c => c.Gender)
+            .NotEmpty()
+                .WithMessage("Person Gender cannot be empty");
+
+        RuleFor(c => c.Telephones)
+            .NotEmpty()
+                .WithMessage("At least one telephone number is required")
+            .Must(telephones => telephones.Count <= 1)
+                .WithMessage("Only one telephone number is allowed");
+
+        RuleForEach(c => c.Telephones)
+            .ChildRules(telephone =>
+            {
+                telephone.RuleFor(t => t.Number)
+                    .NotEmpty()
+                        .WithMessage("Telephone number cannot be empty")
+                    .MaximumLength(80)
+                        .WithMessage("Telephone number should have at most 80 characters");
+
+                telephone.RuleFor(t => t.Type)
+                    .NotEmpty()
+                        .WithMessage("Telephone type is required");
+            });
+
+        RuleFor(c => c.Addresses)
+            .Must(addresses => addresses.Count <= 1)
+                .WithMessage("Only one address is allowed.");
+
+        RuleForEach(c => c.Addresses)
+            .ChildRules(address =>
+            {
+                address.RuleFor(a => a.Street)
+                    .NotEmpty()
+                        .WithMessage("Street cannot be empty")
+                    .MaximumLength(80)
+                        .WithMessage("Street should have at most 80 characters");
+
+                address.RuleFor(a => a.Number)
+                    .NotEmpty()
+                        .WithMessage("Number cannot be empty");
+
+                address.RuleFor(a => a.District)
+                    .MaximumLength(60)
+                        .WithMessage("District should have at most 60 characters");
+
+                address.RuleFor(a => a.City)
+                    .MaximumLength(60)
+                        .WithMessage("City should have at most 60 characters");
+
+                address.RuleFor(a => a.State)
+                    .MaximumLength(2)
+                        .WithMessage("State should have at most 2 characters");
+
+                address.RuleFor(a => a.Cep)
+                    .MaximumLength(8)
+                        .WithMessage("CEP should have at most 8 characters");
+
+                address.RuleFor(a => a.Complement)
+                    .MaximumLength(80)
+                        .WithMessage("Complement should have at most 80 characters");
+            });
+
     }
 
-     private bool ValidateCPF(string cpf)
+    private bool ValidateCPF(string cpf) //Código de validação do CPF.
     {
         // Remove non-numeric characters
         cpf = cpf.Replace(".", "").Replace("-", "");

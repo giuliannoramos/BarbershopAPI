@@ -5,8 +5,8 @@ namespace Barbearia.Application.Contracts.Repositories;
 public interface ICustomerRepository
 {
     Task<IEnumerable<Customer>> GetAllCustomersAsync();
-    Task<Customer?> GetCustomerByIdAsync(int customerId);    
+    Task<Customer?> GetCustomerByIdAsync(int customerId);
     void AddCustomer(Customer customer);
-    void RemoveCustomer(Customer customer);
-    Task<bool> SaveChangesAsync();     
+    void DeleteCustomer(Customer customer);
+    Task<bool> SaveChangesAsync();
 }

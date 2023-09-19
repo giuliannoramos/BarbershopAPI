@@ -10,7 +10,24 @@ namespace Barbearia.Api.Controllers
     [ApiController]
     public abstract class MainController : ControllerBase
     {
-        // Método protegido para retornar um problema de validação com base em um objeto BaseResponse e um ModelState.
+        // Este método substitui o método padrão de tratamento de problemas de validação.
+        // Ele é chamado quando ocorrem erros de validação em uma ação do controlador.
+        public override ActionResult ValidationProblem(
+            [ActionResultObjectValue] ModelStateDictionary modelStateDictionary
+        )
+        {
+            // Obtém as opções de comportamento da API a partir do serviço de solicitação HTTP.
+            var options = HttpContext.RequestServices
+                .GetRequiredService<IOptions<ApiBehaviorOptions>>();
+
+            // Retorna uma resposta personalizada com base nas opções de comportamento da API.
+            return (ActionResult)options.Value
+                .InvalidModelStateResponseFactory(ControllerContext);
+        }
+
+        // Este método é marcado como [NonAction], o que significa que não é uma ação do controlador
+        // e não pode ser acessado diretamente como uma rota da Web.
+        // Ele é usado para lidar com problemas de validação em respostas personalizadas.
         [NonAction]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         protected ActionResult RequestValidationProblem(
@@ -18,6 +35,7 @@ namespace Barbearia.Api.Controllers
             [ActionResultObjectValue] ModelStateDictionary modelStateDictionary
         )
         {
+            // Itera pelos erros na resposta personalizada e adiciona-os ao ModelStateDictionary
             foreach (var error in requestResponse.Errors)
             {
                 string key = error.Key;
@@ -29,6 +47,7 @@ namespace Barbearia.Api.Controllers
                 }
             }
 
+            // Chama o método ValidationProblem padrão, passando o ModelStateDictionary.
             return ValidationProblem(modelStateDictionary);
         }
     }

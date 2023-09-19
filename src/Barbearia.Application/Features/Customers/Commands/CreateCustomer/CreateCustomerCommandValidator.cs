@@ -7,20 +7,17 @@ public class CreateCustomerCommandValidator : AbstractValidator<CreateCustomerCo
     public CreateCustomerCommandValidator()
     {
         RuleFor(c => c.Name)
-            .NotEmpty() //Não pode ser um valor vazio ou null.
-                .WithMessage("You should fill out a Name") //Caso seja vazio ou nulo aparece a mensagem.
-            .MaximumLength(50) //Máximo de caracteres permitido
-                .WithMessage("The {PropertyName} shouldn't have more than 50 characteres"); //Caso tenha mais de 50 aparece essa mensagem
+            .NotEmpty()
+                .WithMessage("You should fill out a Name")
+            .MaximumLength(50)
+                .WithMessage("The {PropertyName} shouldn't have more than 50 characteres");
 
         RuleFor(c => c.Cpf)
-        // .Cascade(CascadeMode.Stop)
-            .NotEmpty() //Não pode ser um valor vazio ou null.
-                .WithMessage("You sould fill out a CPF") //Caso seja vazio ou nulo aparece a mensagem.
-            .Length(11) //O tamanho deve ser 11. 
-                .WithMessage("The CPF should have 11 characters") //Caso não seja 11, aparecerá essa mensagem.
+            .NotEmpty()
+                .WithMessage("You sould fill out a CPF")
             .Must(ValidateCPF) //Validação do Cpf.
                 .When(c => c.Cpf != null, ApplyConditionTo.CurrentValidator)
-                .WithMessage("The CPf should be valid number"); //Caso o CPF não seja válido, aparecerá essa mensagem
+                .WithMessage("The CPf should be valid number");
 
         RuleFor(c => c.BirthDate)
             .NotEmpty()

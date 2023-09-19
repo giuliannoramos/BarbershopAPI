@@ -1,6 +1,6 @@
 using Barbearia.Application.Contracts.Repositories;
 using Barbearia.Application.Features.Customers.Commands.CreateCustomer;
-using Barbearia.Application.Features.Customers.Commands.RemoveCustomer;
+using Barbearia.Application.Features.Customers.Commands.DeleteCustomer;
 using Barbearia.Application.Features.Customers.Commands.UpdateCustomer;
 using Barbearia.Application.Features.Customers.Queries.GetAllCustomers;
 using Barbearia.Application.Features.Customers.Queries.GetCustomerById;
@@ -40,7 +40,7 @@ builder.Services.AddTransient<IValidator<CreateCustomerCommand>, CreateCustomerC
 builder.Services.AddTransient<IRequestHandler<UpdateCustomerCommand, UpdateCustomerCommandResponse>, UpdateCustomerCommandHandler>();
 builder.Services.AddTransient<IValidator<UpdateCustomerCommand>, UpdateCustomerCommandValidator>();
 
-builder.Services.AddTransient<IRequestHandler<RemoveCustomerCommand, bool>, RemoveCustomerCommandHandler>();
+builder.Services.AddTransient<IRequestHandler<DeleteCustomerCommand, bool>, DeleteCustomerCommandHandler>();
 
 //config banco de dados
 builder.Services.AddDbContext<CustomerContext>(options =>

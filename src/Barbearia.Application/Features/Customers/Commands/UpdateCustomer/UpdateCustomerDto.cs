@@ -4,7 +4,7 @@ namespace Barbearia.Application.Features.Customers.Commands.UpdateCustomer;
 
 public class UpdateCustomerDto
 {
-    public int Id{get;set;}
+    public int PersonId{get;set;}
     public string Name{get;set;} = string.Empty;
     public DateOnly BirthDate{get;set;}
     public int Gender { get; set; }

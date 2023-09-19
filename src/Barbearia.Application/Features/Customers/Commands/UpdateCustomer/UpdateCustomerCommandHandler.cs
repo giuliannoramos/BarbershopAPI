@@ -20,33 +20,33 @@ public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerComman
 
     public async Task<UpdateCustomerCommandResponse> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
     {
-        UpdateCustomerCommandResponse updateCustomerCommandResponse = new();
+        UpdateCustomerCommandResponse response = new();
 
         var validationResult = _validator.Validate(request);
 
-        if(!validationResult.IsValid)
+        if (!validationResult.IsValid)
         {
-            foreach(var error in validationResult.ToDictionary())
+            foreach (var error in validationResult.ToDictionary())
             {
-                updateCustomerCommandResponse.Errors.Add(error.Key, error.Value);
+                response.Errors.Add(error.Key, error.Value);
             }
 
-            updateCustomerCommandResponse.IsSuccess = false;
-            return updateCustomerCommandResponse;
+            return response;
         }
 
-        var customerFromDatabase = await _customerRepository.GetCustomerByIdAsync(request.Id);
+        var customerFromDatabase = await _customerRepository.GetCustomerByIdAsync(request.PersonId);
 
-        if(customerFromDatabase == null)
+        if (customerFromDatabase == null)
         {
-            updateCustomerCommandResponse.Exist = false;
-            return updateCustomerCommandResponse;
+            response.ErrorType = Error.NotFoundProblem;
+            response.Errors.Add("PersonId", new[] { "Customer not found." });
+            return response;
         }
 
         _mapper.Map(request, customerFromDatabase);
 
         await _customerRepository.SaveChangesAsync();
 
-        return updateCustomerCommandResponse;
+        return response;
     }
 }

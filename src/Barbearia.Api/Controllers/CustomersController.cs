@@ -1,10 +1,10 @@
-using Barbearia.Application.Features.Customers.Commands.RemoveCustomer;
 using Barbearia.Application.Features.Customers.Commands.CreateCustomer;
 using Barbearia.Application.Features.Customers.Queries.GetAllCustomers;
 using Barbearia.Application.Features.Customers.Queries.GetCustomerById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Barbearia.Application.Features.Customers.Commands.UpdateCustomer;
+using Barbearia.Application.Features.Customers.Commands.DeleteCustomer;
 
 namespace Barbearia.Api.Controllers;
 
@@ -60,28 +60,14 @@ public class CustomersController : MainController
     }
 
     [HttpPut("{customerId}")]
-    public async Task<ActionResult> UpdateCustomer(int customerId, UpdateCustomerCommand updateCustomerCommand){
-        if(updateCustomerCommand.Id != customerId) return BadRequest();
+    public async Task<ActionResult> UpdateCustomer(int customerId, UpdateCustomerCommand updateCustomerCommand)
+    {
+        if(updateCustomerCommand.PersonId != customerId) return BadRequest();
 
         var updateCustomerCommandResponse = await _mediator.Send(updateCustomerCommand);
 
         if(!updateCustomerCommandResponse.IsSuccess)
-        {
-            foreach(var error in updateCustomerCommandResponse.Errors)
-            {
-                string key = error.Key;
-                string[] values = error.Value;
-
-                foreach(var value in values)
-                {
-                    ModelState.AddModelError(key, value);
-                }
-            }
-
-            return ValidationProblem(ModelState);
-        }
-
-        if(!updateCustomerCommandResponse.Exist) return NotFound();
+        return RequestValidationProblem(updateCustomerCommandResponse, ModelState); 
 
         return NoContent();
     }
@@ -89,12 +75,11 @@ public class CustomersController : MainController
     [HttpDelete("{customerId}")]
     public async Task<ActionResult> DeleteCustomer(int customerId)
     {
-        var result = await _mediator.Send(new RemoveCustomerCommand { Id = customerId});
+        var result = await _mediator.Send(new DeleteCustomerCommand { Id = customerId});
 
         if(!result) return NotFound();
 
         return NoContent();
     }
-
 
 }

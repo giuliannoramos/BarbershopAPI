@@ -47,4 +47,14 @@ public class CustomerRepository : ICustomerRepository
     {
         _context.Persons.Remove(customer);
     }
+    public async Task<IEnumerable<Address>?> GetAddressAsync(int customerId)
+    {
+        var customerFromDatabase = await GetCustomerByIdAsync(customerId);
+        return customerFromDatabase?.Addresses;
+    }
+
+    public void AddAddress(Customer customer, Address address)
+    {
+        customer.Addresses.Add(address);
+    }
 }

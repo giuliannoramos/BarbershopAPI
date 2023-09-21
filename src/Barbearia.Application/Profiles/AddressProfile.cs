@@ -1,5 +1,6 @@
 using AutoMapper;
 using Barbearia.Application.Features.Addresses.Commands.CreateAddress;
+using Barbearia.Application.Features.Addresses.Commands.UpdateAddress;
 using Barbearia.Application.Features.Addresses.Queries.GetAddress;
 using Barbearia.Domain.Entities;
 
@@ -12,5 +13,7 @@ public class AddressProfile : Profile
         CreateMap<Address, GetAddressDto>().ReverseMap();
         CreateMap<CreateAddressCommand, Address>();
         CreateMap<Address, CreateAddressDto>();
+        CreateMap<UpdateAddressCommand, Address>();
+        CreateMap<UpdateAddressCommand, Customer>();
     }
 }

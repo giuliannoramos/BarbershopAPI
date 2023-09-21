@@ -1798,8 +1798,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "c:\\Users\\giule\\Dev\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj": {
-              "projectPath": "c:\\Users\\giule\\Dev\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj"
+            "C:\\Users\\giule\\Dev\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj": {
+              "projectPath": "C:\\Users\\giule\\Dev\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj"
             },
             "C:\\Users\\giule\\Dev\\barbershopapi\\src\\Barbearia.Persistence\\Barbearia.Persistence.csproj": {
               "projectPath": "C:\\Users\\giule\\Dev\\barbershopapi\\src\\Barbearia.Persistence\\Barbearia.Persistence.csproj"

@@ -51,13 +51,14 @@ namespace Barbearia.Persistence.DbContexts
 
 
             order
-            .HasOne(o=>o.customer)
+            .HasOne(o=>o.Customer)
             .WithMany(c=>c.Orders)
-            .HasForeignKey(o=>o.PersonId);
+            .HasForeignKey(o=>o.PersonId)
+            .IsRequired();
 
             order
-            .HasOne(o=>o.payment)
-            .WithOne(p=>p.order)
+            .HasOne(o=>o.Payment)
+            .WithOne(p=>p.Order)
             .HasForeignKey<Payment>(p=>p.OrderId)
             .IsRequired(false);
 
@@ -93,7 +94,7 @@ namespace Barbearia.Persistence.DbContexts
             .IsRequired();
 
             payment
-            .HasOne(p=>p.coupon)
+            .HasOne(p=>p.Coupon)
             .WithMany(c=>c.Payments)
             .HasForeignKey(p=>p.CouponId)
             .IsRequired(false);

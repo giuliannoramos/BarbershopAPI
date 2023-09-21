@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barbershopapiAtualizado\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj": {}
+    "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barbershopapiAtualizado\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj": {}
   },
   "projects": {
-    "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barbershopapiAtualizado\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj": {
+    "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barbershopapiAtualizado\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barbershopapiAtualizado\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj",
+        "projectUniqueName": "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barbershopapiAtualizado\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj",
         "projectName": "Barbearia.Domain",
-        "projectPath": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barbershopapiAtualizado\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj",
+        "projectPath": "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barbershopapiAtualizado\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj",
         "packagesPath": "C:\\Users\\lucas\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barbershopapiAtualizado\\barbershopapi\\src\\Barbearia.Domain\\obj\\",
+        "outputPath": "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barbershopapiAtualizado\\barbershopapi\\src\\Barbearia.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Users\\lucas\\AppData\\Roaming\\Godot\\mono\\GodotNuGetFallbackFolder",

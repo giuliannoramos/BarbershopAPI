@@ -1,0 +1,19 @@
+using System.Dynamic;
+
+namespace Barbearia.Domain.Entities;
+
+public class Payment
+{
+    public int PaymentId{get;set;}
+    public DateTime BuyDate{get; set;}
+    public Decimal GrossTotal {get;set;}
+    public string PaymentMethod{get;set;} = string.Empty;
+    public string Description{get;set;} = string.Empty;
+    public int Status{get;set;}
+    public decimal NetTotal{get;set;}
+    public int? CouponId { get; set; }
+    public Coupon? coupon { get; set; }
+    public int OrderId{get; set;}
+    public Order? order{get;set;}   
+
+}

@@ -59,7 +59,13 @@ builder.Services.AddTransient<IRequestHandler<DeleteAddressCommand, bool>, Delet
 //config banco de dados
 builder.Services.AddDbContext<CustomerContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=1973");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678");
+}
+);
+
+builder.Services.AddDbContext<OrderContext>(options =>
+{
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678");
 }
 );
 
@@ -83,11 +89,16 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var customerContext = scope.ServiceProvider.GetService<CustomerContext>();
+        var orderContext  = scope.ServiceProvider.GetService<OrderContext>();
 
         if (customerContext != null)
         {
             await customerContext.Database.EnsureDeletedAsync();
             await customerContext.Database.MigrateAsync();
+        }
+        if (orderContext != null)
+        {
+            await orderContext.Database.MigrateAsync();
         }
     }
     catch (Exception ex)

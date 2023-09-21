@@ -1,4 +1,6 @@
 using Barbearia.Application.Features.Addresses.Commands.CreateAddress;
+using Barbearia.Application.Features.Addresses.Commands.DeleteAddress;
+using Barbearia.Application.Features.Addresses.Commands.UpdateAddress;
 using Barbearia.Application.Features.Addresses.Queries.GetAddress;
 using Barbearia.Application.Models;
 using MediatR;
@@ -23,7 +25,7 @@ public class AddressesController : MainController
         var getAddressQuery = new GetAddressQuery { PersonId = customerId };
         var addressToReturn = await _mediator.Send(getAddressQuery);
 
-        if (addressToReturn == null) return NotFound();
+        if (!addressToReturn.Any()) return NotFound();
 
         return Ok(addressToReturn);
     }
@@ -50,5 +52,28 @@ public class AddressesController : MainController
             },
             addressForReturn
         );
+    }
+
+    [HttpPut]
+    public async Task<ActionResult> UpdateAddress(int customerId, UpdateAddressCommand updateAddressCommand)
+    {
+        if (updateAddressCommand.PersonId != customerId) return BadRequest();
+
+        var updateAddressCommandResponse = await _mediator.Send(updateAddressCommand);
+
+        if (!updateAddressCommandResponse.IsSuccess)
+            return RequestValidationProblem(updateAddressCommandResponse, ModelState);
+
+        return NoContent();
+    }
+
+    [HttpDelete("{addressId}")]
+    public async Task<ActionResult> DeleteAddress(int customerId, int addressId)
+    {
+        var result = await _mediator.Send(new DeleteAddressCommand { PersonId = customerId, AddressId = addressId });
+
+        if (!result) return NotFound();
+
+        return NoContent();
     }
 }

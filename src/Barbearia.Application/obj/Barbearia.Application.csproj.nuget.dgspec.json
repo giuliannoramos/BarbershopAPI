@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\giule\\Dev\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj": {}
+    "C:\\Users\\giule\\Dev\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj": {}
   },
   "projects": {
-    "c:\\Users\\giule\\Dev\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj": {
+    "C:\\Users\\giule\\Dev\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\giule\\Dev\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj",
+        "projectUniqueName": "C:\\Users\\giule\\Dev\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj",
         "projectName": "Barbearia.Application",
-        "projectPath": "c:\\Users\\giule\\Dev\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj",
+        "projectPath": "C:\\Users\\giule\\Dev\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj",
         "packagesPath": "C:\\Users\\giule\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\giule\\Dev\\barbershopapi\\src\\Barbearia.Application\\obj\\",
+        "outputPath": "C:\\Users\\giule\\Dev\\barbershopapi\\src\\Barbearia.Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

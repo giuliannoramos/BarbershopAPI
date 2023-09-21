@@ -16,7 +16,7 @@ public class DeleteCustomerCommandHandler : IRequestHandler<DeleteCustomerComman
 
     public async Task<bool> Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
     {
-        var customerFromDatabase = await _customerRepository.GetCustomerByIdAsync(request.Id);
+        var customerFromDatabase = await _customerRepository.GetCustomerByIdAsync(request.PersonId);
 
         if(customerFromDatabase == null) return false;
 

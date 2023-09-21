@@ -75,7 +75,7 @@ public class CustomersController : MainController
     [HttpDelete("{customerId}")]
     public async Task<ActionResult> DeleteCustomer(int customerId)
     {
-        var result = await _mediator.Send(new DeleteCustomerCommand { Id = customerId});
+        var result = await _mediator.Send(new DeleteCustomerCommand { PersonId = customerId});
 
         if(!result) return NotFound();
 

@@ -2,6 +2,7 @@ namespace Barbearia.Domain.Entities;
 
 public class Customer : Person
 {
+    public List<Order> Orders{get; set;} = new();
     public void ValidateCustomerTelephone()
     {
         if (Telephones.Count == 0)

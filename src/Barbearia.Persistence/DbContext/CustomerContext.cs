@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Barbearia.Domain.Entities;
 using Microsoft.Extensions.Configuration;
+using FluentValidation.Validators;
 
 namespace Barbearia.Persistence.DbContexts
 {
@@ -11,11 +12,24 @@ namespace Barbearia.Persistence.DbContexts
 
         public DbSet<Person> Persons { get; set; } = null!;
 
+        public DbSet<Telephone> Telephones {get; set; } = null!;
+
+        public DbSet<Address> Addresses {get; set; } = null!;
+
+        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
             var person = modelBuilder.Entity<Person>();
             var customer = modelBuilder.Entity<Customer>();
+            var telephone = modelBuilder.Entity<Telephone>();
+            var address = modelBuilder.Entity<Address>();
+
+            // modelBuilder.Entity<Order>().ToTable("Orders", t => t.ExcludeFromMigrations()); 
+            modelBuilder.Ignore<Order>();
+            modelBuilder.Ignore<Payment>();
+            modelBuilder.Ignore<Coupon>();
 
             person
             .ToTable("Persons")
@@ -58,60 +72,60 @@ namespace Barbearia.Persistence.DbContexts
                 .HasForeignKey(t => t.PersonId)
                 .IsRequired();            
 
-            modelBuilder.Entity<Address>()
+            address
                 .ToTable("Address");
 
-            modelBuilder.Entity<Address>()
+            address
                 .Property(c => c.Street)
                 .HasMaxLength(80);
 
-            modelBuilder.Entity<Address>()
+            address
                 .Property(c => c.Number);
 
-            modelBuilder.Entity<Address>()
+            address
                 .Property(c => c.District)
                 .HasMaxLength(60);
 
-            modelBuilder.Entity<Address>()
+            address
                 .Property(c => c.City)
                 .HasMaxLength(60);
 
-            modelBuilder.Entity<Address>()
+            address
                 .Property(c => c.State)
                 .HasMaxLength(2);
 
-            modelBuilder.Entity<Address>()
+            address
                 .Property(c => c.Cep)
                 .HasMaxLength(8);
 
-            modelBuilder.Entity<Address>()
+            address
                 .Property(c => c.Complement)
                 .HasMaxLength(80);
 
-            modelBuilder.Entity<Address>()
+            address
                 .HasOne(p => p.Person) 
                 .WithMany(c => c.Addresses)
                 .HasForeignKey(a => a.PersonId);
 
-            modelBuilder.Entity<Telephone>()
+            telephone
                 .ToTable("Telephone");
 
-            modelBuilder.Entity<Telephone>()
+            telephone
                 .Property(c => c.Number)
                 .HasMaxLength(80)
                 .IsRequired();
 
-            modelBuilder.Entity<Telephone>()
+            telephone
                 .Property(c => c.Type)
                 .IsRequired();
 
-            modelBuilder.Entity<Telephone>()
+            telephone
                 .HasOne(t => t.Person) 
                 .WithMany(c => c.Telephones)
                 .HasForeignKey(t => t.PersonId);
 
 
-            modelBuilder.Entity<Customer>()
+            customer
                 .HasData(
                     new Customer()
                     {
@@ -132,7 +146,7 @@ namespace Barbearia.Persistence.DbContexts
                         Email = "bill@gmail.com",
                     });
 
-            modelBuilder.Entity<Address>()
+            address
                 .HasData(
                     new Address()
                     {
@@ -159,7 +173,7 @@ namespace Barbearia.Persistence.DbContexts
                         PersonId = 2
                     });
 
-            modelBuilder.Entity<Telephone>()
+            telephone
                 .HasData(
                     new Telephone()
                     {

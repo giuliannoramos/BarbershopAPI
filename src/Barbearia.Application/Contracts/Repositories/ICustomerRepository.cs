@@ -11,5 +11,8 @@ public interface ICustomerRepository
     Task<bool> SaveChangesAsync();
     Task<IEnumerable<Address>?> GetAddressAsync(int customerId);
     void AddAddress(Customer customer, Address address);   
-    void DeleteAddress(Customer customer, Address address);   
+    void DeleteAddress(Customer customer, Address address);
+    Task<IEnumerable<Telephone>?> GetTelephoneAsync(int customerId);
+    void AddTelephone(Customer customer, Telephone telephone);
+    void DeleteTelephone(Customer customer, Telephone telephone);
 }

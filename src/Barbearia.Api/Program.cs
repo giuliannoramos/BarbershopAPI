@@ -3,6 +3,10 @@ using Barbearia.Application.Features.Addresses.Commands.CreateAddress;
 using Barbearia.Application.Features.Addresses.Commands.DeleteAddress;
 using Barbearia.Application.Features.Addresses.Commands.UpdateAddress;
 using Barbearia.Application.Features.Addresses.Queries.GetAddress;
+using Barbearia.Application.Features.Telephones.Commands.CreateTelephone;
+using Barbearia.Application.Features.Telephones.Commands.DeleteTelephone;
+using Barbearia.Application.Features.Telephones.Commands.UpdateTelephone;
+using Barbearia.Application.Features.Telephones.Query.GetTelephone;
 using Barbearia.Application.Features.Customers.Commands.CreateCustomer;
 using Barbearia.Application.Features.Customers.Commands.DeleteCustomer;
 using Barbearia.Application.Features.Customers.Commands.UpdateCustomer;
@@ -56,16 +60,28 @@ builder.Services.AddTransient<IValidator<UpdateAddressCommand>, UpdateAddressCom
 
 builder.Services.AddTransient<IRequestHandler<DeleteAddressCommand, bool>, DeleteAddressCommandHandler>();
 
+
+builder.Services.AddTransient<IRequestHandler<GetTelephoneQuery, IEnumerable<GetTelephoneDto>>, GetTelephoneQueryHandler>();
+
+builder.Services.AddTransient<IRequestHandler<CreateTelephoneCommand, CreateTelephoneCommandResponse>, CreateTelephoneCommandHandler>();
+builder.Services.AddTransient<IValidator<CreateTelephoneCommand>, CreateTelephoneCommandValidator>();
+
+builder.Services.AddTransient<IRequestHandler<UpdateTelephoneCommand, UpdateTelephoneCommandResponse>, UpdateTelephoneCommandHandler>();
+builder.Services.AddTransient<IValidator<UpdateTelephoneCommand>, UpdateTelephoneCommandValidator>();
+
+builder.Services.AddTransient<IRequestHandler<DeleteTelephoneCommand, bool>, DeleteTelephoneCommandHandler>();
+
+
 //config banco de dados
 builder.Services.AddDbContext<CustomerContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=1973");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=123456");
 }
 );
 
 builder.Services.AddDbContext<OrderContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=1973");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=123456");
 }
 );
 

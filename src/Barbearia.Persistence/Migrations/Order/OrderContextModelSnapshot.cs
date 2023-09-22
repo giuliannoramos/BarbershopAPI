@@ -101,9 +101,9 @@ namespace Barbearia.Persistence.Migrations.Order
                         {
                             CouponId = 1,
                             CouponCode = "teste3",
-                            CreationDate = new DateTime(2023, 9, 21, 4, 26, 7, 611, DateTimeKind.Utc).AddTicks(5973),
+                            CreationDate = new DateTime(2023, 9, 22, 20, 16, 9, 923, DateTimeKind.Utc).AddTicks(9416),
                             DiscountPercent = 10,
-                            ExpirationDate = new DateTime(2023, 9, 21, 4, 26, 7, 611, DateTimeKind.Utc).AddTicks(5974)
+                            ExpirationDate = new DateTime(2023, 9, 22, 20, 16, 9, 923, DateTimeKind.Utc).AddTicks(9416)
                         });
                 });
 
@@ -131,13 +131,13 @@ namespace Barbearia.Persistence.Migrations.Order
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("Order", (string)null);
+                    b.ToTable("Orders", (string)null);
 
                     b.HasData(
                         new
                         {
                             OrderId = 1,
-                            BuyDate = new DateTime(2023, 9, 21, 4, 26, 7, 611, DateTimeKind.Utc).AddTicks(5798),
+                            BuyDate = new DateTime(2023, 9, 22, 20, 16, 9, 923, DateTimeKind.Utc).AddTicks(9312),
                             Number = 500,
                             PersonId = 1,
                             Status = 2
@@ -190,7 +190,7 @@ namespace Barbearia.Persistence.Migrations.Order
                         new
                         {
                             PaymentId = 1,
-                            BuyDate = new DateTime(2023, 9, 21, 4, 26, 7, 611, DateTimeKind.Utc).AddTicks(5962),
+                            BuyDate = new DateTime(2023, 9, 22, 20, 16, 9, 923, DateTimeKind.Utc).AddTicks(9404),
                             Description = "Para de ler isso aqui e vai programar",
                             GrossTotal = 80m,
                             NetTotal = 60m,
@@ -219,10 +219,6 @@ namespace Barbearia.Persistence.Migrations.Order
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("text");
@@ -240,10 +236,6 @@ namespace Barbearia.Persistence.Migrations.Order
                         {
                             t.ExcludeFromMigrations();
                         });
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Person");
-
-                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Telephone", b =>
@@ -274,13 +266,6 @@ namespace Barbearia.Persistence.Migrations.Order
                         });
                 });
 
-            modelBuilder.Entity("Barbearia.Domain.Entities.Customer", b =>
-                {
-                    b.HasBaseType("Barbearia.Domain.Entities.Person");
-
-                    b.HasDiscriminator().HasValue("Customer");
-                });
-
             modelBuilder.Entity("Barbearia.Domain.Entities.Address", b =>
                 {
                     b.HasOne("Barbearia.Domain.Entities.Person", "Person")
@@ -294,28 +279,28 @@ namespace Barbearia.Persistence.Migrations.Order
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Order", b =>
                 {
-                    b.HasOne("Barbearia.Domain.Entities.Customer", "customer")
+                    b.HasOne("Barbearia.Domain.Entities.Person", "Person")
                         .WithMany("Orders")
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("customer");
+                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Payment", b =>
                 {
-                    b.HasOne("Barbearia.Domain.Entities.Coupon", "coupon")
+                    b.HasOne("Barbearia.Domain.Entities.Coupon", "Coupon")
                         .WithMany("Payments")
                         .HasForeignKey("CouponId");
 
-                    b.HasOne("Barbearia.Domain.Entities.Order", "order")
-                        .WithOne("payment")
+                    b.HasOne("Barbearia.Domain.Entities.Order", "Order")
+                        .WithOne("Payment")
                         .HasForeignKey("Barbearia.Domain.Entities.Payment", "OrderId");
 
-                    b.Navigation("coupon");
+                    b.Navigation("Coupon");
 
-                    b.Navigation("order");
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Telephone", b =>
@@ -336,19 +321,16 @@ namespace Barbearia.Persistence.Migrations.Order
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Order", b =>
                 {
-                    b.Navigation("payment");
+                    b.Navigation("Payment");
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Person", b =>
                 {
                     b.Navigation("Addresses");
 
-                    b.Navigation("Telephones");
-                });
-
-            modelBuilder.Entity("Barbearia.Domain.Entities.Customer", b =>
-                {
                     b.Navigation("Orders");
+
+                    b.Navigation("Telephones");
                 });
 #pragma warning restore 612, 618
         }

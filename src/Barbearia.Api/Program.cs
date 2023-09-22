@@ -12,6 +12,7 @@ using Barbearia.Application.Features.Customers.Commands.DeleteCustomer;
 using Barbearia.Application.Features.Customers.Commands.UpdateCustomer;
 using Barbearia.Application.Features.Customers.Queries.GetAllCustomers;
 using Barbearia.Application.Features.Customers.Queries.GetCustomerById;
+using Barbearia.Application.Features.Customers.Queries.GetCustomerWithOrdersById;
 using Barbearia.Persistence.DbContexts;
 using Barbearia.Persistence.Repositories;
 using FluentValidation;
@@ -41,6 +42,7 @@ builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Program>());
 builder.Services.AddTransient<IRequestHandler<GetCustomerByIdQuery, GetCustomerByIdDto>, GetCustomerByIdQueryHandler>();
 builder.Services.AddTransient<IRequestHandler<GetAllCustomersQuery, IEnumerable<GetAllCustomersDto>>, GetAllCustomersQueryHandler>();
+builder.Services.AddTransient<IRequestHandler<GetCustomerWithOrdersByIdQuery, GetCustomerWithOrdersByIdDto>, GetCustomerWithOrdersByIdQueryHandler>();
 
 builder.Services.AddTransient<IRequestHandler<CreateCustomerCommand, CreateCustomerCommandResponse>, CreateCustomerCommandHandler>();
 builder.Services.AddTransient<IValidator<CreateCustomerCommand>, CreateCustomerCommandValidator>();

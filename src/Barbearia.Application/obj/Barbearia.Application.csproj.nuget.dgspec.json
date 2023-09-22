@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\7620586\\Desktop\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj": {}
+    "C:\\Users\\7728735\\Desktop\\barbe\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj": {}
   },
   "projects": {
-    "C:\\Users\\7620586\\Desktop\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj": {
+    "C:\\Users\\7728735\\Desktop\\barbe\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\7620586\\Desktop\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj",
+        "projectUniqueName": "C:\\Users\\7728735\\Desktop\\barbe\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj",
         "projectName": "Barbearia.Application",
-        "projectPath": "C:\\Users\\7620586\\Desktop\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj",
-        "packagesPath": "C:\\Users\\7620586\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\7620586\\Desktop\\barbershopapi\\src\\Barbearia.Application\\obj\\",
+        "projectPath": "C:\\Users\\7728735\\Desktop\\barbe\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj",
+        "packagesPath": "C:\\Users\\7728735\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\7728735\\Desktop\\barbe\\barbershopapi\\src\\Barbearia.Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -19,7 +19,7 @@
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\7620586\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\7728735\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
@@ -35,8 +35,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\7620586\\Desktop\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj": {
-                "projectPath": "C:\\Users\\7620586\\Desktop\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj"
+              "C:\\Users\\7728735\\Desktop\\barbe\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj": {
+                "projectPath": "C:\\Users\\7728735\\Desktop\\barbe\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj"
               }
             }
           }
@@ -88,14 +88,14 @@
         }
       }
     },
-    "C:\\Users\\7620586\\Desktop\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj": {
+    "C:\\Users\\7728735\\Desktop\\barbe\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\7620586\\Desktop\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\7728735\\Desktop\\barbe\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj",
         "projectName": "Barbearia.Domain",
-        "projectPath": "C:\\Users\\7620586\\Desktop\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj",
-        "packagesPath": "C:\\Users\\7620586\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\7620586\\Desktop\\barbershopapi\\src\\Barbearia.Domain\\obj\\",
+        "projectPath": "C:\\Users\\7728735\\Desktop\\barbe\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj",
+        "packagesPath": "C:\\Users\\7728735\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\7728735\\Desktop\\barbe\\barbershopapi\\src\\Barbearia.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -103,7 +103,7 @@
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\7620586\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\7728735\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"

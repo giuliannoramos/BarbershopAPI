@@ -1,6 +1,7 @@
 using Barbearia.Application.Features.Customers.Commands.CreateCustomer;
 using Barbearia.Application.Features.Customers.Queries.GetAllCustomers;
 using Barbearia.Application.Features.Customers.Queries.GetCustomerById;
+using Barbearia.Application.Features.Customers.Queries.GetCustomerWithOrdersById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Barbearia.Application.Features.Customers.Commands.UpdateCustomer;
@@ -81,5 +82,15 @@ public class CustomersController : MainController
 
         return NoContent();
     }
+    [HttpGet("with-orders/{customerId}")]
+    public async Task<ActionResult<GetCustomerWithOrdersByIdDto>> GetCustomerWithOrdersById(int customerId)
+    {
+        var getCustomerWithOrdersByIdQuery = new GetCustomerWithOrdersByIdQuery {PersonId = customerId};
 
+        var customerToReturn = await _mediator.Send(getCustomerWithOrdersByIdQuery);
+
+        if(customerToReturn == null) return NotFound();
+
+        return Ok(customerToReturn);
+    }
 }

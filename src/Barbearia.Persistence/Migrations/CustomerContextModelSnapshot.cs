@@ -99,6 +99,39 @@ namespace Barbearia.Persistence.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Barbearia.Domain.Entities.Order", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("OrderId"));
+
+                    b.Property<DateTime>("BuyDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("CustomerPersonId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Number")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PersonId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.HasKey("OrderId");
+
+                    b.HasIndex("CustomerPersonId");
+
+                    b.ToTable("Orders", null, t =>
+                        {
+                            t.ExcludeFromMigrations();
+                        });
+                });
+
             modelBuilder.Entity("Barbearia.Domain.Entities.Person", b =>
                 {
                     b.Property<int>("PersonId")
@@ -226,6 +259,15 @@ namespace Barbearia.Persistence.Migrations
                     b.Navigation("Person");
                 });
 
+            modelBuilder.Entity("Barbearia.Domain.Entities.Order", b =>
+                {
+                    b.HasOne("Barbearia.Domain.Entities.Customer", "Customer")
+                        .WithMany("Orders")
+                        .HasForeignKey("CustomerPersonId");
+
+                    b.Navigation("Customer");
+                });
+
             modelBuilder.Entity("Barbearia.Domain.Entities.Telephone", b =>
                 {
                     b.HasOne("Barbearia.Domain.Entities.Person", "Person")
@@ -242,6 +284,11 @@ namespace Barbearia.Persistence.Migrations
                     b.Navigation("Addresses");
 
                     b.Navigation("Telephones");
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.Customer", b =>
+                {
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

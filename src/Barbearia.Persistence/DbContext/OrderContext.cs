@@ -14,12 +14,6 @@ namespace Barbearia.Persistence.DbContexts
 
         public DbSet<Coupon> Coupons {get; set; } = null!;
 
-        public DbSet<Person> Persons {get; set;} = null!;
-
-        public DbSet<Address> Addresses {get; set;} = null!;
-
-        public DbSet<Telephone> Telephones {get; set;} = null!;
-
         protected override void OnModelCreating(ModelBuilder modelBuilder){
 
             var order = modelBuilder.Entity<Order>();
@@ -31,7 +25,7 @@ namespace Barbearia.Persistence.DbContexts
             modelBuilder.Entity<Telephone>().ToTable("Telephone", t => t.ExcludeFromMigrations()); // criada em CustomerContext
 
             order
-            .ToTable("Order");
+            .ToTable("Orders");
 
             order
             .Property(o => o.Number)
@@ -51,7 +45,7 @@ namespace Barbearia.Persistence.DbContexts
 
 
             order
-            .HasOne(o=>o.Customer)
+            .HasOne(o=>o.Person)
             .WithMany(c=>c.Orders)
             .HasForeignKey(o=>o.PersonId)
             .IsRequired();

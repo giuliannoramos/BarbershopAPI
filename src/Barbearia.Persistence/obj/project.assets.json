@@ -1297,7 +1297,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\7620586\\.nuget\\packages\\": {},
+    "C:\\Users\\7728735\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
     "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
@@ -1305,11 +1305,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\7620586\\Desktop\\barbershopapi\\src\\Barbearia.Persistence\\Barbearia.Persistence.csproj",
+      "projectUniqueName": "C:\\Users\\7728735\\Desktop\\barbe\\barbershopapi\\src\\Barbearia.Persistence\\Barbearia.Persistence.csproj",
       "projectName": "Barbearia.Persistence",
-      "projectPath": "C:\\Users\\7620586\\Desktop\\barbershopapi\\src\\Barbearia.Persistence\\Barbearia.Persistence.csproj",
-      "packagesPath": "C:\\Users\\7620586\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\7620586\\Desktop\\barbershopapi\\src\\Barbearia.Persistence\\obj\\",
+      "projectPath": "C:\\Users\\7728735\\Desktop\\barbe\\barbershopapi\\src\\Barbearia.Persistence\\Barbearia.Persistence.csproj",
+      "packagesPath": "C:\\Users\\7728735\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\7728735\\Desktop\\barbe\\barbershopapi\\src\\Barbearia.Persistence\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -1317,7 +1317,7 @@
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\7620586\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\7728735\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
@@ -1333,11 +1333,11 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Users\\7620586\\Desktop\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj": {
-              "projectPath": "C:\\Users\\7620586\\Desktop\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj"
+            "C:\\Users\\7728735\\Desktop\\barbe\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj": {
+              "projectPath": "C:\\Users\\7728735\\Desktop\\barbe\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj"
             },
-            "C:\\Users\\7620586\\Desktop\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj": {
-              "projectPath": "C:\\Users\\7620586\\Desktop\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj"
+            "C:\\Users\\7728735\\Desktop\\barbe\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj": {
+              "projectPath": "C:\\Users\\7728735\\Desktop\\barbe\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj"
             }
           }
         }

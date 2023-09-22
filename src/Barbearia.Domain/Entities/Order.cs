@@ -10,7 +10,7 @@ public class Order
     public int Status{get;set;}
     public DateTime BuyDate{get;set;}
     public int PersonId { get; set; }
-    public Customer? Customer { get; set; } 
+    public Person? Person { get; set; } 
     public Payment? Payment{get; set; }
 
     //no banco, order está com a id de payment, mas não é necessário,
@@ -27,7 +27,7 @@ public class Order
 
     bool IsCustomerValid()
     {
-        if(Customer==null) return false;
+        if(Person==null) return false;
 
         return true;
     }

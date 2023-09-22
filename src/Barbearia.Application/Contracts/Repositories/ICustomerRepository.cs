@@ -15,4 +15,5 @@ public interface ICustomerRepository
     Task<IEnumerable<Telephone>?> GetTelephoneAsync(int customerId);
     void AddTelephone(Customer customer, Telephone telephone);
     void DeleteTelephone(Customer customer, Telephone telephone);
+    Task<Customer?> GetCustomerWithOrdersByIdAsync(int customerId);
 }

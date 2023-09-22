@@ -79,4 +79,10 @@ public class CustomerRepository : ICustomerRepository
     {
         customer.Telephones.Remove(telephone);
     }
+    public async Task<Customer?> GetCustomerWithOrdersByIdAsync(int customerId)
+    {
+        return await _context.Persons.OfType<Customer>()
+        .Include(p=>p.Orders)
+        .FirstOrDefaultAsync(c=>c.PersonId == customerId);
+    }
 }

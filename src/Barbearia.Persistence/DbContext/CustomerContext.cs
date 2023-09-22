@@ -26,8 +26,7 @@ namespace Barbearia.Persistence.DbContexts
             var telephone = modelBuilder.Entity<Telephone>();
             var address = modelBuilder.Entity<Address>();
 
-            // modelBuilder.Entity<Order>().ToTable("Orders", t => t.ExcludeFromMigrations()); 
-            modelBuilder.Ignore<Order>();
+            modelBuilder.Entity<Order>().ToTable("Orders", t => t.ExcludeFromMigrations()); 
             modelBuilder.Ignore<Payment>();
             modelBuilder.Ignore<Coupon>();
 

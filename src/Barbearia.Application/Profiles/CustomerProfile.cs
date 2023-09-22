@@ -3,6 +3,7 @@ using Barbearia.Application.Features.Customers.Commands.CreateCustomer;
 using Barbearia.Application.Features.Customers.Commands.UpdateCustomer;
 using Barbearia.Application.Features.Customers.Queries.GetAllCustomers;
 using Barbearia.Application.Features.Customers.Queries.GetCustomerById;
+using Barbearia.Application.Features.Customers.Queries.GetCustomerWithOrdersById;
 using Barbearia.Application.Models;
 using Barbearia.Domain.Entities;
 
@@ -14,6 +15,7 @@ public class CustomerProfile : Profile
     {
         CreateMap<Customer, GetCustomerByIdDto>();
         CreateMap<Customer, GetAllCustomersDto>();
+        CreateMap<Customer, GetCustomerWithOrdersByIdDto>();
 
         CreateMap<CreateCustomerCommand, Customer>();        
         CreateMap<Customer, CreateCustomerDto>();  
@@ -22,6 +24,7 @@ public class CustomerProfile : Profile
         CreateMap<UpdateCustomerCommand, Customer>();        
 
         CreateMap<TelephoneDto, Telephone>().ReverseMap();
-        CreateMap<AddressDto, Address>().ReverseMap();    
+        CreateMap<AddressDto, Address>().ReverseMap();
+        CreateMap<OrderDto, Order>().ReverseMap();  
     }
 }

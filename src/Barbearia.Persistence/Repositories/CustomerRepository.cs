@@ -63,4 +63,20 @@ public class CustomerRepository : ICustomerRepository
     {
         customer.Addresses.Remove(address);
     }
+
+    public async Task<IEnumerable<Telephone>?> GetTelephoneAsync(int customerId)
+    {
+        var customerFromDatabase = await GetCustomerByIdAsync(customerId);
+        return customerFromDatabase?.Telephones;
+    }
+
+    public void AddTelephone(Customer customer, Telephone telephone)
+    {
+        customer.Telephones.Add(telephone);
+    }
+
+    public void DeleteTelephone(Customer customer, Telephone telephone)
+    {
+        customer.Telephones.Remove(telephone);
+    }
 }

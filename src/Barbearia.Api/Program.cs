@@ -56,6 +56,18 @@ builder.Services.AddTransient<IValidator<UpdateAddressCommand>, UpdateAddressCom
 
 builder.Services.AddTransient<IRequestHandler<DeleteAddressCommand, bool>, DeleteAddressCommandHandler>();
 
+
+builder.Services.AddTransient<IRequestHandler<GetTelephoneQuery, IEnumerable<GetTelephoneDto>>, GetTelephoneQueryHandler>();
+
+builder.Services.AddTransient<IRequestHandler<CreateTelephoneCommand, CreateTelephoneCommandResponse>, CreateTelephoneCommandHandler>();
+builder.Services.AddTransient<IValidator<CreateTelephoneCommand>, CreateTelephoneCommandValidator>();
+
+builder.Services.AddTransient<IRequestHandler<UpdateTelephoneCommand, UpdateTelephoneCommandResponse>, UpdateTelephoneCommandHandler>();
+builder.Services.AddTransient<IValidator<UpdateTelephoneCommand>, UpdateTelephoneCommandValidator>();
+
+builder.Services.AddTransient<IRequestHandler<DeleteTelephoneCommand, bool>, DeleteTelephoneCommandHandler>();
+
+
 //config banco de dados
 builder.Services.AddDbContext<CustomerContext>(options =>
 {

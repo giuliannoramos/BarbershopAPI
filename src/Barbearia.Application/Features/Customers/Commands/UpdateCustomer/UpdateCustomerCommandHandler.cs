@@ -29,7 +29,19 @@ public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerComman
             return response;
         }
 
+        var validator = new UpdateCustomerCommandValidator();
+        var validationResult = await validator.ValidateAsync(request);
+
+        if (!validationResult.IsValid)
+        {
+            response.ErrorType = Error.ValidationProblem;
+            response.FillErrors(validationResult);
+            return response;
+        }
+
         _mapper.Map(request, customerFromDatabase);
+
+        customerFromDatabase.IsValid();
 
         await _customerRepository.SaveChangesAsync();
 

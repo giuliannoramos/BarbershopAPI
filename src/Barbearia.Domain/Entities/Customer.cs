@@ -2,7 +2,7 @@ namespace Barbearia.Domain.Entities;
 
 public class Customer : Person
 {
-    public List<Order> Orders{get; set;} = new();
+    public List<Order> Orders { get; set; } = new();
     public void ValidateCustomerTelephone()
     {
         if (Telephones.Count == 0)
@@ -16,16 +16,25 @@ public class Customer : Person
     }
 
     public void ValidateCustomerAddress()
-    {        
+    {
         if (Addresses.Count > 1)
         {
             throw new Exception("Um cliente só pode ter um endereço cadastrado.");
         }
     }
 
-    public void CantHaveCNPJ(){
-        if(Cnpj !=null){
+    public void ValidateCnpj()
+    {
+        if (Cnpj != null)
+        {
             throw new Exception("Cliente não pode ter cnpj cadastrado");
         }
+    }
+
+    public void IsValid()
+    {
+        ValidateCustomerTelephone();
+        ValidateCustomerAddress();
+        ValidateCnpj();
     }
 }

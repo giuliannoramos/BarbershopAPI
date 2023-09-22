@@ -23,19 +23,19 @@ public class CreateCustomerCommandHandler: IRequestHandler<CreateCustomerCommand
     {
         CreateCustomerCommandResponse response = new();
 
-        var validationResult = _validator.Validate(request);
+        var validator = new CreateCustomerCommandValidator();
+        var validationResult = await validator.ValidateAsync(request);
 
-        if(!validationResult.IsValid)
+        if (!validationResult.IsValid)
         {
-            foreach(var error in validationResult.ToDictionary())
-            {
-                response.Errors.Add(error.Key, error.Value);
-            }
-
+            response.ErrorType = Error.ValidationProblem;
+            response.FillErrors(validationResult);
             return response;
         }
 
         var customerEntity = _mapper.Map<Customer>(request);
+
+        customerEntity.IsValid();
 
         _customerRepository.AddCustomer(customerEntity);
         await _customerRepository.SaveChangesAsync();

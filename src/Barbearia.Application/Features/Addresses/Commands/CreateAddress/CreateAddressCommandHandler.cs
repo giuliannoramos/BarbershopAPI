@@ -35,6 +35,16 @@ public class CreateAddressCommandHandler : IRequestHandler<CreateAddressCommand,
             return response;
         }
 
+        var validator = new CreateAddressCommandValidator();
+        var validationResult = await validator.ValidateAsync(request);
+
+        if (!validationResult.IsValid)
+        {
+            response.ErrorType = Error.ValidationProblem;
+            response.FillErrors(validationResult);
+            return response;
+        }
+
         var addressEntity = _mapper.Map<Address>(request);
 
         _customerRepository.AddAddress(customerFromDatabase, addressEntity);

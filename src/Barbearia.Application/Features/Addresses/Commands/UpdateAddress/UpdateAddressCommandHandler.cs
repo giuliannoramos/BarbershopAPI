@@ -37,6 +37,16 @@ public class UpdateAddressCommandHandler : IRequestHandler<UpdateAddressCommand,
             return response;
         }
 
+        var validator = new UpdateAddressCommandValidator();
+        var validationResult = await validator.ValidateAsync(request);
+
+        if (!validationResult.IsValid)
+        {
+            response.ErrorType = Error.ValidationProblem;
+            response.FillErrors(validationResult);
+            return response;
+        }
+
         _mapper.Map(request, addressToUpdate);
 
         await _customerRepository.SaveChangesAsync();

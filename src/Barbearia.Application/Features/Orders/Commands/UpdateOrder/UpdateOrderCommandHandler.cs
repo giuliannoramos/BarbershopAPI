@@ -8,11 +8,13 @@ namespace Barbearia.Application.Features.Orders.Commands.UpdateOrder;
 public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand, UpdateOrderCommandResponse>
 {
     private readonly IOrderRepository _orderRepository;
+    private readonly ICustomerRepository _customerRepository;
     private readonly IMapper _mapper;
 
-    public UpdateOrderCommandHandler(IOrderRepository orderRepository, IMapper mapper)
+    public UpdateOrderCommandHandler(IOrderRepository orderRepository, ICustomerRepository customerRepository, IMapper mapper)
     {
         _orderRepository = orderRepository;
+        _customerRepository = customerRepository;
         _mapper = mapper;
     }
 
@@ -26,7 +28,15 @@ public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand, Upd
             response.ErrorType = Error.NotFoundProblem;
             response.Errors.Add("OrderId", new[] { "Order not found in the database." });
             return response;
-        }        
+        }
+
+        var customerFromDatabase = await _customerRepository.GetCustomerByIdAsync(request.PersonId);
+        if (customerFromDatabase == null)
+        {
+            response.ErrorType = Error.NotFoundProblem;
+            response.Errors.Add("PersonId", new[] { "Customer not found in the database." });
+            return response;
+        }
 
         var validator = new UpdateOrderCommandValidator();
         var validationResult = await validator.ValidateAsync(request);
@@ -43,5 +53,5 @@ public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand, Upd
         await _orderRepository.SaveChangesAsync();
 
         return response;
-    }    
+    }
 }

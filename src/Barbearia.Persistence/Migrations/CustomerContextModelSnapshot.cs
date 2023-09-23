@@ -110,9 +110,6 @@ namespace Barbearia.Persistence.Migrations
                     b.Property<DateTime>("BuyDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int?>("CustomerPersonId")
-                        .HasColumnType("integer");
-
                     b.Property<int>("Number")
                         .HasColumnType("integer");
 
@@ -124,7 +121,7 @@ namespace Barbearia.Persistence.Migrations
 
                     b.HasKey("OrderId");
 
-                    b.HasIndex("CustomerPersonId");
+                    b.HasIndex("PersonId");
 
                     b.ToTable("Orders", null, t =>
                         {
@@ -261,11 +258,13 @@ namespace Barbearia.Persistence.Migrations
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Order", b =>
                 {
-                    b.HasOne("Barbearia.Domain.Entities.Customer", "Customer")
+                    b.HasOne("Barbearia.Domain.Entities.Person", "Person")
                         .WithMany("Orders")
-                        .HasForeignKey("CustomerPersonId");
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Customer");
+                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Telephone", b =>
@@ -283,12 +282,9 @@ namespace Barbearia.Persistence.Migrations
                 {
                     b.Navigation("Addresses");
 
-                    b.Navigation("Telephones");
-                });
-
-            modelBuilder.Entity("Barbearia.Domain.Entities.Customer", b =>
-                {
                     b.Navigation("Orders");
+
+                    b.Navigation("Telephones");
                 });
 #pragma warning restore 612, 618
         }

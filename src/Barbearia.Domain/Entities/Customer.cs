@@ -24,7 +24,7 @@ public class Customer : Person
 
     public void ValidateCnpj()
     {
-        if (Cnpj != null)
+        if (Cnpj != null && Cnpj != "")
         {
             throw new Exception("Cliente não pode ter cnpj cadastrado");
         }

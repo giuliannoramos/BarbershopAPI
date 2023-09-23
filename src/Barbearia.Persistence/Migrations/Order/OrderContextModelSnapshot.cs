@@ -101,9 +101,9 @@ namespace Barbearia.Persistence.Migrations.Order
                         {
                             CouponId = 1,
                             CouponCode = "teste3",
-                            CreationDate = new DateTime(2023, 9, 22, 20, 16, 9, 923, DateTimeKind.Utc).AddTicks(9416),
+                            CreationDate = new DateTime(2023, 9, 23, 22, 22, 19, 951, DateTimeKind.Utc).AddTicks(5385),
                             DiscountPercent = 10,
-                            ExpirationDate = new DateTime(2023, 9, 22, 20, 16, 9, 923, DateTimeKind.Utc).AddTicks(9416)
+                            ExpirationDate = new DateTime(2023, 9, 23, 22, 22, 19, 951, DateTimeKind.Utc).AddTicks(5387)
                         });
                 });
 
@@ -137,7 +137,7 @@ namespace Barbearia.Persistence.Migrations.Order
                         new
                         {
                             OrderId = 1,
-                            BuyDate = new DateTime(2023, 9, 22, 20, 16, 9, 923, DateTimeKind.Utc).AddTicks(9312),
+                            BuyDate = new DateTime(2023, 9, 23, 22, 22, 19, 951, DateTimeKind.Utc).AddTicks(4992),
                             Number = 500,
                             PersonId = 1,
                             Status = 2
@@ -190,7 +190,7 @@ namespace Barbearia.Persistence.Migrations.Order
                         new
                         {
                             PaymentId = 1,
-                            BuyDate = new DateTime(2023, 9, 22, 20, 16, 9, 923, DateTimeKind.Utc).AddTicks(9404),
+                            BuyDate = new DateTime(2023, 9, 23, 22, 22, 19, 951, DateTimeKind.Utc).AddTicks(5368),
                             Description = "Para de ler isso aqui e vai programar",
                             GrossTotal = 80m,
                             NetTotal = 60m,
@@ -296,7 +296,8 @@ namespace Barbearia.Persistence.Migrations.Order
 
                     b.HasOne("Barbearia.Domain.Entities.Order", "Order")
                         .WithOne("Payment")
-                        .HasForeignKey("Barbearia.Domain.Entities.Payment", "OrderId");
+                        .HasForeignKey("Barbearia.Domain.Entities.Payment", "OrderId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Coupon");
 

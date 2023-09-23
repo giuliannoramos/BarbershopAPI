@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Barbearia.Persistence.Migrations.Order
 {
     [DbContext(typeof(OrderContext))]
-    [Migration("20230922201152_NovaMigration")]
-    partial class NovaMigration
+    [Migration("20230923222220_AddOrder")]
+    partial class AddOrder
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -104,9 +104,9 @@ namespace Barbearia.Persistence.Migrations.Order
                         {
                             CouponId = 1,
                             CouponCode = "teste3",
-                            CreationDate = new DateTime(2023, 9, 22, 20, 11, 52, 911, DateTimeKind.Utc).AddTicks(1117),
+                            CreationDate = new DateTime(2023, 9, 23, 22, 22, 19, 951, DateTimeKind.Utc).AddTicks(5385),
                             DiscountPercent = 10,
-                            ExpirationDate = new DateTime(2023, 9, 22, 20, 11, 52, 911, DateTimeKind.Utc).AddTicks(1118)
+                            ExpirationDate = new DateTime(2023, 9, 23, 22, 22, 19, 951, DateTimeKind.Utc).AddTicks(5387)
                         });
                 });
 
@@ -140,7 +140,7 @@ namespace Barbearia.Persistence.Migrations.Order
                         new
                         {
                             OrderId = 1,
-                            BuyDate = new DateTime(2023, 9, 22, 20, 11, 52, 911, DateTimeKind.Utc).AddTicks(1046),
+                            BuyDate = new DateTime(2023, 9, 23, 22, 22, 19, 951, DateTimeKind.Utc).AddTicks(4992),
                             Number = 500,
                             PersonId = 1,
                             Status = 2
@@ -193,7 +193,7 @@ namespace Barbearia.Persistence.Migrations.Order
                         new
                         {
                             PaymentId = 1,
-                            BuyDate = new DateTime(2023, 9, 22, 20, 11, 52, 911, DateTimeKind.Utc).AddTicks(1108),
+                            BuyDate = new DateTime(2023, 9, 23, 22, 22, 19, 951, DateTimeKind.Utc).AddTicks(5368),
                             Description = "Para de ler isso aqui e vai programar",
                             GrossTotal = 80m,
                             NetTotal = 60m,
@@ -222,10 +222,6 @@ namespace Barbearia.Persistence.Migrations.Order
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("text");
@@ -243,10 +239,6 @@ namespace Barbearia.Persistence.Migrations.Order
                         {
                             t.ExcludeFromMigrations();
                         });
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Person");
-
-                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Telephone", b =>
@@ -277,13 +269,6 @@ namespace Barbearia.Persistence.Migrations.Order
                         });
                 });
 
-            modelBuilder.Entity("Barbearia.Domain.Entities.Customer", b =>
-                {
-                    b.HasBaseType("Barbearia.Domain.Entities.Person");
-
-                    b.HasDiscriminator().HasValue("Customer");
-                });
-
             modelBuilder.Entity("Barbearia.Domain.Entities.Address", b =>
                 {
                     b.HasOne("Barbearia.Domain.Entities.Person", "Person")
@@ -297,13 +282,13 @@ namespace Barbearia.Persistence.Migrations.Order
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Order", b =>
                 {
-                    b.HasOne("Barbearia.Domain.Entities.Customer", "Customer")
+                    b.HasOne("Barbearia.Domain.Entities.Person", "Person")
                         .WithMany("Orders")
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Customer");
+                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Payment", b =>
@@ -314,7 +299,8 @@ namespace Barbearia.Persistence.Migrations.Order
 
                     b.HasOne("Barbearia.Domain.Entities.Order", "Order")
                         .WithOne("Payment")
-                        .HasForeignKey("Barbearia.Domain.Entities.Payment", "OrderId");
+                        .HasForeignKey("Barbearia.Domain.Entities.Payment", "OrderId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Coupon");
 
@@ -346,12 +332,9 @@ namespace Barbearia.Persistence.Migrations.Order
                 {
                     b.Navigation("Addresses");
 
-                    b.Navigation("Telephones");
-                });
-
-            modelBuilder.Entity("Barbearia.Domain.Entities.Customer", b =>
-                {
                     b.Navigation("Orders");
+
+                    b.Navigation("Telephones");
                 });
 #pragma warning restore 612, 618
         }

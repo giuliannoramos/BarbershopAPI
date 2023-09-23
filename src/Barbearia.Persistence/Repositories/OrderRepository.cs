@@ -19,14 +19,13 @@ public class OrderRepository : IOrderRepository
 
     public async Task<Order?> GetOrderByIdAsync(int orderId)
     {
-        return await _context.Orders
-        .Include(o => o.Person)
+        return await _context.Orders        
         .FirstOrDefaultAsync(o => o.OrderId == orderId);
     }
 
     public void DeleteOrder(Order order)
     {
-        // Excluir pagamentos associados
+        // Excluir pagamentos associados sem cascade
         // var pagamentosParaExcluir = _context.Payments.Where(p => p.OrderId == order.OrderId);
         // _context.Payments.RemoveRange(pagamentosParaExcluir);
 

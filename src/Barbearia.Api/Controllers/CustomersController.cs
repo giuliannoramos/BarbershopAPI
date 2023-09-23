@@ -82,6 +82,7 @@ public class CustomersController : MainController
 
         return NoContent();
     }
+    
     [HttpGet("with-orders/{customerId}")]
     public async Task<ActionResult<GetCustomerWithOrdersByIdDto>> GetCustomerWithOrdersById(int customerId)
     {

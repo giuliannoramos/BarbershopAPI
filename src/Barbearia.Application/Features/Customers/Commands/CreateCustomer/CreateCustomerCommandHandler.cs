@@ -6,17 +6,15 @@ using MediatR;
 
 namespace Barbearia.Application.Features.Customers.Commands.CreateCustomer;
 
-public class CreateCustomerCommandHandler: IRequestHandler<CreateCustomerCommand, CreateCustomerCommandResponse>
+public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, CreateCustomerCommandResponse>
 {
     private readonly ICustomerRepository _customerRepository;
     private readonly IMapper _mapper;
-    private readonly IValidator<CreateCustomerCommand> _validator;
 
-    public CreateCustomerCommandHandler(ICustomerRepository customerRepository, IMapper mapper, IValidator<CreateCustomerCommand> validator)
+    public CreateCustomerCommandHandler(ICustomerRepository customerRepository, IMapper mapper)
     {
         _customerRepository = customerRepository;
         _mapper = mapper;
-        _validator = validator;
     }
 
     public async Task<CreateCustomerCommandResponse> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)

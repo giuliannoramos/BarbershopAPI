@@ -27,8 +27,8 @@ public class OrderRepository : IOrderRepository
     public void DeleteOrder(Order order)
     {
         // Excluir pagamentos associados
-        var pagamentosParaExcluir = _context.Payments.Where(p => p.OrderId == order.OrderId);
-        _context.Payments.RemoveRange(pagamentosParaExcluir);
+        // var pagamentosParaExcluir = _context.Payments.Where(p => p.OrderId == order.OrderId);
+        // _context.Payments.RemoveRange(pagamentosParaExcluir);
 
         _context.Orders.Remove(order);
     }

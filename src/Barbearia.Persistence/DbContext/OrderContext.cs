@@ -10,18 +10,19 @@ namespace Barbearia.Persistence.DbContexts
 
         public DbSet<Order> Orders { get; set; } = null!;
 
-        public DbSet<Payment> Payments {get; set; } = null!;
+        public DbSet<Payment> Payments { get; set; } = null!;
 
-        public DbSet<Coupon> Coupons {get; set; } = null!;
+        public DbSet<Coupon> Coupons { get; set; } = null!;
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder){
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
 
             var order = modelBuilder.Entity<Order>();
             var payment = modelBuilder.Entity<Payment>();
             var coupon = modelBuilder.Entity<Coupon>();
 
-            modelBuilder.Entity<Person>().ToTable("Persons", t => t.ExcludeFromMigrations()); 
-            modelBuilder.Entity<Address>().ToTable("Address", t => t.ExcludeFromMigrations()); 
+            modelBuilder.Entity<Person>().ToTable("Persons", t => t.ExcludeFromMigrations());
+            modelBuilder.Entity<Address>().ToTable("Address", t => t.ExcludeFromMigrations());
             modelBuilder.Entity<Telephone>().ToTable("Telephone", t => t.ExcludeFromMigrations()); // criada em CustomerContext
 
             order
@@ -32,85 +33,86 @@ namespace Barbearia.Persistence.DbContexts
             .IsRequired();
 
             order
-            .Property(o=>o.Status)
+            .Property(o => o.Status)
             .IsRequired();
 
             order
-            .Property(o=>o.BuyDate)
+            .Property(o => o.BuyDate)
             .IsRequired();
 
             order
-            .Property(o=>o.PersonId)
+            .Property(o => o.PersonId)
             .IsRequired();
 
 
             order
-            .HasOne(o=>o.Person)
-            .WithMany(c=>c.Orders)
-            .HasForeignKey(o=>o.PersonId)
+            .HasOne(o => o.Person)
+            .WithMany(c => c.Orders)
+            .HasForeignKey(o => o.PersonId)
             .IsRequired();
 
             order
-            .HasOne(o=>o.Payment)
-            .WithOne(p=>p.Order)
-            .HasForeignKey<Payment>(p=>p.OrderId)
-            .IsRequired(false);
+            .HasOne(o => o.Payment)
+            .WithOne(p => p.Order)
+            .HasForeignKey<Payment>(p => p.OrderId)
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.Cascade);
 
             payment
             .ToTable("Payments");
 
             payment
-            .Property(p=>p.BuyDate)
+            .Property(p => p.BuyDate)
             .IsRequired();
 
             payment
-            .Property(p=>p.GrossTotal)
+            .Property(p => p.GrossTotal)
             .IsRequired();
 
             payment
-            .Property(p=>p.PaymentMethod)
+            .Property(p => p.PaymentMethod)
             .IsRequired();
 
             payment
-            .Property(p=>p.Description)
+            .Property(p => p.Description)
             .IsRequired(false);
 
             payment
-            .Property(p=>p.Status)
+            .Property(p => p.Status)
             .IsRequired();
 
             payment
-            .Property(p=>p.NetTotal)
+            .Property(p => p.NetTotal)
             .IsRequired();
 
             payment
-            .Property(p=>p.OrderId)
+            .Property(p => p.OrderId)
             .IsRequired();
 
             payment
-            .HasOne(p=>p.Coupon)
-            .WithMany(c=>c.Payments)
-            .HasForeignKey(p=>p.CouponId)
+            .HasOne(p => p.Coupon)
+            .WithMany(c => c.Payments)
+            .HasForeignKey(p => p.CouponId)
             .IsRequired(false);
 
             coupon
             .ToTable("Coupons");
 
             coupon
-            .Property(c=>c.CouponCode)
+            .Property(c => c.CouponCode)
             .HasMaxLength(30)
             .IsRequired();
 
             coupon
-            .Property(c=>c.DiscountPercent)
+            .Property(c => c.DiscountPercent)
             .IsRequired();
 
             coupon
-            .Property(c=>c.CreationDate)
+            .Property(c => c.CreationDate)
             .IsRequired();
 
             coupon
-            .Property(c=>c.ExpirationDate)
+            .Property(c => c.ExpirationDate)
             .IsRequired();
 
             order

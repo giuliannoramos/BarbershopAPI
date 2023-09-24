@@ -10,7 +10,7 @@ public class Order
     public int Status { get; set; }
     public DateTime BuyDate { get; set; }
     public int PersonId { get; set; }
-    public Customer? Customer { get; set; }
+    public Person? Person { get; set; }
     public Payment? Payment { get; set; }
 
     //no banco, order está com a id de payment, mas não é necessário,
@@ -24,7 +24,7 @@ public class Order
 
     void IsCustomerValid()
     {
-        if (Customer == null) throw new Exception("Order tem que ter um Customer");
+        if (Person == null) throw new Exception("Order tem que ter um Customer");
     }
 
     void IsDataValid()

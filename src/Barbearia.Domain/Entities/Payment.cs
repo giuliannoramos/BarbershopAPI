@@ -18,57 +18,53 @@ public class Payment
     public Order? Order { get; set; } 
 
 
-    bool IsDataValid()
+    void IsDataValid()
     {
         try
         {
             DateTime dataParseada = BuyDate;
-            return true;
         }
         catch (FormatException)
         {
-            return false;
+            throw new Exception("A data deve ser válida");
         }
     }
 
-    bool IsGrossTotaValid()
+    void IsGrossTotaValid()
     {
-        if(GrossTotal<0)return false;
-
-        return true;
+        if(GrossTotal<0)throw new Exception("O grossTotal deve ser maior que 0");
     }
 
-    bool IsPaymentValid()
+    void IsPaymentValid()
     {
-        if(PaymentMethod != "Débito" || PaymentMethod != "Crédito" || PaymentMethod != "Dinheiro") return false;
+        if(PaymentMethod != "Débito" || PaymentMethod != "Crédito" || PaymentMethod != "Dinheiro")
+        {
+            throw new Exception("Forma de pagamento não suportada");
+        }
         
-        return true;
     }
 
-    bool IsNetTotalValid()
+    void IsNetTotalValid()
     {
-        if(NetTotal<0)return false;
-
-        return true;
+        if(NetTotal<0) throw new Exception("O Net Total deve ser maior que 0");
     }
 
-    bool IsOrderValid()
+    void IsOrderValid()
     {
-        if(Order == null) return false;
-        return true;
+        if(Order == null) throw new Exception("O pagamento deve ter uma order");
     }
 
     bool IsValid()
     {
-        if(!IsDataValid())return false;
+        IsDataValid();
 
-        if(!IsGrossTotaValid())return false;
+        IsGrossTotaValid();
 
-        if(!IsPaymentValid())return false;
+        IsPaymentValid();
 
-        if(!IsNetTotalValid())return false;
+        IsNetTotalValid();
 
-        if(!IsOrderValid())return false;
+        IsOrderValid();
 
         return true;
     }

@@ -23,6 +23,12 @@ public class OrderRepository : IOrderRepository
         .FirstOrDefaultAsync(o => o.OrderId == orderId);
     }
 
+    public async Task<Order?> GetOrderByNumberAsync(int number)
+    {
+        return await _context.Orders
+        .FirstOrDefaultAsync(o=>o.Number == number);
+    }
+
     public void DeleteOrder(Order order)
     {
         // Excluir pagamentos associados sem cascade

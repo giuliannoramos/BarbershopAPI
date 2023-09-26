@@ -101,9 +101,9 @@ namespace Barbearia.Persistence.Migrations.Order
                         {
                             CouponId = 1,
                             CouponCode = "teste3",
-                            CreationDate = new DateTime(2023, 9, 23, 22, 22, 19, 951, DateTimeKind.Utc).AddTicks(5385),
+                            CreationDate = new DateTime(2023, 9, 26, 3, 30, 8, 883, DateTimeKind.Utc).AddTicks(7),
                             DiscountPercent = 10,
-                            ExpirationDate = new DateTime(2023, 9, 23, 22, 22, 19, 951, DateTimeKind.Utc).AddTicks(5387)
+                            ExpirationDate = new DateTime(2023, 9, 26, 3, 30, 8, 883, DateTimeKind.Utc).AddTicks(7)
                         });
                 });
 
@@ -137,7 +137,7 @@ namespace Barbearia.Persistence.Migrations.Order
                         new
                         {
                             OrderId = 1,
-                            BuyDate = new DateTime(2023, 9, 23, 22, 22, 19, 951, DateTimeKind.Utc).AddTicks(4992),
+                            BuyDate = new DateTime(2023, 9, 26, 3, 30, 8, 882, DateTimeKind.Utc).AddTicks(9572),
                             Number = 500,
                             PersonId = 1,
                             Status = 2
@@ -190,7 +190,7 @@ namespace Barbearia.Persistence.Migrations.Order
                         new
                         {
                             PaymentId = 1,
-                            BuyDate = new DateTime(2023, 9, 23, 22, 22, 19, 951, DateTimeKind.Utc).AddTicks(5368),
+                            BuyDate = new DateTime(2023, 9, 26, 3, 30, 8, 882, DateTimeKind.Utc).AddTicks(9990),
                             Description = "Para de ler isso aqui e vai programar",
                             GrossTotal = 80m,
                             NetTotal = 60m,

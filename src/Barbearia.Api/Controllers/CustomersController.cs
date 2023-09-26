@@ -14,11 +14,15 @@ namespace Barbearia.Api.Controllers;
 public class CustomersController : MainController
 {
     private readonly IMediator _mediator;
+    private readonly ILogger<CustomersController> _logger;
 
-    public CustomersController(IMediator mediator)
+    public CustomersController(IMediator mediator, ILogger<CustomersController> logger)
     {
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+        _logger = logger;
     }
+
+
 
     [HttpGet("{customerId}", Name = "GetCustomerById")]
     public async Task<ActionResult<GetCustomerByIdDto>> GetCustomerById(int customerId)
@@ -47,10 +51,13 @@ public class CustomersController : MainController
     {
         var createCustomerCommandResponse = await _mediator.Send(createCustomerCommand);
 
+
         if(!createCustomerCommandResponse.IsSuccess)
             return RequestValidationProblem(createCustomerCommandResponse, ModelState);
 
         var customerForReturn = createCustomerCommandResponse.Customer;
+
+        if(customerForReturn ==null)return StatusCode(500);
 
         return CreatedAtRoute
         (
@@ -67,8 +74,14 @@ public class CustomersController : MainController
 
         var updateCustomerCommandResponse = await _mediator.Send(updateCustomerCommand);
 
+        var customerForReturn = updateCustomerCommandResponse.Customer;
+
         if(!updateCustomerCommandResponse.IsSuccess)
-        return RequestValidationProblem(updateCustomerCommandResponse, ModelState); 
+        return RequestValidationProblem(updateCustomerCommandResponse, ModelState);
+
+        if(customerForReturn == null) return StatusCode(500);
+        //update não retorna nada, esse customer só existe para checar se
+        //houve erro nas regras de negócio da aplicação com o logger aplicado.
 
         return NoContent();
     }

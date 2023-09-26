@@ -1,7 +1,9 @@
 using AutoMapper;
 using Barbearia.Application.Contracts.Repositories;
+using Barbearia.Application.Features.Customers.Commands.CreateCustomer;
 using FluentValidation;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace Barbearia.Application.Features.Customers.Commands.UpdateCustomer;
 
@@ -9,11 +11,13 @@ public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerComman
 {
     private readonly ICustomerRepository _customerRepository;
     private readonly IMapper _mapper;
+    private readonly ILogger<UpdateCustomerCommandHandler> _logger;
 
-    public UpdateCustomerCommandHandler(ICustomerRepository customerRepository, IMapper mapper)
+    public UpdateCustomerCommandHandler(ICustomerRepository customerRepository, IMapper mapper, ILogger<UpdateCustomerCommandHandler> logger)
     {
         _customerRepository = customerRepository;
         _mapper = mapper;
+        _logger = logger;
     }
 
     public async Task<UpdateCustomerCommandResponse> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
@@ -41,8 +45,18 @@ public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerComman
 
         _mapper.Map(request, customerFromDatabase);
 
-        customerFromDatabase.IsValid();
-
+        try
+        {
+            customerFromDatabase.IsValid();
+            response.Customer = _mapper.Map<UpdateCustomerDto>(customerFromDatabase);;
+        }
+        catch (Exception ex)
+        {
+            response.ErrorType = Error.ValidationProblem;
+            response.FillErrors(validationResult);
+            _logger.LogError(ex, "erro de validação em update customer");
+            return response;
+        }
         await _customerRepository.SaveChangesAsync();
 
         return response;

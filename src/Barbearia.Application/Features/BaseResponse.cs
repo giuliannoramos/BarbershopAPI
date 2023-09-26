@@ -1,4 +1,5 @@
 using FluentValidation.Results;
+using Microsoft.Extensions.Logging;
 
 namespace Barbearia.Application.Features;
 
@@ -7,7 +8,7 @@ public abstract class BaseResponse
 {
     public bool IsSuccess
     {
-        get { return Errors.Count == 0; }
+        get {return Errors.Count == 0;}
     }
     
     public Dictionary<string, string[]> Errors { get; set; } = new();

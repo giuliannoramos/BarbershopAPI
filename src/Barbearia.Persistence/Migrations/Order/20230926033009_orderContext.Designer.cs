@@ -9,11 +9,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Barbearia.Persistence.Migrations
+namespace Barbearia.Persistence.Migrations.Order
 {
-    [DbContext(typeof(CustomerContext))]
-    [Migration("20230923222159_AddCustomer")]
-    partial class AddCustomer
+    [DbContext(typeof(OrderContext))]
+    [Migration("20230926033009_orderContext")]
+    partial class orderContext
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,23 +35,19 @@ namespace Barbearia.Persistence.Migrations
 
                     b.Property<string>("Cep")
                         .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("character varying(8)");
+                        .HasColumnType("text");
 
                     b.Property<string>("City")
                         .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("character varying(60)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Complement")
                         .IsRequired()
-                        .HasMaxLength(80)
-                        .HasColumnType("character varying(80)");
+                        .HasColumnType("text");
 
                     b.Property<string>("District")
                         .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("character varying(60)");
+                        .HasColumnType("text");
 
                     b.Property<int>("Number")
                         .HasColumnType("integer");
@@ -61,44 +57,56 @@ namespace Barbearia.Persistence.Migrations
 
                     b.Property<string>("State")
                         .IsRequired()
-                        .HasMaxLength(2)
-                        .HasColumnType("character varying(2)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Street")
                         .IsRequired()
-                        .HasMaxLength(80)
-                        .HasColumnType("character varying(80)");
+                        .HasColumnType("text");
 
                     b.HasKey("AddressId");
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("Address", (string)null);
+                    b.ToTable("Address", null, t =>
+                        {
+                            t.ExcludeFromMigrations();
+                        });
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.Coupon", b =>
+                {
+                    b.Property<int>("CouponId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CouponId"));
+
+                    b.Property<string>("CouponCode")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("DiscountPercent")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("ExpirationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("CouponId");
+
+                    b.ToTable("Coupons", (string)null);
 
                     b.HasData(
                         new
                         {
-                            AddressId = 1,
-                            Cep = "88888888",
-                            City = "Bc",
-                            Complement = "Perto de la",
-                            District = "Teste",
-                            Number = 100,
-                            PersonId = 1,
-                            State = "SC",
-                            Street = "Rua logo ali"
-                        },
-                        new
-                        {
-                            AddressId = 2,
-                            Cep = "88888888",
-                            City = "Itajaí",
-                            Complement = "Longe de la",
-                            District = "Perto",
-                            Number = 300,
-                            PersonId = 2,
-                            State = "SC",
-                            Street = "Rua longe"
+                            CouponId = 1,
+                            CouponCode = "teste3",
+                            CreationDate = new DateTime(2023, 9, 26, 3, 30, 8, 883, DateTimeKind.Utc).AddTicks(7),
+                            DiscountPercent = 10,
+                            ExpirationDate = new DateTime(2023, 9, 26, 3, 30, 8, 883, DateTimeKind.Utc).AddTicks(7)
                         });
                 });
 
@@ -126,9 +134,72 @@ namespace Barbearia.Persistence.Migrations
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("Orders", null, t =>
+                    b.ToTable("Orders", (string)null);
+
+                    b.HasData(
+                        new
                         {
-                            t.ExcludeFromMigrations();
+                            OrderId = 1,
+                            BuyDate = new DateTime(2023, 9, 26, 3, 30, 8, 882, DateTimeKind.Utc).AddTicks(9572),
+                            Number = 500,
+                            PersonId = 1,
+                            Status = 2
+                        });
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.Payment", b =>
+                {
+                    b.Property<int>("PaymentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("PaymentId"));
+
+                    b.Property<DateTime>("BuyDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("CouponId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("GrossTotal")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("NetTotal")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("PaymentMethod")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.HasKey("PaymentId");
+
+                    b.HasIndex("CouponId");
+
+                    b.HasIndex("OrderId")
+                        .IsUnique();
+
+                    b.ToTable("Payments", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            PaymentId = 1,
+                            BuyDate = new DateTime(2023, 9, 26, 3, 30, 8, 882, DateTimeKind.Utc).AddTicks(9990),
+                            Description = "Para de ler isso aqui e vai programar",
+                            GrossTotal = 80m,
+                            NetTotal = 60m,
+                            OrderId = 1,
+                            PaymentMethod = "Dinheiro",
+                            Status = 1
                         });
                 });
 
@@ -149,32 +220,25 @@ namespace Barbearia.Persistence.Migrations
 
                     b.Property<string>("Cpf")
                         .IsRequired()
-                        .HasMaxLength(11)
-                        .HasColumnType("character varying(11)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(80)
-                        .HasColumnType("character varying(80)");
+                        .HasColumnType("text");
 
                     b.Property<int>("Gender")
                         .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(80)
-                        .HasColumnType("character varying(80)");
-
-                    b.Property<int>("PersonType")
-                        .HasColumnType("integer");
+                        .HasColumnType("text");
 
                     b.HasKey("PersonId");
 
-                    b.ToTable("Persons", (string)null);
-
-                    b.HasDiscriminator<int>("PersonType").HasValue(1);
-
-                    b.UseTphMappingStrategy();
+                    b.ToTable("Persons", null, t =>
+                        {
+                            t.ExcludeFromMigrations();
+                        });
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Telephone", b =>
@@ -187,8 +251,7 @@ namespace Barbearia.Persistence.Migrations
 
                     b.Property<string>("Number")
                         .IsRequired()
-                        .HasMaxLength(80)
-                        .HasColumnType("character varying(80)");
+                        .HasColumnType("text");
 
                     b.Property<int>("PersonId")
                         .HasColumnType("integer");
@@ -200,51 +263,9 @@ namespace Barbearia.Persistence.Migrations
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("Telephone", (string)null);
-
-                    b.HasData(
-                        new
+                    b.ToTable("Telephone", null, t =>
                         {
-                            TelephoneId = 1,
-                            Number = "47988887777",
-                            PersonId = 1,
-                            Type = 1
-                        },
-                        new
-                        {
-                            TelephoneId = 2,
-                            Number = "47988887777",
-                            PersonId = 2,
-                            Type = 2
-                        });
-                });
-
-            modelBuilder.Entity("Barbearia.Domain.Entities.Customer", b =>
-                {
-                    b.HasBaseType("Barbearia.Domain.Entities.Person");
-
-                    b.HasDiscriminator().HasValue(2);
-
-                    b.HasData(
-                        new
-                        {
-                            PersonId = 1,
-                            BirthDate = new DateOnly(1999, 8, 7),
-                            Cnpj = "",
-                            Cpf = "73473943096",
-                            Email = "veio@hotmail.com",
-                            Gender = 1,
-                            Name = "Linus Torvalds"
-                        },
-                        new
-                        {
-                            PersonId = 2,
-                            BirthDate = new DateOnly(2000, 1, 1),
-                            Cnpj = "",
-                            Cpf = "73473003096",
-                            Email = "bill@gmail.com",
-                            Gender = 2,
-                            Name = "Bill Gates"
+                            t.ExcludeFromMigrations();
                         });
                 });
 
@@ -270,6 +291,22 @@ namespace Barbearia.Persistence.Migrations
                     b.Navigation("Person");
                 });
 
+            modelBuilder.Entity("Barbearia.Domain.Entities.Payment", b =>
+                {
+                    b.HasOne("Barbearia.Domain.Entities.Coupon", "Coupon")
+                        .WithMany("Payments")
+                        .HasForeignKey("CouponId");
+
+                    b.HasOne("Barbearia.Domain.Entities.Order", "Order")
+                        .WithOne("Payment")
+                        .HasForeignKey("Barbearia.Domain.Entities.Payment", "OrderId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Coupon");
+
+                    b.Navigation("Order");
+                });
+
             modelBuilder.Entity("Barbearia.Domain.Entities.Telephone", b =>
                 {
                     b.HasOne("Barbearia.Domain.Entities.Person", "Person")
@@ -279,6 +316,16 @@ namespace Barbearia.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Person");
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.Coupon", b =>
+                {
+                    b.Navigation("Payments");
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.Order", b =>
+                {
+                    b.Navigation("Payment");
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Person", b =>

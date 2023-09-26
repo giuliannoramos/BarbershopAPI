@@ -1,6 +1,7 @@
 using AutoMapper;
 using Barbearia.Application.Contracts.Repositories;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using Microsoft.VisualBasic;
 
 namespace Barbearia.Application.Features.Orders.Commands.UpdateOrder;
@@ -11,11 +12,15 @@ public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand, Upd
     private readonly ICustomerRepository _customerRepository;
     private readonly IMapper _mapper;
 
-    public UpdateOrderCommandHandler(IOrderRepository orderRepository, ICustomerRepository customerRepository, IMapper mapper)
+    private readonly ILogger<UpdateOrderCommandHandler> _logger;
+
+    public UpdateOrderCommandHandler(IOrderRepository orderRepository, ICustomerRepository customerRepository, IMapper mapper
+    , ILogger<UpdateOrderCommandHandler> logger)
     {
         _orderRepository = orderRepository;
         _customerRepository = customerRepository;
         _mapper = mapper;
+        _logger = logger;
     }
 
     public async Task<UpdateOrderCommandResponse> Handle(UpdateOrderCommand request, CancellationToken cancellationToken)
@@ -49,6 +54,19 @@ public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand, Upd
         }
 
         _mapper.Map(request, orderFromDatabase);
+
+        try
+        {
+            customerFromDatabase.IsValid();
+            response.Orders = _mapper.Map<UpdateOrderDto>(customerFromDatabase); ;
+        }
+        catch (Exception ex)
+        {
+            response.ErrorType = Error.ValidationProblem;
+            response.FillErrors(validationResult);
+            _logger.LogError(ex, "erro de validação em update order");
+            return response;
+        }
 
         await _orderRepository.SaveChangesAsync();
 

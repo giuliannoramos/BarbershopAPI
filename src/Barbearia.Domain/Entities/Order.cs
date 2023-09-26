@@ -10,7 +10,7 @@ public class Order
     public int Status { get; set; }
     public DateTime BuyDate { get; set; }
     public int PersonId { get; set; }
-    public Customer? Customer { get; set; }
+    public Person? Person { get; set; }
     public Payment? Payment { get; set; }
 
     //no banco, order está com a id de payment, mas não é necessário,
@@ -19,12 +19,13 @@ public class Order
     void IsNumberValid()
     {
         if (Number <= 0) throw new Exception("O Número tem que ser positivo e diferente de 0");
-        //adicionar teste para ver se ja existe numero igual no banco quando for adicionado repositorio
+
+        //handler tem que testar também se não existe número repetido no banco
     }
 
     void IsCustomerValid()
     {
-        if (Customer == null) throw new Exception("Order tem que ter um Customer");
+        if (Person == null) throw new Exception("Order tem que ter um Customer");
     }
 
     void IsDataValid()

@@ -8,6 +8,7 @@ public class OrderProfile : Profile
 {
     public OrderProfile()
     {
-        CreateMap<UpdateOrderCommand, Order>();        
+        CreateMap<UpdateOrderCommand, Order>(); 
+        CreateMap<Order,UpdateOrderDto>();       
     }
 }

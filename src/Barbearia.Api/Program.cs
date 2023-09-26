@@ -20,6 +20,9 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Barbearia.Application.Features.Orders.Commands.UpdateOrder;
 using Barbearia.Application.Features.Orders.Commands.DeleteOrder;
+using Barbearia.Application.Features.CustomersCollection;
+using Microsoft.Extensions.Options;
+using Elmah.Io.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +39,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Logging.AddElmahIo(options =>
+{
+    options.ApiKey = "d8c818e18e154af08ffa697802b4687a";
+    options.LogId = new Guid("92f71801-82ae-469e-b6ed-e4c9cc6cb221");
+});
+
+builder.Logging.AddFilter<ElmahIoLoggerProvider>(null,LogLevel.Warning);
+
 //config automapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
@@ -43,54 +54,59 @@ builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 //config mediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Program>());
-builder.Services.AddTransient<IRequestHandler<GetCustomerByIdQuery, GetCustomerByIdDto>, GetCustomerByIdQueryHandler>();
-builder.Services.AddTransient<IRequestHandler<GetAllCustomersQuery, IEnumerable<GetAllCustomersDto>>, GetAllCustomersQueryHandler>();
-builder.Services.AddTransient<IRequestHandler<GetCustomerWithOrdersByIdQuery, GetCustomerWithOrdersByIdDto>, GetCustomerWithOrdersByIdQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<GetCustomerByIdQuery, GetCustomerByIdDto>, GetCustomerByIdQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<GetAllCustomersQuery, IEnumerable<GetAllCustomersDto>>, GetAllCustomersQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<GetCustomerWithOrdersByIdQuery, GetCustomerWithOrdersByIdDto>, GetCustomerWithOrdersByIdQueryHandler>();
 
-builder.Services.AddTransient<IRequestHandler<CreateCustomerCommand, CreateCustomerCommandResponse>, CreateCustomerCommandHandler>();
-builder.Services.AddTransient<IValidator<CreateCustomerCommand>, CreateCustomerCommandValidator>();
 
-builder.Services.AddTransient<IRequestHandler<UpdateCustomerCommand, UpdateCustomerCommandResponse>, UpdateCustomerCommandHandler>();
-builder.Services.AddTransient<IValidator<UpdateCustomerCommand>, UpdateCustomerCommandValidator>();
+builder.Services.AddScoped<IRequestHandler<GetCustomersCollectionQuery, GetCustomersCollectionQueryResponse>, GetCustomersCollectionQueryHandler>();
 
-builder.Services.AddTransient<IRequestHandler<DeleteCustomerCommand, bool>, DeleteCustomerCommandHandler>();
 
-builder.Services.AddTransient<IRequestHandler<GetAddressQuery, IEnumerable<GetAddressDto>>, GetAddressQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<CreateCustomerCommand, CreateCustomerCommandResponse>, CreateCustomerCommandHandler>();
+builder.Services.AddScoped<IValidator<CreateCustomerCommand>, CreateCustomerCommandValidator>();
 
-builder.Services.AddTransient<IRequestHandler<CreateAddressCommand, CreateAddressCommandResponse>, CreateAddressCommandHandler>();
-builder.Services.AddTransient<IValidator<CreateAddressCommand>, CreateAddressCommandValidator>();
+builder.Services.AddScoped<IRequestHandler<UpdateCustomerCommand, UpdateCustomerCommandResponse>, UpdateCustomerCommandHandler>();
+builder.Services.AddScoped<IValidator<UpdateCustomerCommand>, UpdateCustomerCommandValidator>();
 
-builder.Services.AddTransient<IRequestHandler<UpdateAddressCommand, UpdateAddressCommandResponse>, UpdateAddressCommandHandler>();
-builder.Services.AddTransient<IValidator<UpdateAddressCommand>, UpdateAddressCommandValidator>();
+builder.Services.AddScoped<IRequestHandler<DeleteCustomerCommand, bool>, DeleteCustomerCommandHandler>();
 
-builder.Services.AddTransient<IRequestHandler<DeleteAddressCommand, bool>, DeleteAddressCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<GetAddressQuery, IEnumerable<GetAddressDto>>, GetAddressQueryHandler>();
 
-builder.Services.AddTransient<IRequestHandler<GetTelephoneQuery, IEnumerable<GetTelephoneDto>>, GetTelephoneQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<CreateAddressCommand, CreateAddressCommandResponse>, CreateAddressCommandHandler>();
+builder.Services.AddScoped<IValidator<CreateAddressCommand>, CreateAddressCommandValidator>();
 
-builder.Services.AddTransient<IRequestHandler<CreateTelephoneCommand, CreateTelephoneCommandResponse>, CreateTelephoneCommandHandler>();
-builder.Services.AddTransient<IValidator<CreateTelephoneCommand>, CreateTelephoneCommandValidator>();
+builder.Services.AddScoped<IRequestHandler<UpdateAddressCommand, UpdateAddressCommandResponse>, UpdateAddressCommandHandler>();
+builder.Services.AddScoped<IValidator<UpdateAddressCommand>, UpdateAddressCommandValidator>();
 
-builder.Services.AddTransient<IRequestHandler<UpdateTelephoneCommand, UpdateTelephoneCommandResponse>, UpdateTelephoneCommandHandler>();
-builder.Services.AddTransient<IValidator<UpdateTelephoneCommand>, UpdateTelephoneCommandValidator>();
+builder.Services.AddScoped<IRequestHandler<DeleteAddressCommand, bool>, DeleteAddressCommandHandler>();
 
-builder.Services.AddTransient<IRequestHandler<DeleteTelephoneCommand, bool>, DeleteTelephoneCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<GetTelephoneQuery, IEnumerable<GetTelephoneDto>>, GetTelephoneQueryHandler>();
 
-builder.Services.AddTransient<IRequestHandler<UpdateOrderCommand, UpdateOrderCommandResponse>, UpdateOrderCommandHandler>();
-builder.Services.AddTransient<IValidator<UpdateOrderCommand>, UpdateOrderCommandValidator>();
+builder.Services.AddScoped<IRequestHandler<CreateTelephoneCommand, CreateTelephoneCommandResponse>, CreateTelephoneCommandHandler>();
+builder.Services.AddScoped<IValidator<CreateTelephoneCommand>, CreateTelephoneCommandValidator>();
 
-builder.Services.AddTransient<IRequestHandler<DeleteOrderCommand, bool>, DeleteOrderCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<UpdateTelephoneCommand, UpdateTelephoneCommandResponse>, UpdateTelephoneCommandHandler>();
+builder.Services.AddScoped<IValidator<UpdateTelephoneCommand>, UpdateTelephoneCommandValidator>();
+
+builder.Services.AddScoped<IRequestHandler<DeleteTelephoneCommand, bool>, DeleteTelephoneCommandHandler>();
+
+builder.Services.AddScoped<IRequestHandler<UpdateOrderCommand, UpdateOrderCommandResponse>, UpdateOrderCommandHandler>();
+builder.Services.AddScoped<IValidator<UpdateOrderCommand>, UpdateOrderCommandValidator>();
+
+builder.Services.AddScoped<IRequestHandler<DeleteOrderCommand, bool>, DeleteOrderCommandHandler>();
+
 
 
 //config banco de dados
 builder.Services.AddDbContext<CustomerContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=1973");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678");
 }
 );
 
 builder.Services.AddDbContext<OrderContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=1973");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678");
 }
 );
 
@@ -104,6 +120,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseElmahIoExtensionsLogging();
 
 app.UseAuthorization();
 

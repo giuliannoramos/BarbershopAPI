@@ -1,5 +1,6 @@
 using AutoMapper;
 using Barbearia.Application.Contracts.Repositories;
+using Barbearia.Application.Features;
 using Barbearia.Domain.Entities;
 using Barbearia.Persistence.DbContexts;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,36 @@ public class CustomerRepository : ICustomerRepository
     {
         _context = customerContext ?? throw new ArgumentNullException(nameof(customerContext));
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+    }
+
+        public async Task<(IEnumerable<Customer>, PaginationMetadata)> GetAllCustomersAsync(string? searchQuery,
+         int pageNumber, int pageSize)
+        {
+        IQueryable<Customer> collection = _context.Persons.OfType<Customer>()
+        .Include(c=>c.Telephones);
+        
+
+        if (!string.IsNullOrWhiteSpace(searchQuery))
+        {
+            var name = searchQuery.Trim();
+            collection = collection.Where(
+
+                c => c.Name.Contains(searchQuery)
+            );
+        }
+
+
+        var totalItemCount = await collection.CountAsync();
+
+        var paginationMetadata = new PaginationMetadata(totalItemCount, pageSize, pageNumber);
+
+        var customerToReturn = await collection
+        .OrderBy(c => c.PersonId)
+        .Skip(pageSize * (pageNumber-1))
+        .Take(pageSize)
+        .ToListAsync();
+
+        return (customerToReturn, paginationMetadata);
     }
 
     public async Task<IEnumerable<Customer>> GetAllCustomersAsync()

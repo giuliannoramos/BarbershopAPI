@@ -19,7 +19,8 @@ public class Order
     void IsNumberValid()
     {
         if (Number <= 0) throw new Exception("O Número tem que ser positivo e diferente de 0");
-        //adicionar teste para ver se ja existe numero igual no banco quando for adicionado repositorio
+
+        //handler tem que testar também se não existe número repetido no banco
     }
 
     void IsCustomerValid()

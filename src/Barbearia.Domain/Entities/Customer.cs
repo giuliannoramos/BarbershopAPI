@@ -6,7 +6,7 @@ public class Customer : Person
     {
         if (Telephones.Count == 0)
         {
-            throw new Exception("Um cliente deve conter pelo menos um telefone.");
+            throw new Exception ("Um cliente deve conter pelo menos um telefone.");
         }
         if (Telephones.Count > 1)
         {

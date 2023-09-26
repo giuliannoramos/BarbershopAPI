@@ -930,11 +930,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barbershopProjeto\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj",
+      "projectUniqueName": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barberShopApiProjeto\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj",
       "projectName": "Barbearia.Application",
-      "projectPath": "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barbershopProjeto\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj",
+      "projectPath": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barberShopApiProjeto\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj",
       "packagesPath": "C:\\Users\\lucas\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barbershopProjeto\\barbershopapi\\src\\Barbearia.Application\\obj\\",
+      "outputPath": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barberShopApiProjeto\\barbershopapi\\src\\Barbearia.Application\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Users\\lucas\\AppData\\Roaming\\Godot\\mono\\GodotNuGetFallbackFolder",
@@ -957,8 +957,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barbershopProjeto\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj": {
-              "projectPath": "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barbershopProjeto\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj"
+            "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barberShopApiProjeto\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj": {
+              "projectPath": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barberShopApiProjeto\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj"
             }
           }
         }

@@ -22,12 +22,8 @@ public class OrdersController : MainController
 
         var updateOrderCommandResponse = await _mediator.Send(updateOrderCommand);
 
-        var orderForReturn = updateOrderCommandResponse.Orders;
-
         if (!updateOrderCommandResponse.IsSuccess)
             return RequestValidationProblem(updateOrderCommandResponse, ModelState);
-
-        if(orderForReturn == null) return StatusCode(500);
         
         return NoContent();
     }

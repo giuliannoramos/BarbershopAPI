@@ -48,12 +48,11 @@ public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerComman
         try
         {
             customerFromDatabase.IsValid();
-            response.Customer = _mapper.Map<UpdateCustomerDto>(customerFromDatabase);;
         }
         catch (Exception ex)
         {
             response.ErrorType = Error.ValidationProblem;
-            response.FillErrors(validationResult);
+            response.Errors.Add("Customer_Validation", new[] { "Error in customer validation" });
             _logger.LogError(ex, "erro de validação em update customer");
             return response;
         }

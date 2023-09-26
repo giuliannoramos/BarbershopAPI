@@ -57,13 +57,12 @@ public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand, Upd
 
         try
         {
-            customerFromDatabase.IsValid();
-            response.Orders = _mapper.Map<UpdateOrderDto>(customerFromDatabase); ;
+            orderFromDatabase.IsValid();
         }
         catch (Exception ex)
         {
             response.ErrorType = Error.ValidationProblem;
-            response.FillErrors(validationResult);
+            response.Errors.Add("Order_Validation", new[] { "Error in order validation" });
             _logger.LogError(ex, "erro de validação em update order");
             return response;
         }

@@ -57,7 +57,6 @@ public class CustomersController : MainController
 
         var customerForReturn = createCustomerCommandResponse.Customer;
 
-        if(customerForReturn ==null)return StatusCode(500);
 
         return CreatedAtRoute
         (
@@ -74,14 +73,8 @@ public class CustomersController : MainController
 
         var updateCustomerCommandResponse = await _mediator.Send(updateCustomerCommand);
 
-        var customerForReturn = updateCustomerCommandResponse.Customer;
-
         if(!updateCustomerCommandResponse.IsSuccess)
         return RequestValidationProblem(updateCustomerCommandResponse, ModelState);
-
-        if(customerForReturn == null) return StatusCode(500);
-        //update não retorna nada, esse customer só existe para checar se
-        //houve erro nas regras de negócio da aplicação com o logger aplicado.
 
         return NoContent();
     }

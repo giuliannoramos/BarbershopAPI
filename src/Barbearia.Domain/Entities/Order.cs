@@ -40,15 +40,13 @@ public class Order
         }
     }
 
-    bool IsValid()
+    public void IsValid()
     {
         IsNumberValid();
 
         IsCustomerValid();
 
         IsDataValid();
-
-        return true;
     }
 
 

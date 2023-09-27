@@ -47,16 +47,31 @@ public class OrderRepository : IOrderRepository
         return (orderToReturn, paginationMetadata);
     }
 
+    public async Task<IEnumerable<Order>> GetAllOrdersAsync()
+    {
+        return await _context.Orders
+        .Include(o=>o.Person)
+        .OrderBy(o=>o.OrderId)
+        .ToListAsync();
+    }
+
     public async Task<Order?> GetOrderByIdAsync(int orderId)
     {
-        return await _context.Orders        
-        .FirstOrDefaultAsync(o => o.OrderId == orderId);
+        return await _context.Orders
+        .Include(o=>o.Person)
+        .FirstOrDefaultAsync(o=>o.OrderId == orderId);
     }
 
     public async Task<Order?> GetOrderByNumberAsync(int number)
     {
         return await _context.Orders
+        .Include(o=>o.Person)
         .FirstOrDefaultAsync(o=>o.Number == number);
+    }
+
+    public void AddOrder(Order order)
+    {
+        _context.Orders.Add(order);
     }
 
     public void DeleteOrder(Order order)

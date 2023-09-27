@@ -1,5 +1,6 @@
 using AutoMapper;
 using Barbearia.Application.Contracts.Repositories;
+using Barbearia.Application.Features;
 using Barbearia.Domain.Entities;
 using Barbearia.Persistence.DbContexts;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,35 @@ public class OrderRepository : IOrderRepository
     {
         _context = OrderContext ?? throw new ArgumentNullException(nameof(OrderContext));
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+    }
+
+    public async Task<(IEnumerable<Order>,PaginationMetadata)> GetAllOrdersAsync(string? searchQuery,
+         int pageNumber, int pageSize)
+    {
+        IQueryable<Order> collection = _context.Orders
+        .Include(o=>o.Person);
+
+        if (!string.IsNullOrWhiteSpace(searchQuery))
+        {
+            var name = searchQuery.Trim();
+            collection = collection.Where(
+                o => o.Number.ToString().Contains(searchQuery)
+                || o.Person != null
+                && o.Person.Name.ToLower().Contains(name)
+            );
+        }
+
+        var totalItemCount = await collection.CountAsync();
+
+        var paginationMetadata = new PaginationMetadata(totalItemCount, pageSize, pageNumber);
+
+        var orderToReturn = await collection
+        .OrderBy(o=>o.OrderId)
+        .Skip(pageSize * (pageNumber-1))
+        .Take(pageSize)
+        .ToListAsync();
+
+        return (orderToReturn, paginationMetadata);
     }
 
     public async Task<Order?> GetOrderByIdAsync(int orderId)

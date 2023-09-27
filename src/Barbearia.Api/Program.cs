@@ -23,6 +23,7 @@ using Barbearia.Application.Features.Orders.Commands.DeleteOrder;
 using Barbearia.Application.Features.CustomersCollection;
 using Microsoft.Extensions.Options;
 using Elmah.Io.Extensions.Logging;
+using Barbearia.Application.Features.OrdersCollection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -60,6 +61,7 @@ builder.Services.AddScoped<IRequestHandler<GetCustomerWithOrdersByIdQuery, GetCu
 
 
 builder.Services.AddScoped<IRequestHandler<GetCustomersCollectionQuery, GetCustomersCollectionQueryResponse>, GetCustomersCollectionQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<GetOrdersCollectionQuery, GetOrdersCollectionQueryResponse>, GetOrdersCollectionQueryHandler>();
 
 
 builder.Services.AddScoped<IRequestHandler<CreateCustomerCommand, CreateCustomerCommandResponse>, CreateCustomerCommandHandler>();
@@ -100,13 +102,13 @@ builder.Services.AddScoped<IRequestHandler<DeleteOrderCommand, bool>, DeleteOrde
 //config banco de dados
 builder.Services.AddDbContext<CustomerContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=123456");
 }
 );
 
 builder.Services.AddDbContext<OrderContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=123456");
 }
 );
 

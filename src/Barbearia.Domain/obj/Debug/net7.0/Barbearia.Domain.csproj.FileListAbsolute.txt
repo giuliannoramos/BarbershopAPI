@@ -115,3 +115,15 @@ C:\Users\lucas\Documents\conteudoFaculdade\enterAllog\projetoBarberShop\barberSh
 C:\Users\lucas\Documents\conteudoFaculdade\enterAllog\projetoBarberShop\barberShopApiProjeto\barbershopapi\src\Barbearia.Domain\obj\Debug\net7.0\refint\Barbearia.Domain.dll
 C:\Users\lucas\Documents\conteudoFaculdade\enterAllog\projetoBarberShop\barberShopApiProjeto\barbershopapi\src\Barbearia.Domain\obj\Debug\net7.0\Barbearia.Domain.pdb
 c:\Users\lucas\Documents\conteudoFaculdade\enterAllog\projetoBarberShop\barberShopApiProjeto\barbershopapi\src\Barbearia.Domain\obj\Debug\net7.0\ref\Barbearia.Domain.dll
+C:\Users\Guilherme\Desktop\barbe\barbershopapi\src\Barbearia.Domain\bin\Debug\net7.0\Barbearia.Domain.deps.json
+C:\Users\Guilherme\Desktop\barbe\barbershopapi\src\Barbearia.Domain\bin\Debug\net7.0\Barbearia.Domain.dll
+C:\Users\Guilherme\Desktop\barbe\barbershopapi\src\Barbearia.Domain\bin\Debug\net7.0\Barbearia.Domain.pdb
+C:\Users\Guilherme\Desktop\barbe\barbershopapi\src\Barbearia.Domain\obj\Debug\net7.0\Barbearia.Domain.csproj.AssemblyReference.cache
+C:\Users\Guilherme\Desktop\barbe\barbershopapi\src\Barbearia.Domain\obj\Debug\net7.0\Barbearia.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Guilherme\Desktop\barbe\barbershopapi\src\Barbearia.Domain\obj\Debug\net7.0\Barbearia.Domain.AssemblyInfoInputs.cache
+C:\Users\Guilherme\Desktop\barbe\barbershopapi\src\Barbearia.Domain\obj\Debug\net7.0\Barbearia.Domain.AssemblyInfo.cs
+C:\Users\Guilherme\Desktop\barbe\barbershopapi\src\Barbearia.Domain\obj\Debug\net7.0\Barbearia.Domain.csproj.CoreCompileInputs.cache
+C:\Users\Guilherme\Desktop\barbe\barbershopapi\src\Barbearia.Domain\obj\Debug\net7.0\Barbearia.Domain.dll
+C:\Users\Guilherme\Desktop\barbe\barbershopapi\src\Barbearia.Domain\obj\Debug\net7.0\refint\Barbearia.Domain.dll
+C:\Users\Guilherme\Desktop\barbe\barbershopapi\src\Barbearia.Domain\obj\Debug\net7.0\Barbearia.Domain.pdb
+C:\Users\Guilherme\Desktop\barbe\barbershopapi\src\Barbearia.Domain\obj\Debug\net7.0\ref\Barbearia.Domain.dll

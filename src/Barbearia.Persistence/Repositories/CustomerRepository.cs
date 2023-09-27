@@ -30,7 +30,7 @@ public class CustomerRepository : ICustomerRepository
             var name = searchQuery.Trim();
             collection = collection.Where(
 
-                c => c.Name.Contains(searchQuery)
+                c => c.Name.ToLower().Contains(name)
             );
         }
 

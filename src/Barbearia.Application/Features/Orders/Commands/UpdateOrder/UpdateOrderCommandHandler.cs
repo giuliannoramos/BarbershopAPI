@@ -57,7 +57,7 @@ public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand, Upd
 
         try
         {
-            orderFromDatabase.IsValid();
+            orderFromDatabase.ValidateOrder();
         }
         catch (Exception ex)
         {

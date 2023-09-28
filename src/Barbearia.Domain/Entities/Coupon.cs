@@ -9,58 +9,34 @@ public class Coupon
     public DateTime ExpirationDate { get; set; }
     public List<Payment> Payments { get; set; } = new();
 
-
-    // bool IsCouponCodeValid()
-    // {
-    //     //precisa do repository para checar se nao tem repetido
-
-    //     return true;
-    // }
-
-    void IsDiscountPercentValid()
+    private void CheckDiscountPercent()
     {
-        if (!(DiscountPercent > 0 && DiscountPercent < 100))
+        if (!(DiscountPercent >= 1 && DiscountPercent <= 100))
         {
-            throw new Exception("A taxa de desconto tem de estar entre 1 e 100 ");
+            throw new ArgumentException("A taxa de desconto deve estar entre 1 e 100.");
         }
     }
 
-    void IsExpirationDateValid()
+    private void CheckCreationDate()
     {
-        try
+        if (CreationDate > DateTime.Now)
         {
-            DateTime dataParseada = ExpirationDate;
-        }
-        catch (FormatException)
-        {
-            throw new Exception("A expiration date deve ser válida");
-        }
-
-        if (CreationDate > ExpirationDate) throw new Exception("A data de expiração não pode ser antes da criação");
-    }
-
-    void IsCreationDateValid()
-    {
-        try
-        {
-            DateTime dataParseada = ExpirationDate;
-        }
-        catch (FormatException)
-        {
-            throw new Exception("A creation date deve ser válida");
+            throw new ArgumentException("A data de criação não pode ser no futuro.");
         }
     }
 
-    bool IsValid()
+    private void CheckExpirationDate()
     {
-        // if(!IsCouponCodeValid()) return false;
+        if (CreationDate > ExpirationDate)
+        {
+            throw new ArgumentException("A data de expiração não pode ser anterior à data de criação.");
+        }
+    }
 
-        IsCreationDateValid();
-
-        IsExpirationDateValid();
-
-        IsDiscountPercentValid();
-
-        return true;
+    public void ValidateCoupon()
+    {
+        CheckDiscountPercent();
+        CheckCreationDate();
+        CheckExpirationDate();
     }
 }

@@ -14,59 +14,61 @@ public class Payment
     public decimal NetTotal { get; set; }
     public int? CouponId { get; set; }
     public Coupon? Coupon { get; set; }
-    public int OrderId { get; set; }
+    public int? OrderId { get; set; }
     public Order? Order { get; set; } 
 
 
-    void IsDataValid()
+    private void CheckBuyDate()
     {
-        try
+        if (!DateTime.TryParse(BuyDate.ToString(), out DateTime parsedDate))
         {
-            DateTime dataParseada = BuyDate;
+            throw new ArgumentException("A data deve ser válida.");
         }
-        catch (FormatException)
+        if (parsedDate > DateTime.Now)
         {
-            throw new Exception("A data deve ser válida");
+            throw new ArgumentException("A data não pode ser no futuro.");
         }
     }
 
-    void IsGrossTotaValid()
+    private void CheckGrossTotal()
     {
-        if(GrossTotal<0)throw new Exception("O grossTotal deve ser maior que 0");
-    }
-
-    void IsPaymentValid()
-    {
-        if(PaymentMethod != "Débito" || PaymentMethod != "Crédito" || PaymentMethod != "Dinheiro")
+        if (GrossTotal < 0)
         {
-            throw new Exception("Forma de pagamento não suportada");
+            throw new ArgumentException("O valor bruto total deve ser maior que 0.");
         }
-        
     }
 
-    void IsNetTotalValid()
+    private void CheckPaymentMethod()
     {
-        if(NetTotal<0) throw new Exception("O Net Total deve ser maior que 0");
+        if (!(PaymentMethod == "Débito" || PaymentMethod == "Crédito" || PaymentMethod == "Dinheiro"))
+        {
+            throw new ArgumentException("Forma de pagamento não suportada.");
+        }
     }
 
-    void IsOrderValid()
+    private void CheckNetTotal()
     {
-        if(Order == null) throw new Exception("O pagamento deve ter uma order");
+        if (NetTotal < 0)
+        {
+            throw new ArgumentException("O valor líquido total deve ser maior que 0.");
+        }
     }
 
-    bool IsValid()
+    private void CheckOrder()
     {
-        IsDataValid();
+        if (OrderId == null)
+        {
+            throw new ArgumentException("O pagamento deve estar associado a uma ordem.");
+        }
+    }
 
-        IsGrossTotaValid();
-
-        IsPaymentValid();
-
-        IsNetTotalValid();
-
-        IsOrderValid();
-
-        return true;
+    public void ValidatePayment()
+    {
+        CheckBuyDate();
+        CheckGrossTotal();
+        CheckPaymentMethod();
+        CheckNetTotal();
+        CheckOrder();
     }
 
 }

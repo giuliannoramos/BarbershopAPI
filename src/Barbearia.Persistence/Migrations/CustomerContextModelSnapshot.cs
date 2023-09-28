@@ -96,37 +96,57 @@ namespace Barbearia.Persistence.Migrations
                             PersonId = 2,
                             State = "SC",
                             Street = "Rua longe"
+                        },
+                        new
+                        {
+                            AddressId = 3,
+                            Cep = "80888088",
+                            City = "Bc",
+                            Complement = "Perto",
+                            District = "Asilo",
+                            Number = 100,
+                            PersonId = 3,
+                            State = "SC",
+                            Street = "Rua velha"
+                        },
+                        new
+                        {
+                            AddressId = 4,
+                            Cep = "88123888",
+                            City = "Floripa",
+                            Complement = "Longe",
+                            District = "soft",
+                            Number = 300,
+                            PersonId = 4,
+                            State = "SC",
+                            Street = "Rua micro"
                         });
                 });
 
-            modelBuilder.Entity("Barbearia.Domain.Entities.Order", b =>
+            modelBuilder.Entity("Barbearia.Domain.Entities.Item", b =>
                 {
-                    b.Property<int>("OrderId")
+                    b.Property<int>("ItemId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("OrderId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ItemId"));
 
-                    b.Property<DateTime>("BuyDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.Property<int>("Number")
-                        .HasColumnType("integer");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.Property<int>("PersonId")
-                        .HasColumnType("integer");
+                    b.HasKey("ItemId");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("integer");
-
-                    b.HasKey("OrderId");
-
-                    b.HasIndex("PersonId");
-
-                    b.ToTable("Orders", null, t =>
+                    b.ToTable("Item", null, t =>
                         {
                             t.ExcludeFromMigrations();
                         });
+
+                    b.UseTptMappingStrategy();
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Person", b =>
@@ -142,7 +162,8 @@ namespace Barbearia.Persistence.Migrations
 
                     b.Property<string>("Cnpj")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(14)
+                        .HasColumnType("character varying(14)");
 
                     b.Property<string>("Cpf")
                         .IsRequired()
@@ -167,7 +188,7 @@ namespace Barbearia.Persistence.Migrations
 
                     b.HasKey("PersonId");
 
-                    b.ToTable("Persons", (string)null);
+                    b.ToTable("Person", (string)null);
 
                     b.HasDiscriminator<int>("PersonType").HasValue(1);
 
@@ -213,6 +234,60 @@ namespace Barbearia.Persistence.Migrations
                             Number = "47988887777",
                             PersonId = 2,
                             Type = 2
+                        },
+                        new
+                        {
+                            TelephoneId = 3,
+                            Number = "47944887777",
+                            PersonId = 3,
+                            Type = 1
+                        },
+                        new
+                        {
+                            TelephoneId = 4,
+                            Number = "55988844777",
+                            PersonId = 4,
+                            Type = 2
+                        });
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.Product", b =>
+                {
+                    b.HasBaseType("Barbearia.Domain.Entities.Item");
+
+                    b.Property<string>("Brand")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int?>("CustomerPersonId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PersonId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ProductCategoryId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("QuantityInStock")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("QuantityReserved")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("SKU")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int?>("SuplierPersonId")
+                        .HasColumnType("integer");
+
+                    b.HasIndex("CustomerPersonId");
+
+                    b.HasIndex("SuplierPersonId");
+
+                    b.ToTable("Product", null, t =>
+                        {
+                            t.ExcludeFromMigrations();
                         });
                 });
 
@@ -245,21 +320,39 @@ namespace Barbearia.Persistence.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Barbearia.Domain.Entities.Suplier", b =>
+                {
+                    b.HasBaseType("Barbearia.Domain.Entities.Person");
+
+                    b.HasDiscriminator().HasValue(3);
+
+                    b.HasData(
+                        new
+                        {
+                            PersonId = 3,
+                            BirthDate = new DateOnly(1973, 2, 1),
+                            Cnpj = "",
+                            Cpf = "73473943096",
+                            Email = "josefacraft@hotmail.com",
+                            Gender = 2,
+                            Name = "Josefina"
+                        },
+                        new
+                        {
+                            PersonId = 4,
+                            BirthDate = new DateOnly(1975, 4, 4),
+                            Cnpj = "73473003096986",
+                            Cpf = "",
+                            Email = "micro@so.ft",
+                            Gender = 0,
+                            Name = "Microsoft"
+                        });
+                });
+
             modelBuilder.Entity("Barbearia.Domain.Entities.Address", b =>
                 {
                     b.HasOne("Barbearia.Domain.Entities.Person", "Person")
                         .WithMany("Addresses")
-                        .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Person");
-                });
-
-            modelBuilder.Entity("Barbearia.Domain.Entities.Order", b =>
-                {
-                    b.HasOne("Barbearia.Domain.Entities.Person", "Person")
-                        .WithMany("Orders")
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -278,13 +371,40 @@ namespace Barbearia.Persistence.Migrations
                     b.Navigation("Person");
                 });
 
+            modelBuilder.Entity("Barbearia.Domain.Entities.Product", b =>
+                {
+                    b.HasOne("Barbearia.Domain.Entities.Customer", null)
+                        .WithMany("Products")
+                        .HasForeignKey("CustomerPersonId");
+
+                    b.HasOne("Barbearia.Domain.Entities.Item", null)
+                        .WithOne()
+                        .HasForeignKey("Barbearia.Domain.Entities.Product", "ItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Barbearia.Domain.Entities.Suplier", "Suplier")
+                        .WithMany("Products")
+                        .HasForeignKey("SuplierPersonId");
+
+                    b.Navigation("Suplier");
+                });
+
             modelBuilder.Entity("Barbearia.Domain.Entities.Person", b =>
                 {
                     b.Navigation("Addresses");
 
-                    b.Navigation("Orders");
-
                     b.Navigation("Telephones");
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.Customer", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.Suplier", b =>
+                {
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

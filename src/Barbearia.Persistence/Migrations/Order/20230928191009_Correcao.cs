@@ -4,16 +4,18 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Barbearia.Persistence.Migrations.Order
 {
     /// <inheritdoc />
-    public partial class orderContext : Migration
+    public partial class Correcao : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Coupons",
+                name: "Coupon",
                 columns: table => new
                 {
                     CouponId = table.Column<int>(type: "integer", nullable: false)
@@ -25,11 +27,11 @@ namespace Barbearia.Persistence.Migrations.Order
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Coupons", x => x.CouponId);
+                    table.PrimaryKey("PK_Coupon", x => x.CouponId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Orders",
+                name: "Order",
                 columns: table => new
                 {
                     OrderId = table.Column<int>(type: "integer", nullable: false)
@@ -41,17 +43,17 @@ namespace Barbearia.Persistence.Migrations.Order
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Orders", x => x.OrderId);
+                    table.PrimaryKey("PK_Order", x => x.OrderId);
                     table.ForeignKey(
-                        name: "FK_Orders_Persons_PersonId",
+                        name: "FK_Order_Person_PersonId",
                         column: x => x.PersonId,
-                        principalTable: "Persons",
+                        principalTable: "Person",
                         principalColumn: "PersonId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Payments",
+                name: "Payment",
                 columns: table => new
                 {
                     PaymentId = table.Column<int>(type: "integer", nullable: false)
@@ -67,48 +69,52 @@ namespace Barbearia.Persistence.Migrations.Order
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Payments", x => x.PaymentId);
+                    table.PrimaryKey("PK_Payment", x => x.PaymentId);
                     table.ForeignKey(
-                        name: "FK_Payments_Coupons_CouponId",
+                        name: "FK_Payment_Coupon_CouponId",
                         column: x => x.CouponId,
-                        principalTable: "Coupons",
+                        principalTable: "Coupon",
                         principalColumn: "CouponId");
                     table.ForeignKey(
-                        name: "FK_Payments_Orders_OrderId",
+                        name: "FK_Payment_Order_OrderId",
                         column: x => x.OrderId,
-                        principalTable: "Orders",
+                        principalTable: "Order",
                         principalColumn: "OrderId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
-                table: "Coupons",
+                table: "Coupon",
                 columns: new[] { "CouponId", "CouponCode", "CreationDate", "DiscountPercent", "ExpirationDate" },
-                values: new object[] { 1, "teste3", new DateTime(2023, 9, 26, 3, 30, 8, 883, DateTimeKind.Utc).AddTicks(7), 10, new DateTime(2023, 9, 26, 3, 30, 8, 883, DateTimeKind.Utc).AddTicks(7) });
+                values: new object[] { 1, "teste3", new DateTime(2023, 9, 28, 19, 10, 9, 399, DateTimeKind.Utc).AddTicks(5180), 10, new DateTime(2023, 9, 28, 19, 10, 9, 399, DateTimeKind.Utc).AddTicks(5181) });
 
             migrationBuilder.InsertData(
-                table: "Orders",
+                table: "Order",
                 columns: new[] { "OrderId", "BuyDate", "Number", "PersonId", "Status" },
-                values: new object[] { 1, new DateTime(2023, 9, 26, 3, 30, 8, 882, DateTimeKind.Utc).AddTicks(9572), 500, 1, 2 });
+                values: new object[,]
+                {
+                    { 1, new DateTime(2023, 9, 28, 19, 10, 9, 399, DateTimeKind.Utc).AddTicks(5025), 500, 1, 2 },
+                    { 2, new DateTime(2023, 9, 28, 19, 10, 9, 399, DateTimeKind.Utc).AddTicks(5055), 501, 2, 2 }
+                });
 
             migrationBuilder.InsertData(
-                table: "Payments",
+                table: "Payment",
                 columns: new[] { "PaymentId", "BuyDate", "CouponId", "Description", "GrossTotal", "NetTotal", "OrderId", "PaymentMethod", "Status" },
-                values: new object[] { 1, new DateTime(2023, 9, 26, 3, 30, 8, 882, DateTimeKind.Utc).AddTicks(9990), null, "Para de ler isso aqui e vai programar", 80m, 60m, 1, "Dinheiro", 1 });
+                values: new object[] { 1, new DateTime(2023, 9, 28, 19, 10, 9, 399, DateTimeKind.Utc).AddTicks(5165), null, "Para de ler isso aqui e vai programar", 80m, 60m, 1, "Dinheiro", 1 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_PersonId",
-                table: "Orders",
+                name: "IX_Order_PersonId",
+                table: "Order",
                 column: "PersonId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Payments_CouponId",
-                table: "Payments",
+                name: "IX_Payment_CouponId",
+                table: "Payment",
                 column: "CouponId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Payments_OrderId",
-                table: "Payments",
+                name: "IX_Payment_OrderId",
+                table: "Payment",
                 column: "OrderId",
                 unique: true);
         }
@@ -117,13 +123,13 @@ namespace Barbearia.Persistence.Migrations.Order
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Payments");
+                name: "Payment");
 
             migrationBuilder.DropTable(
-                name: "Coupons");
+                name: "Coupon");
 
             migrationBuilder.DropTable(
-                name: "Orders");
+                name: "Order");
         }
     }
 }

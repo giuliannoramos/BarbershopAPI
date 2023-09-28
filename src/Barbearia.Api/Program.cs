@@ -123,6 +123,12 @@ builder.Services.AddDbContext<OrderContext>(options =>
 }
 );
 
+builder.Services.AddDbContext<ItemContext>(options =>
+{
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=123456");
+}
+);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

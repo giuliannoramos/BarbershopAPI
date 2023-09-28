@@ -12,6 +12,9 @@ public class Order
     public int PersonId { get; set; }
     public Person? Person { get; set; }
     public Payment? Payment { get; set; }
+    public List<StockHistory> StockHistories { get; set; } = new();
+    public List<Product> Products { get; set; } = new();
+    public ICollection<OrderProduct> OrderProducts { get; set; } = new List<OrderProduct>();
 
     //no banco, order está com a id de payment, mas não é necessário,
     //pois payment já tem o id de order. Além disso, a relação é opcional.

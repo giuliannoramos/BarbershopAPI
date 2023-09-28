@@ -94,16 +94,16 @@ namespace Barbearia.Persistence.Migrations.Order
 
                     b.HasKey("CouponId");
 
-                    b.ToTable("Coupons", (string)null);
+                    b.ToTable("Coupon", (string)null);
 
                     b.HasData(
                         new
                         {
                             CouponId = 1,
                             CouponCode = "teste3",
-                            CreationDate = new DateTime(2023, 9, 26, 3, 30, 8, 883, DateTimeKind.Utc).AddTicks(7),
+                            CreationDate = new DateTime(2023, 9, 28, 19, 10, 9, 399, DateTimeKind.Utc).AddTicks(5180),
                             DiscountPercent = 10,
-                            ExpirationDate = new DateTime(2023, 9, 26, 3, 30, 8, 883, DateTimeKind.Utc).AddTicks(7)
+                            ExpirationDate = new DateTime(2023, 9, 28, 19, 10, 9, 399, DateTimeKind.Utc).AddTicks(5181)
                         });
                 });
 
@@ -131,15 +131,23 @@ namespace Barbearia.Persistence.Migrations.Order
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Order", (string)null);
 
                     b.HasData(
                         new
                         {
                             OrderId = 1,
-                            BuyDate = new DateTime(2023, 9, 26, 3, 30, 8, 882, DateTimeKind.Utc).AddTicks(9572),
+                            BuyDate = new DateTime(2023, 9, 28, 19, 10, 9, 399, DateTimeKind.Utc).AddTicks(5025),
                             Number = 500,
                             PersonId = 1,
+                            Status = 2
+                        },
+                        new
+                        {
+                            OrderId = 2,
+                            BuyDate = new DateTime(2023, 9, 28, 19, 10, 9, 399, DateTimeKind.Utc).AddTicks(5055),
+                            Number = 501,
+                            PersonId = 2,
                             Status = 2
                         });
                 });
@@ -184,13 +192,13 @@ namespace Barbearia.Persistence.Migrations.Order
                     b.HasIndex("OrderId")
                         .IsUnique();
 
-                    b.ToTable("Payments", (string)null);
+                    b.ToTable("Payment", (string)null);
 
                     b.HasData(
                         new
                         {
                             PaymentId = 1,
-                            BuyDate = new DateTime(2023, 9, 26, 3, 30, 8, 882, DateTimeKind.Utc).AddTicks(9990),
+                            BuyDate = new DateTime(2023, 9, 28, 19, 10, 9, 399, DateTimeKind.Utc).AddTicks(5165),
                             Description = "Para de ler isso aqui e vai programar",
                             GrossTotal = 80m,
                             NetTotal = 60m,
@@ -232,7 +240,7 @@ namespace Barbearia.Persistence.Migrations.Order
 
                     b.HasKey("PersonId");
 
-                    b.ToTable("Persons", null, t =>
+                    b.ToTable("Person", null, t =>
                         {
                             t.ExcludeFromMigrations();
                         });

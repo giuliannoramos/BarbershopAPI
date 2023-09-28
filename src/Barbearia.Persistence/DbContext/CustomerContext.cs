@@ -12,38 +12,44 @@ namespace Barbearia.Persistence.DbContexts
 
         public DbSet<Person> Persons { get; set; } = null!;
 
-        public DbSet<Telephone> Telephones {get; set; } = null!;
+        public DbSet<Telephone> Telephones { get; set; } = null!;
 
-        public DbSet<Address> Addresses {get; set; } = null!;
+        public DbSet<Address> Addresses { get; set; } = null!;
 
-        
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
             var person = modelBuilder.Entity<Person>();
             var customer = modelBuilder.Entity<Customer>();
+            var product = modelBuilder.Entity<Product>();
+            var item = modelBuilder.Entity<Item>();
+            var suplier = modelBuilder.Entity<Suplier>();
             var telephone = modelBuilder.Entity<Telephone>();
             var address = modelBuilder.Entity<Address>();
 
-            modelBuilder.Entity<Order>().ToTable("Orders", t => t.ExcludeFromMigrations()); 
+            modelBuilder.Entity<Order>().ToTable("Order", t => t.ExcludeFromMigrations());            
+            modelBuilder.Entity<Item>().ToTable("Item", t => t.ExcludeFromMigrations());            
+            modelBuilder.Entity<Product>().ToTable("Product", t => t.ExcludeFromMigrations());            
+            modelBuilder.Entity<StockHistory>().ToTable("StockHistory", t => t.ExcludeFromMigrations());            
             modelBuilder.Ignore<Payment>();
+            modelBuilder.Ignore<StockHistory>();
+            modelBuilder.Ignore<Order>();
             modelBuilder.Ignore<Coupon>();
+            modelBuilder.Ignore<ProductCategory>();
+            modelBuilder.Ignore<OrderProduct>();
 
             person
-            .ToTable("Persons")
+            .ToTable("Person")
             .HasDiscriminator<int>("PersonType")
             .HasValue<Person>(1)
-            .HasValue<Customer>(2);
+            .HasValue<Customer>(2)
+            .HasValue<Suplier>(3);
 
             person
                 .Property(p => p.Name)
                 .HasMaxLength(80)
-                .IsRequired();
-
-            person
-                .Property(p => p.Cpf)
-                .HasMaxLength(11)
                 .IsRequired();
 
             person
@@ -57,19 +63,15 @@ namespace Barbearia.Persistence.DbContexts
                 .IsRequired();
 
             person
-                .Property(p => p.Gender)
-                .IsRequired();
-
-            person
-                .HasMany(p => p.Addresses) 
+                .HasMany(p => p.Addresses)
                 .WithOne(a => a.Person)
                 .HasForeignKey(a => a.PersonId);
 
             person
-                .HasMany(p => p.Telephones) 
+                .HasMany(p => p.Telephones)
                 .WithOne(t => t.Person)
                 .HasForeignKey(t => t.PersonId)
-                .IsRequired();            
+                .IsRequired();
 
             address
                 .ToTable("Address");
@@ -102,7 +104,7 @@ namespace Barbearia.Persistence.DbContexts
                 .HasMaxLength(80);
 
             address
-                .HasOne(p => p.Person) 
+                .HasOne(p => p.Person)
                 .WithMany(c => c.Addresses)
                 .HasForeignKey(a => a.PersonId);
 
@@ -119,10 +121,18 @@ namespace Barbearia.Persistence.DbContexts
                 .IsRequired();
 
             telephone
-                .HasOne(t => t.Person) 
+                .HasOne(t => t.Person)
                 .WithMany(c => c.Telephones)
                 .HasForeignKey(t => t.PersonId);
 
+            customer
+                .Property(p => p.Gender)
+                .IsRequired();
+
+            customer
+                .Property(p => p.Cpf)
+                .HasMaxLength(11)
+                .IsRequired();
 
             customer
                 .HasData(
@@ -143,6 +153,55 @@ namespace Barbearia.Persistence.DbContexts
                         Gender = 2,
                         Cpf = "73473003096",
                         Email = "bill@gmail.com",
+                    });
+
+            // product
+            //     .ToTable("Product");
+
+            item
+                .HasKey(p => p.ItemId);
+
+            // product
+            //     .HasKey(p => p.ItemId);
+
+           
+
+            suplier
+                .Property(p => p.Cnpj)
+                .HasMaxLength(14);
+
+            suplier
+                .Property(p => p.Gender);
+
+            suplier
+                .Property(p => p.Cpf)
+                .HasMaxLength(11);
+
+
+            // suplier
+            //     .HasMany(s => s.Products)
+            //     .WithOne(s => s.Suplier)
+            //     .HasForeignKey(s => s.PersonId)
+            //     .IsRequired();
+
+            suplier
+                .HasData(
+                    new Suplier()
+                    {
+                        PersonId = 3,
+                        Name = "Josefina",
+                        BirthDate = new DateOnly(1973, 2, 1),
+                        Gender = 2,
+                        Cpf = "73473943096",
+                        Email = "josefacraft@hotmail.com",
+                    },
+                    new Suplier()
+                    {
+                        PersonId = 4,
+                        Name = "Microsoft",
+                        BirthDate = new DateOnly(1975, 4, 4),
+                        Cnpj = "73473003096986",
+                        Email = "micro@so.ft",
                     });
 
             address
@@ -170,6 +229,30 @@ namespace Barbearia.Persistence.DbContexts
                         Cep = "88888888",
                         Complement = "Longe de la",
                         PersonId = 2
+                    },
+                    new Address()
+                    {
+                        AddressId = 3,
+                        Street = "Rua velha",
+                        Number = 100,
+                        District = "Asilo",
+                        City = "Bc",
+                        State = "SC",
+                        Cep = "80888088",
+                        Complement = "Perto",
+                        PersonId = 3
+                    },
+                    new Address()
+                    {
+                        AddressId = 4,
+                        Street = "Rua micro",
+                        Number = 300,
+                        District = "soft",
+                        City = "Floripa",
+                        State = "SC",
+                        Cep = "88123888",
+                        Complement = "Longe",
+                        PersonId = 4
                     });
 
             telephone
@@ -187,6 +270,20 @@ namespace Barbearia.Persistence.DbContexts
                         Number = "47988887777",
                         Type = 2,
                         PersonId = 2
+                    },
+                    new Telephone()
+                    {
+                        TelephoneId = 3,
+                        Number = "47944887777",
+                        Type = 1,
+                        PersonId = 3
+                    },
+                    new Telephone()
+                    {
+                        TelephoneId = 4,
+                        Number = "55988844777",
+                        Type = 2,
+                        PersonId = 4
                     });
 
             base.OnModelCreating(modelBuilder);
@@ -194,5 +291,5 @@ namespace Barbearia.Persistence.DbContexts
     }
 }
 
-// dotnet ef migrations add InitialMigration --startup-project ../barbearia.api
-// dotnet ef database update --startup-project ../barbearia.api
+// dotnet ef migrations add Correcao --context CustomerContext --startup-project ../Barbearia.Api
+// dotnet ef database update --context CustomerContext --startup-project ../Barbearia.Api

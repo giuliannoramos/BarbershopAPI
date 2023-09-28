@@ -1,38 +1,36 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Guilherme\\Desktop\\barbershopapi\\src\\Barbearia.Api\\Barbearia.Api.csproj": {}
+    "/home/miguel/Projects/Curso/PastaDaIntegracao/barbershopapi/src/Barbearia.Api/Barbearia.Api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Guilherme\\Desktop\\barbershopapi\\src\\Barbearia.Api\\Barbearia.Api.csproj": {
+    "/home/miguel/Projects/Curso/PastaDaIntegracao/barbershopapi/src/Barbearia.Api/Barbearia.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Guilherme\\Desktop\\barbershopapi\\src\\Barbearia.Api\\Barbearia.Api.csproj",
+        "projectUniqueName": "/home/miguel/Projects/Curso/PastaDaIntegracao/barbershopapi/src/Barbearia.Api/Barbearia.Api.csproj",
         "projectName": "Barbearia.Api",
-        "projectPath": "C:\\Users\\Guilherme\\Desktop\\barbershopapi\\src\\Barbearia.Api\\Barbearia.Api.csproj",
-        "packagesPath": "C:\\Users\\Guilherme\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Guilherme\\Desktop\\barbershopapi\\src\\Barbearia.Api\\obj\\",
+        "projectPath": "/home/miguel/Projects/Curso/PastaDaIntegracao/barbershopapi/src/Barbearia.Api/Barbearia.Api.csproj",
+        "packagesPath": "/home/miguel/.nuget/packages/",
+        "outputPath": "/home/miguel/Projects/Curso/PastaDaIntegracao/barbershopapi/src/Barbearia.Api/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Guilherme\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/home/miguel/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\Guilherme\\Desktop\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj": {
-                "projectPath": "C:\\Users\\Guilherme\\Desktop\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj"
+              "/home/miguel/Projects/Curso/PastaDaIntegracao/barbershopapi/src/Barbearia.Application/Barbearia.Application.csproj": {
+                "projectPath": "/home/miguel/Projects/Curso/PastaDaIntegracao/barbershopapi/src/Barbearia.Application/Barbearia.Application.csproj"
               },
-              "C:\\Users\\Guilherme\\Desktop\\barbershopapi\\src\\Barbearia.Persistence\\Barbearia.Persistence.csproj": {
-                "projectPath": "C:\\Users\\Guilherme\\Desktop\\barbershopapi\\src\\Barbearia.Persistence\\Barbearia.Persistence.csproj"
+              "/home/miguel/Projects/Curso/PastaDaIntegracao/barbershopapi/src/Barbearia.Persistence/Barbearia.Persistence.csproj": {
+                "projectPath": "/home/miguel/Projects/Curso/PastaDaIntegracao/barbershopapi/src/Barbearia.Persistence/Barbearia.Persistence.csproj"
               }
             }
           }
@@ -85,6 +83,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[7.0.10, 7.0.10]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -93,36 +97,34 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.110/RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Guilherme\\Desktop\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj": {
+    "/home/miguel/Projects/Curso/PastaDaIntegracao/barbershopapi/src/Barbearia.Application/Barbearia.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Guilherme\\Desktop\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj",
+        "projectUniqueName": "/home/miguel/Projects/Curso/PastaDaIntegracao/barbershopapi/src/Barbearia.Application/Barbearia.Application.csproj",
         "projectName": "Barbearia.Application",
-        "projectPath": "C:\\Users\\Guilherme\\Desktop\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj",
-        "packagesPath": "C:\\Users\\Guilherme\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Guilherme\\Desktop\\barbershopapi\\src\\Barbearia.Application\\obj\\",
+        "projectPath": "/home/miguel/Projects/Curso/PastaDaIntegracao/barbershopapi/src/Barbearia.Application/Barbearia.Application.csproj",
+        "packagesPath": "/home/miguel/.nuget/packages/",
+        "outputPath": "/home/miguel/Projects/Curso/PastaDaIntegracao/barbershopapi/src/Barbearia.Application/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Guilherme\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/home/miguel/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\Guilherme\\Desktop\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj": {
-                "projectPath": "C:\\Users\\Guilherme\\Desktop\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj"
+              "/home/miguel/Projects/Curso/PastaDaIntegracao/barbershopapi/src/Barbearia.Domain/Barbearia.Domain.csproj": {
+                "projectPath": "/home/miguel/Projects/Curso/PastaDaIntegracao/barbershopapi/src/Barbearia.Domain/Barbearia.Domain.csproj"
               }
             }
           }
@@ -165,33 +167,37 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[7.0.10, 7.0.10]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.110/RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Guilherme\\Desktop\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj": {
+    "/home/miguel/Projects/Curso/PastaDaIntegracao/barbershopapi/src/Barbearia.Domain/Barbearia.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Guilherme\\Desktop\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj",
+        "projectUniqueName": "/home/miguel/Projects/Curso/PastaDaIntegracao/barbershopapi/src/Barbearia.Domain/Barbearia.Domain.csproj",
         "projectName": "Barbearia.Domain",
-        "projectPath": "C:\\Users\\Guilherme\\Desktop\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj",
-        "packagesPath": "C:\\Users\\Guilherme\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Guilherme\\Desktop\\barbershopapi\\src\\Barbearia.Domain\\obj\\",
+        "projectPath": "/home/miguel/Projects/Curso/PastaDaIntegracao/barbershopapi/src/Barbearia.Domain/Barbearia.Domain.csproj",
+        "packagesPath": "/home/miguel/.nuget/packages/",
+        "outputPath": "/home/miguel/Projects/Curso/PastaDaIntegracao/barbershopapi/src/Barbearia.Domain/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Guilherme\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/home/miguel/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -220,44 +226,48 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[7.0.10, 7.0.10]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.110/RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Guilherme\\Desktop\\barbershopapi\\src\\Barbearia.Persistence\\Barbearia.Persistence.csproj": {
+    "/home/miguel/Projects/Curso/PastaDaIntegracao/barbershopapi/src/Barbearia.Persistence/Barbearia.Persistence.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Guilherme\\Desktop\\barbershopapi\\src\\Barbearia.Persistence\\Barbearia.Persistence.csproj",
+        "projectUniqueName": "/home/miguel/Projects/Curso/PastaDaIntegracao/barbershopapi/src/Barbearia.Persistence/Barbearia.Persistence.csproj",
         "projectName": "Barbearia.Persistence",
-        "projectPath": "C:\\Users\\Guilherme\\Desktop\\barbershopapi\\src\\Barbearia.Persistence\\Barbearia.Persistence.csproj",
-        "packagesPath": "C:\\Users\\Guilherme\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Guilherme\\Desktop\\barbershopapi\\src\\Barbearia.Persistence\\obj\\",
+        "projectPath": "/home/miguel/Projects/Curso/PastaDaIntegracao/barbershopapi/src/Barbearia.Persistence/Barbearia.Persistence.csproj",
+        "packagesPath": "/home/miguel/.nuget/packages/",
+        "outputPath": "/home/miguel/Projects/Curso/PastaDaIntegracao/barbershopapi/src/Barbearia.Persistence/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Guilherme\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/home/miguel/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\Guilherme\\Desktop\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj": {
-                "projectPath": "C:\\Users\\Guilherme\\Desktop\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj"
+              "/home/miguel/Projects/Curso/PastaDaIntegracao/barbershopapi/src/Barbearia.Application/Barbearia.Application.csproj": {
+                "projectPath": "/home/miguel/Projects/Curso/PastaDaIntegracao/barbershopapi/src/Barbearia.Application/Barbearia.Application.csproj"
               },
-              "C:\\Users\\Guilherme\\Desktop\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj": {
-                "projectPath": "C:\\Users\\Guilherme\\Desktop\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj"
+              "/home/miguel/Projects/Curso/PastaDaIntegracao/barbershopapi/src/Barbearia.Domain/Barbearia.Domain.csproj": {
+                "projectPath": "/home/miguel/Projects/Curso/PastaDaIntegracao/barbershopapi/src/Barbearia.Domain/Barbearia.Domain.csproj"
               }
             }
           }
@@ -294,12 +304,18 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[7.0.10, 7.0.10]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.110/RuntimeIdentifierGraph.json"
         }
       }
     }

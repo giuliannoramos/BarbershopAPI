@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "yEvQ+S4NlHHo3adoai7af3Ze1A+B53VD8lnzuEsfvZpZICLGCy0xeQ1CQ0+twq/wFHTndacvpn+go3iKgPz6vA==",
+  "dgSpecHash": "7wxY9NRP0ylGlwOw/1+zwL7PZDUOyxSpbCryxHqoInBdyvLg0MtfQPzWZbqxbrUr4/gFolSD0L7fpzvtuX0nnw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Guilherme\\Desktop\\barbe\\barbershopapi\\src\\Barbearia.Api\\Barbearia.Api.csproj",
+  "projectFilePath": "C:\\Users\\Guilherme\\Desktop\\barbershopapi\\src\\Barbearia.Api\\Barbearia.Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Guilherme\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\Guilherme\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

@@ -24,6 +24,10 @@ using Barbearia.Application.Features.CustomersCollection;
 using Microsoft.Extensions.Options;
 using Elmah.Io.Extensions.Logging;
 using Barbearia.Application.Features.OrdersCollection;
+using Barbearia.Application.Features.Orders.Queries.GetAllOrders;
+using Barbearia.Application.Features.Orders.Queries.GetOrderById;
+using Barbearia.Application.Features.Orders.Queries.GetOrderByNumber;
+using Barbearia.Application.Features.Orders.Commands.CreateOrder;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -61,7 +65,6 @@ builder.Services.AddScoped<IRequestHandler<GetCustomerWithOrdersByIdQuery, GetCu
 
 
 builder.Services.AddScoped<IRequestHandler<GetCustomersCollectionQuery, GetCustomersCollectionQueryResponse>, GetCustomersCollectionQueryHandler>();
-builder.Services.AddScoped<IRequestHandler<GetOrdersCollectionQuery, GetOrdersCollectionQueryResponse>, GetOrdersCollectionQueryHandler>();
 
 
 builder.Services.AddScoped<IRequestHandler<CreateCustomerCommand, CreateCustomerCommandResponse>, CreateCustomerCommandHandler>();
@@ -90,7 +93,15 @@ builder.Services.AddScoped<IValidator<CreateTelephoneCommand>, CreateTelephoneCo
 builder.Services.AddScoped<IRequestHandler<UpdateTelephoneCommand, UpdateTelephoneCommandResponse>, UpdateTelephoneCommandHandler>();
 builder.Services.AddScoped<IValidator<UpdateTelephoneCommand>, UpdateTelephoneCommandValidator>();
 
+builder.Services.AddScoped<IRequestHandler<GetOrdersCollectionQuery, GetOrdersCollectionQueryResponse>, GetOrdersCollectionQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<GetAllOrdersQuery, IEnumerable<GetAllOrdersDto>>, GetAllOrdersQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<GetOrderByIdQuery, GetOrderByIdDto>, GetOrderByIdQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<GetOrderByNumberQuery, GetOrderByNumberDto>, GetOrderByNumberQueryHandler>();
+
 builder.Services.AddScoped<IRequestHandler<DeleteTelephoneCommand, bool>, DeleteTelephoneCommandHandler>();
+
+builder.Services.AddScoped<IRequestHandler<CreateOrderCommand, CreateOrderCommandResponse>, CreateOrderCommandHandler>();
+builder.Services.AddScoped<IValidator<CreateOrderCommand>, CreateOrderCommandValidator>();
 
 builder.Services.AddScoped<IRequestHandler<UpdateOrderCommand, UpdateOrderCommandResponse>, UpdateOrderCommandHandler>();
 builder.Services.AddScoped<IValidator<UpdateOrderCommand>, UpdateOrderCommandValidator>();

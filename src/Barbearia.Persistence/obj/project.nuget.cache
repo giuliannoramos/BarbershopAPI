@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "/MlZ4rNGOd8t6Ty9eewLCXJ6WTaLRHUhWShiLbGfSt4gbMtsGho6WIhwqvDyoubD7Xcv2ou2uZ+X/dW95jHvng==",
+  "dgSpecHash": "ecGq+CwgkhyFzbkMkLZpYHQaFgVStISI38sQ9ajha5vWETd7sx7QnmVvP0y5PlTXVBgXU9grS74tkzFn2W3rnQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Guilherme\\Desktop\\barbe\\barbershopapi\\src\\Barbearia.Persistence\\Barbearia.Persistence.csproj",
+  "projectFilePath": "C:\\Users\\Guilherme\\Desktop\\barbershopapi\\src\\Barbearia.Persistence\\Barbearia.Persistence.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Guilherme\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\Guilherme\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

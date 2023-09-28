@@ -25,7 +25,7 @@ public class Order
 
     void IsCustomerValid()
     {
-        if (Person == null) throw new Exception("Order tem que ter um Customer");
+        if (PersonId == 0) throw new Exception("Order tem que ter um Customer");
     }
 
     void IsDataValid()

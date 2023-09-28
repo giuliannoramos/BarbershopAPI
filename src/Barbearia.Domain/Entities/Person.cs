@@ -12,4 +12,6 @@ public class Person
     public List<Address> Addresses {get; set;} = new();
     public List<Telephone> Telephones {get; set;} = new();
     public List<Order> Orders { get; set; } = new();
+    public List<Product> Products { get; set; } = new();//não é só suplier que tem produto?
+    public StockHistory? StockHistory { get; set; }
 }

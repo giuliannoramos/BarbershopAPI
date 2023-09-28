@@ -20,13 +20,21 @@ namespace Barbearia.Persistence.DbContexts
             var order = modelBuilder.Entity<Order>();
             var payment = modelBuilder.Entity<Payment>();
             var coupon = modelBuilder.Entity<Coupon>();
+            var orderProduct = modelBuilder.Entity<OrderProduct>();
 
-            modelBuilder.Entity<Person>().ToTable("Persons", t => t.ExcludeFromMigrations());
+            modelBuilder.Entity<Person>().ToTable("Person", t => t.ExcludeFromMigrations());
             modelBuilder.Entity<Address>().ToTable("Address", t => t.ExcludeFromMigrations());
-            modelBuilder.Entity<Telephone>().ToTable("Telephone", t => t.ExcludeFromMigrations()); // criada em CustomerContext
+            modelBuilder.Entity<Telephone>().ToTable("Telephone", t => t.ExcludeFromMigrations()); // criada em CustomerContext 
+            // modelBuilder.Entity<OrderProduct>().ToTable("OrderProduct", t => t.ExcludeFromMigrations());  
+            modelBuilder.Ignore<Suplier>();
+            modelBuilder.Ignore<Product>();
+            modelBuilder.Ignore<StockHistory>();   
+            modelBuilder.Ignore<OrderProduct>();   
+
+     
 
             order
-            .ToTable("Orders");
+            .ToTable("Order");
 
             order
             .Property(o => o.Number)
@@ -59,7 +67,7 @@ namespace Barbearia.Persistence.DbContexts
             .OnDelete(DeleteBehavior.Cascade);
 
             payment
-            .ToTable("Payments");
+            .ToTable("Payment");
 
             payment
             .Property(p => p.BuyDate)
@@ -96,7 +104,7 @@ namespace Barbearia.Persistence.DbContexts
             .IsRequired(false);
 
             coupon
-            .ToTable("Coupons");
+            .ToTable("Coupon");
 
             coupon
             .Property(c => c.CouponCode)
@@ -123,7 +131,87 @@ namespace Barbearia.Persistence.DbContexts
                     Number = 500,
                     PersonId = 1,
                     Status = 2,
-                    BuyDate = DateTime.UtcNow
+                    BuyDate = DateTime.UtcNow,
+                    StockHistories = new List<StockHistory>()
+                    {
+                        new StockHistory()
+                        {
+                            StockHistoryId = 1,
+                            Operation = 1,
+                            CurrentPrice = 23.5f,
+                            Amount = 20,
+                            Timestamp = DateTime.UtcNow,
+                            LastStockQuantity = 10,
+                            PersonId = 3,
+                            ItemId = 1,
+                            OrderId = 1
+                        }
+                    },
+                    Products = new List<Product>()
+                    {
+                        new Product()
+                        {
+                            ItemId = 1,
+                            Name = "Bombomzinho de energético",
+                            Description = "é bom e te deixa ligadão",
+                            Brand = "Josefa doces para gamers",
+                            SKU = "G4M3R5",
+                            QuantityInStock = 40,
+                            QuantityReserved = 35,
+                            ProductCategoryId = 1,
+                            PersonId = 3
+                        },
+                        new Product()
+                        {
+                            ItemId = 2,
+                            Name = "Gel Mil Grau",
+                            Description = "deixa o cabelo duro",
+                            Brand = "Microsoft Cooporations",
+                            SKU = "S0FT",
+                            QuantityInStock = 400,
+                            QuantityReserved = 20,
+                            ProductCategoryId = 2,
+                            PersonId = 4
+                        }
+                    }
+                },
+                new Order()
+                {
+                    OrderId = 2,
+                    Number = 501,
+                    PersonId = 2,
+                    Status = 2,
+                    BuyDate = DateTime.UtcNow,
+                    StockHistories = new List<StockHistory>()
+                    {
+                        new StockHistory()
+                        {
+                            StockHistoryId = 2,
+                            Operation = 3,
+                            CurrentPrice = 200.2f,
+                            Amount = 40,
+                            Timestamp = DateTime.UtcNow,
+                            LastStockQuantity = 32,
+                            PersonId = 4,
+                            ItemId = 2,
+                            OrderId = 2
+                        }
+                    },
+                    Products = new List<Product>()
+                    {
+                        new Product()
+                        {
+                            ItemId = 1,
+                            Name = "Bombomzinho de energético",
+                            Description = "é bom e te deixa ligadão",
+                            Brand = "Josefa doces para gamers",
+                            SKU = "G4M3R5",
+                            QuantityInStock = 40,
+                            QuantityReserved = 35,
+                            ProductCategoryId = 1,
+                            PersonId = 3
+                        }
+                    }
                 }
             );
 

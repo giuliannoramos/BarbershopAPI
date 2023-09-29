@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Barbearia.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class Correcao : Migration
+    public partial class customerContext : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -40,7 +40,7 @@ namespace Barbearia.Persistence.Migrations
                     AddressId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Street = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: false),
-                    Number = table.Column<int>(type: "integer", nullable: false),
+                    Number = table.Column<int>(type: "integer", nullable: true),
                     District = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: false),
                     City = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: false),
                     State = table.Column<string>(type: "character varying(2)", maxLength: 2, nullable: false),

@@ -161,6 +161,7 @@ using (var scope = app.Services.CreateScope())
     {
         var customerContext = scope.ServiceProvider.GetService<CustomerContext>();
         var orderContext = scope.ServiceProvider.GetService<OrderContext>();
+        var itemContext = scope.ServiceProvider.GetService<ItemContext>();
 
         if (customerContext != null)
         {
@@ -170,6 +171,10 @@ using (var scope = app.Services.CreateScope())
         if (orderContext != null)
         {
             await orderContext.Database.MigrateAsync();
+        }
+        if(itemContext !=null)
+        {
+            await itemContext.Database.MigrateAsync();
         }
     }
     catch (Exception ex)

@@ -36,13 +36,18 @@ namespace Barbearia.Persistence.DbContexts
                 .HasKey(p => p.ItemId);
 
             item
-                .Property(s => s.Name)
+                .Property(i => i.Name)
                 .HasMaxLength(80)
                 .IsRequired();
 
             item
-                .Property(s => s.Description)
+                .Property(i => i.Description)
                 .IsRequired();
+
+            item
+                .Property(i=>i.Price)
+                .IsRequired()
+                .HasPrecision(8,2);
 
             // product.HasNoKey();
 
@@ -59,7 +64,7 @@ namespace Barbearia.Persistence.DbContexts
                 .IsRequired();
 
             product
-                .HasOne(s => s.Suplier)
+                .HasOne(s => s.Supplier)
                 .WithMany(s => s.Products)
                 .HasForeignKey(s => s.PersonId)
                 .IsRequired();
@@ -139,6 +144,10 @@ namespace Barbearia.Persistence.DbContexts
                 .IsRequired();
 
             product
+                .Property(p=>p.Status)
+                .IsRequired();
+
+            product
                 .HasData(
                     new Product()
                     {
@@ -147,6 +156,8 @@ namespace Barbearia.Persistence.DbContexts
                         Description = "é bom e te deixa ligadão",
                         Brand = "Josefa doces para gamers",
                         SKU = "G4M3R5",
+                        Price = 20m,
+                        Status = 1,
                         QuantityInStock = 40,
                         QuantityReserved = 35,
                         ProductCategoryId = 1,
@@ -159,6 +170,8 @@ namespace Barbearia.Persistence.DbContexts
                         Description = "deixa o cabelo duro",
                         Brand = "Microsoft Cooporations",
                         SKU = "S0FT",
+                        Price = 40m,
+                        Status = 2,
                         QuantityInStock = 400,
                         QuantityReserved = 20,
                         ProductCategoryId = 2,
@@ -197,6 +210,7 @@ namespace Barbearia.Persistence.DbContexts
 
             stockHistory
                 .Property(s => s.CurrentPrice)
+                .HasPrecision(8,2)
                 .IsRequired();
 
             stockHistory
@@ -216,8 +230,8 @@ namespace Barbearia.Persistence.DbContexts
                 .WithMany(o => o.StockHistories)
                 .HasForeignKey(o => o.OrderId);
 
-            stockHistory//pelo que entendi, isso é pra dizer que StockHistory vai ser a que vai ter o suplier
-                .HasOne(s => s.Suplier)
+            stockHistory//pelo que entendi, isso é pra dizer que StockHistory vai ser a que vai ter o Supplier
+                .HasOne(s => s.Supplier)
                 .WithOne(s => s.StockHistory)
                 .HasForeignKey<StockHistory>(s => s.PersonId)
                 .IsRequired();
@@ -229,7 +243,7 @@ namespace Barbearia.Persistence.DbContexts
                     {
                         StockHistoryId = 1,
                         Operation = 1,
-                        CurrentPrice = 23.5f,
+                        CurrentPrice = 23.5m,
                         Amount = 20,
                         Timestamp = DateTime.UtcNow,
                         LastStockQuantity = 10,
@@ -241,7 +255,7 @@ namespace Barbearia.Persistence.DbContexts
                     {
                         StockHistoryId = 2,
                         Operation = 3,
-                        CurrentPrice = 200.2f,
+                        CurrentPrice = 200.2m,
                         Amount = 40,
                         Timestamp = DateTime.UtcNow,
                         LastStockQuantity = 32,

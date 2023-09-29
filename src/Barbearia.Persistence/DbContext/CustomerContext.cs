@@ -25,7 +25,7 @@ namespace Barbearia.Persistence.DbContexts
             var customer = modelBuilder.Entity<Customer>();
             var product = modelBuilder.Entity<Product>();
             var item = modelBuilder.Entity<Item>();
-            var suplier = modelBuilder.Entity<Suplier>();
+            var Supplier = modelBuilder.Entity<Supplier>();
             var telephone = modelBuilder.Entity<Telephone>();
             var address = modelBuilder.Entity<Address>();
 
@@ -45,7 +45,7 @@ namespace Barbearia.Persistence.DbContexts
             .HasDiscriminator<int>("PersonType")
             .HasValue<Person>(1)
             .HasValue<Customer>(2)
-            .HasValue<Suplier>(3);
+            .HasValue<Supplier>(3);
 
             person
                 .Property(p => p.Name)
@@ -166,27 +166,27 @@ namespace Barbearia.Persistence.DbContexts
 
            
 
-            suplier
+            Supplier
                 .Property(p => p.Cnpj)
                 .HasMaxLength(14);
 
-            suplier
+            Supplier
                 .Property(p => p.Gender);
 
-            suplier
+            Supplier
                 .Property(p => p.Cpf)
                 .HasMaxLength(11);
 
 
-            // suplier
+            // Supplier
             //     .HasMany(s => s.Products)
-            //     .WithOne(s => s.Suplier)
+            //     .WithOne(s => s.Supplier)
             //     .HasForeignKey(s => s.PersonId)
             //     .IsRequired();
 
-            suplier
+            Supplier
                 .HasData(
-                    new Suplier()
+                    new Supplier()
                     {
                         PersonId = 3,
                         Name = "Josefina",
@@ -195,7 +195,7 @@ namespace Barbearia.Persistence.DbContexts
                         Cpf = "73473943096",
                         Email = "josefacraft@hotmail.com",
                     },
-                    new Suplier()
+                    new Supplier()
                     {
                         PersonId = 4,
                         Name = "Microsoft",

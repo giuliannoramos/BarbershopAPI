@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Barbearia.Persistence.Migrations
 {
     [DbContext(typeof(CustomerContext))]
-    [Migration("20230928191000_Correcao")]
-    partial class Correcao
+    [Migration("20230929181818_customerContext")]
+    partial class customerContext
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -53,7 +53,7 @@ namespace Barbearia.Persistence.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("character varying(60)");
 
-                    b.Property<int>("Number")
+                    b.Property<int?>("Number")
                         .HasColumnType("integer");
 
                     b.Property<int>("PersonId")
@@ -141,6 +141,9 @@ namespace Barbearia.Persistence.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
 
                     b.HasKey("ItemId");
 
@@ -281,12 +284,15 @@ namespace Barbearia.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("SuplierPersonId")
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("SupplierPersonId")
                         .HasColumnType("integer");
 
                     b.HasIndex("CustomerPersonId");
 
-                    b.HasIndex("SuplierPersonId");
+                    b.HasIndex("SupplierPersonId");
 
                     b.ToTable("Product", null, t =>
                         {
@@ -323,7 +329,7 @@ namespace Barbearia.Persistence.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Barbearia.Domain.Entities.Suplier", b =>
+            modelBuilder.Entity("Barbearia.Domain.Entities.Supplier", b =>
                 {
                     b.HasBaseType("Barbearia.Domain.Entities.Person");
 
@@ -386,11 +392,11 @@ namespace Barbearia.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Barbearia.Domain.Entities.Suplier", "Suplier")
+                    b.HasOne("Barbearia.Domain.Entities.Supplier", "Supplier")
                         .WithMany("Products")
-                        .HasForeignKey("SuplierPersonId");
+                        .HasForeignKey("SupplierPersonId");
 
-                    b.Navigation("Suplier");
+                    b.Navigation("Supplier");
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Person", b =>
@@ -405,7 +411,7 @@ namespace Barbearia.Persistence.Migrations
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("Barbearia.Domain.Entities.Suplier", b =>
+            modelBuilder.Entity("Barbearia.Domain.Entities.Supplier", b =>
                 {
                     b.Navigation("Products");
                 });

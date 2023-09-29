@@ -27,7 +27,7 @@ public class CustomerRepository : ICustomerRepository
 
         if (!string.IsNullOrWhiteSpace(searchQuery))
         {
-            var name = searchQuery.Trim();
+            var name = searchQuery.Trim().ToLower();
             collection = collection.Where(
 
                 c => c.Name.ToLower().Contains(name)

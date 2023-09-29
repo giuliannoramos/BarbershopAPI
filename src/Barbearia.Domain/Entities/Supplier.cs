@@ -1,6 +1,6 @@
 namespace Barbearia.Domain.Entities;
 
-public class Suplier : Person
+public class Supplier : Person
 {
     // private void CheckCnpj()
     // {
@@ -94,7 +94,7 @@ public class Suplier : Person
         }
     }
 
-    public void ValidateSuplier()
+    public void ValidateSupplier()
     {
         //CheckCnpj();
         CheckOrder();

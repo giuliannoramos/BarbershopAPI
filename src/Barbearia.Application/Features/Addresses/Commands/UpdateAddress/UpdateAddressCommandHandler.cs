@@ -2,6 +2,7 @@ using AutoMapper;
 using Barbearia.Application.Contracts.Repositories;
 using Barbearia.Domain.Entities;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace Barbearia.Application.Features.Addresses.Commands.UpdateAddress;
 
@@ -9,11 +10,13 @@ public class UpdateAddressCommandHandler : IRequestHandler<UpdateAddressCommand,
 {
     private readonly ICustomerRepository _customerRepository;
     private readonly IMapper _mapper;
+    private readonly ILogger<UpdateAddressCommandHandler> _logger;
 
-    public UpdateAddressCommandHandler(ICustomerRepository customerRepository, IMapper mapper)
+    public UpdateAddressCommandHandler(ICustomerRepository customerRepository, IMapper mapper, ILogger<UpdateAddressCommandHandler> logger)
     {
         _customerRepository = customerRepository;
         _mapper = mapper;
+        _logger = logger;
     }
 
     public async Task<UpdateAddressCommandResponse> Handle(UpdateAddressCommand request, CancellationToken cancellationToken)
@@ -48,6 +51,18 @@ public class UpdateAddressCommandHandler : IRequestHandler<UpdateAddressCommand,
         }
 
         _mapper.Map(request, addressToUpdate);
+
+        try
+        {
+            addressToUpdate.ValidateAddress();
+        }
+        catch (Exception ex)
+        {
+            response.ErrorType = Error.ValidationProblem;
+            response.Errors.Add("Address_Validation", new[] { "Error in address validation" });
+            _logger.LogError(ex, "erro de validação em create address");
+            return response;
+        }
 
         await _customerRepository.SaveChangesAsync();
 

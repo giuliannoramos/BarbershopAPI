@@ -3,6 +3,7 @@ using Barbearia.Application.Contracts.Repositories;
 using Barbearia.Domain.Entities;
 using FluentValidation;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace Barbearia.Application.Features.Telephones.Commands.UpdateTelephone;
 
@@ -11,10 +12,13 @@ public class UpdateTelephoneCommandHandler : IRequestHandler<UpdateTelephoneComm
     private readonly ICustomerRepository _customerRepository;
     private readonly IMapper _mapper;
     private readonly IValidator<UpdateTelephoneCommand> _validator;
-    public UpdateTelephoneCommandHandler(ICustomerRepository customerRepository, IMapper mapper, IValidator<UpdateTelephoneCommand> validator){
+    private readonly ILogger<UpdateTelephoneCommandHandler> _logger;
+    public UpdateTelephoneCommandHandler(ICustomerRepository customerRepository, IMapper mapper, IValidator<UpdateTelephoneCommand> validator
+    , ILogger<UpdateTelephoneCommandHandler> logger){
         _mapper = mapper;
         _customerRepository = customerRepository;
         _validator = validator;
+        _logger = logger;
     }
     public async Task<UpdateTelephoneCommandResponse> Handle(UpdateTelephoneCommand request, CancellationToken cancellationToken)
     {
@@ -44,6 +48,18 @@ public class UpdateTelephoneCommandHandler : IRequestHandler<UpdateTelephoneComm
         }
 
         _mapper.Map(request, telephoneToUpdate);
+
+        try
+        {
+            telephoneToUpdate.ValidateTelephone();
+        }
+        catch (Exception ex)
+        {
+            response.ErrorType = Error.ValidationProblem;
+            response.Errors.Add("Telephone_Validation", new[] { "Error in telephone validation" });
+            _logger.LogError(ex, "erro de validação em create telephone");
+            return response;
+        }
 
         await _customerRepository.SaveChangesAsync();
 

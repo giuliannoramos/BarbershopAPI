@@ -22,4 +22,13 @@ namespace Barbearia.Application.Features.Telephones.Commands.CreateTelephone;
 
         return true;
     }
+
+    public bool CheckNumber(string number)
+    {
+        if (!(number.Length == 11 && number.All(char.IsDigit)))
+        {
+            return false;
+        }
+        return true;
+    }
  }

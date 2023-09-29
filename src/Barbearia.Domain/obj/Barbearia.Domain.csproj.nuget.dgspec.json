@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\testandoBranchGiuliano\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj": {}
+    "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\ApiAtualizada\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj": {}
   },
   "projects": {
-    "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\testandoBranchGiuliano\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj": {
+    "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\ApiAtualizada\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\testandoBranchGiuliano\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\ApiAtualizada\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj",
         "projectName": "Barbearia.Domain",
-        "projectPath": "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\testandoBranchGiuliano\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj",
+        "projectPath": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\ApiAtualizada\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj",
         "packagesPath": "C:\\Users\\lucas\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\testandoBranchGiuliano\\barbershopapi\\src\\Barbearia.Domain\\obj\\",
+        "outputPath": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\ApiAtualizada\\barbershopapi\\src\\Barbearia.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Users\\lucas\\AppData\\Roaming\\Godot\\mono\\GodotNuGetFallbackFolder",

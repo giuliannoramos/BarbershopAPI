@@ -59,6 +59,7 @@ public class OrderRepository : IOrderRepository
     {
         return await _context.Orders
         .Include(o=>o.Person)
+        .Include(o=>o.Payment) 
         .FirstOrDefaultAsync(o=>o.OrderId == orderId);
     }
 
@@ -69,9 +70,30 @@ public class OrderRepository : IOrderRepository
         .FirstOrDefaultAsync(o=>o.Number == number);
     }
 
+    public async Task<Payment?> GetPaymentAsync(int orderId)
+    {
+        return await _context.Payments
+        .Include(p=>p.Coupon)
+        .FirstOrDefaultAsync(p=>p.OrderId == orderId);
+    }
+
     public void AddOrder(Order order)
     {
         _context.Orders.Add(order);
+    }
+
+    public void AddPayment(Order order, Payment payment)
+    {
+        order.Payment = payment;
+    }
+
+    public void DeletePayment(Order order, Payment payment)
+    {
+        if(order.Payment!=null)
+        {
+            _context.Payments.Remove(order.Payment);
+        }
+        order.Payment = null;
     }
 
     public void DeleteOrder(Order order)

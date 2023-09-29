@@ -28,6 +28,10 @@ using Barbearia.Application.Features.Orders.Queries.GetAllOrders;
 using Barbearia.Application.Features.Orders.Queries.GetOrderById;
 using Barbearia.Application.Features.Orders.Queries.GetOrderByNumber;
 using Barbearia.Application.Features.Orders.Commands.CreateOrder;
+using Barbearia.Application.Features.Payments.Queries.GetPayment;
+using Barbearia.Application.Features.Payments.Commands.CreatePayment;
+using Barbearia.Application.Features.Payments.Commands.UpdatePayment;
+using Barbearia.Application.Features.Payments.Commands.DeletePayment;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -107,6 +111,11 @@ builder.Services.AddScoped<IRequestHandler<UpdateOrderCommand, UpdateOrderComman
 builder.Services.AddScoped<IValidator<UpdateOrderCommand>, UpdateOrderCommandValidator>();
 
 builder.Services.AddScoped<IRequestHandler<DeleteOrderCommand, bool>, DeleteOrderCommandHandler>();
+
+builder.Services.AddScoped<IRequestHandler<GetPaymentQuery,GetPaymentDto>,GetPaymentQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<CreatePaymentCommand, CreatePaymentCommandResponse>, CreatePaymentCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<UpdatePaymentCommand, UpdatePaymentCommandResponse>, UpdatePaymentCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<DeletePaymentCommand, bool>, DeletePaymentCommandHandler>();
 
 
 

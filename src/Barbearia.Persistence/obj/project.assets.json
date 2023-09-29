@@ -1304,11 +1304,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\testandoBranchGiuliano\\barbershopapi\\src\\Barbearia.Persistence\\Barbearia.Persistence.csproj",
+      "projectUniqueName": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\ApiAtualizada\\barbershopapi\\src\\Barbearia.Persistence\\Barbearia.Persistence.csproj",
       "projectName": "Barbearia.Persistence",
-      "projectPath": "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\testandoBranchGiuliano\\barbershopapi\\src\\Barbearia.Persistence\\Barbearia.Persistence.csproj",
+      "projectPath": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\ApiAtualizada\\barbershopapi\\src\\Barbearia.Persistence\\Barbearia.Persistence.csproj",
       "packagesPath": "C:\\Users\\lucas\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\testandoBranchGiuliano\\barbershopapi\\src\\Barbearia.Persistence\\obj\\",
+      "outputPath": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\ApiAtualizada\\barbershopapi\\src\\Barbearia.Persistence\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Users\\lucas\\AppData\\Roaming\\Godot\\mono\\GodotNuGetFallbackFolder",
@@ -1331,11 +1331,11 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\testandoBranchGiuliano\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj": {
-              "projectPath": "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\testandoBranchGiuliano\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj"
+            "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\ApiAtualizada\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj": {
+              "projectPath": "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\ApiAtualizada\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj"
             },
-            "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\testandoBranchGiuliano\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj": {
-              "projectPath": "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\testandoBranchGiuliano\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj"
+            "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\ApiAtualizada\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj": {
+              "projectPath": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\ApiAtualizada\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj"
             }
           }
         }

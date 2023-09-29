@@ -26,7 +26,7 @@ namespace Barbearia.Persistence.DbContexts
             modelBuilder.Entity<Address>().ToTable("Address", t => t.ExcludeFromMigrations());
             modelBuilder.Entity<Telephone>().ToTable("Telephone", t => t.ExcludeFromMigrations()); // criada em CustomerContext 
             // modelBuilder.Entity<OrderProduct>().ToTable("OrderProduct", t => t.ExcludeFromMigrations());  
-            modelBuilder.Ignore<Suplier>();
+            modelBuilder.Ignore<Supplier>();
             modelBuilder.Ignore<Product>();
             modelBuilder.Ignore<StockHistory>();   
             modelBuilder.Ignore<OrderProduct>();   
@@ -138,7 +138,7 @@ namespace Barbearia.Persistence.DbContexts
                         {
                             StockHistoryId = 1,
                             Operation = 1,
-                            CurrentPrice = 23.5f,
+                            CurrentPrice = 23.5m,
                             Amount = 20,
                             Timestamp = DateTime.UtcNow,
                             LastStockQuantity = 10,
@@ -188,7 +188,7 @@ namespace Barbearia.Persistence.DbContexts
                         {
                             StockHistoryId = 2,
                             Operation = 3,
-                            CurrentPrice = 200.2f,
+                            CurrentPrice = 200.2m,
                             Amount = 40,
                             Timestamp = DateTime.UtcNow,
                             LastStockQuantity = 32,

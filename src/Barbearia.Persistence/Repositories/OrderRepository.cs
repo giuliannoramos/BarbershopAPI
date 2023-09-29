@@ -26,7 +26,7 @@ public class OrderRepository : IOrderRepository
 
         if (!string.IsNullOrWhiteSpace(searchQuery))
         {
-            var name = searchQuery.Trim();
+            var name = searchQuery.Trim().ToLower();
             collection = collection.Where(
                 o => o.Number.ToString().Contains(searchQuery)
                 || o.Person != null

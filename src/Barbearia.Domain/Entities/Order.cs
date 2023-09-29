@@ -6,7 +6,7 @@ namespace Barbearia.Domain.Entities;
 public class Order
 {
     public int OrderId { get; set; }
-    public int? Number { get; set; }
+    public int Number { get; set; }
     public int Status { get; set; }
     public DateTime BuyDate { get; set; }
     public int? PersonId { get; set; }
@@ -18,7 +18,7 @@ public class Order
 
     private void CheckNumber()
     {
-        if (Number == null)
+        if (Number == 0)
         {
             throw new ArgumentException("Numero não pode estar vazio.");
         }

@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Barbearia.Persistence.Migrations.Item
 {
     /// <inheritdoc />
-    public partial class Correcao : Migration
+    public partial class itemContext : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,6 +21,7 @@ namespace Barbearia.Persistence.Migrations.Item
                     ItemId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: false),
+                    Price = table.Column<decimal>(type: "numeric(8,2)", precision: 8, scale: 2, nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
@@ -47,6 +48,7 @@ namespace Barbearia.Persistence.Migrations.Item
                 {
                     ItemId = table.Column<int>(type: "integer", nullable: false),
                     Brand = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: false),
+                    Status = table.Column<int>(type: "integer", nullable: false),
                     SKU = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     QuantityInStock = table.Column<int>(type: "integer", nullable: false),
                     QuantityReserved = table.Column<int>(type: "integer", nullable: false),
@@ -107,7 +109,7 @@ namespace Barbearia.Persistence.Migrations.Item
                     StockHistoryId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Operation = table.Column<int>(type: "integer", nullable: false),
-                    CurrentPrice = table.Column<float>(type: "real", nullable: false),
+                    CurrentPrice = table.Column<decimal>(type: "numeric(8,2)", precision: 8, scale: 2, nullable: false),
                     Amount = table.Column<int>(type: "integer", nullable: false),
                     Timestamp = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     LastStockQuantity = table.Column<int>(type: "integer", nullable: false),
@@ -140,11 +142,11 @@ namespace Barbearia.Persistence.Migrations.Item
 
             migrationBuilder.InsertData(
                 table: "Item",
-                columns: new[] { "ItemId", "Description", "Name" },
+                columns: new[] { "ItemId", "Description", "Name", "Price" },
                 values: new object[,]
                 {
-                    { 1, "é bom e te deixa ligadão", "Bombomzinho de energético" },
-                    { 2, "deixa o cabelo duro", "Gel Mil Grau" }
+                    { 1, "é bom e te deixa ligadão", "Bombomzinho de energético", 20m },
+                    { 2, "deixa o cabelo duro", "Gel Mil Grau", 40m }
                 });
 
             migrationBuilder.InsertData(
@@ -158,11 +160,11 @@ namespace Barbearia.Persistence.Migrations.Item
 
             migrationBuilder.InsertData(
                 table: "Product",
-                columns: new[] { "ItemId", "Brand", "PersonId", "ProductCategoryId", "QuantityInStock", "QuantityReserved", "SKU" },
+                columns: new[] { "ItemId", "Brand", "PersonId", "ProductCategoryId", "QuantityInStock", "QuantityReserved", "SKU", "Status" },
                 values: new object[,]
                 {
-                    { 1, "Josefa doces para gamers", 3, 1, 40, 35, "G4M3R5" },
-                    { 2, "Microsoft Cooporations", 4, 2, 400, 20, "S0FT" }
+                    { 1, "Josefa doces para gamers", 3, 1, 40, 35, "G4M3R5", 1 },
+                    { 2, "Microsoft Cooporations", 4, 2, 400, 20, "S0FT", 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -180,8 +182,8 @@ namespace Barbearia.Persistence.Migrations.Item
                 columns: new[] { "StockHistoryId", "Amount", "CurrentPrice", "ItemId", "LastStockQuantity", "Operation", "OrderId", "PersonId", "Timestamp" },
                 values: new object[,]
                 {
-                    { 1, 20, 23.5f, 1, 10, 1, 1, 3, new DateTime(2023, 9, 28, 19, 10, 17, 841, DateTimeKind.Utc).AddTicks(8572) },
-                    { 2, 40, 200.2f, 2, 32, 3, 2, 4, new DateTime(2023, 9, 28, 19, 10, 17, 841, DateTimeKind.Utc).AddTicks(8576) }
+                    { 1, 20, 23.5m, 1, 10, 1, 1, 3, new DateTime(2023, 9, 29, 18, 19, 35, 330, DateTimeKind.Utc).AddTicks(5262) },
+                    { 2, 40, 200.2m, 2, 32, 3, 2, 4, new DateTime(2023, 9, 29, 18, 19, 35, 330, DateTimeKind.Utc).AddTicks(5269) }
                 });
 
             migrationBuilder.CreateIndex(

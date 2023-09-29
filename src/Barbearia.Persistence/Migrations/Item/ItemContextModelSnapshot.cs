@@ -39,6 +39,10 @@ namespace Barbearia.Persistence.Migrations.Item
                         .HasMaxLength(80)
                         .HasColumnType("character varying(80)");
 
+                    b.Property<decimal>("Price")
+                        .HasPrecision(8, 2)
+                        .HasColumnType("numeric(8,2)");
+
                     b.HasKey("ItemId");
 
                     b.ToTable("Item");
@@ -60,7 +64,7 @@ namespace Barbearia.Persistence.Migrations.Item
                     b.Property<int>("Number")
                         .HasColumnType("integer");
 
-                    b.Property<int>("PersonId")
+                    b.Property<int?>("PersonId")
                         .HasColumnType("integer");
 
                     b.Property<int>("Status")
@@ -195,8 +199,9 @@ namespace Barbearia.Persistence.Migrations.Item
                     b.Property<int>("Amount")
                         .HasColumnType("integer");
 
-                    b.Property<float>("CurrentPrice")
-                        .HasColumnType("real");
+                    b.Property<decimal>("CurrentPrice")
+                        .HasPrecision(8, 2)
+                        .HasColumnType("numeric(8,2)");
 
                     b.Property<int>("ItemId")
                         .HasColumnType("integer");
@@ -232,25 +237,25 @@ namespace Barbearia.Persistence.Migrations.Item
                         {
                             StockHistoryId = 1,
                             Amount = 20,
-                            CurrentPrice = 23.5f,
+                            CurrentPrice = 23.5m,
                             ItemId = 1,
                             LastStockQuantity = 10,
                             Operation = 1,
                             OrderId = 1,
                             PersonId = 3,
-                            Timestamp = new DateTime(2023, 9, 28, 19, 10, 17, 841, DateTimeKind.Utc).AddTicks(8572)
+                            Timestamp = new DateTime(2023, 9, 29, 18, 19, 35, 330, DateTimeKind.Utc).AddTicks(5262)
                         },
                         new
                         {
                             StockHistoryId = 2,
                             Amount = 40,
-                            CurrentPrice = 200.2f,
+                            CurrentPrice = 200.2m,
                             ItemId = 2,
                             LastStockQuantity = 32,
                             Operation = 3,
                             OrderId = 2,
                             PersonId = 4,
-                            Timestamp = new DateTime(2023, 9, 28, 19, 10, 17, 841, DateTimeKind.Utc).AddTicks(8576)
+                            Timestamp = new DateTime(2023, 9, 29, 18, 19, 35, 330, DateTimeKind.Utc).AddTicks(5269)
                         });
                 });
 
@@ -280,6 +285,9 @@ namespace Barbearia.Persistence.Migrations.Item
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
                     b.HasIndex("PersonId");
 
                     b.HasIndex("ProductCategoryId")
@@ -293,41 +301,43 @@ namespace Barbearia.Persistence.Migrations.Item
                             ItemId = 1,
                             Description = "é bom e te deixa ligadão",
                             Name = "Bombomzinho de energético",
+                            Price = 20m,
                             Brand = "Josefa doces para gamers",
                             PersonId = 3,
                             ProductCategoryId = 1,
                             QuantityInStock = 40,
                             QuantityReserved = 35,
-                            SKU = "G4M3R5"
+                            SKU = "G4M3R5",
+                            Status = 1
                         },
                         new
                         {
                             ItemId = 2,
                             Description = "deixa o cabelo duro",
                             Name = "Gel Mil Grau",
+                            Price = 40m,
                             Brand = "Microsoft Cooporations",
                             PersonId = 4,
                             ProductCategoryId = 2,
                             QuantityInStock = 400,
                             QuantityReserved = 20,
-                            SKU = "S0FT"
+                            SKU = "S0FT",
+                            Status = 2
                         });
                 });
 
-            modelBuilder.Entity("Barbearia.Domain.Entities.Suplier", b =>
+            modelBuilder.Entity("Barbearia.Domain.Entities.Supplier", b =>
                 {
                     b.HasBaseType("Barbearia.Domain.Entities.Person");
 
-                    b.HasDiscriminator().HasValue("Suplier");
+                    b.HasDiscriminator().HasValue("Supplier");
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Order", b =>
                 {
                     b.HasOne("Barbearia.Domain.Entities.Person", "Person")
                         .WithMany("Orders")
-                        .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PersonId");
 
                     b.Navigation("Person");
                 });
@@ -365,7 +375,7 @@ namespace Barbearia.Persistence.Migrations.Item
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Barbearia.Domain.Entities.Suplier", "Suplier")
+                    b.HasOne("Barbearia.Domain.Entities.Supplier", "Supplier")
                         .WithOne("StockHistory")
                         .HasForeignKey("Barbearia.Domain.Entities.StockHistory", "PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -375,7 +385,7 @@ namespace Barbearia.Persistence.Migrations.Item
 
                     b.Navigation("Product");
 
-                    b.Navigation("Suplier");
+                    b.Navigation("Supplier");
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Product", b =>
@@ -386,7 +396,7 @@ namespace Barbearia.Persistence.Migrations.Item
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Barbearia.Domain.Entities.Suplier", "Suplier")
+                    b.HasOne("Barbearia.Domain.Entities.Supplier", "Supplier")
                         .WithMany("Products")
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -400,7 +410,7 @@ namespace Barbearia.Persistence.Migrations.Item
 
                     b.Navigation("ProductCategory");
 
-                    b.Navigation("Suplier");
+                    b.Navigation("Supplier");
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Order", b =>
@@ -427,7 +437,7 @@ namespace Barbearia.Persistence.Migrations.Item
                     b.Navigation("StockHistories");
                 });
 
-            modelBuilder.Entity("Barbearia.Domain.Entities.Suplier", b =>
+            modelBuilder.Entity("Barbearia.Domain.Entities.Supplier", b =>
                 {
                     b.Navigation("Products");
 

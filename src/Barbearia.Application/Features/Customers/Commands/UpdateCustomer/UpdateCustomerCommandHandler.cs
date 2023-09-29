@@ -1,6 +1,7 @@
 using AutoMapper;
 using Barbearia.Application.Contracts.Repositories;
 using Barbearia.Application.Features.Customers.Commands.CreateCustomer;
+using Barbearia.Domain.Entities;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -45,17 +46,53 @@ public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerComman
 
         _mapper.Map(request, customerFromDatabase);
 
+        // Validação do cliente
         try
         {
-            customerFromDatabase.IsValid();
+            customerFromDatabase.ValidateCustomer();
         }
         catch (Exception ex)
         {
             response.ErrorType = Error.ValidationProblem;
             response.Errors.Add("Customer_Validation", new[] { "Error in customer validation" });
-            _logger.LogError(ex, "erro de validação em update customer");
+            _logger.LogError(ex, "erro de validação em create customer");
             return response;
         }
+
+        // Validação do número de telefone
+        foreach (var telephone in request.Telephones)
+        {
+            var telephoneEntity = _mapper.Map<Telephone>(telephone);
+            try
+            {
+                telephoneEntity.ValidateTelephone();
+            }
+            catch (Exception ex)
+            {
+                response.ErrorType = Error.ValidationProblem;
+                response.Errors.Add("Telephone_Validation", new[] { "Error in telephone validation" });
+                _logger.LogError(ex, "erro de validação em create telephone");
+                return response;
+            }
+        }
+
+        // Validação do endereço
+        foreach (var address in request.Addresses)
+        {
+            var addressEntity = _mapper.Map<Address>(address);
+            try
+            {
+                addressEntity.ValidateAddress();
+            }
+            catch (Exception ex)
+            {
+                response.ErrorType = Error.ValidationProblem;
+                response.Errors.Add("Address_Validation", new[] { "Error in address validation" });
+                _logger.LogError(ex, "erro de validação em create address");
+                return response;
+            }
+        }
+
         await _customerRepository.SaveChangesAsync();
 
         return response;

@@ -2,7 +2,7 @@ namespace Barbearia.Domain.Entities;
 
 public class Suplier : Person
 {
-    // public void ValidateCnpj()
+    // private void CheckCnpj()
     // {
     //     int[] multiplicador1 = new int[12] { 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
     //     int[] multiplicador2 = new int[13] { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
@@ -70,34 +70,35 @@ public class Suplier : Person
     // }
 
 
-    public void ValidateOrder()
+    private void CheckOrder()
     {
         if (Orders.Any())
         {
-            throw new Exception("Suplier não pode ter pedidos");
-        }
-    }
-    public void ValidateGender()//faz sentido isso dessa forma?
-    {
-        if ((Cnpj != null || Cnpj != "") && (Gender != 0))//se tiver Cnpj e tiver um gênero ta errado
-        {
-            throw new Exception("Suplier com CNPJ não pode ter gênero");
+            throw new Exception("Fornecedor não pode ter pedidos");
         }
     }
 
-    public void ValidateCpfOrCnpj()
+    private void CheckCpfOrCnpj()
     {
-        if((Cnpj == null || Cnpj == "") && (Cpf == null || Cpf == ""))
+        if (string.IsNullOrWhiteSpace(Cpf) && string.IsNullOrWhiteSpace(Cnpj))
         {
-            throw new Exception("Suplier tem que ter CPF ou CNPJ");
+            throw new Exception("Fornecedor deve ter CPF ou CNPJ");
         }
     }
 
-    public void IsValid()
+    private void CheckGender()
     {
-        // ValidateCnpj();
-        ValidateOrder();
-        ValidateGender();
-        ValidateCpfOrCnpj();
+        if (!string.IsNullOrWhiteSpace(Cnpj) && Gender != 0)
+        {
+            throw new Exception("Fornecedor com CNPJ não pode ter gênero");
+        }
+    }
+
+    public void ValidateSuplier()
+    {
+        //CheckCnpj();
+        CheckOrder();
+        CheckCpfOrCnpj();
+        CheckGender();
     }
 }

@@ -36,13 +36,12 @@ public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerComman
             return response;
         }
 
-
-
         var customerEntity = _mapper.Map<Customer>(request);
 
+        // Validação do cliente
         try
         {
-            customerEntity.IsValid();
+            customerEntity.ValidateCustomer();
         }
         catch (Exception ex)
         {
@@ -52,7 +51,39 @@ public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerComman
             return response;
         }
 
+        // Validação do número de telefone
+        foreach (var telephone in request.Telephones)
+        {
+            var telephoneEntity = _mapper.Map<Telephone>(telephone);
+            try
+            {
+                telephoneEntity.ValidateTelephone();
+            }
+            catch (Exception ex)
+            {
+                response.ErrorType = Error.ValidationProblem;
+                response.Errors.Add("Telephone_Validation", new[] { "Error in telephone validation" });
+                _logger.LogError(ex, "erro de validação em create telephone");
+                return response;
+            }
+        }
 
+        // Validação do endereço
+        foreach (var address in request.Addresses)
+        {
+            var addressEntity = _mapper.Map<Address>(address);
+            try
+            {
+                addressEntity.ValidateAddress();
+            }
+            catch (Exception ex)
+            {
+                response.ErrorType = Error.ValidationProblem;
+                response.Errors.Add("Address_Validation", new[] { "Error in address validation" });
+                _logger.LogError(ex, "erro de validação em create address");
+                return response;
+            }
+        }
 
         _customerRepository.AddCustomer(customerEntity);
         await _customerRepository.SaveChangesAsync();

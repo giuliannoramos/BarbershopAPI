@@ -2,38 +2,38 @@ namespace Barbearia.Domain.Entities;
 
 public class Customer : Person
 {
-    public void ValidateCustomerTelephone()
+    public void CheckCustomerTelephone()
     {
         if (Telephones.Count == 0)
         {
-            throw new Exception ("Um cliente deve conter pelo menos um telefone.");
+            throw new ArgumentException("Um cliente deve conter pelo menos um telefone.");
         }
         if (Telephones.Count > 1)
         {
-            throw new Exception("Um cliente só pode ter um telefone principal.");
+            throw new ArgumentException("Um cliente só pode ter um telefone principal.");
         }
     }
 
-    public void ValidateCustomerAddress()
+    public void CheckCustomerAddress()
     {
         if (Addresses.Count > 1)
         {
-            throw new Exception("Um cliente só pode ter um endereço cadastrado.");
+            throw new ArgumentException("Um cliente só pode ter um endereço cadastrado.");
         }
     }
 
-    public void ValidateCnpj()
+    public void CheckCnpj()
     {
-        if (Cnpj != null && Cnpj != "")
+        if (!string.IsNullOrEmpty(Cnpj))
         {
-            throw new Exception("Cliente não pode ter cnpj cadastrado");
+            throw new ArgumentException("Cliente não pode ter CNPJ cadastrado.");
         }
     }
 
-    public void IsValid()
+    public void ValidateCustomer()
     {
-        ValidateCustomerTelephone();
-        ValidateCustomerAddress();
-        ValidateCnpj();
+        CheckCustomerTelephone();
+        CheckCustomerAddress();
+        CheckCnpj();
     }
 }

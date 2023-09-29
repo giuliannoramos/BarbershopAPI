@@ -48,7 +48,9 @@ public class CreateCustomerCommandValidator : AbstractValidator<CreateCustomerCo
                     .NotEmpty()
                         .WithMessage("Telephone number cannot be empty")
                     .MaximumLength(80)
-                        .WithMessage("Telephone number should have at most 80 characters");
+                        .WithMessage("Telephone number should have at most 80 characters")
+                    .Must(CheckNumber)
+                        .WithMessage("Número de telefone inválido. Use o formato: 47988887777.");
 
                 telephone.RuleFor(t => t.Type)
                     .NotEmpty()
@@ -147,6 +149,15 @@ public class CreateCustomerCommandValidator : AbstractValidator<CreateCustomerCo
             return false;
         }
 
+        return true;
+    }
+
+    public bool CheckNumber(string number)
+    {
+        if (!(number.Length == 11 && number.All(char.IsDigit)))
+        {
+            return false;
+        }
         return true;
     }
 }

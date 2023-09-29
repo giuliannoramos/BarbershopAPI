@@ -49,7 +49,7 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Cre
 
         try
         {
-            orderEntity.IsValid();
+            orderEntity.ValidateOrder();
         }
         catch(Exception ex)
         {
@@ -58,8 +58,6 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Cre
             _logger.LogError(ex,"erro de validação em create order");
             return response;
         }
-
-
 
         _orderRepository.AddOrder(orderEntity);
         await _orderRepository.SaveChangesAsync();

@@ -261,28 +261,28 @@ namespace Barbearia.Persistence.DbContexts
                     {
                         TelephoneId = 1,
                         Number = "47988887777",
-                        Type = 1,
+                        Type = Telephone.TelephoneType.Mobile,
                         PersonId = 1
                     },
                     new Telephone()
                     {
                         TelephoneId = 2,
                         Number = "47988887777",
-                        Type = 2,
+                        Type = Telephone.TelephoneType.Landline,
                         PersonId = 2
                     },
                     new Telephone()
                     {
                         TelephoneId = 3,
                         Number = "47944887777",
-                        Type = 1,
+                        Type = Telephone.TelephoneType.Mobile,
                         PersonId = 3
                     },
                     new Telephone()
                     {
                         TelephoneId = 4,
                         Number = "55988844777",
-                        Type = 2,
+                        Type = Telephone.TelephoneType.Landline,
                         PersonId = 4
                     });
 

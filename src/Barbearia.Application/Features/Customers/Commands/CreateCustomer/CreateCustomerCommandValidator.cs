@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using FluentValidation;
 
 namespace Barbearia.Application.Features.Customers.Commands.CreateCustomer;
@@ -54,7 +55,9 @@ public class CreateCustomerCommandValidator : AbstractValidator<CreateCustomerCo
 
                 telephone.RuleFor(t => t.Type)
                     .NotEmpty()
-                        .WithMessage("Telephone type is required");
+                        .WithMessage("Telephone type is required")
+                    .IsInEnum()
+                        .WithMessage("Tipo de telefone inválido. O tipo deve ser Móvel ou Fixo.");
             });
 
         RuleFor(c => c.Addresses)
@@ -72,7 +75,9 @@ public class CreateCustomerCommandValidator : AbstractValidator<CreateCustomerCo
 
                 address.RuleFor(a => a.Number)
                     .NotEmpty()
-                        .WithMessage("Number cannot be empty");
+                        .WithMessage("Number cannot be empty")
+                    .Must(CheckAddressNumber)
+                        .WithMessage("Número inválido. O Número deve ser maior que zero.");
 
                 address.RuleFor(a => a.District)
                     .MaximumLength(60)
@@ -88,7 +93,9 @@ public class CreateCustomerCommandValidator : AbstractValidator<CreateCustomerCo
 
                 address.RuleFor(a => a.Cep)
                     .MaximumLength(8)
-                        .WithMessage("CEP should have at most 8 characters");
+                        .WithMessage("CEP should have at most 8 characters")
+                    .Must(CheckCep)
+                        .WithMessage("CEP inválido");
 
                 address.RuleFor(a => a.Complement)
                     .MaximumLength(80)
@@ -152,9 +159,42 @@ public class CreateCustomerCommandValidator : AbstractValidator<CreateCustomerCo
         return true;
     }
 
-    public bool CheckNumber(string number)
+    private bool CheckNumber(string number)
     {
         if (!(number.Length == 11 && number.All(char.IsDigit)))
+        {
+            return false;
+        }
+        return true;
+    }
+
+    private bool CheckCep(string cep)
+    {
+        if (string.IsNullOrEmpty(cep))
+        {
+            return false;
+        }
+
+        if (!Regex.IsMatch(cep, "^[0-9]{8}$"))
+        {
+            return false;
+        }
+
+        if (cep.Distinct().Count() == 1)
+        {
+            return false;
+        }
+
+        if (cep.StartsWith("0"))
+        {
+            return false;
+        }
+        return true;
+    }
+
+    private bool CheckAddressNumber(int number)
+    {
+        if (number <= 0)
         {
             return false;
         }

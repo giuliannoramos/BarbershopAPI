@@ -6,7 +6,7 @@ public class Address
 {
     public int AddressId { get; set; }
     public string Street { get; set; } = string.Empty;    
-    public int? Number { get; set; }
+    public int Number { get; set; }
     public string District { get; set; } = string.Empty;
     public string City { get; set; } = string.Empty;
     public string State { get; set; } = string.Empty;
@@ -25,7 +25,7 @@ public class Address
 
     private void CheckNumber()
     {
-        if (Number == null)
+        if (Number == 0)
         {
             throw new ArgumentException("Numero não pode estar vazio.");
         }

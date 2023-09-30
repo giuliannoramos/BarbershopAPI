@@ -25,7 +25,6 @@ c:/Users/giule/Dev/Barbearia/src/Barbearia.Domain/obj/Debug/net7.0/ref/Barbearia
 c:/Users/giule/Dev/barbershopapi/src/Barbearia.Domain/bin/Debug/net7.0/Barbearia.Domain.deps.json
 C:/Users/giule/Dev/barbershopapi/src/Barbearia.Domain/bin/Debug/net7.0/Barbearia.Domain.dll
 C:/Users/giule/Dev/barbershopapi/src/Barbearia.Domain/bin/Debug/net7.0/Barbearia.Domain.pdb
-C:/Users/giule/Dev/barbershopapi/src/Barbearia.Domain/obj/Debug/net7.0/Barbearia.Domain.csproj.AssemblyReference.cache
 C:/Users/giule/Dev/barbershopapi/src/Barbearia.Domain/obj/Debug/net7.0/Barbearia.Domain.GeneratedMSBuildEditorConfig.editorconfig
 C:/Users/giule/Dev/barbershopapi/src/Barbearia.Domain/obj/Debug/net7.0/Barbearia.Domain.AssemblyInfoInputs.cache
 C:/Users/giule/Dev/barbershopapi/src/Barbearia.Domain/obj/Debug/net7.0/Barbearia.Domain.AssemblyInfo.cs
@@ -142,7 +141,6 @@ C:/Users/Guilherme/Desktop/barbershopapi/src/Barbearia.Domain/obj/Debug/net7.0/r
 C:\Users\giule\dev\barbershopapi\src\Barbearia.Domain\bin\Debug\net7.0\Barbearia.Domain.deps.json
 C:\Users\giule\dev\barbershopapi\src\Barbearia.Domain\bin\Debug\net7.0\Barbearia.Domain.dll
 C:\Users\giule\dev\barbershopapi\src\Barbearia.Domain\bin\Debug\net7.0\Barbearia.Domain.pdb
-C:\Users\giule\dev\barbershopapi\src\Barbearia.Domain\obj\Debug\net7.0\Barbearia.Domain.csproj.AssemblyReference.cache
 C:\Users\giule\dev\barbershopapi\src\Barbearia.Domain\obj\Debug\net7.0\Barbearia.Domain.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\giule\dev\barbershopapi\src\Barbearia.Domain\obj\Debug\net7.0\Barbearia.Domain.AssemblyInfoInputs.cache
 C:\Users\giule\dev\barbershopapi\src\Barbearia.Domain\obj\Debug\net7.0\Barbearia.Domain.AssemblyInfo.cs

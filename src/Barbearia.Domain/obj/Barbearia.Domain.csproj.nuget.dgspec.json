@@ -1,25 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\ApiAtualizada\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj": {}
+    "C:\\Users\\giule\\Dev\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj": {}
   },
   "projects": {
-    "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\ApiAtualizada\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj": {
+    "C:\\Users\\giule\\Dev\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\ApiAtualizada\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\giule\\Dev\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj",
         "projectName": "Barbearia.Domain",
-        "projectPath": "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\ApiAtualizada\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj",
-        "packagesPath": "C:\\Users\\lucas\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\ApiAtualizada\\barbershopapi\\src\\Barbearia.Domain\\obj\\",
+        "projectPath": "C:\\Users\\giule\\Dev\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj",
+        "packagesPath": "C:\\Users\\giule\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\giule\\Dev\\barbershopapi\\src\\Barbearia.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Users\\lucas\\AppData\\Roaming\\Godot\\mono\\GodotNuGetFallbackFolder",
-          "D:\\visual studio componentes e ferramentas\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\lucas\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Users\\lucas\\AppData\\Roaming\\NuGet\\config\\Godot.Offline.Config",
+          "C:\\Users\\giule\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -28,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -61,7 +60,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -34,11 +34,12 @@ namespace Barbearia.Persistence.DbContexts
             modelBuilder.Entity<Product>().ToTable("Product", t => t.ExcludeFromMigrations());            
             modelBuilder.Entity<StockHistory>().ToTable("StockHistory", t => t.ExcludeFromMigrations());            
             modelBuilder.Ignore<Payment>();
-            modelBuilder.Ignore<StockHistory>();
+            // modelBuilder.Ignore<StockHistory>();
             modelBuilder.Ignore<Order>();
             modelBuilder.Ignore<Coupon>();
             modelBuilder.Ignore<ProductCategory>();
             modelBuilder.Ignore<OrderProduct>();
+
 
             person
             .ToTable("Person")
@@ -54,8 +55,7 @@ namespace Barbearia.Persistence.DbContexts
 
             person
                 .Property(p => p.BirthDate)
-                .HasColumnType("date")
-                .IsRequired();
+                .HasColumnType("date");
 
             person
                 .Property(p => p.Email)

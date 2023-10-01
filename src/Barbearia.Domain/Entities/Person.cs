@@ -12,6 +12,6 @@ public class Person
     public List<Address> Addresses {get; set;} = new();
     public List<Telephone> Telephones {get; set;} = new();
     public List<Order> Orders { get; set; } = new();
-    public List<Product> Products { get; set; } = new();//não é só Supplier que tem produto?
-    public StockHistory? StockHistory { get; set; }
+    public List<Product> Products { get; set; } = new();
+    public List <StockHistory> StockHistories { get; set; } = new();
 }

@@ -79,6 +79,26 @@ public class CustomerRepository : ICustomerRepository
         _context.Persons.Remove(customer);
     }
 
+    public async Task<Supplier?> GetSupplierByIdAsync(int supplierId)
+    {
+            return await _context.Persons.OfType<Supplier>()
+            .Include(s => s.Telephones)
+            .Include(s => s.Addresses)
+            .Include(s => s.Products)
+            .Include(s => s.StockHistories) 
+            .FirstOrDefaultAsync(s => s.PersonId == supplierId);
+    }
+
+    public void AddSupplier(Supplier supplier)
+    {
+        _context.Persons.Add(supplier);
+    }
+
+    public void DeleteSupplier(Supplier supplier)
+    {
+         _context.Persons.Remove(supplier);
+    }
+
     public async Task<IEnumerable<Address>?> GetAddressAsync(int customerId)
     {
         var customerFromDatabase = await GetCustomerByIdAsync(customerId);
@@ -116,4 +136,5 @@ public class CustomerRepository : ICustomerRepository
         .Include(p=>p.Orders)
         .FirstOrDefaultAsync(c=>c.PersonId == customerId);
     }
+
 }

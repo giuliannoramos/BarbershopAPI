@@ -26,7 +26,7 @@ public class ItemRepository : IItemRepository
         {
             var category = searchQuery.Trim().ToLower();
             collection = collection.Where(
-                p => p.ProductCategory.Name.ToLower().Contains(category)
+               p => p.ProductCategory != null && p.ProductCategory.Name.ToLower().Contains(category)
             );
         }
 

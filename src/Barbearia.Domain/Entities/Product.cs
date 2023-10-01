@@ -10,7 +10,7 @@ public class Product : Item{// não entendi se o product tem o mesmo id do item 
     public int ProductCategoryId { get; set; }
     public ProductCategory? ProductCategory { get; set; }
     public int PersonId { get; set; }
-    public Supplier? Supplier { get; set; }
+    public Person? Supplier { get; set; }
     public List<Order> Orders { get; set; } = new();
     public ICollection<OrderProduct> OrderProducts { get; set; } = new List<OrderProduct>();
 

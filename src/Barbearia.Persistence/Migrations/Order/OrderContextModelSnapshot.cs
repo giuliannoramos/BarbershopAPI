@@ -46,7 +46,7 @@ namespace Barbearia.Persistence.Migrations.Order
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("Number")
+                    b.Property<int>("Number")
                         .HasColumnType("integer");
 
                     b.Property<int>("PersonId")
@@ -101,9 +101,9 @@ namespace Barbearia.Persistence.Migrations.Order
                         {
                             CouponId = 1,
                             CouponCode = "teste3",
-                            CreationDate = new DateTime(2023, 9, 29, 18, 19, 19, 231, DateTimeKind.Utc).AddTicks(9920),
+                            CreationDate = new DateTime(2023, 10, 1, 0, 4, 23, 319, DateTimeKind.Utc).AddTicks(1497),
                             DiscountPercent = 10,
-                            ExpirationDate = new DateTime(2023, 9, 29, 18, 19, 19, 231, DateTimeKind.Utc).AddTicks(9921)
+                            ExpirationDate = new DateTime(2023, 10, 1, 0, 4, 23, 319, DateTimeKind.Utc).AddTicks(1498)
                         });
                 });
 
@@ -138,7 +138,7 @@ namespace Barbearia.Persistence.Migrations.Order
                         new
                         {
                             OrderId = 1,
-                            BuyDate = new DateTime(2023, 9, 29, 18, 19, 19, 231, DateTimeKind.Utc).AddTicks(9646),
+                            BuyDate = new DateTime(2023, 10, 1, 0, 4, 23, 319, DateTimeKind.Utc).AddTicks(1327),
                             Number = 500,
                             PersonId = 1,
                             Status = 2
@@ -146,7 +146,7 @@ namespace Barbearia.Persistence.Migrations.Order
                         new
                         {
                             OrderId = 2,
-                            BuyDate = new DateTime(2023, 9, 29, 18, 19, 19, 231, DateTimeKind.Utc).AddTicks(9670),
+                            BuyDate = new DateTime(2023, 10, 1, 0, 4, 23, 319, DateTimeKind.Utc).AddTicks(1353),
                             Number = 501,
                             PersonId = 2,
                             Status = 2
@@ -200,7 +200,7 @@ namespace Barbearia.Persistence.Migrations.Order
                         new
                         {
                             PaymentId = 1,
-                            BuyDate = new DateTime(2023, 9, 29, 18, 19, 19, 231, DateTimeKind.Utc).AddTicks(9907),
+                            BuyDate = new DateTime(2023, 10, 1, 0, 4, 23, 319, DateTimeKind.Utc).AddTicks(1483),
                             Description = "Para de ler isso aqui e vai programar",
                             GrossTotal = 80m,
                             NetTotal = 60m,

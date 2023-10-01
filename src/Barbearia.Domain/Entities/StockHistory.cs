@@ -8,8 +8,8 @@ public class StockHistory{
     public int LastStockQuantity {get;set;}
 
     public int PersonId {get;set;}
-    public Supplier? Supplier {get;set;}
-    public int ItemId {get;set;}
+    public Person? Supplier {get;set;}
+    public int ProductId {get;set;}
     public Product? Product {get;set;}
     public int OrderId {get;set;}
     public Order? Order {get;set;}

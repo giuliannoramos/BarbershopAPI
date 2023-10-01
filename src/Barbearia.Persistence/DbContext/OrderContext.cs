@@ -143,7 +143,7 @@ namespace Barbearia.Persistence.DbContexts
                             Timestamp = DateTime.UtcNow,
                             LastStockQuantity = 10,
                             PersonId = 3,
-                            ItemId = 1,
+                            ProductId = 1,
                             OrderId = 1
                         }
                     },
@@ -193,7 +193,7 @@ namespace Barbearia.Persistence.DbContexts
                             Timestamp = DateTime.UtcNow,
                             LastStockQuantity = 32,
                             PersonId = 4,
-                            ItemId = 2,
+                            ProductId = 2,
                             OrderId = 2
                         }
                     },

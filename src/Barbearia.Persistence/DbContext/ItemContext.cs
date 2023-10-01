@@ -51,16 +51,15 @@ namespace Barbearia.Persistence.DbContexts
 
             // product.HasNoKey();
 
-            product
-                .ToTable("Product");
-
             // product
             //     .HasKey(p => p.ItemId);
+            product
+            .ToTable("Product");
 
             product
                 .HasMany(s => s.StockHistories)
                 .WithOne(p => p.Product)
-                .HasForeignKey(s => s.ItemId)
+                .HasForeignKey(s => s.ProductId)
                 .IsRequired();
 
             product
@@ -121,8 +120,8 @@ namespace Barbearia.Persistence.DbContexts
 
             product
                 .HasOne(s => s.ProductCategory)
-                .WithOne(p => p.Product)
-                .HasForeignKey<Product>(s => s.ProductCategoryId)
+                .WithMany(p => p.Product)
+                .HasForeignKey(s => s.ProductCategoryId)
                 .IsRequired();
 
             product
@@ -232,8 +231,8 @@ namespace Barbearia.Persistence.DbContexts
 
             stockHistory//pelo que entendi, isso é pra dizer que StockHistory vai ser a que vai ter o Supplier
                 .HasOne(s => s.Supplier)
-                .WithOne(s => s.StockHistory)
-                .HasForeignKey<StockHistory>(s => s.PersonId)
+                .WithMany(s => s.StockHistories)
+                .HasForeignKey(s => s.PersonId)
                 .IsRequired();
 
 
@@ -248,7 +247,7 @@ namespace Barbearia.Persistence.DbContexts
                         Timestamp = DateTime.UtcNow,
                         LastStockQuantity = 10,
                         PersonId = 3,
-                        ItemId = 1,
+                        ProductId = 1,
                         OrderId = 1
                     },
                     new StockHistory()
@@ -260,7 +259,7 @@ namespace Barbearia.Persistence.DbContexts
                         Timestamp = DateTime.UtcNow,
                         LastStockQuantity = 32,
                         PersonId = 4,
-                        ItemId = 2,
+                        ProductId = 2,
                         OrderId = 2
                     }
                 );

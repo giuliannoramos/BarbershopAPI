@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Barbearia.Persistence.Migrations.Item
 {
     /// <inheritdoc />
-    public partial class itemContext : Migration
+    public partial class itemInitMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -114,7 +114,7 @@ namespace Barbearia.Persistence.Migrations.Item
                     Timestamp = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     LastStockQuantity = table.Column<int>(type: "integer", nullable: false),
                     PersonId = table.Column<int>(type: "integer", nullable: false),
-                    ItemId = table.Column<int>(type: "integer", nullable: false),
+                    ProductId = table.Column<int>(type: "integer", nullable: false),
                     OrderId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -133,8 +133,8 @@ namespace Barbearia.Persistence.Migrations.Item
                         principalColumn: "PersonId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_StockHistory_Product_ItemId",
-                        column: x => x.ItemId,
+                        name: "FK_StockHistory_Product_ProductId",
+                        column: x => x.ProductId,
                         principalTable: "Product",
                         principalColumn: "ItemId",
                         onDelete: ReferentialAction.Cascade);
@@ -179,11 +179,11 @@ namespace Barbearia.Persistence.Migrations.Item
 
             migrationBuilder.InsertData(
                 table: "StockHistory",
-                columns: new[] { "StockHistoryId", "Amount", "CurrentPrice", "ItemId", "LastStockQuantity", "Operation", "OrderId", "PersonId", "Timestamp" },
+                columns: new[] { "StockHistoryId", "Amount", "CurrentPrice", "LastStockQuantity", "Operation", "OrderId", "PersonId", "ProductId", "Timestamp" },
                 values: new object[,]
                 {
-                    { 1, 20, 23.5m, 1, 10, 1, 1, 3, new DateTime(2023, 9, 29, 18, 19, 35, 330, DateTimeKind.Utc).AddTicks(5262) },
-                    { 2, 40, 200.2m, 2, 32, 3, 2, 4, new DateTime(2023, 9, 29, 18, 19, 35, 330, DateTimeKind.Utc).AddTicks(5269) }
+                    { 1, 20, 23.5m, 10, 1, 1, 3, 1, new DateTime(2023, 10, 1, 0, 4, 36, 663, DateTimeKind.Utc).AddTicks(6143) },
+                    { 2, 40, 200.2m, 32, 3, 2, 4, 2, new DateTime(2023, 10, 1, 0, 4, 36, 663, DateTimeKind.Utc).AddTicks(6149) }
                 });
 
             migrationBuilder.CreateIndex(
@@ -199,13 +199,7 @@ namespace Barbearia.Persistence.Migrations.Item
             migrationBuilder.CreateIndex(
                 name: "IX_Product_ProductCategoryId",
                 table: "Product",
-                column: "ProductCategoryId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StockHistory_ItemId",
-                table: "StockHistory",
-                column: "ItemId");
+                column: "ProductCategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StockHistory_OrderId",
@@ -215,8 +209,12 @@ namespace Barbearia.Persistence.Migrations.Item
             migrationBuilder.CreateIndex(
                 name: "IX_StockHistory_PersonId",
                 table: "StockHistory",
-                column: "PersonId",
-                unique: true);
+                column: "PersonId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StockHistory_ProductId",
+                table: "StockHistory",
+                column: "ProductId");
         }
 
         /// <inheritdoc />

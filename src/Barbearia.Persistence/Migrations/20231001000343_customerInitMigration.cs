@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Barbearia.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class customerContext : Migration
+    public partial class customerInitMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -40,7 +40,7 @@ namespace Barbearia.Persistence.Migrations
                     AddressId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Street = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: false),
-                    Number = table.Column<int>(type: "integer", nullable: true),
+                    Number = table.Column<int>(type: "integer", nullable: false),
                     District = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: false),
                     City = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: false),
                     State = table.Column<string>(type: "character varying(2)", maxLength: 2, nullable: false),
@@ -107,10 +107,10 @@ namespace Barbearia.Persistence.Migrations
                 columns: new[] { "TelephoneId", "Number", "PersonId", "Type" },
                 values: new object[,]
                 {
-                    { 1, "47988887777", 1, 1 },
-                    { 2, "47988887777", 2, 2 },
-                    { 3, "47944887777", 3, 1 },
-                    { 4, "55988844777", 4, 2 }
+                    { 1, "47988887777", 1, 0 },
+                    { 2, "47988887777", 2, 1 },
+                    { 3, "47944887777", 3, 0 },
+                    { 4, "55988844777", 4, 1 }
                 });
 
             migrationBuilder.CreateIndex(

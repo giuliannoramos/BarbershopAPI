@@ -131,10 +131,6 @@ namespace Barbearia.Persistence.Migrations.Item
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("text");
@@ -152,10 +148,6 @@ namespace Barbearia.Persistence.Migrations.Item
                         {
                             t.ExcludeFromMigrations();
                         });
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Person");
-
-                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.ProductCategory", b =>
@@ -203,9 +195,6 @@ namespace Barbearia.Persistence.Migrations.Item
                         .HasPrecision(8, 2)
                         .HasColumnType("numeric(8,2)");
 
-                    b.Property<int>("ItemId")
-                        .HasColumnType("integer");
-
                     b.Property<int>("LastStockQuantity")
                         .HasColumnType("integer");
 
@@ -218,17 +207,19 @@ namespace Barbearia.Persistence.Migrations.Item
                     b.Property<int>("PersonId")
                         .HasColumnType("integer");
 
+                    b.Property<int>("ProductId")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("StockHistoryId");
 
-                    b.HasIndex("ItemId");
-
                     b.HasIndex("OrderId");
 
-                    b.HasIndex("PersonId")
-                        .IsUnique();
+                    b.HasIndex("PersonId");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("StockHistory", (string)null);
 
@@ -238,24 +229,24 @@ namespace Barbearia.Persistence.Migrations.Item
                             StockHistoryId = 1,
                             Amount = 20,
                             CurrentPrice = 23.5m,
-                            ItemId = 1,
                             LastStockQuantity = 10,
                             Operation = 1,
                             OrderId = 1,
                             PersonId = 3,
-                            Timestamp = new DateTime(2023, 9, 29, 18, 19, 35, 330, DateTimeKind.Utc).AddTicks(5262)
+                            ProductId = 1,
+                            Timestamp = new DateTime(2023, 10, 1, 0, 4, 36, 663, DateTimeKind.Utc).AddTicks(6143)
                         },
                         new
                         {
                             StockHistoryId = 2,
                             Amount = 40,
                             CurrentPrice = 200.2m,
-                            ItemId = 2,
                             LastStockQuantity = 32,
                             Operation = 3,
                             OrderId = 2,
                             PersonId = 4,
-                            Timestamp = new DateTime(2023, 9, 29, 18, 19, 35, 330, DateTimeKind.Utc).AddTicks(5269)
+                            ProductId = 2,
+                            Timestamp = new DateTime(2023, 10, 1, 0, 4, 36, 663, DateTimeKind.Utc).AddTicks(6149)
                         });
                 });
 
@@ -290,8 +281,7 @@ namespace Barbearia.Persistence.Migrations.Item
 
                     b.HasIndex("PersonId");
 
-                    b.HasIndex("ProductCategoryId")
-                        .IsUnique();
+                    b.HasIndex("ProductCategoryId");
 
                     b.ToTable("Product", (string)null);
 
@@ -326,13 +316,6 @@ namespace Barbearia.Persistence.Migrations.Item
                         });
                 });
 
-            modelBuilder.Entity("Barbearia.Domain.Entities.Supplier", b =>
-                {
-                    b.HasBaseType("Barbearia.Domain.Entities.Person");
-
-                    b.HasDiscriminator().HasValue("Supplier");
-                });
-
             modelBuilder.Entity("Barbearia.Domain.Entities.Order", b =>
                 {
                     b.HasOne("Barbearia.Domain.Entities.Person", "Person")
@@ -363,21 +346,21 @@ namespace Barbearia.Persistence.Migrations.Item
 
             modelBuilder.Entity("Barbearia.Domain.Entities.StockHistory", b =>
                 {
-                    b.HasOne("Barbearia.Domain.Entities.Product", "Product")
-                        .WithMany("StockHistories")
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Barbearia.Domain.Entities.Order", "Order")
                         .WithMany("StockHistories")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Barbearia.Domain.Entities.Supplier", "Supplier")
-                        .WithOne("StockHistory")
-                        .HasForeignKey("Barbearia.Domain.Entities.StockHistory", "PersonId")
+                    b.HasOne("Barbearia.Domain.Entities.Person", "Supplier")
+                        .WithMany("StockHistories")
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Barbearia.Domain.Entities.Product", "Product")
+                        .WithMany("StockHistories")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -396,15 +379,15 @@ namespace Barbearia.Persistence.Migrations.Item
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Barbearia.Domain.Entities.Supplier", "Supplier")
+                    b.HasOne("Barbearia.Domain.Entities.Person", "Supplier")
                         .WithMany("Products")
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Barbearia.Domain.Entities.ProductCategory", "ProductCategory")
-                        .WithOne("Product")
-                        .HasForeignKey("Barbearia.Domain.Entities.Product", "ProductCategoryId")
+                        .WithMany("Product")
+                        .HasForeignKey("ProductCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -423,6 +406,10 @@ namespace Barbearia.Persistence.Migrations.Item
             modelBuilder.Entity("Barbearia.Domain.Entities.Person", b =>
                 {
                     b.Navigation("Orders");
+
+                    b.Navigation("Products");
+
+                    b.Navigation("StockHistories");
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.ProductCategory", b =>
@@ -435,13 +422,6 @@ namespace Barbearia.Persistence.Migrations.Item
                     b.Navigation("OrderProducts");
 
                     b.Navigation("StockHistories");
-                });
-
-            modelBuilder.Entity("Barbearia.Domain.Entities.Supplier", b =>
-                {
-                    b.Navigation("Products");
-
-                    b.Navigation("StockHistory");
                 });
 #pragma warning restore 612, 618
         }

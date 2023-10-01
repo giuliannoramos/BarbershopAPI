@@ -11,6 +11,9 @@ public interface ICustomerRepository
     Task<Customer?> GetCustomerByIdAsync(int customerId);
     void AddCustomer(Customer customer);
     void DeleteCustomer(Customer customer);
+    Task<Supplier?> GetSupplierByIdAsync(int supplierId);
+    void AddSupplier(Supplier supplier);
+    void DeleteSupplier(Supplier supplier);
     Task<bool> SaveChangesAsync();
     Task<IEnumerable<Address>?> GetAddressAsync(int customerId);
     void AddAddress(Customer customer, Address address);   

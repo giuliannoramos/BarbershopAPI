@@ -15,28 +15,11 @@ public class CreateSupplierCommandValidator : AbstractValidator<CreateSupplierCo
             .MaximumLength(50)
                 .WithMessage("The {PropertyName} shouldn't have more than 50 characteres");
 
-        RuleFor(s => s.Cpf)
-            .NotEmpty()
-                .Must(ValidateCPF)
-                    .When(s => string.IsNullOrEmpty(s.Cnpj))
-                        .WithMessage("You should fill out a valid CPF");
-
-        RuleFor(s => s.Cpf)
-            .Empty()
-                .When(s => !string.IsNullOrEmpty(s.Cnpj))
-                    .WithMessage("You cant fill cpf and cnpj");
-
-
         RuleFor(s => s.Cnpj)
             .NotEmpty()
                 .Must(CheckCnpj)
-                    .When(s => string.IsNullOrEmpty(s.Cpf))
                         .WithMessage("You should fill out a valid Cnpj");
 
-        RuleFor(s => s.Cnpj)
-            .Empty()
-                .When(s => !string.IsNullOrEmpty(s.Cpf))
-                    .WithMessage("You cant fill cpf and cnpj");
 
         //devemos usar birth date como fundação da empresa?
         //deixei o birth date como opcional se for empresa
@@ -59,16 +42,6 @@ public class CreateSupplierCommandValidator : AbstractValidator<CreateSupplierCo
                 .WithMessage("Person Email should have at most 80 characters")
             .EmailAddress()
                 .WithMessage("Person Email should be a valid email address");
-
-        RuleFor(s => s.Gender)
-            .NotEmpty()
-                .When(s => string.IsNullOrEmpty(s.Cnpj))
-                    .WithMessage("you should fill out a gender");
-
-        RuleFor(c => c.Gender)
-            .Empty()
-                .When(c => !string.IsNullOrEmpty(c.Cnpj))
-                    .WithMessage("An organization can't have gender");
 
         RuleFor(s => s.Status)
             .NotEmpty()

@@ -173,6 +173,9 @@ namespace Barbearia.Persistence.DbContexts
                 .IsRequired();
 
             workingDay
+                .ToTable("WorkingDay");
+
+            workingDay
                 .Property(w => w.WorkDate)
                 .IsRequired();
 
@@ -211,6 +214,9 @@ namespace Barbearia.Persistence.DbContexts
                 .IsRequired();
 
             role
+                .ToTable("Role");  
+
+            role
                 .Property(r => r.Name)
                 .HasMaxLength(80)
                 .IsRequired();
@@ -226,19 +232,12 @@ namespace Barbearia.Persistence.DbContexts
                 .HasForeignKey(ro => ro.RoleId);
 
             schedule
+                .ToTable("Schedule");
+
+            schedule
                 .Property(s => s.Status)
                 .IsRequired();
-
-            workingDay
-                .ToTable("WorkingDay");
             
-            timeOff
-                .ToTable("TimeOff");
-
-            role
-                .ToTable("Role");           
-
-
             employee
                 .HasData(
                     new Employee()
@@ -356,6 +355,7 @@ namespace Barbearia.Persistence.DbContexts
                         Gender = 1,
                         Cpf = "73473943096",
                         Email = "veio@hotmail.com",
+                        Status =0
                     },
                     new Customer()
                     {
@@ -365,6 +365,7 @@ namespace Barbearia.Persistence.DbContexts
                         Gender = 2,
                         Cpf = "73473003096",
                         Email = "bill@gmail.com",
+                        Status = 0
                     });
 
             Supplier
@@ -374,8 +375,7 @@ namespace Barbearia.Persistence.DbContexts
                         PersonId = 3,
                         Name = "Josefina",
                         BirthDate = new DateOnly(1973, 2, 1),
-                        Gender = 2,
-                        Cpf = "73473943096",
+                        Cnpj = "73473003096986",
                         Email = "josefacraft@hotmail.com",
                         Status = Person.TypeStatus.Active,
                     },

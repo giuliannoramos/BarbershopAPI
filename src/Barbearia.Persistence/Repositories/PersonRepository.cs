@@ -161,7 +161,7 @@ public class PersonRepository : IPersonRepository
     public async Task<Customer?> GetCustomerWithOrdersByIdAsync(int customerId)
     {
         return await _context.Persons.OfType<Customer>()
-        .Include(p=>p.Orders)
+        .Include(c=>c.Orders)
         .FirstOrDefaultAsync(c=>c.PersonId == customerId);
     }
 

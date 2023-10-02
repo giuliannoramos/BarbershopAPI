@@ -38,6 +38,11 @@ using Barbearia.Application.Features.Suppliers.Commands.CreateSupplier;
 using Barbearia.Application.Features.Suppliers.Commands.UpdateSupplier;
 using Barbearia.Application.Features.Suppliers.Commands.DeleteSupplier;
 using Barbearia.Application.Features.SuppliersCollection;
+using Barbearia.Application.Features.Products.Queries.GetAllProducts;
+using Barbearia.Application.Features.Products.Queries.GetProductById;
+using Barbearia.Application.Features.Products.Commands.CreateProduct;
+using Barbearia.Application.Features.Products.Commands.DeleteProduct;
+using Barbearia.Application.Features.Products.Commands.UpdateProduct;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -117,24 +122,28 @@ builder.Services.AddScoped<IRequestHandler<UpdatePaymentCommand, UpdatePaymentCo
 builder.Services.AddScoped<IRequestHandler<DeletePaymentCommand, bool>, DeletePaymentCommandHandler>();
 // Product commands and queries
 builder.Services.AddScoped<IRequestHandler<GetProductsCollectionQuery, GetProductsCollectionQueryResponse>, GetProductsCollectionQueryHandler>();
-
+builder.Services.AddScoped<IRequestHandler<GetAllProductsQuery,IEnumerable<GetAllProductsDto>>,GetAllProductsQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<GetProductByIdQuery,GetProductByIdDto>,GetProductByIdQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<CreateProductCommand, CreateProductCommandResponse>, CreateProductCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<DeleteProductCommand, bool>, DeleteProductCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<UpdateProductCommand, UpdateProductCommandResponse>, UpdateProductCommandHandler>();
 
 //config banco de dados
 builder.Services.AddDbContext<PersonContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=1973");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678");
 }
 );
 
 builder.Services.AddDbContext<OrderContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=1973");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678");
 }
 );
 
 builder.Services.AddDbContext<ItemContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=1973");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678");
 }
 );
 

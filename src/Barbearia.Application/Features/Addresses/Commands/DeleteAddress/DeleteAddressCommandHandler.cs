@@ -5,16 +5,16 @@ namespace Barbearia.Application.Features.Addresses.Commands.DeleteAddress;
 
 public class DeleteAddressCommandHandler : IRequestHandler<DeleteAddressCommand, bool>
 {
-    private readonly ICustomerRepository _customerRepository;
+    private readonly IPersonRepository _personRepository;
 
-    public DeleteAddressCommandHandler(ICustomerRepository customerRepository)
+    public DeleteAddressCommandHandler(IPersonRepository personRepository)
     {
-        _customerRepository = customerRepository;
+        _personRepository = personRepository;
     }
 
     public async Task<bool> Handle(DeleteAddressCommand request, CancellationToken cancellationToken)
     {
-        var customerFromDatabase = await _customerRepository.GetCustomerByIdAsync(request.PersonId);
+        var customerFromDatabase = await _personRepository.GetCustomerByIdAsync(request.PersonId);
 
         if(customerFromDatabase == null) return false;
 
@@ -22,8 +22,8 @@ public class DeleteAddressCommandHandler : IRequestHandler<DeleteAddressCommand,
 
         if (addressToDelete == null) return false;
 
-        _customerRepository.DeleteAddress(customerFromDatabase, addressToDelete);
+        _personRepository.DeleteAddress(customerFromDatabase, addressToDelete);
 
-        return await _customerRepository.SaveChangesAsync();
+        return await _personRepository.SaveChangesAsync();
     }
 }

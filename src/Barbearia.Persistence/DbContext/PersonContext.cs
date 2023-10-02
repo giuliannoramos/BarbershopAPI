@@ -5,18 +5,18 @@ using FluentValidation.Validators;
 
 namespace Barbearia.Persistence.DbContexts
 {
-    public class CustomerContext : DbContext
+    public class PersonContext : DbContext
     {
-        public CustomerContext(DbContextOptions<CustomerContext> options)
+        public PersonContext(DbContextOptions<PersonContext> options)
         : base(options) { }
 
         public DbSet<Person> Persons { get; set; } = null!;
         public DbSet<Telephone> Telephones { get; set; } = null!;
         public DbSet<Address> Addresses { get; set; } = null!;
-        public DbSet<WorkingDay>WorkingDays{get; set; } = null!;
-        public DbSet<TimeOff>TimeOffs{get; set; } = null!;
-        public DbSet<Role>Roles{get; set; } = null!;
-        public DbSet<Schedule>Schedules{get; set; } = null!;
+        public DbSet<WorkingDay> WorkingDays { get; set; } = null!;
+        public DbSet<TimeOff> TimeOffs { get; set; } = null!;
+        public DbSet<Role> Roles { get; set; } = null!;
+        public DbSet<Schedule> Schedules { get; set; } = null!;
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -36,10 +36,10 @@ namespace Barbearia.Persistence.DbContexts
             var employee = modelBuilder.Entity<Employee>();
             var roleEmployee = modelBuilder.Entity<RoleEmployee>();
 
-            modelBuilder.Entity<Order>().ToTable("Order", t => t.ExcludeFromMigrations());            
-            modelBuilder.Entity<Item>().ToTable("Item", t => t.ExcludeFromMigrations());            
-            modelBuilder.Entity<Product>().ToTable("Product", t => t.ExcludeFromMigrations());            
-            modelBuilder.Entity<StockHistory>().ToTable("StockHistory", t => t.ExcludeFromMigrations());            
+            modelBuilder.Entity<Order>().ToTable("Order", t => t.ExcludeFromMigrations());
+            modelBuilder.Entity<Item>().ToTable("Item", t => t.ExcludeFromMigrations());
+            modelBuilder.Entity<Product>().ToTable("Product", t => t.ExcludeFromMigrations());
+            modelBuilder.Entity<StockHistory>().ToTable("StockHistory", t => t.ExcludeFromMigrations());
             modelBuilder.Ignore<Payment>();
             modelBuilder.Ignore<Order>();
             modelBuilder.Ignore<Coupon>();
@@ -155,8 +155,12 @@ namespace Barbearia.Persistence.DbContexts
                 .Property(p => p.Cpf)
                 .HasMaxLength(11);
 
+            Supplier
+                .Property(s => s.Status)
+                .IsRequired();
+
             employee
-                .Property(e=>e.Cpf)
+                .Property(e => e.Cpf)
                 .IsRequired()
                 .HasMaxLength(11);
 
@@ -164,61 +168,65 @@ namespace Barbearia.Persistence.DbContexts
                 .Property(p => p.Gender)
                 .IsRequired();
 
-            workingDay
-                .Property(w=>w.WorkDate)
+            employee
+                .Property(e => e.Status)
                 .IsRequired();
 
             workingDay
-                .Property(w=>w.StartTime)
+                .Property(w => w.WorkDate)
                 .IsRequired();
 
             workingDay
-                .Property(w=>w.FinishTime)
+                .Property(w => w.StartTime)
                 .IsRequired();
 
             workingDay
-                .HasMany(w=>w.TimeOffs)
-                .WithOne(t=>t.WorkingDay)
-                .HasForeignKey(t=>t.WorkingDayId);
+                .Property(w => w.FinishTime)
+                .IsRequired();
 
             workingDay
-                .HasOne(w=>w.Schedule)
-                .WithOne(s=>s.WorkingDay)
-                .HasForeignKey<Schedule>(s=>s.WorkingDayId);
+                .HasMany(w => w.TimeOffs)
+                .WithOne(t => t.WorkingDay)
+                .HasForeignKey(t => t.WorkingDayId);
 
             workingDay
-                .HasOne(w=>w.Employee)
-                .WithMany(e=>e.WorkingDays)
-                .HasForeignKey(w=>w.PersonId);
-            
+                .HasOne(w => w.Schedule)
+                .WithOne(s => s.WorkingDay)
+                .HasForeignKey<Schedule>(s => s.WorkingDayId);
+
+            workingDay
+                .HasOne(w => w.Employee)
+                .WithMany(e => e.WorkingDays)
+                .HasForeignKey(w => w.PersonId);
+
             timeOff
                 .ToTable("TimeOff");
-                
+
             timeOff
-                .Property(t=>t.StartTime)
+                .Property(t => t.StartTime)
                 .IsRequired();
 
             timeOff
-                .Property(t=>t.FinishTime)
+                .Property(t => t.FinishTime)
                 .IsRequired();
 
             role
-                .Property(r=>r.Name)
+                .Property(r => r.Name)
                 .HasMaxLength(80)
                 .IsRequired();
-            
+
             role
-                .HasMany(r=>r.Employees)
-                .WithMany(e=>e.Roles)
+                .HasMany(r => r.Employees)
+                .WithMany(e => e.Roles)
                 .UsingEntity<RoleEmployee>();
 
             role.
-                HasMany(r=>r.RoleEmployees)
-                .WithOne(ro=>ro.Role)
-                .HasForeignKey(ro=>ro.RoleId);
+                HasMany(r => r.RoleEmployees)
+                .WithOne(ro => ro.Role)
+                .HasForeignKey(ro => ro.RoleId);
 
             schedule
-                .Property(s=>s.Status)
+                .Property(s => s.Status)
                 .IsRequired();
 
             employee
@@ -231,6 +239,7 @@ namespace Barbearia.Persistence.DbContexts
                         Gender = 1,
                         Cpf = "73473943096",
                         Email = "joao@hotmail.com",
+                        Status = Employee.EmployeeStatus.Active,
                     },
                     new Employee()
                     {
@@ -240,6 +249,7 @@ namespace Barbearia.Persistence.DbContexts
                         Gender = 1,
                         Cpf = "73473003096",
                         Email = "billdoidao@gmail.com",
+                        Status = Employee.EmployeeStatus.Inactive,
                     });
 
             workingDay
@@ -249,16 +259,16 @@ namespace Barbearia.Persistence.DbContexts
                         WorkingDayId = 1,
                         PersonId = 5,
                         WorkDate = new DateOnly(2023, 10, 10),
-                        StartTime = new TimeOnly(7, 23 ,11),
-                        FinishTime = new TimeOnly(18 ,30, 0)
+                        StartTime = new TimeOnly(7, 23, 11),
+                        FinishTime = new TimeOnly(18, 30, 0)
                     },
                     new WorkingDay()
                     {
                         WorkingDayId = 2,
                         PersonId = 5,
                         WorkDate = new DateOnly(2023, 11, 11),
-                        StartTime = new TimeOnly(8, 23 ,11),
-                        FinishTime = new TimeOnly(19 ,30, 0)
+                        StartTime = new TimeOnly(8, 23, 11),
+                        FinishTime = new TimeOnly(19, 30, 0)
                     }
                 );
 
@@ -268,15 +278,15 @@ namespace Barbearia.Persistence.DbContexts
                     {
                         TimeOffId = 1,
                         WorkingDayId = 1,
-                        StartTime = new TimeOnly(11, 30 ,0),
-                        FinishTime = new TimeOnly(14 ,0, 0)
+                        StartTime = new TimeOnly(11, 30, 0),
+                        FinishTime = new TimeOnly(14, 0, 0)
                     },
                     new TimeOff()
                     {
                         TimeOffId = 2,
                         WorkingDayId = 2,
-                        StartTime = new TimeOnly(12, 0 ,0),
-                        FinishTime = new TimeOnly(15 ,0, 0)
+                        StartTime = new TimeOnly(12, 0, 0),
+                        FinishTime = new TimeOnly(15, 0, 0)
                     }
                 );
 
@@ -357,6 +367,7 @@ namespace Barbearia.Persistence.DbContexts
                         Gender = 2,
                         Cpf = "73473943096",
                         Email = "josefacraft@hotmail.com",
+                        Status = Domain.Entities.Supplier.SupplierStatus.Active,
                     },
                     new Supplier()
                     {
@@ -365,6 +376,7 @@ namespace Barbearia.Persistence.DbContexts
                         BirthDate = new DateOnly(1975, 4, 4),
                         Cnpj = "73473003096986",
                         Email = "micro@so.ft",
+                        Status = Domain.Entities.Supplier.SupplierStatus.Inactive,
                     });
 
             address

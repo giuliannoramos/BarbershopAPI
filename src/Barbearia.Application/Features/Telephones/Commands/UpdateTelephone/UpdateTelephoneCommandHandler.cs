@@ -9,14 +9,14 @@ namespace Barbearia.Application.Features.Telephones.Commands.UpdateTelephone;
 
 public class UpdateTelephoneCommandHandler : IRequestHandler<UpdateTelephoneCommand, UpdateTelephoneCommandResponse>
 {
-    private readonly ICustomerRepository _customerRepository;
+    private readonly IPersonRepository _personRepository;
     private readonly IMapper _mapper;
     private readonly IValidator<UpdateTelephoneCommand> _validator;
     private readonly ILogger<UpdateTelephoneCommandHandler> _logger;
-    public UpdateTelephoneCommandHandler(ICustomerRepository customerRepository, IMapper mapper, IValidator<UpdateTelephoneCommand> validator
+    public UpdateTelephoneCommandHandler(IPersonRepository personRepository, IMapper mapper, IValidator<UpdateTelephoneCommand> validator
     , ILogger<UpdateTelephoneCommandHandler> logger){
         _mapper = mapper;
-        _customerRepository = customerRepository;
+        _personRepository = personRepository;
         _validator = validator;
         _logger = logger;
     }
@@ -24,7 +24,7 @@ public class UpdateTelephoneCommandHandler : IRequestHandler<UpdateTelephoneComm
     {
         UpdateTelephoneCommandResponse response = new();
 
-        var customerFromDatabase = await _customerRepository.GetCustomerByIdAsync(request.PersonId);
+        var customerFromDatabase = await _personRepository.GetCustomerByIdAsync(request.PersonId);
         if(customerFromDatabase == null){
             response.ErrorType = Error.ValidationProblem;
             response.Errors.Add("PersonId", new[]{"Customer not found in database"});
@@ -61,7 +61,7 @@ public class UpdateTelephoneCommandHandler : IRequestHandler<UpdateTelephoneComm
             return response;
         }
 
-        await _customerRepository.SaveChangesAsync();
+        await _personRepository.SaveChangesAsync();
 
         return response;
     }

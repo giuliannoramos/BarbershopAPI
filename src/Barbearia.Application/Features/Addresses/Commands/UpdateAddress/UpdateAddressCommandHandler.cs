@@ -8,13 +8,13 @@ namespace Barbearia.Application.Features.Addresses.Commands.UpdateAddress;
 
 public class UpdateAddressCommandHandler : IRequestHandler<UpdateAddressCommand, UpdateAddressCommandResponse>
 {
-    private readonly ICustomerRepository _customerRepository;
+    private readonly IPersonRepository _personRepository;
     private readonly IMapper _mapper;
     private readonly ILogger<UpdateAddressCommandHandler> _logger;
 
-    public UpdateAddressCommandHandler(ICustomerRepository customerRepository, IMapper mapper, ILogger<UpdateAddressCommandHandler> logger)
+    public UpdateAddressCommandHandler(IPersonRepository personRepository, IMapper mapper, ILogger<UpdateAddressCommandHandler> logger)
     {
-        _customerRepository = customerRepository;
+        _personRepository = personRepository;
         _mapper = mapper;
         _logger = logger;
     }
@@ -23,7 +23,7 @@ public class UpdateAddressCommandHandler : IRequestHandler<UpdateAddressCommand,
     {
         UpdateAddressCommandResponse response = new UpdateAddressCommandResponse();
 
-        var customerFromDatabase = await _customerRepository.GetCustomerByIdAsync(request.PersonId);
+        var customerFromDatabase = await _personRepository.GetCustomerByIdAsync(request.PersonId);
         if (customerFromDatabase == null)
         {
             response.ErrorType = Error.NotFoundProblem;
@@ -64,7 +64,7 @@ public class UpdateAddressCommandHandler : IRequestHandler<UpdateAddressCommand,
             return response;
         }
 
-        await _customerRepository.SaveChangesAsync();
+        await _personRepository.SaveChangesAsync();
 
         return response;
     }

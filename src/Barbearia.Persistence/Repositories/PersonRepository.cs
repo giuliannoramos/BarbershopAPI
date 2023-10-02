@@ -7,14 +7,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Barbearia.Persistence.Repositories;
 
-public class CustomerRepository : ICustomerRepository
+public class PersonRepository : IPersonRepository
 {
-    private readonly CustomerContext _context;
+    private readonly PersonContext _context;
     private readonly IMapper _mapper;
 
-    public CustomerRepository(CustomerContext customerContext, IMapper mapper)
+    public PersonRepository(PersonContext personContext, IMapper mapper)
     {
-        _context = customerContext ?? throw new ArgumentNullException(nameof(customerContext));
+        _context = personContext ?? throw new ArgumentNullException(nameof(personContext));
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 

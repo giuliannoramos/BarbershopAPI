@@ -6,18 +6,18 @@ namespace Barbearia.Application.Features.Customers.Queries.GetCustomerWithOrders
 
 public class GetCustomerWithOrdersByIdQueryHandler : IRequestHandler<GetCustomerWithOrdersByIdQuery, GetCustomerWithOrdersByIdDto>
 {
-    private readonly ICustomerRepository _customerRepository;
+    private readonly IPersonRepository _personRepository;
     private readonly IMapper _mapper;
 
-    public GetCustomerWithOrdersByIdQueryHandler(ICustomerRepository customerRepository, IMapper mapper)
+    public GetCustomerWithOrdersByIdQueryHandler(IPersonRepository personRepository, IMapper mapper)
     {
-        _customerRepository = customerRepository;
+        _personRepository = personRepository;
         _mapper = mapper;
     }
 
     public async Task<GetCustomerWithOrdersByIdDto> Handle(GetCustomerWithOrdersByIdQuery request, CancellationToken cancellationToken)
     {
-        var customerFromDatabase = await _customerRepository.GetCustomerWithOrdersByIdAsync(request.PersonId);
+        var customerFromDatabase = await _personRepository.GetCustomerWithOrdersByIdAsync(request.PersonId);
         return _mapper.Map<GetCustomerWithOrdersByIdDto>(customerFromDatabase);
     }
 }

@@ -9,15 +9,15 @@ namespace Barbearia.Application.Features.Customers.Commands.CreateCustomer;
 
 public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, CreateCustomerCommandResponse>
 {
-    private readonly ICustomerRepository _customerRepository;
+    private readonly IPersonRepository _personRepository;
     private readonly IMapper _mapper;
     private readonly ILogger<CreateCustomerCommandHandler> _logger;
 
 
 
-    public CreateCustomerCommandHandler(ICustomerRepository customerRepository, IMapper mapper, ILogger<CreateCustomerCommandHandler> logger)
+    public CreateCustomerCommandHandler(IPersonRepository personRepository, IMapper mapper, ILogger<CreateCustomerCommandHandler> logger)
     {
-        _customerRepository = customerRepository;
+        _personRepository = personRepository;
         _mapper = mapper;
         _logger = logger;
     }
@@ -85,8 +85,8 @@ public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerComman
             }
         }
 
-        _customerRepository.AddCustomer(customerEntity);
-        await _customerRepository.SaveChangesAsync();
+        _personRepository.AddCustomer(customerEntity);
+        await _personRepository.SaveChangesAsync();
 
         response.Customer = _mapper.Map<CreateCustomerDto>(customerEntity);
         return response;

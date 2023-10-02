@@ -10,14 +10,14 @@ namespace Barbearia.Application.Features.Orders.Commands.CreateOrder;
 public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, CreateOrderCommandResponse>
 {
     private readonly IOrderRepository _orderRepository;
-    private readonly ICustomerRepository _customerRepository;
+    private readonly IPersonRepository _personRepository;
     private readonly IMapper _mapper;
     private readonly ILogger<CreateOrderCommandHandler> _logger;
 
-    public CreateOrderCommandHandler(IOrderRepository orderRepository, ICustomerRepository customerRepository, IMapper mapper, ILogger<CreateOrderCommandHandler> logger)
+    public CreateOrderCommandHandler(IOrderRepository orderRepository, IPersonRepository personRepository, IMapper mapper, ILogger<CreateOrderCommandHandler> logger)
     {
         _orderRepository = orderRepository;
-        _customerRepository = customerRepository;
+        _personRepository = personRepository;
         _mapper = mapper;
         _logger = logger;
     }
@@ -29,7 +29,7 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Cre
         var validator = new CreateOrderCommandValidator();
         var validationResult = await validator.ValidateAsync(request);
 
-        var customerFromDatabase = await _customerRepository.GetCustomerByIdAsync(request.PersonId);
+        var customerFromDatabase = await _personRepository.GetCustomerByIdAsync(request.PersonId);
 
         if (customerFromDatabase == null)
         {

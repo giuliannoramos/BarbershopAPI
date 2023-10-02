@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Barbearia.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class customerInitMigration : Migration
+    public partial class AddPerson : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -26,7 +26,9 @@ namespace Barbearia.Persistence.Migrations
                     Cpf = table.Column<string>(type: "character varying(11)", maxLength: 11, nullable: false),
                     Cnpj = table.Column<string>(type: "character varying(14)", maxLength: 14, nullable: false),
                     Email = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: false),
-                    PersonType = table.Column<int>(type: "integer", nullable: false)
+                    PersonType = table.Column<int>(type: "integer", nullable: false),
+                    Status = table.Column<int>(type: "integer", nullable: true),
+                    Supplier_Status = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -186,11 +188,25 @@ namespace Barbearia.Persistence.Migrations
                 values: new object[,]
                 {
                     { 1, new DateOnly(1999, 8, 7), "", "73473943096", "veio@hotmail.com", 1, "Linus Torvalds", 2 },
-                    { 2, new DateOnly(2000, 1, 1), "", "73473003096", "bill@gmail.com", 2, "Bill Gates", 2 },
-                    { 3, new DateOnly(1973, 2, 1), "", "73473943096", "josefacraft@hotmail.com", 2, "Josefina", 3 },
-                    { 4, new DateOnly(1975, 4, 4), "73473003096986", "", "micro@so.ft", 0, "Microsoft", 3 },
-                    { 5, new DateOnly(2000, 8, 7), "", "73473943096", "joao@hotmail.com", 1, "João cabeça", 4 },
-                    { 6, new DateOnly(1990, 1, 1), "", "73473003096", "billdoidao@gmail.com", 1, "Bill Maluco", 4 }
+                    { 2, new DateOnly(2000, 1, 1), "", "73473003096", "bill@gmail.com", 2, "Bill Gates", 2 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Person",
+                columns: new[] { "PersonId", "BirthDate", "Cnpj", "Cpf", "Email", "Gender", "Name", "PersonType", "Supplier_Status" },
+                values: new object[,]
+                {
+                    { 3, new DateOnly(1973, 2, 1), "", "73473943096", "josefacraft@hotmail.com", 2, "Josefina", 3, 0 },
+                    { 4, new DateOnly(1975, 4, 4), "73473003096986", "", "micro@so.ft", 0, "Microsoft", 3, 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Person",
+                columns: new[] { "PersonId", "BirthDate", "Cnpj", "Cpf", "Email", "Gender", "Name", "PersonType", "Status" },
+                values: new object[,]
+                {
+                    { 5, new DateOnly(2000, 8, 7), "", "73473943096", "joao@hotmail.com", 1, "João cabeça", 4, 0 },
+                    { 6, new DateOnly(1990, 1, 1), "", "73473003096", "billdoidao@gmail.com", 1, "Bill Maluco", 4, 1 }
                 });
 
             migrationBuilder.InsertData(

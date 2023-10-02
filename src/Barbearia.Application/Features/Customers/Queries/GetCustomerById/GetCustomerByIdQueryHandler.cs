@@ -6,17 +6,17 @@ namespace Barbearia.Application.Features.Customers.Queries.GetCustomerById;
 
 public class GetCustomerByIdQueryHandler : IRequestHandler<GetCustomerByIdQuery, GetCustomerByIdDto>
 {
-    private readonly ICustomerRepository _customerRepository;
+    private readonly IPersonRepository _personRepository;
     private readonly IMapper _mapper;
 
-    public GetCustomerByIdQueryHandler(ICustomerRepository customerRepository, IMapper mapper)
+    public GetCustomerByIdQueryHandler(IPersonRepository personRepository, IMapper mapper)
     {
-        _customerRepository = customerRepository;
+        _personRepository = personRepository;
         _mapper = mapper;
     }
     public async Task<GetCustomerByIdDto> Handle(GetCustomerByIdQuery request, CancellationToken cancellationToken)
     {
-        var customerFromDatabase = await _customerRepository.GetCustomerByIdAsync(request.PersonId);
+        var customerFromDatabase = await _personRepository.GetCustomerByIdAsync(request.PersonId);
         return _mapper.Map<GetCustomerByIdDto>(customerFromDatabase);
     }
 }

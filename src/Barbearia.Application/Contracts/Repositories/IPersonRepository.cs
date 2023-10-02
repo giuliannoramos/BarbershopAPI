@@ -3,7 +3,7 @@ using Barbearia.Domain.Entities;
 
 namespace Barbearia.Application.Contracts.Repositories;
 
-public interface ICustomerRepository
+public interface IPersonRepository
 {
     Task<(IEnumerable<Customer>, PaginationMetadata)> GetAllCustomersAsync( string? searchQuery,
      int pageNumber, int pageSize);

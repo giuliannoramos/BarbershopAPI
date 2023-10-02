@@ -64,7 +64,7 @@ builder.Logging.AddFilter<ElmahIoLoggerProvider>(null, LogLevel.Warning);
 
 //config automapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IItemRepository, ItemRepository>();
 
@@ -120,21 +120,21 @@ builder.Services.AddScoped<IRequestHandler<GetProductsCollectionQuery, GetProduc
 
 
 //config banco de dados
-builder.Services.AddDbContext<CustomerContext>(options =>
+builder.Services.AddDbContext<PersonContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=1973");
 }
 );
 
 builder.Services.AddDbContext<OrderContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=1973");
 }
 );
 
 builder.Services.AddDbContext<ItemContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=1973");
 }
 );
 
@@ -159,7 +159,7 @@ using (var scope = app.Services.CreateScope())
 {
     try
     {
-        var customerContext = scope.ServiceProvider.GetService<CustomerContext>();
+        var customerContext = scope.ServiceProvider.GetService<PersonContext>();
         var orderContext = scope.ServiceProvider.GetService<OrderContext>();
         var itemContext = scope.ServiceProvider.GetService<ItemContext>();
 

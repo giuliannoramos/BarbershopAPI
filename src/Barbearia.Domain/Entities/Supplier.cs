@@ -78,11 +78,11 @@ public class Supplier : Person
         }
     }
 
-    private void CheckCpfOrCnpj()
+    private void CheckCnpj()
     {
-        if (string.IsNullOrWhiteSpace(Cpf) && string.IsNullOrWhiteSpace(Cnpj))
+        if (string.IsNullOrWhiteSpace(Cnpj))
         {
-            throw new Exception("Fornecedor deve ter CPF ou CNPJ");
+            throw new Exception("Fornecedor deve CNPJ");
         }
     }
 
@@ -98,7 +98,7 @@ public class Supplier : Person
     {
         //CheckCnpj();
         CheckOrder();
-        CheckCpfOrCnpj();
+        CheckCnpj();
         CheckGender();
     }
 }

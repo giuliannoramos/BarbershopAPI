@@ -41,6 +41,35 @@ public class ItemRepository : IItemRepository
             .ToListAsync();
 
         return (productToReturn, paginationMetadata);
-    }   
+    } 
+
+    public void AddProduct(Product product)
+    {
+        _context.Products.Add(product);
+    }
+
+    public void DeleteProduct(Product product)
+    {
+        _context.Products.Remove(product);
+    }
+
+    public async Task<IEnumerable<Product>> GetAllProductsAsync()
+    {
+        return await _context.Products
+        .Include(p=>p.ProductCategory)
+        .ToListAsync();
+    }
+
+    public async Task<Product?> GetProductByIdAsync(int productId)
+    {
+        return await _context.Products
+        .Include(p=>p.ProductCategory)
+        .FirstOrDefaultAsync(p=> p.ItemId == productId);
+    }
+
+    public async Task<bool> SaveChangesAsync()
+    {
+        return await _context.SaveChangesAsync() > 0;
+    }
 
 }

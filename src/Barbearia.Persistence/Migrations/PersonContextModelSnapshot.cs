@@ -277,7 +277,7 @@ namespace Barbearia.Persistence.Migrations
                     b.HasIndex("WorkingDayId")
                         .IsUnique();
 
-                    b.ToTable("Schedules");
+                    b.ToTable("Schedule", (string)null);
 
                     b.HasData(
                         new
@@ -561,7 +561,7 @@ namespace Barbearia.Persistence.Migrations
                             Email = "joao@hotmail.com",
                             Gender = 1,
                             Name = "João cabeça",
-                            Status = 0
+                            Status = 1
                         },
                         new
                         {
@@ -572,7 +572,7 @@ namespace Barbearia.Persistence.Migrations
                             Email = "billdoidao@gmail.com",
                             Gender = 1,
                             Name = "Bill Maluco",
-                            Status = 1
+                            Status = 2
                         });
                 });
 
@@ -587,12 +587,12 @@ namespace Barbearia.Persistence.Migrations
                         {
                             PersonId = 3,
                             BirthDate = new DateOnly(1973, 2, 1),
-                            Cnpj = "",
-                            Cpf = "73473943096",
+                            Cnpj = "73473003096986",
+                            Cpf = "",
                             Email = "josefacraft@hotmail.com",
-                            Gender = 2,
+                            Gender = 0,
                             Name = "Josefina",
-                            Status = 0
+                            Status = 1
                         },
                         new
                         {
@@ -603,7 +603,7 @@ namespace Barbearia.Persistence.Migrations
                             Email = "micro@so.ft",
                             Gender = 0,
                             Name = "Microsoft",
-                            Status = 1
+                            Status = 2
                         });
                 });
 

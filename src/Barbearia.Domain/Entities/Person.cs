@@ -21,6 +21,7 @@ public class Person
 
     public enum TypeStatus
     {
+        NoStatus,
         Active,
         Inactive        
     }

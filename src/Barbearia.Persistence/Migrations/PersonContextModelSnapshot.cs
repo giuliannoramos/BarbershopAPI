@@ -189,6 +189,9 @@ namespace Barbearia.Persistence.Migrations
                     b.Property<int>("PersonType")
                         .HasColumnType("integer");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
                     b.HasKey("PersonId");
 
                     b.ToTable("Person", (string)null);
@@ -213,7 +216,7 @@ namespace Barbearia.Persistence.Migrations
 
                     b.HasKey("RoleId");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Role", (string)null);
 
                     b.HasData(
                         new
@@ -455,7 +458,7 @@ namespace Barbearia.Persistence.Migrations
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("WorkingDays");
+                    b.ToTable("WorkingDay", (string)null);
 
                     b.HasData(
                         new
@@ -526,7 +529,8 @@ namespace Barbearia.Persistence.Migrations
                             Cpf = "73473943096",
                             Email = "veio@hotmail.com",
                             Gender = 1,
-                            Name = "Linus Torvalds"
+                            Name = "Linus Torvalds",
+                            Status = 0
                         },
                         new
                         {
@@ -536,16 +540,14 @@ namespace Barbearia.Persistence.Migrations
                             Cpf = "73473003096",
                             Email = "bill@gmail.com",
                             Gender = 2,
-                            Name = "Bill Gates"
+                            Name = "Bill Gates",
+                            Status = 0
                         });
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Employee", b =>
                 {
                     b.HasBaseType("Barbearia.Domain.Entities.Person");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("integer");
 
                     b.HasDiscriminator().HasValue(4);
 
@@ -577,15 +579,6 @@ namespace Barbearia.Persistence.Migrations
             modelBuilder.Entity("Barbearia.Domain.Entities.Supplier", b =>
                 {
                     b.HasBaseType("Barbearia.Domain.Entities.Person");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("integer");
-
-                    b.ToTable("Person", t =>
-                        {
-                            t.Property("Status")
-                                .HasColumnName("Supplier_Status");
-                        });
 
                     b.HasDiscriminator().HasValue(3);
 

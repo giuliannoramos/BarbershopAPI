@@ -26,9 +26,8 @@ namespace Barbearia.Persistence.Migrations
                     Cpf = table.Column<string>(type: "character varying(11)", maxLength: 11, nullable: false),
                     Cnpj = table.Column<string>(type: "character varying(14)", maxLength: 14, nullable: false),
                     Email = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: false),
-                    PersonType = table.Column<int>(type: "integer", nullable: false),
-                    Status = table.Column<int>(type: "integer", nullable: true),
-                    Supplier_Status = table.Column<int>(type: "integer", nullable: true)
+                    Status = table.Column<int>(type: "integer", nullable: false),
+                    PersonType = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -36,7 +35,7 @@ namespace Barbearia.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Roles",
+                name: "Role",
                 columns: table => new
                 {
                     RoleId = table.Column<int>(type: "integer", nullable: false)
@@ -45,7 +44,7 @@ namespace Barbearia.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Roles", x => x.RoleId);
+                    table.PrimaryKey("PK_Role", x => x.RoleId);
                 });
 
             migrationBuilder.CreateTable(
@@ -96,7 +95,7 @@ namespace Barbearia.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "WorkingDays",
+                name: "WorkingDay",
                 columns: table => new
                 {
                     WorkingDayId = table.Column<int>(type: "integer", nullable: false)
@@ -108,9 +107,9 @@ namespace Barbearia.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_WorkingDays", x => x.WorkingDayId);
+                    table.PrimaryKey("PK_WorkingDay", x => x.WorkingDayId);
                     table.ForeignKey(
-                        name: "FK_WorkingDays_Person_PersonId",
+                        name: "FK_WorkingDay_Person_PersonId",
                         column: x => x.PersonId,
                         principalTable: "Person",
                         principalColumn: "PersonId",
@@ -134,9 +133,9 @@ namespace Barbearia.Persistence.Migrations
                         principalColumn: "PersonId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_RoleEmployee_Roles_RoleId",
+                        name: "FK_RoleEmployee_Role_RoleId",
                         column: x => x.RoleId,
-                        principalTable: "Roles",
+                        principalTable: "Role",
                         principalColumn: "RoleId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -154,9 +153,9 @@ namespace Barbearia.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_Schedules", x => x.ScheduleId);
                     table.ForeignKey(
-                        name: "FK_Schedules_WorkingDays_WorkingDayId",
+                        name: "FK_Schedules_WorkingDay_WorkingDayId",
                         column: x => x.WorkingDayId,
-                        principalTable: "WorkingDays",
+                        principalTable: "WorkingDay",
                         principalColumn: "WorkingDayId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -175,29 +174,11 @@ namespace Barbearia.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_TimeOff", x => x.TimeOffId);
                     table.ForeignKey(
-                        name: "FK_TimeOff_WorkingDays_WorkingDayId",
+                        name: "FK_TimeOff_WorkingDay_WorkingDayId",
                         column: x => x.WorkingDayId,
-                        principalTable: "WorkingDays",
+                        principalTable: "WorkingDay",
                         principalColumn: "WorkingDayId",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.InsertData(
-                table: "Person",
-                columns: new[] { "PersonId", "BirthDate", "Cnpj", "Cpf", "Email", "Gender", "Name", "PersonType" },
-                values: new object[,]
-                {
-                    { 1, new DateOnly(1999, 8, 7), "", "73473943096", "veio@hotmail.com", 1, "Linus Torvalds", 2 },
-                    { 2, new DateOnly(2000, 1, 1), "", "73473003096", "bill@gmail.com", 2, "Bill Gates", 2 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Person",
-                columns: new[] { "PersonId", "BirthDate", "Cnpj", "Cpf", "Email", "Gender", "Name", "PersonType", "Supplier_Status" },
-                values: new object[,]
-                {
-                    { 3, new DateOnly(1973, 2, 1), "", "73473943096", "josefacraft@hotmail.com", 2, "Josefina", 3, 0 },
-                    { 4, new DateOnly(1975, 4, 4), "73473003096986", "", "micro@so.ft", 0, "Microsoft", 3, 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -205,12 +186,16 @@ namespace Barbearia.Persistence.Migrations
                 columns: new[] { "PersonId", "BirthDate", "Cnpj", "Cpf", "Email", "Gender", "Name", "PersonType", "Status" },
                 values: new object[,]
                 {
+                    { 1, new DateOnly(1999, 8, 7), "", "73473943096", "veio@hotmail.com", 1, "Linus Torvalds", 2, 0 },
+                    { 2, new DateOnly(2000, 1, 1), "", "73473003096", "bill@gmail.com", 2, "Bill Gates", 2, 0 },
+                    { 3, new DateOnly(1973, 2, 1), "", "73473943096", "josefacraft@hotmail.com", 2, "Josefina", 3, 0 },
+                    { 4, new DateOnly(1975, 4, 4), "73473003096986", "", "micro@so.ft", 0, "Microsoft", 3, 1 },
                     { 5, new DateOnly(2000, 8, 7), "", "73473943096", "joao@hotmail.com", 1, "João cabeça", 4, 0 },
                     { 6, new DateOnly(1990, 1, 1), "", "73473003096", "billdoidao@gmail.com", 1, "Bill Maluco", 4, 1 }
                 });
 
             migrationBuilder.InsertData(
-                table: "Roles",
+                table: "Role",
                 columns: new[] { "RoleId", "Name" },
                 values: new object[,]
                 {
@@ -250,7 +235,7 @@ namespace Barbearia.Persistence.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "WorkingDays",
+                table: "WorkingDay",
                 columns: new[] { "WorkingDayId", "FinishTime", "PersonId", "StartTime", "WorkDate" },
                 values: new object[,]
                 {
@@ -303,8 +288,8 @@ namespace Barbearia.Persistence.Migrations
                 column: "WorkingDayId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_WorkingDays_PersonId",
-                table: "WorkingDays",
+                name: "IX_WorkingDay_PersonId",
+                table: "WorkingDay",
                 column: "PersonId");
         }
 
@@ -327,10 +312,10 @@ namespace Barbearia.Persistence.Migrations
                 name: "TimeOff");
 
             migrationBuilder.DropTable(
-                name: "Roles");
+                name: "Role");
 
             migrationBuilder.DropTable(
-                name: "WorkingDays");
+                name: "WorkingDay");
 
             migrationBuilder.DropTable(
                 name: "Person");

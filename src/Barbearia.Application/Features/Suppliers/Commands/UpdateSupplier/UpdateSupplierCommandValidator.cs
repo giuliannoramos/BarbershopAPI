@@ -24,7 +24,7 @@ public class UpdateSupplierCommandValidator : AbstractValidator<UpdateSupplierCo
                     .When(s => string.IsNullOrEmpty(s.Cnpj))
                         .WithMessage("You should fill out a valid CPF");
 
-        RuleFor(s=>s.Cpf)
+        RuleFor(s => s.Cpf)
             .Empty()
                 .When(s => !string.IsNullOrEmpty(s.Cnpj))
                     .WithMessage("You cant fill cpf and cnpj");
@@ -36,7 +36,7 @@ public class UpdateSupplierCommandValidator : AbstractValidator<UpdateSupplierCo
                     .When(s => string.IsNullOrEmpty(s.Cpf))
                         .WithMessage("You should fill out a valid Cnpj");
 
-        RuleFor(s=>s.Cnpj)
+        RuleFor(s => s.Cnpj)
             .Empty()
                 .When(s => !string.IsNullOrEmpty(s.Cpf))
                     .WithMessage("You cant fill cpf and cnpj");
@@ -73,6 +73,10 @@ public class UpdateSupplierCommandValidator : AbstractValidator<UpdateSupplierCo
                 .When(c => !string.IsNullOrEmpty(c.Cnpj))
                     .WithMessage("An organization can't have gender");
 
+        RuleFor(s => s.Status)
+            .NotEmpty()
+                .WithMessage("Supplier Status cannot be empty");
+
         RuleFor(s => s.Telephones)
             .NotEmpty()
                 .WithMessage("At least one telephone number is required")
@@ -82,7 +86,7 @@ public class UpdateSupplierCommandValidator : AbstractValidator<UpdateSupplierCo
         RuleForEach(s => s.Telephones)
             .ChildRules(telephone =>
             {
-                telephone.RuleFor(t=>t.TelephoneId)
+                telephone.RuleFor(t => t.TelephoneId)
                     .Empty()
                         .WithMessage("You should not create an id");
 
@@ -108,7 +112,7 @@ public class UpdateSupplierCommandValidator : AbstractValidator<UpdateSupplierCo
         RuleForEach(s => s.Addresses)
             .ChildRules(address =>
             {
-                address.RuleFor(a=>a.AddressId)
+                address.RuleFor(a => a.AddressId)
                     .Empty()
                         .WithMessage("You should not create an id");
 

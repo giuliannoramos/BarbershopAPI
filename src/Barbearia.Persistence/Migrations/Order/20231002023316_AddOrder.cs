@@ -53,47 +53,6 @@ namespace Barbearia.Persistence.Migrations.Order
                 });
 
             migrationBuilder.CreateTable(
-                name: "Role",
-                columns: table => new
-                {
-                    RoleId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    PersonId = table.Column<int>(type: "integer", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Role", x => x.RoleId);
-                    table.ForeignKey(
-                        name: "FK_Role_Person_PersonId",
-                        column: x => x.PersonId,
-                        principalTable: "Person",
-                        principalColumn: "PersonId");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "WorkingDay",
-                columns: table => new
-                {
-                    WorkingDayId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    PersonId = table.Column<int>(type: "integer", nullable: false),
-                    WorkDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    StartTime = table.Column<TimeOnly>(type: "time without time zone", nullable: false),
-                    FinishTime = table.Column<TimeOnly>(type: "time without time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_WorkingDay", x => x.WorkingDayId);
-                    table.ForeignKey(
-                        name: "FK_WorkingDay_Person_PersonId",
-                        column: x => x.PersonId,
-                        principalTable: "Person",
-                        principalColumn: "PersonId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Payment",
                 columns: table => new
                 {
@@ -124,44 +83,24 @@ namespace Barbearia.Persistence.Migrations.Order
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Schedule",
-                columns: table => new
-                {
-                    ScheduleId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    WorkingDayId = table.Column<int>(type: "integer", nullable: false),
-                    Status = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Schedule", x => x.ScheduleId);
-                    table.ForeignKey(
-                        name: "FK_Schedule_WorkingDay_WorkingDayId",
-                        column: x => x.WorkingDayId,
-                        principalTable: "WorkingDay",
-                        principalColumn: "WorkingDayId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.InsertData(
                 table: "Coupon",
                 columns: new[] { "CouponId", "CouponCode", "CreationDate", "DiscountPercent", "ExpirationDate" },
-                values: new object[] { 1, "teste3", new DateTime(2023, 10, 2, 1, 21, 44, 717, DateTimeKind.Utc).AddTicks(6472), 10, new DateTime(2023, 10, 2, 1, 21, 44, 717, DateTimeKind.Utc).AddTicks(6473) });
+                values: new object[] { 1, "teste3", new DateTime(2023, 10, 2, 2, 33, 16, 152, DateTimeKind.Utc).AddTicks(6141), 10, new DateTime(2023, 10, 2, 2, 33, 16, 152, DateTimeKind.Utc).AddTicks(6142) });
 
             migrationBuilder.InsertData(
                 table: "Order",
                 columns: new[] { "OrderId", "BuyDate", "Number", "PersonId", "Status" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 10, 2, 1, 21, 44, 717, DateTimeKind.Utc).AddTicks(6136), 500, 1, 2 },
-                    { 2, new DateTime(2023, 10, 2, 1, 21, 44, 717, DateTimeKind.Utc).AddTicks(6179), 501, 2, 2 }
+                    { 1, new DateTime(2023, 10, 2, 2, 33, 16, 152, DateTimeKind.Utc).AddTicks(5393), 500, 1, 2 },
+                    { 2, new DateTime(2023, 10, 2, 2, 33, 16, 152, DateTimeKind.Utc).AddTicks(5437), 501, 2, 2 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Payment",
                 columns: new[] { "PaymentId", "BuyDate", "CouponId", "Description", "GrossTotal", "NetTotal", "OrderId", "PaymentMethod", "Status" },
-                values: new object[] { 1, new DateTime(2023, 10, 2, 1, 21, 44, 717, DateTimeKind.Utc).AddTicks(6458), null, "Para de ler isso aqui e vai programar", 80m, 60m, 1, "Dinheiro", 1 });
+                values: new object[] { 1, new DateTime(2023, 10, 2, 2, 33, 16, 152, DateTimeKind.Utc).AddTicks(6118), null, "Para de ler isso aqui e vai programar", 80m, 60m, 1, "Dinheiro", 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_PersonId",
@@ -178,22 +117,6 @@ namespace Barbearia.Persistence.Migrations.Order
                 table: "Payment",
                 column: "OrderId",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Role_PersonId",
-                table: "Role",
-                column: "PersonId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Schedule_WorkingDayId",
-                table: "Schedule",
-                column: "WorkingDayId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_WorkingDay_PersonId",
-                table: "WorkingDay",
-                column: "PersonId");
         }
 
         /// <inheritdoc />
@@ -203,19 +126,10 @@ namespace Barbearia.Persistence.Migrations.Order
                 name: "Payment");
 
             migrationBuilder.DropTable(
-                name: "Role");
-
-            migrationBuilder.DropTable(
-                name: "Schedule");
-
-            migrationBuilder.DropTable(
                 name: "Coupon");
 
             migrationBuilder.DropTable(
                 name: "Order");
-
-            migrationBuilder.DropTable(
-                name: "WorkingDay");
         }
     }
 }

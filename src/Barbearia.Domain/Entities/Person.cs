@@ -9,6 +9,7 @@ public class Person
     public string Cpf { get; set; } = string.Empty;
     public string Cnpj {get;set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
+    public TypeStatus Status { get; set; }
     public List<Address> Addresses {get; set;} = new();
     public List<Telephone> Telephones {get; set;} = new();
     public List<Order> Orders { get; set; } = new();
@@ -18,5 +19,10 @@ public class Person
     public List<Role> Roles{get;set;} = new();
     public List<RoleEmployee> RoleEmployees{get; set;} = new();
 
+    public enum TypeStatus
+    {
+        Active,
+        Inactive        
+    }
 
 }

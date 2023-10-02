@@ -229,6 +229,16 @@ namespace Barbearia.Persistence.DbContexts
                 .Property(s => s.Status)
                 .IsRequired();
 
+            workingDay
+                .ToTable("WorkingDay");
+            
+            timeOff
+                .ToTable("TimeOff");
+
+            role
+                .ToTable("Role");           
+
+
             employee
                 .HasData(
                     new Employee()
@@ -239,7 +249,7 @@ namespace Barbearia.Persistence.DbContexts
                         Gender = 1,
                         Cpf = "73473943096",
                         Email = "joao@hotmail.com",
-                        Status = Employee.EmployeeStatus.Active,
+                        Status = Person.TypeStatus.Active,
                     },
                     new Employee()
                     {
@@ -249,7 +259,7 @@ namespace Barbearia.Persistence.DbContexts
                         Gender = 1,
                         Cpf = "73473003096",
                         Email = "billdoidao@gmail.com",
-                        Status = Employee.EmployeeStatus.Inactive,
+                        Status = Person.TypeStatus.Inactive,
                     });
 
             workingDay
@@ -367,7 +377,7 @@ namespace Barbearia.Persistence.DbContexts
                         Gender = 2,
                         Cpf = "73473943096",
                         Email = "josefacraft@hotmail.com",
-                        Status = Domain.Entities.Supplier.SupplierStatus.Active,
+                        Status = Person.TypeStatus.Active,
                     },
                     new Supplier()
                     {
@@ -376,7 +386,7 @@ namespace Barbearia.Persistence.DbContexts
                         BirthDate = new DateOnly(1975, 4, 4),
                         Cnpj = "73473003096986",
                         Email = "micro@so.ft",
-                        Status = Domain.Entities.Supplier.SupplierStatus.Inactive,
+                        Status = Person.TypeStatus.Inactive,
                     });
 
             address

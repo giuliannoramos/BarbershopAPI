@@ -2,8 +2,6 @@ namespace Barbearia.Domain.Entities;
 
 public class Supplier : Person
 {
-    public SupplierStatus Status { get; set; }
-
     // private void CheckCnpj()
     // {
     //     int[] multiplicador1 = new int[12] { 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
@@ -94,12 +92,6 @@ public class Supplier : Person
         {
             throw new Exception("Fornecedor com CNPJ não pode ter gênero");
         }
-    }
-
-    public enum SupplierStatus
-    {
-        Active,
-        Inactive        
     }
 
     public void ValidateSupplier()

@@ -28,11 +28,13 @@ namespace Barbearia.Persistence.DbContexts
             // modelBuilder.Entity<OrderProduct>().ToTable("OrderProduct", t => t.ExcludeFromMigrations());  
             modelBuilder.Ignore<Supplier>();
             modelBuilder.Ignore<Product>();
-            modelBuilder.Ignore<StockHistory>();   
-            modelBuilder.Ignore<OrderProduct>();  
-            modelBuilder.Ignore<RoleEmployee>(); 
-
-     
+            modelBuilder.Ignore<StockHistory>();
+            modelBuilder.Ignore<OrderProduct>();
+            modelBuilder.Ignore<RoleEmployee>();
+            modelBuilder.Ignore<Role>();
+            modelBuilder.Ignore<WorkingDay>();
+            modelBuilder.Ignore<Schedule>();
+            modelBuilder.Ignore<TimeOff>();
 
             order
             .ToTable("Order");

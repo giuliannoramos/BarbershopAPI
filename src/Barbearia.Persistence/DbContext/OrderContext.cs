@@ -29,7 +29,8 @@ namespace Barbearia.Persistence.DbContexts
             modelBuilder.Ignore<Supplier>();
             modelBuilder.Ignore<Product>();
             modelBuilder.Ignore<StockHistory>();   
-            modelBuilder.Ignore<OrderProduct>();   
+            modelBuilder.Ignore<OrderProduct>();  
+            modelBuilder.Ignore<RoleEmployee>(); 
 
      
 

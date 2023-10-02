@@ -37,6 +37,7 @@ using Barbearia.Application.Features.Suppliers.Queries.GetSupplierById;
 using Barbearia.Application.Features.Suppliers.Commands.CreateSupplier;
 using Barbearia.Application.Features.Suppliers.Commands.UpdateSupplier;
 using Barbearia.Application.Features.Suppliers.Commands.DeleteSupplier;
+using Barbearia.Application.Features.SuppliersCollection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -109,6 +110,7 @@ builder.Services.AddScoped<IRequestHandler<UpdateOrderCommand, UpdateOrderComman
 builder.Services.AddScoped<IValidator<UpdateOrderCommand>, UpdateOrderCommandValidator>();
 builder.Services.AddScoped<IRequestHandler<DeleteOrderCommand, bool>, DeleteOrderCommandHandler>();
 // Payment commands and queries
+builder.Services.AddScoped<IRequestHandler<GetSuppliersCollectionQuery, GetSuppliersCollectionQueryResponse>, GetSuppliersCollectionQueryHandler>();
 builder.Services.AddScoped<IRequestHandler<GetPaymentQuery, GetPaymentDto>, GetPaymentQueryHandler>();
 builder.Services.AddScoped<IRequestHandler<CreatePaymentCommand, CreatePaymentCommandResponse>, CreatePaymentCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<UpdatePaymentCommand, UpdatePaymentCommandResponse>, UpdatePaymentCommandHandler>();

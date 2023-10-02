@@ -930,11 +930,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barberiaAPI\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj",
+      "projectUniqueName": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barberiaAPI\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj",
       "projectName": "Barbearia.Application",
-      "projectPath": "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barberiaAPI\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj",
+      "projectPath": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barberiaAPI\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj",
       "packagesPath": "C:\\Users\\lucas\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barberiaAPI\\barbershopapi\\src\\Barbearia.Application\\obj\\",
+      "outputPath": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barberiaAPI\\barbershopapi\\src\\Barbearia.Application\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Users\\lucas\\AppData\\Roaming\\Godot\\mono\\GodotNuGetFallbackFolder",

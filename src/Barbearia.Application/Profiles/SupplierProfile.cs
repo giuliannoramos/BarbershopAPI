@@ -2,6 +2,7 @@ using AutoMapper;
 using Barbearia.Application.Features.Suppliers.Commands.CreateSupplier;
 using Barbearia.Application.Features.Suppliers.Commands.UpdateSupplier;
 using Barbearia.Application.Features.Suppliers.Queries.GetSupplierById;
+using Barbearia.Application.Features.SuppliersCollection;
 using Barbearia.Domain.Entities;
 
 namespace Barbearia.Application.Profiles;
@@ -17,5 +18,7 @@ public class SupplierProfile : Profile
 
         CreateMap<UpdateSupplierCommand, Supplier>();     
         CreateMap<Supplier,UpdateSupplierDto>(); 
+
+        CreateMap<Supplier, GetSuppliersCollectionDto>();
     }
 }

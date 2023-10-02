@@ -198,6 +198,99 @@ namespace Barbearia.Persistence.Migrations
                     b.UseTphMappingStrategy();
                 });
 
+            modelBuilder.Entity("Barbearia.Domain.Entities.Role", b =>
+                {
+                    b.Property<int>("RoleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("RoleId"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("character varying(80)");
+
+                    b.HasKey("RoleId");
+
+                    b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            RoleId = 1,
+                            Name = "Barbeiro"
+                        },
+                        new
+                        {
+                            RoleId = 2,
+                            Name = "Barbeiro Mestre?Sla"
+                        });
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.RoleEmployee", b =>
+                {
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("EmployeeId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("RoleEmployee");
+
+                    b.HasData(
+                        new
+                        {
+                            EmployeeId = 5,
+                            RoleId = 1
+                        },
+                        new
+                        {
+                            EmployeeId = 6,
+                            RoleId = 2
+                        });
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.Schedule", b =>
+                {
+                    b.Property<int>("ScheduleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ScheduleId"));
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("WorkingDayId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ScheduleId");
+
+                    b.HasIndex("WorkingDayId")
+                        .IsUnique();
+
+                    b.ToTable("Schedules");
+
+                    b.HasData(
+                        new
+                        {
+                            ScheduleId = 1,
+                            Status = 1,
+                            WorkingDayId = 1
+                        },
+                        new
+                        {
+                            ScheduleId = 2,
+                            Status = 2,
+                            WorkingDayId = 2
+                        });
+                });
+
             modelBuilder.Entity("Barbearia.Domain.Entities.StockHistory", b =>
                 {
                     b.Property<int>("StockHistoryId")
@@ -298,6 +391,91 @@ namespace Barbearia.Persistence.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Barbearia.Domain.Entities.TimeOff", b =>
+                {
+                    b.Property<int>("TimeOffId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("TimeOffId"));
+
+                    b.Property<TimeOnly>("FinishTime")
+                        .HasColumnType("time without time zone");
+
+                    b.Property<TimeOnly>("StartTime")
+                        .HasColumnType("time without time zone");
+
+                    b.Property<int>("WorkingDayId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("TimeOffId");
+
+                    b.HasIndex("WorkingDayId");
+
+                    b.ToTable("TimeOff", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            TimeOffId = 1,
+                            FinishTime = new TimeOnly(14, 0, 0),
+                            StartTime = new TimeOnly(11, 30, 0),
+                            WorkingDayId = 1
+                        },
+                        new
+                        {
+                            TimeOffId = 2,
+                            FinishTime = new TimeOnly(15, 0, 0),
+                            StartTime = new TimeOnly(12, 0, 0),
+                            WorkingDayId = 2
+                        });
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.WorkingDay", b =>
+                {
+                    b.Property<int>("WorkingDayId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("WorkingDayId"));
+
+                    b.Property<TimeOnly>("FinishTime")
+                        .HasColumnType("time without time zone");
+
+                    b.Property<int>("PersonId")
+                        .HasColumnType("integer");
+
+                    b.Property<TimeOnly>("StartTime")
+                        .HasColumnType("time without time zone");
+
+                    b.Property<DateOnly>("WorkDate")
+                        .HasColumnType("date");
+
+                    b.HasKey("WorkingDayId");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("WorkingDays");
+
+                    b.HasData(
+                        new
+                        {
+                            WorkingDayId = 1,
+                            FinishTime = new TimeOnly(18, 30, 0),
+                            PersonId = 5,
+                            StartTime = new TimeOnly(7, 23, 11),
+                            WorkDate = new DateOnly(2023, 10, 10)
+                        },
+                        new
+                        {
+                            WorkingDayId = 2,
+                            FinishTime = new TimeOnly(19, 30, 0),
+                            PersonId = 5,
+                            StartTime = new TimeOnly(8, 23, 11),
+                            WorkDate = new DateOnly(2023, 11, 11)
+                        });
+                });
+
             modelBuilder.Entity("Barbearia.Domain.Entities.Product", b =>
                 {
                     b.HasBaseType("Barbearia.Domain.Entities.Item");
@@ -362,6 +540,35 @@ namespace Barbearia.Persistence.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Barbearia.Domain.Entities.Employee", b =>
+                {
+                    b.HasBaseType("Barbearia.Domain.Entities.Person");
+
+                    b.HasDiscriminator().HasValue(4);
+
+                    b.HasData(
+                        new
+                        {
+                            PersonId = 5,
+                            BirthDate = new DateOnly(2000, 8, 7),
+                            Cnpj = "",
+                            Cpf = "73473943096",
+                            Email = "joao@hotmail.com",
+                            Gender = 1,
+                            Name = "João cabeça"
+                        },
+                        new
+                        {
+                            PersonId = 6,
+                            BirthDate = new DateOnly(1990, 1, 1),
+                            Cnpj = "",
+                            Cpf = "73473003096",
+                            Email = "billdoidao@gmail.com",
+                            Gender = 1,
+                            Name = "Bill Maluco"
+                        });
+                });
+
             modelBuilder.Entity("Barbearia.Domain.Entities.Supplier", b =>
                 {
                     b.HasBaseType("Barbearia.Domain.Entities.Person");
@@ -402,6 +609,36 @@ namespace Barbearia.Persistence.Migrations
                     b.Navigation("Person");
                 });
 
+            modelBuilder.Entity("Barbearia.Domain.Entities.RoleEmployee", b =>
+                {
+                    b.HasOne("Barbearia.Domain.Entities.Person", "Employee")
+                        .WithMany("RoleEmployees")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Barbearia.Domain.Entities.Role", "Role")
+                        .WithMany("RoleEmployees")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.Schedule", b =>
+                {
+                    b.HasOne("Barbearia.Domain.Entities.WorkingDay", "WorkingDay")
+                        .WithOne("Schedule")
+                        .HasForeignKey("Barbearia.Domain.Entities.Schedule", "WorkingDayId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("WorkingDay");
+                });
+
             modelBuilder.Entity("Barbearia.Domain.Entities.StockHistory", b =>
                 {
                     b.HasOne("Barbearia.Domain.Entities.Person", "Supplier")
@@ -432,6 +669,28 @@ namespace Barbearia.Persistence.Migrations
                     b.Navigation("Person");
                 });
 
+            modelBuilder.Entity("Barbearia.Domain.Entities.TimeOff", b =>
+                {
+                    b.HasOne("Barbearia.Domain.Entities.WorkingDay", "WorkingDay")
+                        .WithMany("TimeOffs")
+                        .HasForeignKey("WorkingDayId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("WorkingDay");
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.WorkingDay", b =>
+                {
+                    b.HasOne("Barbearia.Domain.Entities.Person", "Employee")
+                        .WithMany("WorkingDays")
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+                });
+
             modelBuilder.Entity("Barbearia.Domain.Entities.Product", b =>
                 {
                     b.HasOne("Barbearia.Domain.Entities.Item", null)
@@ -455,9 +714,25 @@ namespace Barbearia.Persistence.Migrations
 
                     b.Navigation("Products");
 
+                    b.Navigation("RoleEmployees");
+
                     b.Navigation("StockHistories");
 
                     b.Navigation("Telephones");
+
+                    b.Navigation("WorkingDays");
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.Role", b =>
+                {
+                    b.Navigation("RoleEmployees");
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.WorkingDay", b =>
+                {
+                    b.Navigation("Schedule");
+
+                    b.Navigation("TimeOffs");
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Product", b =>

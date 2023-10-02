@@ -6,22 +6,22 @@ namespace Barbearia.Application.Features.Customers.Commands.DeleteCustomer;
 
 public class DeleteCustomerCommandHandler : IRequestHandler<DeleteCustomerCommand, bool>
 {
-    private readonly ICustomerRepository _customerRepository;
+    private readonly IPersonRepository _personRepository;
     private readonly IMapper _mapper;
 
-    public DeleteCustomerCommandHandler(ICustomerRepository customerRepository, IMapper mapper){
-        _customerRepository = customerRepository;
+    public DeleteCustomerCommandHandler(IPersonRepository personRepository, IMapper mapper){
+        _personRepository = personRepository;
         _mapper = mapper;
     }
 
     public async Task<bool> Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
     {
-        var customerFromDatabase = await _customerRepository.GetCustomerByIdAsync(request.PersonId);
+        var customerFromDatabase = await _personRepository.GetCustomerByIdAsync(request.PersonId);
 
         if(customerFromDatabase == null) return false;
 
-        _customerRepository.DeleteCustomer(customerFromDatabase);
+        _personRepository.DeleteCustomer(customerFromDatabase);
 
-        return await _customerRepository.SaveChangesAsync();
+        return await _personRepository.SaveChangesAsync();
     }
 }

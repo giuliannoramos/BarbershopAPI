@@ -9,16 +9,16 @@ namespace Barbearia.Application.Features.Orders.Commands.UpdateOrder;
 public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand, UpdateOrderCommandResponse>
 {
     private readonly IOrderRepository _orderRepository;
-    private readonly ICustomerRepository _customerRepository;
+    private readonly IPersonRepository _personRepository;
     private readonly IMapper _mapper;
 
     private readonly ILogger<UpdateOrderCommandHandler> _logger;
 
-    public UpdateOrderCommandHandler(IOrderRepository orderRepository, ICustomerRepository customerRepository, IMapper mapper
+    public UpdateOrderCommandHandler(IOrderRepository orderRepository, IPersonRepository personRepository, IMapper mapper
     , ILogger<UpdateOrderCommandHandler> logger)
     {
         _orderRepository = orderRepository;
-        _customerRepository = customerRepository;
+        _personRepository = personRepository;
         _mapper = mapper;
         _logger = logger;
     }
@@ -35,7 +35,7 @@ public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand, Upd
             return response;
         }
 
-        var customerFromDatabase = await _customerRepository.GetCustomerByIdAsync(request.PersonId);
+        var customerFromDatabase = await _personRepository.GetCustomerByIdAsync(request.PersonId);
         if (customerFromDatabase == null)
         {
             response.ErrorType = Error.NotFoundProblem;

@@ -8,14 +8,14 @@ namespace Barbearia.Application.Features.Addresses.Commands.CreateAddress;
 
 public class CreateAddressCommandHandler : IRequestHandler<CreateAddressCommand, CreateAddressCommandResponse>
 {
-    private readonly ICustomerRepository _customerRepository;
+    private readonly IPersonRepository _personRepository;
     private readonly IMapper _mapper;
     private readonly ILogger<CreateAddressCommandHandler> _logger;
 
 
-    public CreateAddressCommandHandler(ICustomerRepository customerRepository, IMapper mapper, ILogger<CreateAddressCommandHandler> logger)
+    public CreateAddressCommandHandler(IPersonRepository personRepository, IMapper mapper, ILogger<CreateAddressCommandHandler> logger)
     {
-        _customerRepository = customerRepository;
+        _personRepository = personRepository;
         _mapper = mapper;
         _logger = logger;
     }
@@ -24,7 +24,7 @@ public class CreateAddressCommandHandler : IRequestHandler<CreateAddressCommand,
     {
         CreateAddressCommandResponse response = new();
 
-        var customerFromDatabase = await _customerRepository.GetCustomerByIdAsync(request.PersonId);
+        var customerFromDatabase = await _personRepository.GetCustomerByIdAsync(request.PersonId);
         if (customerFromDatabase == null)
         {
             response.ErrorType = Error.NotFoundProblem;
@@ -63,8 +63,8 @@ public class CreateAddressCommandHandler : IRequestHandler<CreateAddressCommand,
             return response;
         }
 
-        _customerRepository.AddAddress(customerFromDatabase, addressEntity);
-        await _customerRepository.SaveChangesAsync();
+        _personRepository.AddAddress(customerFromDatabase, addressEntity);
+        await _personRepository.SaveChangesAsync();
 
         response.Address = _mapper.Map<CreateAddressDto>(addressEntity);
         return response;

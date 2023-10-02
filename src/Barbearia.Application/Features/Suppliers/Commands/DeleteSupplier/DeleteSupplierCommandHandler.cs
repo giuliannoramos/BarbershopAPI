@@ -6,22 +6,22 @@ namespace Barbearia.Application.Features.Suppliers.Commands.DeleteSupplier;
 
 public class DeleteSupplierCommandHandler : IRequestHandler<DeleteSupplierCommand, bool>
 {
-    private readonly ICustomerRepository _customerRepository;
+    private readonly IPersonRepository _personRepository;
     private readonly IMapper _mapper;
 
-    public DeleteSupplierCommandHandler(ICustomerRepository customerRepository, IMapper mapper){
-        _customerRepository = customerRepository;
+    public DeleteSupplierCommandHandler(IPersonRepository personRepository, IMapper mapper){
+        _personRepository = personRepository;
         _mapper = mapper;
     }
 
     public async Task<bool> Handle(DeleteSupplierCommand request, CancellationToken cancellationToken)
     {
-        var supplierFromDatabase = await _customerRepository.GetSupplierByIdAsync(request.PersonId);
+        var supplierFromDatabase = await _personRepository.GetSupplierByIdAsync(request.PersonId);
 
         if(supplierFromDatabase == null) return false;
 
-        _customerRepository.DeleteSupplier(supplierFromDatabase);
+        _personRepository.DeleteSupplier(supplierFromDatabase);
 
-        return await _customerRepository.SaveChangesAsync();
+        return await _personRepository.SaveChangesAsync();
     }
 }

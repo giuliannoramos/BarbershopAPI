@@ -6,18 +6,18 @@ namespace Barbearia.Application.Features.Customers.Queries.GetAllCustomers;
 
 public class GetAllCustomersQueryHandler : IRequestHandler<GetAllCustomersQuery, IEnumerable<GetAllCustomersDto>>
 {
-    private readonly ICustomerRepository _customerRepository;
+    private readonly IPersonRepository _personRepository;
     private readonly IMapper _mapper;
 
-    public GetAllCustomersQueryHandler(ICustomerRepository customerRepository, IMapper mapper)
+    public GetAllCustomersQueryHandler(IPersonRepository personRepository, IMapper mapper)
     {
-        _customerRepository = customerRepository;
+        _personRepository = personRepository;
         _mapper = mapper;
     }
 
     public async Task<IEnumerable<GetAllCustomersDto>> Handle(GetAllCustomersQuery request, CancellationToken cancellationToken)
     {
-        var customerFromDatabase = await _customerRepository.GetAllCustomersAsync();
+        var customerFromDatabase = await _personRepository.GetAllCustomersAsync();
 
         return _mapper.Map<IEnumerable<GetAllCustomersDto>>(customerFromDatabase);
     }

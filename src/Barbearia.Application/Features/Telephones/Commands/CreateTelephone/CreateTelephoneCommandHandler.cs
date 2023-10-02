@@ -9,20 +9,20 @@ namespace Barbearia.Application.Features.Telephones.Commands.CreateTelephone;
 
 public class CreateTelephoneCommandHandler : IRequestHandler<CreateTelephoneCommand, CreateTelephoneCommandResponse>
 {
-    private readonly ICustomerRepository _customerRepository;
+    private readonly IPersonRepository _personRepository;
     private readonly IMapper _mapper;
     private readonly ILogger<CreateTelephoneCommandHandler> _logger;
-    public CreateTelephoneCommandHandler(ICustomerRepository customerRepository, IMapper mapper, ILogger<CreateTelephoneCommandHandler> logger)
+    public CreateTelephoneCommandHandler(IPersonRepository personRepository, IMapper mapper, ILogger<CreateTelephoneCommandHandler> logger)
     {
         _mapper = mapper;
-        _customerRepository = customerRepository;
+        _personRepository = personRepository;
         _logger = logger;
     }
     public async Task<CreateTelephoneCommandResponse> Handle(CreateTelephoneCommand request, CancellationToken cancellationToken)
     {
         CreateTelephoneCommandResponse response = new();
 
-        var customerFromDatabase = await _customerRepository.GetCustomerByIdAsync(request.PersonId);
+        var customerFromDatabase = await _personRepository.GetCustomerByIdAsync(request.PersonId);
         if (customerFromDatabase == null)
         {
             response.ErrorType = Error.ValidationProblem;
@@ -59,8 +59,8 @@ public class CreateTelephoneCommandHandler : IRequestHandler<CreateTelephoneComm
             return response;
         }
 
-        _customerRepository.AddTelephone(customerFromDatabase, telephoneEntity);
-        await _customerRepository.SaveChangesAsync();
+        _personRepository.AddTelephone(customerFromDatabase, telephoneEntity);
+        await _personRepository.SaveChangesAsync();
 
         response.Telephone = _mapper.Map<CreateTelephoneDto>(telephoneEntity);
         return response;

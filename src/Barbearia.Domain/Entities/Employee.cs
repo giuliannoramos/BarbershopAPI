@@ -4,6 +4,7 @@ namespace Barbearia.Domain.Entities;
 
 public class Employee: Person
 {
+    public EmployeeStatus Status { get; set; }
     private void CheckEmployeeTelephone()
     {
         if (Telephones.Count < 1)
@@ -91,6 +92,12 @@ public class Employee: Person
         {
             throw new Exception("Employee cant have stock histories");
         }
+    }
+
+    public enum EmployeeStatus
+    {
+        Active,
+        Inactive        
     }
 
     public void ValidateEmployee()

@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Barbearia.Persistence.Migrations.Item
 {
     /// <inheritdoc />
-    public partial class itemInitMigration : Migration
+    public partial class AddItem : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -182,8 +182,8 @@ namespace Barbearia.Persistence.Migrations.Item
                 columns: new[] { "StockHistoryId", "Amount", "CurrentPrice", "LastStockQuantity", "Operation", "OrderId", "PersonId", "ProductId", "Timestamp" },
                 values: new object[,]
                 {
-                    { 1, 20, 23.5m, 10, 1, 1, 3, 1, new DateTime(2023, 10, 2, 0, 0, 35, 64, DateTimeKind.Utc).AddTicks(4461) },
-                    { 2, 40, 200.2m, 32, 3, 2, 4, 2, new DateTime(2023, 10, 2, 0, 0, 35, 64, DateTimeKind.Utc).AddTicks(4507) }
+                    { 1, 20, 23.5m, 10, 1, 1, 3, 1, new DateTime(2023, 10, 2, 1, 22, 19, 824, DateTimeKind.Utc).AddTicks(4683) },
+                    { 2, 40, 200.2m, 32, 3, 2, 4, 2, new DateTime(2023, 10, 2, 1, 22, 19, 824, DateTimeKind.Utc).AddTicks(4689) }
                 });
 
             migrationBuilder.CreateIndex(

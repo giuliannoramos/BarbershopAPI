@@ -10,13 +10,13 @@ namespace Barbearia.Application.Features.Customers.Commands.UpdateCustomer;
 
 public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerCommand, UpdateCustomerCommandResponse>
 {
-    private readonly ICustomerRepository _customerRepository;
+    private readonly IPersonRepository _personRepository;
     private readonly IMapper _mapper;
     private readonly ILogger<UpdateCustomerCommandHandler> _logger;
 
-    public UpdateCustomerCommandHandler(ICustomerRepository customerRepository, IMapper mapper, ILogger<UpdateCustomerCommandHandler> logger)
+    public UpdateCustomerCommandHandler(IPersonRepository personRepository, IMapper mapper, ILogger<UpdateCustomerCommandHandler> logger)
     {
-        _customerRepository = customerRepository;
+        _personRepository = personRepository;
         _mapper = mapper;
         _logger = logger;
     }
@@ -25,7 +25,7 @@ public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerComman
     {
         UpdateCustomerCommandResponse response = new();
 
-        var customerFromDatabase = await _customerRepository.GetCustomerByIdAsync(request.PersonId);
+        var customerFromDatabase = await _personRepository.GetCustomerByIdAsync(request.PersonId);
 
         if (customerFromDatabase == null)
         {
@@ -93,7 +93,7 @@ public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerComman
             }
         }
 
-        await _customerRepository.SaveChangesAsync();
+        await _personRepository.SaveChangesAsync();
 
         return response;
     }

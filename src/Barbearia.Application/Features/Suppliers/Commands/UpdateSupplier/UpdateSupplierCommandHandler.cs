@@ -10,13 +10,13 @@ namespace Barbearia.Application.Features.Suppliers.Commands.UpdateSupplier;
 
 public class UpdateSupplierCommandHandler : IRequestHandler<UpdateSupplierCommand, UpdateSupplierCommandResponse>
 {
-    private readonly ICustomerRepository _customerRepository;
+    private readonly IPersonRepository _personRepository;
     private readonly IMapper _mapper;
     private readonly ILogger<UpdateSupplierCommandHandler> _logger;
 
-    public UpdateSupplierCommandHandler(ICustomerRepository customerRepository, IMapper mapper, ILogger<UpdateSupplierCommandHandler> logger)
+    public UpdateSupplierCommandHandler(IPersonRepository personRepository, IMapper mapper, ILogger<UpdateSupplierCommandHandler> logger)
     {
-        _customerRepository = customerRepository;
+        _personRepository = personRepository;
         _mapper = mapper;
         _logger = logger;
     }
@@ -25,7 +25,7 @@ public class UpdateSupplierCommandHandler : IRequestHandler<UpdateSupplierComman
     {
         UpdateSupplierCommandResponse response = new();
 
-        var supplierFromDatabase = await _customerRepository.GetSupplierByIdAsync(request.PersonId);
+        var supplierFromDatabase = await _personRepository.GetSupplierByIdAsync(request.PersonId);
 
         if (supplierFromDatabase == null)
         {
@@ -93,7 +93,7 @@ public class UpdateSupplierCommandHandler : IRequestHandler<UpdateSupplierComman
             }
         }
 
-        await _customerRepository.SaveChangesAsync();
+        await _personRepository.SaveChangesAsync();
 
         return response;
     }

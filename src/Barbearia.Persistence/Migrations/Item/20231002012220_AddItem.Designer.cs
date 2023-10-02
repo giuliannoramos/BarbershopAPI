@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Barbearia.Persistence.Migrations.Item
 {
     [DbContext(typeof(ItemContext))]
-    [Migration("20231002000035_itemInitMigration")]
-    partial class itemInitMigration
+    [Migration("20231002012220_AddItem")]
+    partial class AddItem
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -237,7 +237,7 @@ namespace Barbearia.Persistence.Migrations.Item
                             OrderId = 1,
                             PersonId = 3,
                             ProductId = 1,
-                            Timestamp = new DateTime(2023, 10, 2, 0, 0, 35, 64, DateTimeKind.Utc).AddTicks(4461)
+                            Timestamp = new DateTime(2023, 10, 2, 1, 22, 19, 824, DateTimeKind.Utc).AddTicks(4683)
                         },
                         new
                         {
@@ -249,7 +249,7 @@ namespace Barbearia.Persistence.Migrations.Item
                             OrderId = 2,
                             PersonId = 4,
                             ProductId = 2,
-                            Timestamp = new DateTime(2023, 10, 2, 0, 0, 35, 64, DateTimeKind.Utc).AddTicks(4507)
+                            Timestamp = new DateTime(2023, 10, 2, 1, 22, 19, 824, DateTimeKind.Utc).AddTicks(4689)
                         });
                 });
 

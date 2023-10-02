@@ -6,12 +6,12 @@ namespace Barbearia.Application.Features.CustomersCollection;
 
 public class GetCustomersCollectionQueryHandler : IRequestHandler<GetCustomersCollectionQuery,GetCustomersCollectionQueryResponse>
 {
-    private readonly ICustomerRepository _customerRepository;
+    private readonly IPersonRepository _personRepository;
     private readonly IMapper _mapper;
 
-    public GetCustomersCollectionQueryHandler(ICustomerRepository customerRepository, IMapper mapper)
+    public GetCustomersCollectionQueryHandler(IPersonRepository personRepository, IMapper mapper)
     {
-        _customerRepository = customerRepository;
+        _personRepository = personRepository;
         _mapper = mapper;
     }
 
@@ -20,7 +20,7 @@ public class GetCustomersCollectionQueryHandler : IRequestHandler<GetCustomersCo
 
         GetCustomersCollectionQueryResponse response = new();
 
-        var (customerToReturn, paginationMetadata) = await _customerRepository.GetAllCustomersAsync(request.SearchQuery, request.PageNumber,request.PageSize);
+        var (customerToReturn, paginationMetadata) = await _personRepository.GetAllCustomersAsync(request.SearchQuery, request.PageNumber,request.PageSize);
         // if(customerToReturn == null || !customerToReturn.Any())
         // {
         //     response.Errors.Add(

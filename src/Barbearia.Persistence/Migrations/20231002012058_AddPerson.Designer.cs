@@ -11,9 +11,9 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Barbearia.Persistence.Migrations
 {
-    [DbContext(typeof(CustomerContext))]
-    [Migration("20231002000011_customerInitMigration")]
-    partial class customerInitMigration
+    [DbContext(typeof(PersonContext))]
+    [Migration("20231002012058_AddPerson")]
+    partial class AddPerson
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -547,6 +547,9 @@ namespace Barbearia.Persistence.Migrations
                 {
                     b.HasBaseType("Barbearia.Domain.Entities.Person");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
                     b.HasDiscriminator().HasValue(4);
 
                     b.HasData(
@@ -558,7 +561,8 @@ namespace Barbearia.Persistence.Migrations
                             Cpf = "73473943096",
                             Email = "joao@hotmail.com",
                             Gender = 1,
-                            Name = "João cabeça"
+                            Name = "João cabeça",
+                            Status = 0
                         },
                         new
                         {
@@ -568,13 +572,23 @@ namespace Barbearia.Persistence.Migrations
                             Cpf = "73473003096",
                             Email = "billdoidao@gmail.com",
                             Gender = 1,
-                            Name = "Bill Maluco"
+                            Name = "Bill Maluco",
+                            Status = 1
                         });
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Supplier", b =>
                 {
                     b.HasBaseType("Barbearia.Domain.Entities.Person");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.ToTable("Person", t =>
+                        {
+                            t.Property("Status")
+                                .HasColumnName("Supplier_Status");
+                        });
 
                     b.HasDiscriminator().HasValue(3);
 
@@ -587,7 +601,8 @@ namespace Barbearia.Persistence.Migrations
                             Cpf = "73473943096",
                             Email = "josefacraft@hotmail.com",
                             Gender = 2,
-                            Name = "Josefina"
+                            Name = "Josefina",
+                            Status = 0
                         },
                         new
                         {
@@ -597,7 +612,8 @@ namespace Barbearia.Persistence.Migrations
                             Cpf = "",
                             Email = "micro@so.ft",
                             Gender = 0,
-                            Name = "Microsoft"
+                            Name = "Microsoft",
+                            Status = 1
                         });
                 });
 

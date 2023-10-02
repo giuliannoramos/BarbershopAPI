@@ -9,15 +9,15 @@ namespace Barbearia.Application.Features.Suppliers.Commands.CreateSupplier;
 
 public class CreateSupplierCommandHandler : IRequestHandler<CreateSupplierCommand, CreateSupplierCommandResponse>
 {
-    private readonly ICustomerRepository _customerRepository;
+    private readonly IPersonRepository _personRepository;
     private readonly IMapper _mapper;
     private readonly ILogger<CreateSupplierCommandHandler> _logger;
 
 
 
-    public CreateSupplierCommandHandler(ICustomerRepository customerRepository, IMapper mapper, ILogger<CreateSupplierCommandHandler> logger)
+    public CreateSupplierCommandHandler(IPersonRepository personRepository, IMapper mapper, ILogger<CreateSupplierCommandHandler> logger)
     {
-        _customerRepository = customerRepository;
+        _personRepository = personRepository;
         _mapper = mapper;
         _logger = logger;
     }
@@ -85,8 +85,8 @@ public class CreateSupplierCommandHandler : IRequestHandler<CreateSupplierComman
             }
         }
 
-        _customerRepository.AddSupplier(supplierEntity);
-        await _customerRepository.SaveChangesAsync();
+        _personRepository.AddSupplier(supplierEntity);
+        await _personRepository.SaveChangesAsync();
 
         response.Supplier = _mapper.Map<CreateSupplierDto>(supplierEntity);
         return response;

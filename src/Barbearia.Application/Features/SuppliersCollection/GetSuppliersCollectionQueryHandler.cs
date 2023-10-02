@@ -6,12 +6,12 @@ namespace Barbearia.Application.Features.SuppliersCollection;
 
 public class GetSuppliersCollectionQueryHandler : IRequestHandler<GetSuppliersCollectionQuery, GetSuppliersCollectionQueryResponse>
 {
-    private readonly ICustomerRepository _customerRepository;
+    private readonly IPersonRepository _personRepository;
     private readonly IMapper _mapper;
 
-    public GetSuppliersCollectionQueryHandler(ICustomerRepository customerRepository, IMapper mapper)
+    public GetSuppliersCollectionQueryHandler(IPersonRepository personRepository, IMapper mapper)
     {
-        _customerRepository = customerRepository;
+        _personRepository = personRepository;
         _mapper = mapper;
     }
 
@@ -20,11 +20,9 @@ public class GetSuppliersCollectionQueryHandler : IRequestHandler<GetSuppliersCo
 
         GetSuppliersCollectionQueryResponse response = new();
 
-        var (suppliersToReturn, paginationMetadata) = await _customerRepository.GetAllSuppliersAsync(request.SearchQuery, request.PageNumber, request.PageSize);
+        var (suppliersToReturn, paginationMetadata) = await _personRepository.GetAllSuppliersAsync(request.SearchQuery, request.PageNumber, request.PageSize);
 
-        var supliersOnly = suppliersToReturn.Where(s => !string.IsNullOrEmpty(s.Cnpj)).ToList();
-
-        response.Suppliers = _mapper.Map<IEnumerable<GetSuppliersCollectionDto>>(supliersOnly);
+        response.Suppliers = _mapper.Map<IEnumerable<GetSuppliersCollectionDto>>(suppliersToReturn);
         response.PaginationMetadata = paginationMetadata;
 
         return response;

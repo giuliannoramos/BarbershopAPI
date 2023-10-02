@@ -89,6 +89,34 @@ public class CustomerRepository : ICustomerRepository
             .FirstOrDefaultAsync(s => s.PersonId == supplierId);
     }
 
+    public async Task<(IEnumerable<Supplier>, PaginationMetadata)> GetAllSuppliersAsync(string? searchQuery,
+    int pageNumber, int pageSize)
+    {
+        IQueryable<Supplier> collection = _context.Persons.OfType<Supplier>()
+        .Include(c => c.Telephones);
+
+        if (!string.IsNullOrWhiteSpace(searchQuery))
+        {
+            var name = searchQuery.Trim().ToLower();
+            collection = collection.Where(
+
+                c => c.Name.ToLower().Contains(name)
+            );
+        }
+
+        var totalItemCount = await collection.CountAsync();
+
+        var paginationMetadata = new PaginationMetadata(totalItemCount, pageSize, pageNumber);
+
+        var SupplierToReturn = await collection
+        .OrderBy(c => c.PersonId)
+        .Skip(pageSize * (pageNumber - 1))
+        .Take(pageSize)
+        .ToListAsync();
+
+        return (SupplierToReturn, paginationMetadata);
+    }
+
     public void AddSupplier(Supplier supplier)
     {
         _context.Persons.Add(supplier);

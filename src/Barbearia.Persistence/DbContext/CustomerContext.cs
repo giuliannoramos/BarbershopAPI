@@ -11,11 +11,12 @@ namespace Barbearia.Persistence.DbContexts
         : base(options) { }
 
         public DbSet<Person> Persons { get; set; } = null!;
-
         public DbSet<Telephone> Telephones { get; set; } = null!;
-
         public DbSet<Address> Addresses { get; set; } = null!;
-
+        public DbSet<WorkingDay>WorkingDays{get; set; } = null!;
+        public DbSet<TimeOff>TimeOffs{get; set; } = null!;
+        public DbSet<Role>Roles{get; set; } = null!;
+        public DbSet<Schedule>Schedules{get; set; } = null!;
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -28,13 +29,18 @@ namespace Barbearia.Persistence.DbContexts
             var Supplier = modelBuilder.Entity<Supplier>();
             var telephone = modelBuilder.Entity<Telephone>();
             var address = modelBuilder.Entity<Address>();
+            var workingDay = modelBuilder.Entity<WorkingDay>();
+            var timeOff = modelBuilder.Entity<TimeOff>();
+            var role = modelBuilder.Entity<Role>();
+            var schedule = modelBuilder.Entity<Schedule>();
+            var employee = modelBuilder.Entity<Employee>();
+            var roleEmployee = modelBuilder.Entity<RoleEmployee>();
 
             modelBuilder.Entity<Order>().ToTable("Order", t => t.ExcludeFromMigrations());            
             modelBuilder.Entity<Item>().ToTable("Item", t => t.ExcludeFromMigrations());            
             modelBuilder.Entity<Product>().ToTable("Product", t => t.ExcludeFromMigrations());            
             modelBuilder.Entity<StockHistory>().ToTable("StockHistory", t => t.ExcludeFromMigrations());            
             modelBuilder.Ignore<Payment>();
-            // modelBuilder.Ignore<StockHistory>();
             modelBuilder.Ignore<Order>();
             modelBuilder.Ignore<Coupon>();
             modelBuilder.Ignore<ProductCategory>();
@@ -46,7 +52,8 @@ namespace Barbearia.Persistence.DbContexts
             .HasDiscriminator<int>("PersonType")
             .HasValue<Person>(1)
             .HasValue<Customer>(2)
-            .HasValue<Supplier>(3);
+            .HasValue<Supplier>(3)
+            .HasValue<Employee>(4);
 
             person
                 .Property(p => p.Name)
@@ -134,6 +141,191 @@ namespace Barbearia.Persistence.DbContexts
                 .HasMaxLength(11)
                 .IsRequired();
 
+            item
+                .HasKey(p => p.ItemId);
+
+            Supplier
+                .Property(p => p.Cnpj)
+                .HasMaxLength(14);
+
+            Supplier
+                .Property(p => p.Gender);
+
+            Supplier
+                .Property(p => p.Cpf)
+                .HasMaxLength(11);
+
+            employee
+                .Property(e=>e.Cpf)
+                .IsRequired()
+                .HasMaxLength(11);
+
+            employee
+                .Property(p => p.Gender)
+                .IsRequired();
+
+            workingDay
+                .Property(w=>w.WorkDate)
+                .IsRequired();
+
+            workingDay
+                .Property(w=>w.StartTime)
+                .IsRequired();
+
+            workingDay
+                .Property(w=>w.FinishTime)
+                .IsRequired();
+
+            workingDay
+                .HasMany(w=>w.TimeOffs)
+                .WithOne(t=>t.WorkingDay)
+                .HasForeignKey(t=>t.WorkingDayId);
+
+            workingDay
+                .HasOne(w=>w.Schedule)
+                .WithOne(s=>s.WorkingDay)
+                .HasForeignKey<Schedule>(s=>s.WorkingDayId);
+
+            workingDay
+                .HasOne(w=>w.Employee)
+                .WithMany(e=>e.WorkingDays)
+                .HasForeignKey(w=>w.PersonId);
+            
+            timeOff
+                .ToTable("TimeOff");
+                
+            timeOff
+                .Property(t=>t.StartTime)
+                .IsRequired();
+
+            timeOff
+                .Property(t=>t.FinishTime)
+                .IsRequired();
+
+            role
+                .Property(r=>r.Name)
+                .HasMaxLength(80)
+                .IsRequired();
+            
+            role
+                .HasMany(r=>r.Employees)
+                .WithMany(e=>e.Roles)
+                .UsingEntity<RoleEmployee>();
+
+            role.
+                HasMany(r=>r.RoleEmployees)
+                .WithOne(ro=>ro.Role)
+                .HasForeignKey(ro=>ro.RoleId);
+
+            schedule
+                .Property(s=>s.Status)
+                .IsRequired();
+
+            employee
+                .HasData(
+                    new Employee()
+                    {
+                        PersonId = 5,
+                        Name = "João cabeça",
+                        BirthDate = new DateOnly(2000, 8, 7),
+                        Gender = 1,
+                        Cpf = "73473943096",
+                        Email = "joao@hotmail.com",
+                    },
+                    new Employee()
+                    {
+                        PersonId = 6,
+                        Name = "Bill Maluco",
+                        BirthDate = new DateOnly(1990, 1, 1),
+                        Gender = 1,
+                        Cpf = "73473003096",
+                        Email = "billdoidao@gmail.com",
+                    });
+
+            workingDay
+                .HasData(
+                    new WorkingDay()
+                    {
+                        WorkingDayId = 1,
+                        PersonId = 5,
+                        WorkDate = new DateOnly(2023, 10, 10),
+                        StartTime = new TimeOnly(7, 23 ,11),
+                        FinishTime = new TimeOnly(18 ,30, 0)
+                    },
+                    new WorkingDay()
+                    {
+                        WorkingDayId = 2,
+                        PersonId = 5,
+                        WorkDate = new DateOnly(2023, 11, 11),
+                        StartTime = new TimeOnly(8, 23 ,11),
+                        FinishTime = new TimeOnly(19 ,30, 0)
+                    }
+                );
+
+            timeOff
+                .HasData(
+                    new TimeOff()
+                    {
+                        TimeOffId = 1,
+                        WorkingDayId = 1,
+                        StartTime = new TimeOnly(11, 30 ,0),
+                        FinishTime = new TimeOnly(14 ,0, 0)
+                    },
+                    new TimeOff()
+                    {
+                        TimeOffId = 2,
+                        WorkingDayId = 2,
+                        StartTime = new TimeOnly(12, 0 ,0),
+                        FinishTime = new TimeOnly(15 ,0, 0)
+                    }
+                );
+
+            role
+                .HasData(
+                    new Role()
+                    {
+                        RoleId = 1,
+                        Name = "Barbeiro"
+                    },
+                    new Role()
+                    {
+                        RoleId = 2,
+                        Name = "Barbeiro Mestre?Sla"
+                    }
+                );
+
+            roleEmployee
+                .HasData(
+                    new RoleEmployee()
+                    {
+                        RoleId = 1,
+                        EmployeeId = 5
+                    },
+                    new RoleEmployee()
+                    {
+                        RoleId = 2,
+                        EmployeeId = 6
+                    }
+                );
+
+            schedule
+                .HasData(
+                    new Schedule()
+                    {
+                        ScheduleId = 1,
+                        WorkingDayId = 1,
+                        Status = 1
+                    },
+                    new Schedule()
+                    {
+                        ScheduleId = 2,
+                        WorkingDayId = 2,
+                        Status = 2
+                    }
+                );
+
+
+
             customer
                 .HasData(
                     new Customer()
@@ -154,35 +346,6 @@ namespace Barbearia.Persistence.DbContexts
                         Cpf = "73473003096",
                         Email = "bill@gmail.com",
                     });
-
-            // product
-            //     .ToTable("Product");
-
-            item
-                .HasKey(p => p.ItemId);
-
-            // product
-            //     .HasKey(p => p.ItemId);
-
-           
-
-            Supplier
-                .Property(p => p.Cnpj)
-                .HasMaxLength(14);
-
-            Supplier
-                .Property(p => p.Gender);
-
-            Supplier
-                .Property(p => p.Cpf)
-                .HasMaxLength(11);
-
-
-            // Supplier
-            //     .HasMany(s => s.Products)
-            //     .WithOne(s => s.Supplier)
-            //     .HasForeignKey(s => s.PersonId)
-            //     .IsRequired();
 
             Supplier
                 .HasData(

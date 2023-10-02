@@ -11,6 +11,8 @@ public interface ICustomerRepository
     Task<Customer?> GetCustomerByIdAsync(int customerId);
     void AddCustomer(Customer customer);
     void DeleteCustomer(Customer customer);
+    Task<(IEnumerable<Supplier>, PaginationMetadata)> GetAllSuppliersAsync(string? searchQuery,
+     int pageNumber, int pageSize);
     Task<Supplier?> GetSupplierByIdAsync(int supplierId);
     void AddSupplier(Supplier supplier);
     void DeleteSupplier(Supplier supplier);

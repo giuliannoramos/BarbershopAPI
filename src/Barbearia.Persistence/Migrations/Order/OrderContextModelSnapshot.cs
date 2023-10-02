@@ -101,9 +101,9 @@ namespace Barbearia.Persistence.Migrations.Order
                         {
                             CouponId = 1,
                             CouponCode = "teste3",
-                            CreationDate = new DateTime(2023, 10, 1, 0, 4, 23, 319, DateTimeKind.Utc).AddTicks(1497),
+                            CreationDate = new DateTime(2023, 10, 2, 0, 0, 24, 333, DateTimeKind.Utc).AddTicks(9543),
                             DiscountPercent = 10,
-                            ExpirationDate = new DateTime(2023, 10, 1, 0, 4, 23, 319, DateTimeKind.Utc).AddTicks(1498)
+                            ExpirationDate = new DateTime(2023, 10, 2, 0, 0, 24, 333, DateTimeKind.Utc).AddTicks(9543)
                         });
                 });
 
@@ -138,7 +138,7 @@ namespace Barbearia.Persistence.Migrations.Order
                         new
                         {
                             OrderId = 1,
-                            BuyDate = new DateTime(2023, 10, 1, 0, 4, 23, 319, DateTimeKind.Utc).AddTicks(1327),
+                            BuyDate = new DateTime(2023, 10, 2, 0, 0, 24, 333, DateTimeKind.Utc).AddTicks(9359),
                             Number = 500,
                             PersonId = 1,
                             Status = 2
@@ -146,7 +146,7 @@ namespace Barbearia.Persistence.Migrations.Order
                         new
                         {
                             OrderId = 2,
-                            BuyDate = new DateTime(2023, 10, 1, 0, 4, 23, 319, DateTimeKind.Utc).AddTicks(1353),
+                            BuyDate = new DateTime(2023, 10, 2, 0, 0, 24, 333, DateTimeKind.Utc).AddTicks(9384),
                             Number = 501,
                             PersonId = 2,
                             Status = 2
@@ -200,7 +200,7 @@ namespace Barbearia.Persistence.Migrations.Order
                         new
                         {
                             PaymentId = 1,
-                            BuyDate = new DateTime(2023, 10, 1, 0, 4, 23, 319, DateTimeKind.Utc).AddTicks(1483),
+                            BuyDate = new DateTime(2023, 10, 2, 0, 0, 24, 333, DateTimeKind.Utc).AddTicks(9530),
                             Description = "Para de ler isso aqui e vai programar",
                             GrossTotal = 80m,
                             NetTotal = 60m,
@@ -248,6 +248,50 @@ namespace Barbearia.Persistence.Migrations.Order
                         });
                 });
 
+            modelBuilder.Entity("Barbearia.Domain.Entities.Role", b =>
+                {
+                    b.Property<int>("RoleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("RoleId"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int?>("PersonId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("RoleId");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("Role");
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.Schedule", b =>
+                {
+                    b.Property<int>("ScheduleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ScheduleId"));
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("WorkingDayId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ScheduleId");
+
+                    b.HasIndex("WorkingDayId")
+                        .IsUnique();
+
+                    b.ToTable("Schedule");
+                });
+
             modelBuilder.Entity("Barbearia.Domain.Entities.Telephone", b =>
                 {
                     b.Property<int>("TelephoneId")
@@ -274,6 +318,33 @@ namespace Barbearia.Persistence.Migrations.Order
                         {
                             t.ExcludeFromMigrations();
                         });
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.WorkingDay", b =>
+                {
+                    b.Property<int>("WorkingDayId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("WorkingDayId"));
+
+                    b.Property<TimeOnly>("FinishTime")
+                        .HasColumnType("time without time zone");
+
+                    b.Property<int>("PersonId")
+                        .HasColumnType("integer");
+
+                    b.Property<TimeOnly>("StartTime")
+                        .HasColumnType("time without time zone");
+
+                    b.Property<DateOnly>("WorkDate")
+                        .HasColumnType("date");
+
+                    b.HasKey("WorkingDayId");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("WorkingDay");
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Address", b =>
@@ -314,6 +385,24 @@ namespace Barbearia.Persistence.Migrations.Order
                     b.Navigation("Order");
                 });
 
+            modelBuilder.Entity("Barbearia.Domain.Entities.Role", b =>
+                {
+                    b.HasOne("Barbearia.Domain.Entities.Person", null)
+                        .WithMany("Roles")
+                        .HasForeignKey("PersonId");
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.Schedule", b =>
+                {
+                    b.HasOne("Barbearia.Domain.Entities.WorkingDay", "WorkingDay")
+                        .WithOne("Schedule")
+                        .HasForeignKey("Barbearia.Domain.Entities.Schedule", "WorkingDayId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("WorkingDay");
+                });
+
             modelBuilder.Entity("Barbearia.Domain.Entities.Telephone", b =>
                 {
                     b.HasOne("Barbearia.Domain.Entities.Person", "Person")
@@ -323,6 +412,17 @@ namespace Barbearia.Persistence.Migrations.Order
                         .IsRequired();
 
                     b.Navigation("Person");
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.WorkingDay", b =>
+                {
+                    b.HasOne("Barbearia.Domain.Entities.Person", "Employee")
+                        .WithMany("WorkingDays")
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Coupon", b =>
@@ -341,7 +441,16 @@ namespace Barbearia.Persistence.Migrations.Order
 
                     b.Navigation("Orders");
 
+                    b.Navigation("Roles");
+
                     b.Navigation("Telephones");
+
+                    b.Navigation("WorkingDays");
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.WorkingDay", b =>
+                {
+                    b.Navigation("Schedule");
                 });
 #pragma warning restore 612, 618
         }

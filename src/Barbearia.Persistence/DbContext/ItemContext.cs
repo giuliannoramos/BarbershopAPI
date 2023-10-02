@@ -30,6 +30,11 @@ namespace Barbearia.Persistence.DbContexts
             modelBuilder.Ignore<Telephone>();
             modelBuilder.Ignore<Coupon>();
             modelBuilder.Ignore<Payment>();
+            modelBuilder.Ignore<RoleEmployee>();
+            modelBuilder.Ignore<Role>();
+            modelBuilder.Ignore<WorkingDay>();
+            modelBuilder.Ignore<Schedule>();
+            modelBuilder.Ignore<TimeOff>();
 
 
             item
@@ -75,6 +80,7 @@ namespace Barbearia.Persistence.DbContexts
 
             // modelBuilder.Entity<OrderProduct>()
             // .HasNoKey();
+            
 
             modelBuilder.Entity<Product>()
                 .HasMany(e => e.Orders)

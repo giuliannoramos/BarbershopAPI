@@ -48,6 +48,11 @@ using Barbearia.Application.Features.Employees.Commands.CreateEmployee;
 using Barbearia.Application.Features.Employees.Commands.UpdateEmployee;
 using Barbearia.Application.Features.Employees.Commands.DeleteEmployee;
 using Barbearia.Application.Features.EmployeesCollection;
+using Barbearia.Application.Features.Coupons.Queries.GetCouponById;
+using Barbearia.Application.Features.Coupons.Queries.GetAllCoupons;
+using Barbearia.Application.Features.Coupons.Commands.UpdateCoupon;
+using Barbearia.Application.Features.Coupons.Commands.CreateCoupon;
+using Barbearia.Application.Features.Coupons.Commands.DeleteCoupon;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -140,23 +145,30 @@ builder.Services.AddScoped<IRequestHandler<UpdateEmployeeCommand, UpdateEmployee
 builder.Services.AddScoped<IValidator<UpdateEmployeeCommand>, UpdateEmployeeCommandValidator>();
 builder.Services.AddScoped<IRequestHandler<DeleteEmployeeCommand, bool>, DeleteEmployeeCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<GetEmployeesCollectionQuery, GetEmployeesCollectionQueryResponse>, GetEmployeesCollectionQueryHandler>();
+// Coupon commands and queries
+builder.Services.AddScoped<IRequestHandler<GetCouponByIdQuery, GetCouponByIdDto>, GetCouponByIdQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<GetAllCouponsQuery,IEnumerable<GetAllCouponsDto>>,GetAllCouponsQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<UpdateCouponCommand,UpdateCouponCommandResponse>,UpdateCouponCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<CreateCouponCommand, CreateCouponCommandResponse>, CreateCouponCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<DeleteCouponCommand, bool>, DeleteCouponCommandHandler>();
+
 
 //config banco de dados
 builder.Services.AddDbContext<PersonContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=1973");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678");
 }
 );
 
 builder.Services.AddDbContext<OrderContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=1973");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678");
 }
 );
 
 builder.Services.AddDbContext<ItemContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=1973");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678");
 }
 );
 

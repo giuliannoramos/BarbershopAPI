@@ -19,6 +19,17 @@ public interface IOrderRepository
 
     void DeletePayment(Order order, Payment payment);
     void DeleteOrder(Order order);    
+
+    // COUPONS
+    Task<IEnumerable<Coupon>> GetAllCoupons();
+    Task<Coupon?> GetCouponById(int couponId);
+    void AddCoupon(Coupon coupon);
+    void DeleteCoupon(Coupon coupon);
+
+    Task<bool> CouponExistsAndIsActive(string couponCode);
+
+    Task<bool> CouponExists(string couponCode);
+    // COUPONS
     Task<bool> SaveChangesAsync();
 
 

@@ -45,7 +45,9 @@ public class CreateSupplierCommandValidator : AbstractValidator<CreateSupplierCo
 
         RuleFor(s => s.Status)
             .NotEmpty()
-                .WithMessage("Supplier Status cannot be empty");
+                .WithMessage("Supplier Status cannot be empty")
+            .NotEqual(0)
+                .WithMessage("Supplier Status must be different from 0");
 
         RuleFor(s => s.Telephones)
             .NotEmpty()

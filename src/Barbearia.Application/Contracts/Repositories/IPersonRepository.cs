@@ -24,4 +24,9 @@ public interface IPersonRepository
     void AddTelephone(Customer customer, Telephone telephone);
     void DeleteTelephone(Customer customer, Telephone telephone);
     Task<Customer?> GetCustomerWithOrdersByIdAsync(int customerId);
+    Task<Employee?> GetEmployeeByIdAsync(int employeeId);
+    void AddEmployee(Employee employee);
+    void DeleteEmployee(Employee employee);
+    Task<(IEnumerable<Employee>, PaginationMetadata)> GetAllEmployeesAsync( string? searchQuery,
+     int pageNumber, int pageSize);
 }

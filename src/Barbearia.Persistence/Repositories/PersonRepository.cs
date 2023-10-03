@@ -18,12 +18,12 @@ public class PersonRepository : IPersonRepository
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
-        public async Task<(IEnumerable<Customer>, PaginationMetadata)> GetAllCustomersAsync(string? searchQuery,
-         int pageNumber, int pageSize)
-        {
+    public async Task<(IEnumerable<Customer>, PaginationMetadata)> GetAllCustomersAsync(string? searchQuery,
+     int pageNumber, int pageSize)
+    {
         IQueryable<Customer> collection = _context.Persons.OfType<Customer>()
-        .Include(c=>c.Telephones);
-        
+        .Include(c => c.Telephones);
+
 
         if (!string.IsNullOrWhiteSpace(searchQuery))
         {
@@ -41,7 +41,7 @@ public class PersonRepository : IPersonRepository
 
         var customerToReturn = await collection
         .OrderBy(c => c.PersonId)
-        .Skip(pageSize * (pageNumber-1))
+        .Skip(pageSize * (pageNumber - 1))
         .Take(pageSize)
         .ToListAsync();
 
@@ -72,7 +72,7 @@ public class PersonRepository : IPersonRepository
     public async Task<bool> SaveChangesAsync()
     {
         return await _context.SaveChangesAsync() > 0;
-    }    
+    }
 
     public void DeleteCustomer(Customer customer)
     {
@@ -81,12 +81,12 @@ public class PersonRepository : IPersonRepository
 
     public async Task<Supplier?> GetSupplierByIdAsync(int supplierId)
     {
-            return await _context.Persons.OfType<Supplier>()
-            .Include(s => s.Telephones)
-            .Include(s => s.Addresses)
-            .Include(s => s.Products)
-            .Include(s => s.StockHistories) 
-            .FirstOrDefaultAsync(s => s.PersonId == supplierId);
+        return await _context.Persons.OfType<Supplier>()
+        .Include(s => s.Telephones)
+        .Include(s => s.Addresses)
+        .Include(s => s.Products)
+        .Include(s => s.StockHistories)
+        .FirstOrDefaultAsync(s => s.PersonId == supplierId);
     }
 
     public async Task<(IEnumerable<Supplier>, PaginationMetadata)> GetAllSuppliersAsync(string? searchQuery,
@@ -124,7 +124,7 @@ public class PersonRepository : IPersonRepository
 
     public void DeleteSupplier(Supplier supplier)
     {
-         _context.Persons.Remove(supplier);
+        _context.Persons.Remove(supplier);
     }
 
     public async Task<IEnumerable<Address>?> GetAddressAsync(int customerId)
@@ -161,8 +161,54 @@ public class PersonRepository : IPersonRepository
     public async Task<Customer?> GetCustomerWithOrdersByIdAsync(int customerId)
     {
         return await _context.Persons.OfType<Customer>()
-        .Include(c=>c.Orders)
-        .FirstOrDefaultAsync(c=>c.PersonId == customerId);
+        .Include(c => c.Orders)
+        .FirstOrDefaultAsync(c => c.PersonId == customerId);
+    }
+
+    public async Task<Employee?> GetEmployeeByIdAsync(int employeeId)
+    {
+        return await _context.Persons.OfType<Employee>()
+            .Include(c => c.Telephones)
+            .Include(c => c.Addresses)
+            .FirstOrDefaultAsync(p => p.PersonId == employeeId);
+    }
+
+    public void AddEmployee(Employee employee)
+    {
+        _context.Persons.Add(employee);
+    }
+
+    public void DeleteEmployee(Employee employee)
+    {
+        _context.Persons.Remove(employee);
+    }
+
+    public async Task<(IEnumerable<Employee>, PaginationMetadata)> GetAllEmployeesAsync(string? searchQuery,
+         int pageNumber, int pageSize)
+    {
+        IQueryable<Employee> collection = _context.Persons.OfType<Employee>()
+        .Include(c => c.Telephones);
+
+        if (!string.IsNullOrWhiteSpace(searchQuery))
+        {
+            var name = searchQuery.Trim().ToLower();
+            collection = collection.Where(
+
+                c => c.Name.ToLower().Contains(name)
+            );
+        }
+
+        var totalItemCount = await collection.CountAsync();
+
+        var paginationMetadata = new PaginationMetadata(totalItemCount, pageSize, pageNumber);
+
+        var employeeToReturn = await collection
+        .OrderBy(c => c.PersonId)
+        .Skip(pageSize * (pageNumber - 1))
+        .Take(pageSize)
+        .ToListAsync();
+
+        return (employeeToReturn, paginationMetadata);
     }
 
 }

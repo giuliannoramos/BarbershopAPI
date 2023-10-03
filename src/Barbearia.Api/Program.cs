@@ -43,6 +43,11 @@ using Barbearia.Application.Features.Products.Queries.GetProductById;
 using Barbearia.Application.Features.Products.Commands.CreateProduct;
 using Barbearia.Application.Features.Products.Commands.DeleteProduct;
 using Barbearia.Application.Features.Products.Commands.UpdateProduct;
+using Barbearia.Application.Features.Employees.Queries.GetEmployeeById;
+using Barbearia.Application.Features.Employees.Commands.CreateEmployee;
+using Barbearia.Application.Features.Employees.Commands.UpdateEmployee;
+using Barbearia.Application.Features.Employees.Commands.DeleteEmployee;
+using Barbearia.Application.Features.EmployeesCollection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -122,28 +127,36 @@ builder.Services.AddScoped<IRequestHandler<UpdatePaymentCommand, UpdatePaymentCo
 builder.Services.AddScoped<IRequestHandler<DeletePaymentCommand, bool>, DeletePaymentCommandHandler>();
 // Product commands and queries
 builder.Services.AddScoped<IRequestHandler<GetProductsCollectionQuery, GetProductsCollectionQueryResponse>, GetProductsCollectionQueryHandler>();
-builder.Services.AddScoped<IRequestHandler<GetAllProductsQuery,IEnumerable<GetAllProductsDto>>,GetAllProductsQueryHandler>();
-builder.Services.AddScoped<IRequestHandler<GetProductByIdQuery,GetProductByIdDto>,GetProductByIdQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<GetAllProductsQuery, IEnumerable<GetAllProductsDto>>, GetAllProductsQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<GetProductByIdQuery, GetProductByIdDto>, GetProductByIdQueryHandler>();
 builder.Services.AddScoped<IRequestHandler<CreateProductCommand, CreateProductCommandResponse>, CreateProductCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<DeleteProductCommand, bool>, DeleteProductCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<UpdateProductCommand, UpdateProductCommandResponse>, UpdateProductCommandHandler>();
+// Employee commands and queries
+builder.Services.AddScoped<IRequestHandler<GetEmployeeByIdQuery, GetEmployeeByIdDto>, GetEmployeeByIdQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<CreateEmployeeCommand, CreateEmployeeCommandResponse>, CreateEmployeeCommandHandler>();
+builder.Services.AddScoped<IValidator<CreateEmployeeCommand>, CreateEmployeeCommandValidator>();
+builder.Services.AddScoped<IRequestHandler<UpdateEmployeeCommand, UpdateEmployeeCommandResponse>, UpdateEmployeeCommandHandler>();
+builder.Services.AddScoped<IValidator<UpdateEmployeeCommand>, UpdateEmployeeCommandValidator>();
+builder.Services.AddScoped<IRequestHandler<DeleteEmployeeCommand, bool>, DeleteEmployeeCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<GetEmployeesCollectionQuery, GetEmployeesCollectionQueryResponse>, GetEmployeesCollectionQueryHandler>();
 
 //config banco de dados
 builder.Services.AddDbContext<PersonContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=1973");
 }
 );
 
 builder.Services.AddDbContext<OrderContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=1973");
 }
 );
 
 builder.Services.AddDbContext<ItemContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=1973");
 }
 );
 

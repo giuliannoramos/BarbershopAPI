@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Barbearia.Persistence.Migrations
 {
     [DbContext(typeof(PersonContext))]
-    [Migration("20231003185740_personMigration")]
+    [Migration("20231003213239_personMigration")]
     partial class personMigration
     {
         /// <inheritdoc />

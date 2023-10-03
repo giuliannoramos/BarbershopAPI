@@ -9,4 +9,8 @@ public class AppointmentService
     public string Name{get;set;} = string.Empty;
     public int DurationMinutes{get;set;}
     public Decimal CurrentPrice{get;set;}
+
+
+    //entidade associativa
 }
+

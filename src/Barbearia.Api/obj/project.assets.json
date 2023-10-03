@@ -7020,11 +7020,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barberiaAPI\\barbershopapi\\src\\barbearia.api\\Barbearia.Api.csproj",
+      "projectUniqueName": "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barberiaAPI\\barbershopapi\\src\\Barbearia.Api\\Barbearia.Api.csproj",
       "projectName": "Barbearia.Api",
-      "projectPath": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barberiaAPI\\barbershopapi\\src\\barbearia.api\\Barbearia.Api.csproj",
+      "projectPath": "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barberiaAPI\\barbershopapi\\src\\Barbearia.Api\\Barbearia.Api.csproj",
       "packagesPath": "C:\\Users\\lucas\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barberiaAPI\\barbershopapi\\src\\barbearia.api\\obj\\",
+      "outputPath": "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barberiaAPI\\barbershopapi\\src\\Barbearia.Api\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Users\\lucas\\AppData\\Roaming\\Godot\\mono\\GodotNuGetFallbackFolder",
@@ -7050,8 +7050,8 @@
             "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barberiaAPI\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj": {
               "projectPath": "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barberiaAPI\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj"
             },
-            "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barberiaAPI\\barbershopapi\\src\\Barbearia.Persistence\\Barbearia.Persistence.csproj": {
-              "projectPath": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barberiaAPI\\barbershopapi\\src\\Barbearia.Persistence\\Barbearia.Persistence.csproj"
+            "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barberiaAPI\\barbershopapi\\src\\Barbearia.Persistence\\Barbearia.Persistence.csproj": {
+              "projectPath": "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barberiaAPI\\barbershopapi\\src\\Barbearia.Persistence\\Barbearia.Persistence.csproj"
             }
           }
         }

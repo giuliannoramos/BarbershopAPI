@@ -314,12 +314,18 @@ namespace Barbearia.Persistence.Migrations.Item
                 });
 
             migrationBuilder.InsertData(
+                table: "Appointment",
+                columns: new[] { "AppointmentId", "CancellationDate", "ConfirmedDate", "CustomerId", "FinishDate", "FinishServiceDate", "ScheduleId", "StartDate", "StartServiceDate", "Status" },
+                values: new object[] { 1, new DateTime(2023, 10, 3, 21, 33, 11, 542, DateTimeKind.Utc).AddTicks(6793), new DateTime(2023, 10, 3, 21, 33, 11, 542, DateTimeKind.Utc).AddTicks(6793), 2, new DateTime(2023, 10, 3, 21, 33, 11, 542, DateTimeKind.Utc).AddTicks(6791), new DateTime(2023, 10, 3, 21, 33, 11, 542, DateTimeKind.Utc).AddTicks(6792), 1, new DateTime(2023, 10, 3, 21, 33, 11, 542, DateTimeKind.Utc).AddTicks(6789), new DateTime(2023, 10, 3, 21, 33, 11, 542, DateTimeKind.Utc).AddTicks(6792), 1 });
+
+            migrationBuilder.InsertData(
                 table: "Item",
                 columns: new[] { "ItemId", "Description", "Name", "Price" },
                 values: new object[,]
                 {
                     { 1, "é bom e te deixa ligadão", "Bombomzinho de energético", 20m },
-                    { 2, "deixa o cabelo duro", "Gel Mil Grau", 40m }
+                    { 2, "deixa o cabelo duro", "Gel Mil Grau", 40m },
+                    { 3, "Um corte para testas o sistema", "corte qualquer", 20m }
                 });
 
             migrationBuilder.InsertData(
@@ -332,6 +338,16 @@ namespace Barbearia.Persistence.Migrations.Item
                 });
 
             migrationBuilder.InsertData(
+                table: "ServiceCategory",
+                columns: new[] { "ServiceCategoryId", "Name" },
+                values: new object[] { 1, "Corte" });
+
+            migrationBuilder.InsertData(
+                table: "AppointmentOrder",
+                columns: new[] { "AppointmentId", "OrderId" },
+                values: new object[] { 1, 1 });
+
+            migrationBuilder.InsertData(
                 table: "Product",
                 columns: new[] { "ItemId", "Brand", "PersonId", "ProductCategoryId", "QuantityInStock", "QuantityReserved", "SKU", "Status" },
                 values: new object[,]
@@ -339,6 +355,21 @@ namespace Barbearia.Persistence.Migrations.Item
                     { 1, "Josefa doces para gamers", 3, 1, 40, 35, "G4M3R5", 1 },
                     { 2, "Microsoft Cooporations", 4, 2, 400, 20, "S0FT", 2 }
                 });
+
+            migrationBuilder.InsertData(
+                table: "RoleServiceCategory",
+                columns: new[] { "RoleId", "ServiceCategoryId" },
+                values: new object[] { 1, 1 });
+
+            migrationBuilder.InsertData(
+                table: "Service",
+                columns: new[] { "ItemId", "DurationMinutes", "ServiceCategoryId" },
+                values: new object[] { 3, 30, 1 });
+
+            migrationBuilder.InsertData(
+                table: "AppointmentService",
+                columns: new[] { "AppointmentServiceId", "AppointmentId", "CurrentPrice", "DurationMinutes", "EmployeeId", "Name", "ServiceId" },
+                values: new object[] { 1, 1, 20m, 30, 4, "Confesso que não sei que nome é pra colocar aqui", 3 });
 
             migrationBuilder.InsertData(
                 table: "OrderProduct",
@@ -355,8 +386,8 @@ namespace Barbearia.Persistence.Migrations.Item
                 columns: new[] { "StockHistoryId", "Amount", "CurrentPrice", "LastStockQuantity", "Operation", "OrderId", "PersonId", "ProductId", "Timestamp" },
                 values: new object[,]
                 {
-                    { 1, 20, 23.5m, 10, 1, 1, 3, 1, new DateTime(2023, 10, 3, 18, 58, 14, 946, DateTimeKind.Utc).AddTicks(6989) },
-                    { 2, 40, 200.2m, 32, 3, 2, 4, 2, new DateTime(2023, 10, 3, 18, 58, 14, 946, DateTimeKind.Utc).AddTicks(6993) }
+                    { 1, 20, 23.5m, 10, 1, 1, 3, 1, new DateTime(2023, 10, 3, 21, 33, 11, 543, DateTimeKind.Utc).AddTicks(502) },
+                    { 2, 40, 200.2m, 32, 3, 2, 4, 2, new DateTime(2023, 10, 3, 21, 33, 11, 543, DateTimeKind.Utc).AddTicks(505) }
                 });
 
             migrationBuilder.CreateIndex(

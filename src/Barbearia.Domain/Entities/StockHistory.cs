@@ -6,7 +6,6 @@ public class StockHistory{
     public int Amount {get;set;}
     public DateTime Timestamp {get;set;}
     public int LastStockQuantity {get;set;}
-
     public int PersonId {get;set;}
     public Person? Supplier {get;set;}
     public int ProductId {get;set;}

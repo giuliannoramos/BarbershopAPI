@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Barbearia.Persistence.Migrations.Item
 {
     [DbContext(typeof(ItemContext))]
-    [Migration("20231003185815_itemMigration")]
+    [Migration("20231003213311_itemMigration")]
     partial class itemMigration
     {
         /// <inheritdoc />
@@ -67,6 +67,21 @@ namespace Barbearia.Persistence.Migrations.Item
                     b.HasIndex("ScheduleId");
 
                     b.ToTable("Appointment", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            AppointmentId = 1,
+                            CancellationDate = new DateTime(2023, 10, 3, 21, 33, 11, 542, DateTimeKind.Utc).AddTicks(6793),
+                            ConfirmedDate = new DateTime(2023, 10, 3, 21, 33, 11, 542, DateTimeKind.Utc).AddTicks(6793),
+                            CustomerId = 2,
+                            FinishDate = new DateTime(2023, 10, 3, 21, 33, 11, 542, DateTimeKind.Utc).AddTicks(6791),
+                            FinishServiceDate = new DateTime(2023, 10, 3, 21, 33, 11, 542, DateTimeKind.Utc).AddTicks(6792),
+                            ScheduleId = 1,
+                            StartDate = new DateTime(2023, 10, 3, 21, 33, 11, 542, DateTimeKind.Utc).AddTicks(6789),
+                            StartServiceDate = new DateTime(2023, 10, 3, 21, 33, 11, 542, DateTimeKind.Utc).AddTicks(6792),
+                            Status = 1
+                        });
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.AppointmentOrder", b =>
@@ -82,6 +97,13 @@ namespace Barbearia.Persistence.Migrations.Item
                     b.HasIndex("OrderId");
 
                     b.ToTable("AppointmentOrder", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            AppointmentId = 1,
+                            OrderId = 1
+                        });
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.AppointmentService", b =>
@@ -118,6 +140,18 @@ namespace Barbearia.Persistence.Migrations.Item
                     b.HasIndex("ServiceId");
 
                     b.ToTable("AppointmentService", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            AppointmentServiceId = 1,
+                            AppointmentId = 1,
+                            CurrentPrice = 20m,
+                            DurationMinutes = 30,
+                            EmployeeId = 4,
+                            Name = "Confesso que não sei que nome é pra colocar aqui",
+                            ServiceId = 3
+                        });
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.EmployeeService", b =>
@@ -334,6 +368,13 @@ namespace Barbearia.Persistence.Migrations.Item
                     b.HasIndex("ServiceCategoryId");
 
                     b.ToTable("RoleServiceCategory", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            RoleId = 1,
+                            ServiceCategoryId = 1
+                        });
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Schedule", b =>
@@ -373,6 +414,13 @@ namespace Barbearia.Persistence.Migrations.Item
                     b.HasKey("ServiceCategoryId");
 
                     b.ToTable("ServiceCategory", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            ServiceCategoryId = 1,
+                            Name = "Corte"
+                        });
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.StockHistory", b =>
@@ -429,7 +477,7 @@ namespace Barbearia.Persistence.Migrations.Item
                             OrderId = 1,
                             PersonId = 3,
                             ProductId = 1,
-                            Timestamp = new DateTime(2023, 10, 3, 18, 58, 14, 946, DateTimeKind.Utc).AddTicks(6989)
+                            Timestamp = new DateTime(2023, 10, 3, 21, 33, 11, 543, DateTimeKind.Utc).AddTicks(502)
                         },
                         new
                         {
@@ -441,7 +489,7 @@ namespace Barbearia.Persistence.Migrations.Item
                             OrderId = 2,
                             PersonId = 4,
                             ProductId = 2,
-                            Timestamp = new DateTime(2023, 10, 3, 18, 58, 14, 946, DateTimeKind.Utc).AddTicks(6993)
+                            Timestamp = new DateTime(2023, 10, 3, 21, 33, 11, 543, DateTimeKind.Utc).AddTicks(505)
                         });
                 });
 
@@ -524,6 +572,17 @@ namespace Barbearia.Persistence.Migrations.Item
                     b.HasIndex("ServiceCategoryId");
 
                     b.ToTable("Service", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            ItemId = 3,
+                            Description = "Um corte para testas o sistema",
+                            Name = "corte qualquer",
+                            Price = 20m,
+                            DurationMinutes = 30,
+                            ServiceCategoryId = 1
+                        });
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Appointment", b =>

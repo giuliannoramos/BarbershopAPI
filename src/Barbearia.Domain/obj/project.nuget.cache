@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "UpY2wvZMWAEiiNdJ69ABzvay/G5hFnq8w5hh/aG8wEfrUIZjnxaA1chqOxa/ZNQ9S+WbID2tZs4lDIWvv7AcAA==",
+  "dgSpecHash": "evnm4EdTX29ChA7uMG8WMqmP5ROAHV6s5cEI9ZmUqT/l24T1sqktCN7b1AZqXuW82d+Nox0X9DSrcyXQ3xbD1Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barberiaAPI\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj",
+  "projectFilePath": "c:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barberiaAPI\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

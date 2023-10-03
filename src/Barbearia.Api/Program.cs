@@ -77,6 +77,7 @@ builder.Logging.AddElmahIo(options =>
 
 builder.Logging.AddFilter<ElmahIoLoggerProvider>(null, LogLevel.Warning);
 
+
 //config automapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
@@ -168,7 +169,7 @@ builder.Services.AddDbContext<OrderContext>(options =>
 
 builder.Services.AddDbContext<ItemContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678;Include Error Detail=true");
 }
 );
 

@@ -1,6 +1,7 @@
 using Barbearia.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.Extensions.Options;
 
 namespace Barbearia.Persistence.DbContexts
 {
@@ -8,6 +9,8 @@ namespace Barbearia.Persistence.DbContexts
     {
         public ItemContext(DbContextOptions<ItemContext> options)
         : base(options) { }
+
+        
 
         public DbSet<Product> Products { get; set; } = null!;
         public DbSet<Item> Item { get; set; } = null!;
@@ -45,9 +48,7 @@ namespace Barbearia.Persistence.DbContexts
             modelBuilder.Ignore<Coupon>();
             modelBuilder.Ignore<Payment>();
             modelBuilder.Ignore<RoleEmployee>();
-            // modelBuilder.Ignore<Role>();
             modelBuilder.Ignore<WorkingDay>();
-            // modelBuilder.Ignore<Schedule>();
             modelBuilder.Ignore<TimeOff>();
 
 
@@ -237,6 +238,81 @@ namespace Barbearia.Persistence.DbContexts
 
             roleServiceCategory
                 .ToTable("RoleServiceCategory");
+
+
+        
+            appointment
+                .HasData(
+                    new Appointment()
+                    {
+                        AppointmentId = 1,
+                        ScheduleId = 1,
+                        CustomerId = 2,
+                        StartDate = DateTime.UtcNow,
+                        FinishDate = DateTime.UtcNow,
+                        Status = 1,
+                        StartServiceDate = DateTime.UtcNow,
+                        FinishServiceDate = DateTime.UtcNow,
+                        ConfirmedDate = DateTime.UtcNow,
+                        CancellationDate = DateTime.UtcNow
+
+                    }
+                );
+            
+
+            service
+                .HasData(
+                    new Service()
+                    {
+                        ItemId = 3,
+                        Name = "corte qualquer",
+                        Price =20,
+                        Description = "Um corte para testas o sistema",
+                        DurationMinutes = 30,
+                        ServiceCategoryId=1
+                    }
+                );
+
+                appointmentService
+                .HasData(
+                    new AppointmentService()
+                    {
+                        AppointmentServiceId = 1,
+                        ServiceId = 3,
+                        AppointmentId = 1,
+                        EmployeeId = 4,
+                        Name = "Confesso que não sei que nome é pra colocar aqui",
+                        DurationMinutes = 30,
+                        CurrentPrice = 20
+                    }
+                );
+
+                serviceCategory
+                    .HasData(
+                        new ServiceCategory()
+                        {
+                            ServiceCategoryId = 1,
+                            Name = "Corte",
+                        }
+                    );
+
+            roleServiceCategory
+                .HasData(
+                    new RoleServiceCategory()
+                    {
+                        RoleId =1,
+                        ServiceCategoryId =1
+                    }
+                );
+
+            appointmentOrder
+                .HasData(
+                    new AppointmentOrder()
+                    {
+                        OrderId =1,
+                        AppointmentId =1
+                    }
+                );
             
 
             product
@@ -358,6 +434,7 @@ namespace Barbearia.Persistence.DbContexts
                 );
 
             base.OnModelCreating(modelBuilder);
+            
         }
     }
 }

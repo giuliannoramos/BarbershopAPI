@@ -15,6 +15,7 @@ public class Order
     public List<StockHistory> StockHistories { get; set; } = new();
     public List<Product> Products { get; set; } = new();
     public ICollection<OrderProduct> OrderProducts { get; set; } = new List<OrderProduct>();
+    public List<Appointment> Appointments{get; set;} =new();
 
     private void CheckNumber()
     {

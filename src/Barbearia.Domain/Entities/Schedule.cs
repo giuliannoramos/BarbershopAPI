@@ -7,6 +7,7 @@ public class Schedule
     public int WorkingDayId{get;set;}
     public WorkingDay? WorkingDay{get;set;}
     public int Status{get;set;}//1 active, 2 inactive
+    public List<Appointment> Appointments{get;set;} = new();
 
     private void ValidateWorkingDay()
     {

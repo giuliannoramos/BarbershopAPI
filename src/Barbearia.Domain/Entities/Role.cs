@@ -6,6 +6,7 @@ public class Role
     public string Name{get; set;} = string.Empty;
     public List<Person> Employees = new();
     public List<RoleEmployee> RoleEmployees{get; set;} = new();
+    public List<ServiceCategory>ServiceCategories{get; set;} = new();
 
     private void ValidateName()
     {

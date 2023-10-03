@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Barbearia.Persistence.Migrations.Order
 {
     /// <inheritdoc />
-    public partial class AddOrder : Migration
+    public partial class orderMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -86,21 +86,21 @@ namespace Barbearia.Persistence.Migrations.Order
             migrationBuilder.InsertData(
                 table: "Coupon",
                 columns: new[] { "CouponId", "CouponCode", "CreationDate", "DiscountPercent", "ExpirationDate" },
-                values: new object[] { 1, "teste3", new DateTime(2023, 10, 2, 2, 33, 16, 152, DateTimeKind.Utc).AddTicks(6141), 10, new DateTime(2023, 10, 2, 2, 33, 16, 152, DateTimeKind.Utc).AddTicks(6142) });
+                values: new object[] { 1, "teste3", new DateTime(2023, 10, 3, 21, 32, 56, 247, DateTimeKind.Utc).AddTicks(3264), 10, new DateTime(2023, 10, 3, 21, 32, 56, 247, DateTimeKind.Utc).AddTicks(3265) });
 
             migrationBuilder.InsertData(
                 table: "Order",
                 columns: new[] { "OrderId", "BuyDate", "Number", "PersonId", "Status" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 10, 2, 2, 33, 16, 152, DateTimeKind.Utc).AddTicks(5393), 500, 1, 2 },
-                    { 2, new DateTime(2023, 10, 2, 2, 33, 16, 152, DateTimeKind.Utc).AddTicks(5437), 501, 2, 2 }
+                    { 1, new DateTime(2023, 10, 3, 21, 32, 56, 247, DateTimeKind.Utc).AddTicks(3043), 500, 1, 2 },
+                    { 2, new DateTime(2023, 10, 3, 21, 32, 56, 247, DateTimeKind.Utc).AddTicks(3071), 501, 2, 2 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Payment",
                 columns: new[] { "PaymentId", "BuyDate", "CouponId", "Description", "GrossTotal", "NetTotal", "OrderId", "PaymentMethod", "Status" },
-                values: new object[] { 1, new DateTime(2023, 10, 2, 2, 33, 16, 152, DateTimeKind.Utc).AddTicks(6118), null, "Para de ler isso aqui e vai programar", 80m, 60m, 1, "Dinheiro", 1 });
+                values: new object[] { 1, new DateTime(2023, 10, 3, 21, 32, 56, 247, DateTimeKind.Utc).AddTicks(3251), null, "Para de ler isso aqui e vai programar", 80m, 60m, 1, "Dinheiro", 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_PersonId",

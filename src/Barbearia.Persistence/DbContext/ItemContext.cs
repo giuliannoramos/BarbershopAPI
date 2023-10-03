@@ -1,6 +1,7 @@
 using Barbearia.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.Extensions.Options;
 
 namespace Barbearia.Persistence.DbContexts
 {
@@ -9,31 +10,45 @@ namespace Barbearia.Persistence.DbContexts
         public ItemContext(DbContextOptions<ItemContext> options)
         : base(options) { }
 
+        
+
         public DbSet<Product> Products { get; set; } = null!;
         public DbSet<Item> Item { get; set; } = null!;
         public DbSet<ProductCategory> ProductCategory { get; set; } = null!;
         public DbSet<StockHistory> StockHistories { get; set; } = null!;
         public DbSet<OrderProduct> OrderProducts { get; set; } = null!;
+        public DbSet<Appointment> Appointments {get; set; } = null!;
+        public DbSet<AppointmentService> AppointmentServices { get; set; } = null!;
+        public DbSet<Service> Services {get; set; } = null!;
+        public DbSet<ServiceCategory> ServiceCategories{get; set; } = null!;
+        public DbSet<RoleServiceCategory> RoleServiceCategories{get; set;} = null!;
+        public DbSet<AppointmentOrder> AppointmentOrders{get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var item = modelBuilder.Entity<Item>().UseTptMappingStrategy();
             var product = modelBuilder.Entity<Product>();
-            // var orderproduct = modelBuilder.Entity<OrderProduct>();
             var productCategory = modelBuilder.Entity<ProductCategory>();
             var stockHistory = modelBuilder.Entity<StockHistory>();
+            var appointment = modelBuilder.Entity<Appointment>();
+            var appointmentService = modelBuilder.Entity<AppointmentService>();
+            var service = modelBuilder.Entity<Service>();
+            var serviceCategory = modelBuilder.Entity<ServiceCategory>();
+            var roleServiceCategory = modelBuilder.Entity<RoleServiceCategory>();
+            var appointmentOrder = modelBuilder.Entity<AppointmentOrder>();
 
             modelBuilder.Entity<Person>().ToTable("Person", t => t.ExcludeFromMigrations());
             modelBuilder.Entity<Order>().ToTable("Order", t => t.ExcludeFromMigrations());
+            modelBuilder.Entity<Role>().ToTable("Role", t=>t.ExcludeFromMigrations());
+            modelBuilder.Entity<Schedule>().ToTable("Schedule", t=>t.ExcludeFromMigrations());
+            
 
             modelBuilder.Ignore<Address>();
             modelBuilder.Ignore<Telephone>();
             modelBuilder.Ignore<Coupon>();
             modelBuilder.Ignore<Payment>();
             modelBuilder.Ignore<RoleEmployee>();
-            modelBuilder.Ignore<Role>();
             modelBuilder.Ignore<WorkingDay>();
-            modelBuilder.Ignore<Schedule>();
             modelBuilder.Ignore<TimeOff>();
 
 
@@ -54,10 +69,6 @@ namespace Barbearia.Persistence.DbContexts
                 .IsRequired()
                 .HasPrecision(8,2);
 
-            // product.HasNoKey();
-
-            // product
-            //     .HasKey(p => p.ItemId);
             product
             .ToTable("Product");
 
@@ -73,16 +84,7 @@ namespace Barbearia.Persistence.DbContexts
                 .HasForeignKey(s => s.PersonId)
                 .IsRequired();
 
-            // product
-            //     .HasMany(s => s.Orders)
-            //     .WithMany(p => p.Productsha)
-            //     .UsingEntity<OrderProduct>(op => op.ToTable("OrderProduct"));
-
-            // modelBuilder.Entity<OrderProduct>()
-            // .HasNoKey();
-            
-
-            modelBuilder.Entity<Product>()
+            product
                 .HasMany(e => e.Orders)
                 .WithMany(e => e.Products)
                 .UsingEntity<OrderProduct>(
@@ -99,8 +101,6 @@ namespace Barbearia.Persistence.DbContexts
                         j.HasKey(op => new { op.OrderId, op.ItemId });
                         j.ToTable("OrderProduct");
                     });
-
-
 
             modelBuilder.Entity<OrderProduct>()
                 .HasData(
@@ -120,9 +120,6 @@ namespace Barbearia.Persistence.DbContexts
                         ItemId = 2
                     }
                 );
-
-            // modelBuilder.Entity<OrderProduct>().HasKey(op => new { op.ItemId, op.OrderId });
-
 
             product
                 .HasOne(s => s.ProductCategory)
@@ -151,6 +148,172 @@ namespace Barbearia.Persistence.DbContexts
             product
                 .Property(p=>p.Status)
                 .IsRequired();
+
+            appointment
+                .ToTable("Appointment");
+
+            appointment
+                .Property(a =>a.StartDate)
+                .IsRequired();
+
+            appointment
+                .Property(a =>a.FinishDate)
+                .IsRequired();
+
+            appointment
+                .Property(a =>a.Status)
+                .IsRequired();
+
+            //demais atributos acho que não devem ser obrigatórios. Por exemplo: o cliente pode nunca confirmar.
+
+            appointment
+                .HasOne(a =>a.Schedule)
+                .WithMany(s=>s.Appointments)
+                .HasForeignKey(a=>a.ScheduleId);
+
+            appointment
+                .HasOne(a => a.Person)
+                .WithMany(p => p.Appointments)
+                .HasForeignKey(a => a.CustomerId);
+
+            appointment
+                .HasMany(a => a.Services)
+                .WithMany(s => s.Appointments)
+                .UsingEntity<AppointmentService>();
+
+            appointment
+                .HasMany(a => a.Orders)
+                .WithMany(o => o.Appointments)
+                .UsingEntity<AppointmentOrder>();
+
+            appointmentService
+                .ToTable("AppointmentService");
+
+            appointmentOrder
+                .ToTable("AppointmentOrder");
+
+            appointmentService
+                .Property(a=>a.Name)
+                .IsRequired();
+
+            appointmentService
+                .Property(a=>a.DurationMinutes)
+                .IsRequired();
+
+            appointmentService
+                .Property(a=>a.CurrentPrice)
+                .IsRequired();
+            
+            service
+                .ToTable("Service");
+
+            service
+                .Property(s => s.DurationMinutes)
+                .IsRequired();
+
+            service
+                .Property(s => s.ServiceCategoryId)
+                .IsRequired();
+
+            service
+                .HasMany(s => s.Persons)
+                .WithMany(e => e.Services)
+                .UsingEntity<EmployeeService>();
+
+            service
+                .HasOne(s => s.ServiceCategory)
+                .WithMany(sc => sc.Services);
+
+            serviceCategory
+                .ToTable("ServiceCategory");
+
+            serviceCategory
+                .Property(s => s.Name)
+                .IsRequired();
+
+            serviceCategory
+                .HasMany(s=> s.Roles)
+                .WithMany(r=>r.ServiceCategories)
+                .UsingEntity<RoleServiceCategory>();
+
+            roleServiceCategory
+                .ToTable("RoleServiceCategory");
+
+
+        
+            appointment
+                .HasData(
+                    new Appointment()
+                    {
+                        AppointmentId = 1,
+                        ScheduleId = 1,
+                        CustomerId = 2,
+                        StartDate = DateTime.UtcNow,
+                        FinishDate = DateTime.UtcNow,
+                        Status = 1,
+                        StartServiceDate = DateTime.UtcNow,
+                        FinishServiceDate = DateTime.UtcNow,
+                        ConfirmedDate = DateTime.UtcNow,
+                        CancellationDate = DateTime.UtcNow
+
+                    }
+                );
+            
+
+            service
+                .HasData(
+                    new Service()
+                    {
+                        ItemId = 3,
+                        Name = "corte qualquer",
+                        Price =20,
+                        Description = "Um corte para testas o sistema",
+                        DurationMinutes = 30,
+                        ServiceCategoryId=1
+                    }
+                );
+
+                appointmentService
+                .HasData(
+                    new AppointmentService()
+                    {
+                        AppointmentServiceId = 1,
+                        ServiceId = 3,
+                        AppointmentId = 1,
+                        EmployeeId = 4,
+                        Name = "Confesso que não sei que nome é pra colocar aqui",
+                        DurationMinutes = 30,
+                        CurrentPrice = 20
+                    }
+                );
+
+                serviceCategory
+                    .HasData(
+                        new ServiceCategory()
+                        {
+                            ServiceCategoryId = 1,
+                            Name = "Corte",
+                        }
+                    );
+
+            roleServiceCategory
+                .HasData(
+                    new RoleServiceCategory()
+                    {
+                        RoleId =1,
+                        ServiceCategoryId =1
+                    }
+                );
+
+            appointmentOrder
+                .HasData(
+                    new AppointmentOrder()
+                    {
+                        OrderId =1,
+                        AppointmentId =1
+                    }
+                );
+            
 
             product
                 .HasData(
@@ -235,7 +398,7 @@ namespace Barbearia.Persistence.DbContexts
                 .WithMany(o => o.StockHistories)
                 .HasForeignKey(o => o.OrderId);
 
-            stockHistory//pelo que entendi, isso é pra dizer que StockHistory vai ser a que vai ter o Supplier
+            stockHistory
                 .HasOne(s => s.Supplier)
                 .WithMany(s => s.StockHistories)
                 .HasForeignKey(s => s.PersonId)
@@ -271,6 +434,7 @@ namespace Barbearia.Persistence.DbContexts
                 );
 
             base.OnModelCreating(modelBuilder);
+            
         }
     }
 }

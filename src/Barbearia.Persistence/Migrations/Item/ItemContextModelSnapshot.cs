@@ -22,6 +22,150 @@ namespace Barbearia.Persistence.Migrations.Item
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Barbearia.Domain.Entities.Appointment", b =>
+                {
+                    b.Property<int>("AppointmentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("AppointmentId"));
+
+                    b.Property<DateTime>("CancellationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("ConfirmedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("FinishDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("FinishServiceDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("ScheduleId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("StartServiceDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.HasKey("AppointmentId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("ScheduleId");
+
+                    b.ToTable("Appointment", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            AppointmentId = 1,
+                            CancellationDate = new DateTime(2023, 10, 3, 21, 33, 11, 542, DateTimeKind.Utc).AddTicks(6793),
+                            ConfirmedDate = new DateTime(2023, 10, 3, 21, 33, 11, 542, DateTimeKind.Utc).AddTicks(6793),
+                            CustomerId = 2,
+                            FinishDate = new DateTime(2023, 10, 3, 21, 33, 11, 542, DateTimeKind.Utc).AddTicks(6791),
+                            FinishServiceDate = new DateTime(2023, 10, 3, 21, 33, 11, 542, DateTimeKind.Utc).AddTicks(6792),
+                            ScheduleId = 1,
+                            StartDate = new DateTime(2023, 10, 3, 21, 33, 11, 542, DateTimeKind.Utc).AddTicks(6789),
+                            StartServiceDate = new DateTime(2023, 10, 3, 21, 33, 11, 542, DateTimeKind.Utc).AddTicks(6792),
+                            Status = 1
+                        });
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.AppointmentOrder", b =>
+                {
+                    b.Property<int>("AppointmentId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("AppointmentId", "OrderId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("AppointmentOrder", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            AppointmentId = 1,
+                            OrderId = 1
+                        });
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.AppointmentService", b =>
+                {
+                    b.Property<int>("AppointmentServiceId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("AppointmentServiceId"));
+
+                    b.Property<int>("AppointmentId")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("CurrentPrice")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("DurationMinutes")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("AppointmentServiceId");
+
+                    b.HasIndex("AppointmentId");
+
+                    b.HasIndex("ServiceId");
+
+                    b.ToTable("AppointmentService", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            AppointmentServiceId = 1,
+                            AppointmentId = 1,
+                            CurrentPrice = 20m,
+                            DurationMinutes = 30,
+                            EmployeeId = 4,
+                            Name = "Confesso que não sei que nome é pra colocar aqui",
+                            ServiceId = 3
+                        });
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.EmployeeService", b =>
+                {
+                    b.Property<int>("PersonId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("PersonId", "ServiceId");
+
+                    b.HasIndex("ServiceId");
+
+                    b.ToTable("EmployeeService");
+                });
+
             modelBuilder.Entity("Barbearia.Domain.Entities.Item", b =>
                 {
                     b.Property<int>("ItemId")
@@ -183,6 +327,99 @@ namespace Barbearia.Persistence.Migrations.Item
                         });
                 });
 
+            modelBuilder.Entity("Barbearia.Domain.Entities.Role", b =>
+                {
+                    b.Property<int>("RoleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("RoleId"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int?>("PersonId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("RoleId");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("Role", null, t =>
+                        {
+                            t.ExcludeFromMigrations();
+                        });
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.RoleServiceCategory", b =>
+                {
+                    b.Property<int>("RoleId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ServiceCategoryId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("RoleId", "ServiceCategoryId");
+
+                    b.HasIndex("ServiceCategoryId");
+
+                    b.ToTable("RoleServiceCategory", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            RoleId = 1,
+                            ServiceCategoryId = 1
+                        });
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.Schedule", b =>
+                {
+                    b.Property<int>("ScheduleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ScheduleId"));
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("WorkingDayId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ScheduleId");
+
+                    b.ToTable("Schedule", null, t =>
+                        {
+                            t.ExcludeFromMigrations();
+                        });
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.ServiceCategory", b =>
+                {
+                    b.Property<int>("ServiceCategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ServiceCategoryId"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("ServiceCategoryId");
+
+                    b.ToTable("ServiceCategory", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            ServiceCategoryId = 1,
+                            Name = "Corte"
+                        });
+                });
+
             modelBuilder.Entity("Barbearia.Domain.Entities.StockHistory", b =>
                 {
                     b.Property<int>("StockHistoryId")
@@ -237,7 +474,7 @@ namespace Barbearia.Persistence.Migrations.Item
                             OrderId = 1,
                             PersonId = 3,
                             ProductId = 1,
-                            Timestamp = new DateTime(2023, 10, 2, 2, 33, 39, 660, DateTimeKind.Utc).AddTicks(8041)
+                            Timestamp = new DateTime(2023, 10, 3, 21, 33, 11, 543, DateTimeKind.Utc).AddTicks(502)
                         },
                         new
                         {
@@ -249,7 +486,7 @@ namespace Barbearia.Persistence.Migrations.Item
                             OrderId = 2,
                             PersonId = 4,
                             ProductId = 2,
-                            Timestamp = new DateTime(2023, 10, 2, 2, 33, 39, 660, DateTimeKind.Utc).AddTicks(8048)
+                            Timestamp = new DateTime(2023, 10, 3, 21, 33, 11, 543, DateTimeKind.Utc).AddTicks(505)
                         });
                 });
 
@@ -319,6 +556,96 @@ namespace Barbearia.Persistence.Migrations.Item
                         });
                 });
 
+            modelBuilder.Entity("Barbearia.Domain.Entities.Service", b =>
+                {
+                    b.HasBaseType("Barbearia.Domain.Entities.Item");
+
+                    b.Property<int>("DurationMinutes")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ServiceCategoryId")
+                        .HasColumnType("integer");
+
+                    b.HasIndex("ServiceCategoryId");
+
+                    b.ToTable("Service", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            ItemId = 3,
+                            Description = "Um corte para testas o sistema",
+                            Name = "corte qualquer",
+                            Price = 20m,
+                            DurationMinutes = 30,
+                            ServiceCategoryId = 1
+                        });
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.Appointment", b =>
+                {
+                    b.HasOne("Barbearia.Domain.Entities.Person", "Person")
+                        .WithMany("Appointments")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Barbearia.Domain.Entities.Schedule", "Schedule")
+                        .WithMany("Appointments")
+                        .HasForeignKey("ScheduleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Person");
+
+                    b.Navigation("Schedule");
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.AppointmentOrder", b =>
+                {
+                    b.HasOne("Barbearia.Domain.Entities.Appointment", null)
+                        .WithMany()
+                        .HasForeignKey("AppointmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Barbearia.Domain.Entities.Order", null)
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.AppointmentService", b =>
+                {
+                    b.HasOne("Barbearia.Domain.Entities.Appointment", null)
+                        .WithMany()
+                        .HasForeignKey("AppointmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Barbearia.Domain.Entities.Service", null)
+                        .WithMany()
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.EmployeeService", b =>
+                {
+                    b.HasOne("Barbearia.Domain.Entities.Person", null)
+                        .WithMany()
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Barbearia.Domain.Entities.Service", null)
+                        .WithMany()
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Barbearia.Domain.Entities.Order", b =>
                 {
                     b.HasOne("Barbearia.Domain.Entities.Person", "Person")
@@ -345,6 +672,28 @@ namespace Barbearia.Persistence.Migrations.Item
                     b.Navigation("Order");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.Role", b =>
+                {
+                    b.HasOne("Barbearia.Domain.Entities.Person", null)
+                        .WithMany("Roles")
+                        .HasForeignKey("PersonId");
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.RoleServiceCategory", b =>
+                {
+                    b.HasOne("Barbearia.Domain.Entities.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Barbearia.Domain.Entities.ServiceCategory", null)
+                        .WithMany()
+                        .HasForeignKey("ServiceCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.StockHistory", b =>
@@ -399,6 +748,23 @@ namespace Barbearia.Persistence.Migrations.Item
                     b.Navigation("Supplier");
                 });
 
+            modelBuilder.Entity("Barbearia.Domain.Entities.Service", b =>
+                {
+                    b.HasOne("Barbearia.Domain.Entities.Item", null)
+                        .WithOne()
+                        .HasForeignKey("Barbearia.Domain.Entities.Service", "ItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Barbearia.Domain.Entities.ServiceCategory", "ServiceCategory")
+                        .WithMany("Services")
+                        .HasForeignKey("ServiceCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ServiceCategory");
+                });
+
             modelBuilder.Entity("Barbearia.Domain.Entities.Order", b =>
                 {
                     b.Navigation("OrderProducts");
@@ -408,9 +774,13 @@ namespace Barbearia.Persistence.Migrations.Item
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Person", b =>
                 {
+                    b.Navigation("Appointments");
+
                     b.Navigation("Orders");
 
                     b.Navigation("Products");
+
+                    b.Navigation("Roles");
 
                     b.Navigation("StockHistories");
                 });
@@ -418,6 +788,16 @@ namespace Barbearia.Persistence.Migrations.Item
             modelBuilder.Entity("Barbearia.Domain.Entities.ProductCategory", b =>
                 {
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.Schedule", b =>
+                {
+                    b.Navigation("Appointments");
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.ServiceCategory", b =>
+                {
+                    b.Navigation("Services");
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Product", b =>

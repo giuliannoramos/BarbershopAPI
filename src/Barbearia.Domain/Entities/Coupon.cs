@@ -19,7 +19,7 @@ public class Coupon
 
     private void CheckCreationDate()
     {
-        if (CreationDate > DateTime.Now)
+        if (CreationDate > DateTime.UtcNow)
         {
             throw new ArgumentException("A data de criação não pode ser no futuro.");
         }

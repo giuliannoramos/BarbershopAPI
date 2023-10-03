@@ -105,6 +105,43 @@ public class OrderRepository : IOrderRepository
         _context.Orders.Remove(order);
     }
 
+        public async Task<Coupon?> GetCouponById(int couponId)
+    {
+        return await _context.Coupons.FirstOrDefaultAsync(c => c.CouponId == couponId);
+    }
+
+    public async Task<IEnumerable<Coupon>> GetAllCoupons()
+    {
+        return await _context.Coupons.OrderBy(c => c.CouponId).ToListAsync();
+    }
+
+    public async void AddCoupon(Coupon coupon)
+    {
+        await _context.Coupons.AddAsync(coupon);
+    }
+
+    public void DeleteCoupon(Coupon coupon)
+    {
+        _context.Coupons.Remove(coupon);
+    }
+
+    public async Task<bool> CouponExists(string couponCode)
+    {
+        return await _context.Coupons.AnyAsync(c => c.CouponCode == couponCode);
+    }
+    
+    public async Task<bool> CouponExistsAndIsActive(string couponCode)
+    {
+        var couponFromDb =  await _context.Coupons.Where(c => c.CouponCode == couponCode && c.ExpirationDate > DateTime.UtcNow).FirstOrDefaultAsync();
+        if (couponFromDb == null)
+        {
+            return false;
+        }
+
+        return true;
+
+    }
+
     public async Task<bool> SaveChangesAsync()
     {
         return await _context.SaveChangesAsync() > 0;

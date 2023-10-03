@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Barbearia.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class AddPerson : Migration
+    public partial class personMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -141,7 +141,7 @@ namespace Barbearia.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Schedules",
+                name: "Schedule",
                 columns: table => new
                 {
                     ScheduleId = table.Column<int>(type: "integer", nullable: false)
@@ -151,9 +151,9 @@ namespace Barbearia.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Schedules", x => x.ScheduleId);
+                    table.PrimaryKey("PK_Schedule", x => x.ScheduleId);
                     table.ForeignKey(
-                        name: "FK_Schedules_WorkingDay_WorkingDayId",
+                        name: "FK_Schedule_WorkingDay_WorkingDayId",
                         column: x => x.WorkingDayId,
                         principalTable: "WorkingDay",
                         principalColumn: "WorkingDayId",
@@ -188,10 +188,10 @@ namespace Barbearia.Persistence.Migrations
                 {
                     { 1, new DateOnly(1999, 8, 7), "", "73473943096", "veio@hotmail.com", 1, "Linus Torvalds", 2, 0 },
                     { 2, new DateOnly(2000, 1, 1), "", "73473003096", "bill@gmail.com", 2, "Bill Gates", 2, 0 },
-                    { 3, new DateOnly(1973, 2, 1), "", "73473943096", "josefacraft@hotmail.com", 2, "Josefina", 3, 0 },
-                    { 4, new DateOnly(1975, 4, 4), "73473003096986", "", "micro@so.ft", 0, "Microsoft", 3, 1 },
-                    { 5, new DateOnly(2000, 8, 7), "", "73473943096", "joao@hotmail.com", 1, "João cabeça", 4, 0 },
-                    { 6, new DateOnly(1990, 1, 1), "", "73473003096", "billdoidao@gmail.com", 1, "Bill Maluco", 4, 1 }
+                    { 3, new DateOnly(1973, 2, 1), "73473003096986", "", "josefacraft@hotmail.com", 0, "Josefina", 3, 1 },
+                    { 4, new DateOnly(1975, 4, 4), "73473003096986", "", "micro@so.ft", 0, "Microsoft", 3, 2 },
+                    { 5, new DateOnly(2000, 8, 7), "", "73473943096", "joao@hotmail.com", 1, "João cabeça", 4, 1 },
+                    { 6, new DateOnly(1990, 1, 1), "", "73473003096", "billdoidao@gmail.com", 1, "Bill Maluco", 4, 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -244,7 +244,7 @@ namespace Barbearia.Persistence.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Schedules",
+                table: "Schedule",
                 columns: new[] { "ScheduleId", "Status", "WorkingDayId" },
                 values: new object[,]
                 {
@@ -272,8 +272,8 @@ namespace Barbearia.Persistence.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Schedules_WorkingDayId",
-                table: "Schedules",
+                name: "IX_Schedule_WorkingDayId",
+                table: "Schedule",
                 column: "WorkingDayId",
                 unique: true);
 
@@ -303,7 +303,7 @@ namespace Barbearia.Persistence.Migrations
                 name: "RoleEmployee");
 
             migrationBuilder.DropTable(
-                name: "Schedules");
+                name: "Schedule");
 
             migrationBuilder.DropTable(
                 name: "Telephone");

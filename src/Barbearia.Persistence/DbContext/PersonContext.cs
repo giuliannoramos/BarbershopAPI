@@ -45,6 +45,11 @@ namespace Barbearia.Persistence.DbContexts
             modelBuilder.Ignore<Coupon>();
             modelBuilder.Ignore<ProductCategory>();
             modelBuilder.Ignore<OrderProduct>();
+            modelBuilder.Ignore<Service>();
+            modelBuilder.Ignore<Appointment>();
+            modelBuilder.Ignore<RoleServiceCategory>();
+            modelBuilder.Ignore<ServiceCategory>();
+            modelBuilder.Ignore<AppointmentOrder>();
 
 
             person

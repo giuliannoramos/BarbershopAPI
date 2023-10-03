@@ -18,6 +18,8 @@ public class Person
     public List<WorkingDay> WorkingDays{get;set;} = new();
     public List<Role> Roles{get;set;} = new();
     public List<RoleEmployee> RoleEmployees{get; set;} = new();
+    public List<Appointment> Appointments{get;set;} = new();
+    public List<Service> Services{get;set;} = new();
 
     public enum TypeStatus
     {

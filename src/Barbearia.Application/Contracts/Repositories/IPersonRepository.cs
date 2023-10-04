@@ -29,4 +29,11 @@ public interface IPersonRepository
     void DeleteEmployee(Employee employee);
     Task<(IEnumerable<Employee>, PaginationMetadata)> GetAllEmployeesAsync( string? searchQuery,
      int pageNumber, int pageSize);
+
+    Task<(IEnumerable<Schedule>, PaginationMetadata)> GetAllSchedulesAsync(string? searchQuery,
+        int pageNumber, int pageSize);
+    Task<Schedule?> GetScheduleByIdAsync(int scheduleId);
+    Task<IEnumerable<Schedule>> GetAllSchedulesAsync();
+    public void DeleteSchedule(Schedule schedule);
+    public void AddSchedule(Schedule schedule);
 }

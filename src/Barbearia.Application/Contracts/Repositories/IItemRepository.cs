@@ -18,4 +18,9 @@ public interface IItemRepository
     public void AddStockHistory(StockHistory stockHistory);
     public void RemoveStockHistory(StockHistory stockHistory);
     Task<bool> SaveChangesAsync();
+
+    public Task<IEnumerable<ProductCategory>> GetAllProductCategoriesAsync();
+    public Task<ProductCategory?> GetProductCategoryByIdAsync(int productCategoryId);
+    public void AddProductCategory(ProductCategory productCategory);
+    public void RemoveProductCategory(ProductCategory productCategory);
 }

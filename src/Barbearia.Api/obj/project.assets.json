@@ -7013,27 +7013,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\lucas\\.nuget\\packages\\": {},
-    "C:\\Users\\lucas\\AppData\\Roaming\\Godot\\mono\\GodotNuGetFallbackFolder": {},
-    "D:\\visual studio componentes e ferramentas\\NuGetPackages": {}
+    "C:\\Users\\Guilherme\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barberiaAPI\\barbershopapi\\src\\Barbearia.Api\\Barbearia.Api.csproj",
+      "projectUniqueName": "C:\\Users\\Guilherme\\Desktop\\aria\\barbershopapi\\src\\Barbearia.Api\\Barbearia.Api.csproj",
       "projectName": "Barbearia.Api",
-      "projectPath": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barberiaAPI\\barbershopapi\\src\\Barbearia.Api\\Barbearia.Api.csproj",
-      "packagesPath": "C:\\Users\\lucas\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barberiaAPI\\barbershopapi\\src\\Barbearia.Api\\obj\\",
+      "projectPath": "C:\\Users\\Guilherme\\Desktop\\aria\\barbershopapi\\src\\Barbearia.Api\\Barbearia.Api.csproj",
+      "packagesPath": "C:\\Users\\Guilherme\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Guilherme\\Desktop\\aria\\barbershopapi\\src\\Barbearia.Api\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Users\\lucas\\AppData\\Roaming\\Godot\\mono\\GodotNuGetFallbackFolder",
-        "D:\\visual studio componentes e ferramentas\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\lucas\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Users\\lucas\\AppData\\Roaming\\NuGet\\config\\Godot.Offline.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\Guilherme\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -7047,11 +7039,11 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barberiaAPI\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj": {
-              "projectPath": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barberiaAPI\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj"
+            "C:\\Users\\Guilherme\\Desktop\\aria\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj": {
+              "projectPath": "C:\\Users\\Guilherme\\Desktop\\aria\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj"
             },
-            "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barberiaAPI\\barbershopapi\\src\\Barbearia.Persistence\\Barbearia.Persistence.csproj": {
-              "projectPath": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\barberiaAPI\\barbershopapi\\src\\Barbearia.Persistence\\Barbearia.Persistence.csproj"
+            "C:\\Users\\Guilherme\\Desktop\\aria\\barbershopapi\\src\\Barbearia.Persistence\\Barbearia.Persistence.csproj": {
+              "projectPath": "C:\\Users\\Guilherme\\Desktop\\aria\\barbershopapi\\src\\Barbearia.Persistence\\Barbearia.Persistence.csproj"
             }
           }
         }
@@ -7112,7 +7104,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
       }
     }
   }

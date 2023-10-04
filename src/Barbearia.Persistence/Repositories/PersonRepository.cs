@@ -210,5 +210,54 @@ public class PersonRepository : IPersonRepository
 
         return (employeeToReturn, paginationMetadata);
     }
+    public void AddSchedule(Schedule schedule)
+    {
+        _context.Schedules.Add(schedule);
+    }
+    public void DeleteSchedule(Schedule schedule)
+    {
+        _context.Schedules.Remove(schedule);
+    }
+    
+    public async Task<IEnumerable<Schedule>> GetAllSchedulesAsync()
+    {
+        return await _context.Schedules
+            .Include(s=>s.WorkingDay!)
+            .ThenInclude(w=>w.Employee).ToListAsync();
+    }
 
+    public async Task<Schedule?> GetScheduleByIdAsync(int scheduleId)
+    {
+        return await _context.Schedules
+            .Include(s=>s.WorkingDay!)
+            .ThenInclude(w=>w.Employee).FirstOrDefaultAsync(s=> s.ScheduleId == scheduleId);
+    }
+
+    public async Task<(IEnumerable<Schedule>, PaginationMetadata)> GetAllSchedulesAsync(string? searchQuery,
+         int pageNumber, int pageSize)
+    {
+        
+        IQueryable<Schedule> collection = _context.Schedules.Where(s=>s.WorkingDay != null).Include(s=>s.WorkingDay!).ThenInclude(w=>w.Employee);
+
+        if (!string.IsNullOrWhiteSpace(searchQuery))
+        {
+            var name = searchQuery.Trim().ToLower();
+            collection = collection.Where(
+
+                s => s.WorkingDay != null && s.WorkingDay.Employee != null && s.WorkingDay.Employee.Name.ToLower().Contains(name)
+            );
+        }
+
+        var totalItemCount = await collection.CountAsync();
+
+        var paginationMetadata = new PaginationMetadata(totalItemCount, pageSize, pageNumber);
+
+        var schedulesToReturn = await collection
+        .OrderBy(s=> s.ScheduleId)
+        .Skip(pageSize * (pageNumber - 1))
+        .Take(pageSize)
+        .ToListAsync();
+
+        return (schedulesToReturn, paginationMetadata);
+    }
 }

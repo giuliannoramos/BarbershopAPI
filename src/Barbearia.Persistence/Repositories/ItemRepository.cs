@@ -67,6 +67,42 @@ public class ItemRepository : IItemRepository
         .FirstOrDefaultAsync(p=> p.ItemId == productId);
     }
 
+    public async Task<IEnumerable<StockHistory>> GetAllStockHistoriesAsync(){
+        return await _context.StockHistories
+        // .Include(s => s.Supplier)
+        .Include(s => s.Product)
+        // .Include(s => s.Order)
+        .ToListAsync();
+    }
+
+    public async Task<StockHistory?> GetStockHistoryByIdAsync(int stockHistoryId){
+        return await _context.StockHistories
+        .FirstOrDefaultAsync(s => s.StockHistoryId == stockHistoryId);
+    }
+
+    public async Task<StockHistoryOrder?> GetStockHistoryOrderByIdAsync(int stockHistoryId){
+        return await _context.StockHistories.OfType<StockHistoryOrder>()
+        .Include(s => s.Product)
+        .Include(s => s.Order)
+        .FirstOrDefaultAsync(s => s.StockHistoryId == stockHistoryId);
+    }
+
+    public async Task<StockHistorySupplier?> GetStockHistorySupplierByIdAsync(int stockHistoryId){
+        return await _context.StockHistories.OfType<StockHistorySupplier>()
+        .Include(s => s.Supplier)
+        .Include(s => s.Product)
+        .FirstOrDefaultAsync(s => s.StockHistoryId == stockHistoryId);
+    }
+
+    
+    public void AddStockHistory(StockHistory stockHistory){
+        _context.StockHistories.Add(stockHistory);
+    }
+
+    public void RemoveStockHistory(StockHistory stockHistory){
+        _context.StockHistories.Remove(stockHistory);
+    }
+
     public async Task<bool> SaveChangesAsync()
     {
         return await _context.SaveChangesAsync() > 0;

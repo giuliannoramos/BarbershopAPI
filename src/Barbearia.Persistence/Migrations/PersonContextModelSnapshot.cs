@@ -294,50 +294,6 @@ namespace Barbearia.Persistence.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Barbearia.Domain.Entities.StockHistory", b =>
-                {
-                    b.Property<int>("StockHistoryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("StockHistoryId"));
-
-                    b.Property<int>("Amount")
-                        .HasColumnType("integer");
-
-                    b.Property<decimal>("CurrentPrice")
-                        .HasColumnType("numeric");
-
-                    b.Property<int>("LastStockQuantity")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Operation")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("PersonId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("Timestamp")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("StockHistoryId");
-
-                    b.HasIndex("PersonId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("StockHistory", null, t =>
-                        {
-                            t.ExcludeFromMigrations();
-                        });
-                });
-
             modelBuilder.Entity("Barbearia.Domain.Entities.Telephone", b =>
                 {
                     b.Property<int>("TelephoneId")
@@ -648,25 +604,6 @@ namespace Barbearia.Persistence.Migrations
                     b.Navigation("WorkingDay");
                 });
 
-            modelBuilder.Entity("Barbearia.Domain.Entities.StockHistory", b =>
-                {
-                    b.HasOne("Barbearia.Domain.Entities.Person", "Supplier")
-                        .WithMany("StockHistories")
-                        .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Barbearia.Domain.Entities.Product", "Product")
-                        .WithMany("StockHistories")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("Supplier");
-                });
-
             modelBuilder.Entity("Barbearia.Domain.Entities.Telephone", b =>
                 {
                     b.HasOne("Barbearia.Domain.Entities.Person", "Person")
@@ -725,8 +662,6 @@ namespace Barbearia.Persistence.Migrations
 
                     b.Navigation("RoleEmployees");
 
-                    b.Navigation("StockHistories");
-
                     b.Navigation("Telephones");
 
                     b.Navigation("WorkingDays");
@@ -742,11 +677,6 @@ namespace Barbearia.Persistence.Migrations
                     b.Navigation("Schedule");
 
                     b.Navigation("TimeOffs");
-                });
-
-            modelBuilder.Entity("Barbearia.Domain.Entities.Product", b =>
-                {
-                    b.Navigation("StockHistories");
                 });
 #pragma warning restore 612, 618
         }

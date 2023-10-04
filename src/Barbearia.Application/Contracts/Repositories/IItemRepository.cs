@@ -10,5 +10,12 @@ public interface IItemRepository
     Task<Product?> GetProductByIdAsync(int productId);
     void AddProduct(Product product);
     void DeleteProduct(Product product);
+
+    public Task<IEnumerable<StockHistory>> GetAllStockHistoriesAsync();
+    public Task<StockHistory?> GetStockHistoryByIdAsync(int stockHistoryId);
+    public Task<StockHistoryOrder?> GetStockHistoryOrderByIdAsync(int stockHistoryId);
+    public Task<StockHistorySupplier?> GetStockHistorySupplierByIdAsync(int stockHistoryId);
+    public void AddStockHistory(StockHistory stockHistory);
+    public void RemoveStockHistory(StockHistory stockHistory);
     Task<bool> SaveChangesAsync();
 }

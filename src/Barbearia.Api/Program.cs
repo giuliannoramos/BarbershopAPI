@@ -53,6 +53,10 @@ using Barbearia.Application.Features.Coupons.Queries.GetAllCoupons;
 using Barbearia.Application.Features.Coupons.Commands.UpdateCoupon;
 using Barbearia.Application.Features.Coupons.Commands.CreateCoupon;
 using Barbearia.Application.Features.Coupons.Commands.DeleteCoupon;
+using Barbearia.Application.Features.StockHistories.Queries.GetStockHistoryById;
+using Barbearia.Application.Features.StockHistories.Commands.CreateStockHistory;
+using Barbearia.Application.Features.StockHistories.Commands.UpdateStockHistory;
+using Barbearia.Application.Features.StockHistories.Commands.DeleteStockHistory;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -152,6 +156,12 @@ builder.Services.AddScoped<IRequestHandler<GetAllCouponsQuery,IEnumerable<GetAll
 builder.Services.AddScoped<IRequestHandler<UpdateCouponCommand,UpdateCouponCommandResponse>,UpdateCouponCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<CreateCouponCommand, CreateCouponCommandResponse>, CreateCouponCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<DeleteCouponCommand, bool>, DeleteCouponCommandHandler>();
+
+builder.Services.AddScoped<IRequestHandler<GetStockHistoryByIdQuery, GetStockHistoryByIdDto>, GetStockHistoryByIdQueryHandler>();
+// builder.Services.AddScoped<IRequestHandler<GetAllStockHistoriesQuery, IEnumerable<GetAllStockHistoriesDto>>, GetAllStockHistoriesQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<CreateStockHistoryCommand, CreateStockHistoryCommandResponse>, CreateStockHistoryCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<UpdateStockHistoryCommand, UpdateStockHistoryCommandResponse>, UpdateStockHistoryCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<DeleteStockHistoryCommand, bool>, DeleteStockHistoryCommandHandler>();
 
 
 //config banco de dados

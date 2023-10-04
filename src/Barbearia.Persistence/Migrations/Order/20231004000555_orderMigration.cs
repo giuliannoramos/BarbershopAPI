@@ -86,21 +86,21 @@ namespace Barbearia.Persistence.Migrations.Order
             migrationBuilder.InsertData(
                 table: "Coupon",
                 columns: new[] { "CouponId", "CouponCode", "CreationDate", "DiscountPercent", "ExpirationDate" },
-                values: new object[] { 1, "teste3", new DateTime(2023, 10, 3, 21, 32, 56, 247, DateTimeKind.Utc).AddTicks(3264), 10, new DateTime(2023, 10, 3, 21, 32, 56, 247, DateTimeKind.Utc).AddTicks(3265) });
+                values: new object[] { 1, "teste3", new DateTime(2023, 10, 4, 0, 5, 55, 535, DateTimeKind.Utc).AddTicks(9241), 10, new DateTime(2023, 10, 4, 0, 5, 55, 535, DateTimeKind.Utc).AddTicks(9241) });
 
             migrationBuilder.InsertData(
                 table: "Order",
                 columns: new[] { "OrderId", "BuyDate", "Number", "PersonId", "Status" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 10, 3, 21, 32, 56, 247, DateTimeKind.Utc).AddTicks(3043), 500, 1, 2 },
-                    { 2, new DateTime(2023, 10, 3, 21, 32, 56, 247, DateTimeKind.Utc).AddTicks(3071), 501, 2, 2 }
+                    { 1, new DateTime(2023, 10, 4, 0, 5, 55, 535, DateTimeKind.Utc).AddTicks(8961), 500, 1, 2 },
+                    { 2, new DateTime(2023, 10, 4, 0, 5, 55, 535, DateTimeKind.Utc).AddTicks(8994), 501, 2, 2 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Payment",
                 columns: new[] { "PaymentId", "BuyDate", "CouponId", "Description", "GrossTotal", "NetTotal", "OrderId", "PaymentMethod", "Status" },
-                values: new object[] { 1, new DateTime(2023, 10, 3, 21, 32, 56, 247, DateTimeKind.Utc).AddTicks(3251), null, "Para de ler isso aqui e vai programar", 80m, 60m, 1, "Dinheiro", 1 });
+                values: new object[] { 1, new DateTime(2023, 10, 4, 0, 5, 55, 535, DateTimeKind.Utc).AddTicks(9227), null, "Para de ler isso aqui e vai programar", 80m, 60m, 1, "Dinheiro", 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_PersonId",

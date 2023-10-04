@@ -39,7 +39,10 @@ namespace Barbearia.Persistence.DbContexts
             modelBuilder.Entity<Order>().ToTable("Order", t => t.ExcludeFromMigrations());
             modelBuilder.Entity<Item>().ToTable("Item", t => t.ExcludeFromMigrations());
             modelBuilder.Entity<Product>().ToTable("Product", t => t.ExcludeFromMigrations());
-            modelBuilder.Entity<StockHistory>().ToTable("StockHistory", t => t.ExcludeFromMigrations());
+            // modelBuilder.Entity<StockHistory>().ToTable("StockHistory", t => t.ExcludeFromMigrations());
+            modelBuilder.Ignore<StockHistory>();
+            modelBuilder.Ignore<StockHistoryOrder>();
+            modelBuilder.Ignore<StockHistorySupplier>();
             modelBuilder.Ignore<Payment>();
             modelBuilder.Ignore<Order>();
             modelBuilder.Ignore<Coupon>();

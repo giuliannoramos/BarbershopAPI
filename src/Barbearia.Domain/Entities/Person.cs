@@ -14,7 +14,7 @@ public class Person
     public List<Telephone> Telephones {get; set;} = new();
     public List<Order> Orders { get; set; } = new();
     public List<Product> Products { get; set; } = new();
-    public List <StockHistory> StockHistories { get; set; } = new();
+    public List <StockHistorySupplier> StockHistoriesSupplier { get; set; } = new();
     public List<WorkingDay> WorkingDays{get;set;} = new();
     public List<Role> Roles{get;set;} = new();
     public List<RoleEmployee> RoleEmployees{get; set;} = new();

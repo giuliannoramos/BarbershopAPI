@@ -101,9 +101,9 @@ namespace Barbearia.Persistence.Migrations.Order
                         {
                             CouponId = 1,
                             CouponCode = "teste3",
-                            CreationDate = new DateTime(2023, 10, 3, 21, 32, 56, 247, DateTimeKind.Utc).AddTicks(3264),
+                            CreationDate = new DateTime(2023, 10, 4, 0, 5, 55, 535, DateTimeKind.Utc).AddTicks(9241),
                             DiscountPercent = 10,
-                            ExpirationDate = new DateTime(2023, 10, 3, 21, 32, 56, 247, DateTimeKind.Utc).AddTicks(3265)
+                            ExpirationDate = new DateTime(2023, 10, 4, 0, 5, 55, 535, DateTimeKind.Utc).AddTicks(9241)
                         });
                 });
 
@@ -138,7 +138,7 @@ namespace Barbearia.Persistence.Migrations.Order
                         new
                         {
                             OrderId = 1,
-                            BuyDate = new DateTime(2023, 10, 3, 21, 32, 56, 247, DateTimeKind.Utc).AddTicks(3043),
+                            BuyDate = new DateTime(2023, 10, 4, 0, 5, 55, 535, DateTimeKind.Utc).AddTicks(8961),
                             Number = 500,
                             PersonId = 1,
                             Status = 2
@@ -146,7 +146,7 @@ namespace Barbearia.Persistence.Migrations.Order
                         new
                         {
                             OrderId = 2,
-                            BuyDate = new DateTime(2023, 10, 3, 21, 32, 56, 247, DateTimeKind.Utc).AddTicks(3071),
+                            BuyDate = new DateTime(2023, 10, 4, 0, 5, 55, 535, DateTimeKind.Utc).AddTicks(8994),
                             Number = 501,
                             PersonId = 2,
                             Status = 2
@@ -200,7 +200,7 @@ namespace Barbearia.Persistence.Migrations.Order
                         new
                         {
                             PaymentId = 1,
-                            BuyDate = new DateTime(2023, 10, 3, 21, 32, 56, 247, DateTimeKind.Utc).AddTicks(3251),
+                            BuyDate = new DateTime(2023, 10, 4, 0, 5, 55, 535, DateTimeKind.Utc).AddTicks(9227),
                             Description = "Para de ler isso aqui e vai programar",
                             GrossTotal = 80m,
                             NetTotal = 60m,

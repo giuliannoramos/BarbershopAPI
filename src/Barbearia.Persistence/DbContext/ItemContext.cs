@@ -30,6 +30,8 @@ namespace Barbearia.Persistence.DbContexts
             var product = modelBuilder.Entity<Product>();
             var productCategory = modelBuilder.Entity<ProductCategory>();
             var stockHistory = modelBuilder.Entity<StockHistory>();
+            var stockHistorySupplier = modelBuilder.Entity<StockHistorySupplier>();
+            var stockHistoryOrder = modelBuilder.Entity<StockHistoryOrder>();
             var appointment = modelBuilder.Entity<Appointment>();
             var appointmentService = modelBuilder.Entity<AppointmentService>();
             var service = modelBuilder.Entity<Service>();
@@ -370,7 +372,16 @@ namespace Barbearia.Persistence.DbContexts
                 );
 
             stockHistory
-                .ToTable("StockHistory");
+             .UseTptMappingStrategy();
+
+             stockHistory
+                .HasKey(s=>s.StockHistoryId);
+
+            stockHistoryOrder
+                .ToTable("StockHistoryOrder");
+
+            stockHistorySupplier
+                .ToTable("StockHistorySupplier");
 
             stockHistory
                 .Property(s => s.Operation)
@@ -393,21 +404,21 @@ namespace Barbearia.Persistence.DbContexts
                 .Property(s => s.LastStockQuantity)
                 .IsRequired();
 
-            stockHistory
+            stockHistoryOrder
                 .HasOne(s => s.Order)
-                .WithMany(o => o.StockHistories)
+                .WithMany(o => o.StockHistoriesOrder)
                 .HasForeignKey(o => o.OrderId);
 
-            stockHistory
+            stockHistorySupplier
                 .HasOne(s => s.Supplier)
-                .WithMany(s => s.StockHistories)
+                .WithMany(s => s.StockHistoriesSupplier)
                 .HasForeignKey(s => s.PersonId)
                 .IsRequired();
 
 
-            stockHistory
+            stockHistoryOrder
                 .HasData(
-                    new StockHistory()
+                    new StockHistoryOrder()
                     {
                         StockHistoryId = 1,
                         Operation = 1,
@@ -415,11 +426,14 @@ namespace Barbearia.Persistence.DbContexts
                         Amount = 20,
                         Timestamp = DateTime.UtcNow,
                         LastStockQuantity = 10,
-                        PersonId = 3,
                         ProductId = 1,
                         OrderId = 1
-                    },
-                    new StockHistory()
+                    }
+                );
+
+                stockHistorySupplier
+                .HasData(
+                    new StockHistorySupplier()
                     {
                         StockHistoryId = 2,
                         Operation = 3,
@@ -429,7 +443,6 @@ namespace Barbearia.Persistence.DbContexts
                         LastStockQuantity = 32,
                         PersonId = 4,
                         ProductId = 2,
-                        OrderId = 2
                     }
                 );
 

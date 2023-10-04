@@ -16,6 +16,8 @@ public class ProductProfile : Profile
         CreateMap<Product, GetProductsCollectionDto>();    
         CreateMap<Product, ProductForSupplierDto>();    
 
+        CreateMap<Product, ProductForStockHistoryDto>();  
+
         CreateMap<UpdateProductCommand, Product>(); 
         CreateMap<Product,UpdateProductDto>();
 

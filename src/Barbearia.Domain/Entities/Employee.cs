@@ -87,7 +87,7 @@ public class Employee: Person
         {
             throw new Exception("Employee cant have products");
         }
-        if(StockHistories.Count>0)
+        if(StockHistoriesSupplier.Count>0)
         {
             throw new Exception("Employee cant have stock histories");
         }

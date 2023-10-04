@@ -85,7 +85,7 @@ public class PersonRepository : IPersonRepository
         .Include(s => s.Telephones)
         .Include(s => s.Addresses)
         .Include(s => s.Products)
-        .Include(s => s.StockHistories)
+        // .Include(s => s.StockHistoriesSupplier)
         .FirstOrDefaultAsync(s => s.PersonId == supplierId);
     }
 

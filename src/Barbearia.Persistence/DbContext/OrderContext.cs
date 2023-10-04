@@ -29,6 +29,8 @@ namespace Barbearia.Persistence.DbContexts
             modelBuilder.Ignore<Supplier>();
             modelBuilder.Ignore<Product>();
             modelBuilder.Ignore<StockHistory>();
+            modelBuilder.Ignore<StockHistoryOrder>();
+            modelBuilder.Ignore<StockHistorySupplier>();
             modelBuilder.Ignore<OrderProduct>();
             modelBuilder.Ignore<RoleEmployee>();
             modelBuilder.Ignore<Role>();
@@ -41,6 +43,8 @@ namespace Barbearia.Persistence.DbContexts
             modelBuilder.Ignore<ServiceCategory>();
             modelBuilder.Ignore<Service>();
             modelBuilder.Ignore<AppointmentOrder>();
+
+            
 
             order
             .ToTable("Order");
@@ -141,9 +145,9 @@ namespace Barbearia.Persistence.DbContexts
                     PersonId = 1,
                     Status = 2,
                     BuyDate = DateTime.UtcNow,
-                    StockHistories = new List<StockHistory>()
+                    StockHistoriesOrder = new List<StockHistoryOrder>()
                     {
-                        new StockHistory()
+                        new StockHistoryOrder()
                         {
                             StockHistoryId = 1,
                             Operation = 1,
@@ -151,7 +155,6 @@ namespace Barbearia.Persistence.DbContexts
                             Amount = 20,
                             Timestamp = DateTime.UtcNow,
                             LastStockQuantity = 10,
-                            PersonId = 3,
                             ProductId = 1,
                             OrderId = 1
                         }
@@ -191,17 +194,16 @@ namespace Barbearia.Persistence.DbContexts
                     PersonId = 2,
                     Status = 2,
                     BuyDate = DateTime.UtcNow,
-                    StockHistories = new List<StockHistory>()
+                    StockHistoriesOrder = new List<StockHistoryOrder>()
                     {
-                        new StockHistory()
+                        new StockHistoryOrder()
                         {
-                            StockHistoryId = 2,
+                            StockHistoryId = 3,
                             Operation = 3,
                             CurrentPrice = 200.2m,
                             Amount = 40,
                             Timestamp = DateTime.UtcNow,
                             LastStockQuantity = 32,
-                            PersonId = 4,
                             ProductId = 2,
                             OrderId = 2
                         }

@@ -59,7 +59,7 @@ public class OrderRepository : IOrderRepository
     {
         return await _context.Orders
         .Include(o=>o.Person)
-        .Include(o=>o.Payment) 
+        .Include(o=>o.Payment)
         .FirstOrDefaultAsync(o=>o.OrderId == orderId);
     }
 

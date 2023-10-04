@@ -57,6 +57,17 @@ using Barbearia.Application.Features.StockHistories.Queries.GetStockHistoryById;
 using Barbearia.Application.Features.StockHistories.Commands.CreateStockHistory;
 using Barbearia.Application.Features.StockHistories.Commands.UpdateStockHistory;
 using Barbearia.Application.Features.StockHistories.Commands.DeleteStockHistory;
+using Barbearia.Application.Features.Schedules.Commands.CreateSchedule;
+using Barbearia.Application.Features.Schedules.Queries.GetScheduleById;
+using Barbearia.Application.Features.SchedulesCollection;
+using Barbearia.Application.Features.Schedules.Queries.GetAllSchedules;
+using Barbearia.Application.Features.Schedules.Commands.DeleteSchedule;
+using Barbearia.Application.Features.Schedules.Commands.UpdateSchedule;
+using Barbearia.Application.Features.ProductCategories.Queries.GetAllProductCategories;
+using Barbearia.Application.Features.ProductCategories.Commands.UpdateProductCategory;
+using Barbearia.Application.Features.ProductCategories.Commands.DeleteProductCategory;
+using Barbearia.Application.Features.ProductCategories.Commands.CreateProductCategory;
+using Barbearia.Application.Features.ProductCategories.Queries.GetProductCategoryById;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -162,24 +173,40 @@ builder.Services.AddScoped<IRequestHandler<GetStockHistoryByIdQuery, GetStockHis
 builder.Services.AddScoped<IRequestHandler<CreateStockHistoryCommand, CreateStockHistoryCommandResponse>, CreateStockHistoryCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<UpdateStockHistoryCommand, UpdateStockHistoryCommandResponse>, UpdateStockHistoryCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<DeleteStockHistoryCommand, bool>, DeleteStockHistoryCommandHandler>();
-
+// Schedule commands and queries
+builder.Services.AddScoped<IRequestHandler<GetSchedulesCollectionQuery, GetSchedulesCollectionQueryResponse>, GetSchedulesCollectionQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<GetAllSchedulesQuery,IEnumerable<GetAllSchedulesDto>>, GetAllSchedulesQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<GetScheduleByIdQuery, GetScheduleByIdDto>, GetScheduleByIdQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<CreateScheduleCommand,CreateScheduleCommandResponse>,CreateScheduleCommandHandler>();
+builder.Services.AddScoped<IValidator<CreateScheduleCommand>,CreateScheduleCommandValidator>();
+builder.Services.AddScoped<IRequestHandler<DeleteScheduleCommand, bool>, DeleteScheduleCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<UpdateScheduleCommand, UpdateScheduleCommandResponse>, UpdateScheduleCommandHandler>();
+builder.Services.AddScoped<IValidator<UpdateScheduleCommand>, UpdateScheduleCommandValidator>();
+// Product Category commands and queries
+builder.Services.AddScoped<IRequestHandler<GetAllProductCategoriesQuery,IEnumerable<GetAllProductCategoriesDto>>, GetAllProductCategoriesQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<GetProductCategoryByIdQuery, GetProductCategoryByIdDto>, GetProductCategoryByIdQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<CreateProductCategoryCommand,CreateProductCategoryCommandResponse>,CreateProductCategoryCommandHandler>();
+builder.Services.AddScoped<IValidator<CreateProductCategoryCommand>,CreateProductCategoryCommandValidator>();
+builder.Services.AddScoped<IRequestHandler<DeleteProductCategoryCommand, bool>, DeleteProductCategoryCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<UpdateProductCategoryCommand, UpdateProductCategoryCommandResponse>, UpdateProductCategoryCommandHandler>();
+builder.Services.AddScoped<IValidator<UpdateProductCategoryCommand>, UpdateProductCategoryCommandValidator>();
 
 //config banco de dados
 builder.Services.AddDbContext<PersonContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=123456");
 }
 );
 
 builder.Services.AddDbContext<OrderContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=123456");
 }
 );
 
 builder.Services.AddDbContext<ItemContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678;Include Error Detail=true");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=123456;Include Error Detail=true");
 }
 );
 

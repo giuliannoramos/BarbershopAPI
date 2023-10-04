@@ -107,5 +107,25 @@ public class ItemRepository : IItemRepository
     {
         return await _context.SaveChangesAsync() > 0;
     }
+    
+    public async Task<IEnumerable<ProductCategory>> GetAllProductCategoriesAsync()
+    {
+        return await _context.ProductCategory.ToListAsync();
+    }
+
+    public async Task<ProductCategory?> GetProductCategoryByIdAsync(int productCategoryId)
+    {
+        return await _context.ProductCategory.FirstOrDefaultAsync(pc=>pc.ProductCategoryId == productCategoryId);
+    }
+    
+    public void AddProductCategory(ProductCategory productCategory)
+    {
+        _context.ProductCategory.Add(productCategory);
+    }
+
+    public void RemoveProductCategory(ProductCategory productCategory)
+    {
+        _context.ProductCategory.Remove(productCategory);
+    }
 
 }

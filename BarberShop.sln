@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Barbearia.Domain", "src\Bar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Barbearia.Persistence", "src\Barbearia.Persistence\Barbearia.Persistence.csproj", "{A6A2876C-501B-4B76-B634-FF8A100729EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Barber.Domain.UnitTests", "Barber.Domain.UnitTests\Barber.Domain.UnitTests.csproj", "{F9132936-26E7-4CE2-B511-7EEEF289FD48}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Barber.Domain.UnitTests", "tests\UnitTests\Barber.Domain.UnitTests\Barber.Domain.UnitTests.csproj", "{F9132936-26E7-4CE2-B511-7EEEF289FD48}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

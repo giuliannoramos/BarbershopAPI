@@ -22,26 +22,26 @@ public class CreateTelephoneCommandHandler : IRequestHandler<CreateTelephoneComm
     {
         CreateTelephoneCommandResponse response = new();
 
-        var customerFromDatabase = await _personRepository.GetCustomerByIdAsync(request.PersonId);
-        if (customerFromDatabase == null)
+        var personFromDatabase = await _personRepository.GetPersonByIdAsync(request.PersonId);
+        if (personFromDatabase == null)
         {
             response.ErrorType = Error.ValidationProblem;
-            response.Errors.Add("PersonId", new[] { "Customer Not found in database" });
+            response.Errors.Add("PersonId", new[] { "Person Not found in database" });
             return response;
         }
-        if (customerFromDatabase.Telephones.Any())
+        if (personFromDatabase.Telephones.Any())
         {
             response.ErrorType = Error.ValidationProblem;
             response.Errors.Add("Telephone", new[] { "Only one telephone per customer" });
             return response;
-        }
+        }        
 
         var validator = new CreateTelephoneCommandValidator();
-        var validationResult = validator.Validate(request);
+        var validationResult = await validator.ValidateAsync(request);
         if (!validationResult.IsValid)
         {
             response.ErrorType = Error.ValidationProblem;
-            response.Errors.Add("Telephone", new[] { "Telephone number is not valid" });
+            response.FillErrors(validationResult);
             return response;
         }
 
@@ -59,7 +59,7 @@ public class CreateTelephoneCommandHandler : IRequestHandler<CreateTelephoneComm
             return response;
         }
 
-        _personRepository.AddTelephone(customerFromDatabase, telephoneEntity);
+        _personRepository.AddTelephone(personFromDatabase, telephoneEntity);
         await _personRepository.SaveChangesAsync();
 
         response.Telephone = _mapper.Map<CreateTelephoneDto>(telephoneEntity);

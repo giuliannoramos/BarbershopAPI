@@ -23,15 +23,15 @@ public class UpdateAddressCommandHandler : IRequestHandler<UpdateAddressCommand,
     {
         UpdateAddressCommandResponse response = new UpdateAddressCommandResponse();
 
-        var customerFromDatabase = await _personRepository.GetCustomerByIdAsync(request.PersonId);
-        if (customerFromDatabase == null)
+        var personFromDatabase = await _personRepository.GetPersonByIdAsync(request.PersonId);
+        if (personFromDatabase == null)
         {
             response.ErrorType = Error.NotFoundProblem;
-            response.Errors.Add("PersonId", new[] { "Customer not found in the database." });
+            response.Errors.Add("PersonId", new[] { "Person not found in the database." });
             return response;
         }
 
-        var addressToUpdate = customerFromDatabase.Addresses.FirstOrDefault(a => a.AddressId == request.AddressId);
+        var addressToUpdate = personFromDatabase.Addresses.FirstOrDefault(a => a.AddressId == request.AddressId);
 
         if (addressToUpdate == null)
         {

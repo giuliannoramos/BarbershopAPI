@@ -57,9 +57,7 @@ public class UpdateCustomerCommandValidator : AbstractValidator<UpdateCustomerCo
                     .Must(CheckNumber)
                         .WithMessage("Número de telefone inválido. Use o formato: 47988887777.");
 
-                telephone.RuleFor(t => t.Type)
-                    .NotEmpty()
-                        .WithMessage("Telephone type is required")
+                telephone.RuleFor(t => t.Type)                    
                     .IsInEnum()
                         .WithMessage("Tipo de telefone inválido. O tipo deve ser Móvel ou Fixo.");
             });

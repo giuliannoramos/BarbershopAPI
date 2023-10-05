@@ -127,36 +127,36 @@ public class PersonRepository : IPersonRepository
         _context.Persons.Remove(supplier);
     }
 
-    public async Task<IEnumerable<Address>?> GetAddressAsync(int customerId)
+    public async Task<IEnumerable<Address>?> GetAddressAsync(int personId)
     {
-        var customerFromDatabase = await GetCustomerByIdAsync(customerId);
-        return customerFromDatabase?.Addresses;
+        var personFromDatabase = await GetPersonByIdAsync(personId);
+        return personFromDatabase?.Addresses;
     }
 
-    public void AddAddress(Customer customer, Address address)
+    public void AddAddress(Person person, Address address)
     {
-        customer.Addresses.Add(address);
+        person.Addresses.Add(address);
     }
 
-    public void DeleteAddress(Customer customer, Address address)
+    public void DeleteAddress(Person person, Address address)
     {
-        customer.Addresses.Remove(address);
+        person.Addresses.Remove(address);
     }
 
-    public async Task<IEnumerable<Telephone>?> GetTelephoneAsync(int customerId)
+    public async Task<IEnumerable<Telephone>?> GetTelephoneAsync(int personId)
     {
-        var customerFromDatabase = await GetCustomerByIdAsync(customerId);
-        return customerFromDatabase?.Telephones;
+        var personFromDatabase = await GetPersonByIdAsync(personId);
+        return personFromDatabase?.Telephones;
     }
 
-    public void AddTelephone(Customer customer, Telephone telephone)
+    public void AddTelephone(Person person, Telephone telephone)
     {
-        customer.Telephones.Add(telephone);
+        person.Telephones.Add(telephone);
     }
 
-    public void DeleteTelephone(Customer customer, Telephone telephone)
+    public void DeleteTelephone(Person person, Telephone telephone)
     {
-        customer.Telephones.Remove(telephone);
+        person.Telephones.Remove(telephone);
     }
     public async Task<Customer?> GetCustomerWithOrdersByIdAsync(int customerId)
     {
@@ -218,26 +218,26 @@ public class PersonRepository : IPersonRepository
     {
         _context.Schedules.Remove(schedule);
     }
-    
+
     public async Task<IEnumerable<Schedule>> GetAllSchedulesAsync()
     {
         return await _context.Schedules
-            .Include(s=>s.WorkingDay!)
-            .ThenInclude(w=>w.Employee).ToListAsync();
+            .Include(s => s.WorkingDay!)
+            .ThenInclude(w => w.Employee).ToListAsync();
     }
 
     public async Task<Schedule?> GetScheduleByIdAsync(int scheduleId)
     {
         return await _context.Schedules
-            .Include(s=>s.WorkingDay!)
-            .ThenInclude(w=>w.Employee).FirstOrDefaultAsync(s=> s.ScheduleId == scheduleId);
+            .Include(s => s.WorkingDay!)
+            .ThenInclude(w => w.Employee).FirstOrDefaultAsync(s => s.ScheduleId == scheduleId);
     }
 
     public async Task<(IEnumerable<Schedule>, PaginationMetadata)> GetAllSchedulesAsync(string? searchQuery,
          int pageNumber, int pageSize)
     {
-        
-        IQueryable<Schedule> collection = _context.Schedules.Where(s=>s.WorkingDay != null).Include(s=>s.WorkingDay!).ThenInclude(w=>w.Employee);
+
+        IQueryable<Schedule> collection = _context.Schedules.Where(s => s.WorkingDay != null).Include(s => s.WorkingDay!).ThenInclude(w => w.Employee);
 
         if (!string.IsNullOrWhiteSpace(searchQuery))
         {
@@ -253,11 +253,19 @@ public class PersonRepository : IPersonRepository
         var paginationMetadata = new PaginationMetadata(totalItemCount, pageSize, pageNumber);
 
         var schedulesToReturn = await collection
-        .OrderBy(s=> s.ScheduleId)
+        .OrderBy(s => s.ScheduleId)
         .Skip(pageSize * (pageNumber - 1))
         .Take(pageSize)
         .ToListAsync();
 
         return (schedulesToReturn, paginationMetadata);
+    }
+
+    public async Task<Person?> GetPersonByIdAsync(int personId)
+    {
+        return await _context.Persons
+            .Include(c => c.Telephones)
+            .Include(c => c.Addresses)
+            .FirstOrDefaultAsync(p => p.PersonId == personId);
     }
 }

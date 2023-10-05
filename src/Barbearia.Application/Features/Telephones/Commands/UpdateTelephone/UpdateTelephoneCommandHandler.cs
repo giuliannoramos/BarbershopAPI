@@ -24,14 +24,14 @@ public class UpdateTelephoneCommandHandler : IRequestHandler<UpdateTelephoneComm
     {
         UpdateTelephoneCommandResponse response = new();
 
-        var customerFromDatabase = await _personRepository.GetCustomerByIdAsync(request.PersonId);
-        if(customerFromDatabase == null){
+        var personFromDatabase = await _personRepository.GetPersonByIdAsync(request.PersonId);
+        if(personFromDatabase == null){
             response.ErrorType = Error.ValidationProblem;
             response.Errors.Add("PersonId", new[]{"Customer not found in database"});
             return response;
         }
 
-        var telephoneToUpdate = customerFromDatabase.Telephones.FirstOrDefault(c => c.TelephoneId == request.TelephoneId);
+        var telephoneToUpdate = personFromDatabase.Telephones.FirstOrDefault(c => c.TelephoneId == request.TelephoneId);
         if(telephoneToUpdate == null){
             response.ErrorType = Error.ValidationProblem;
             response.Errors.Add("Telephone", new[]{"Telephone not found in database"});
@@ -39,11 +39,11 @@ public class UpdateTelephoneCommandHandler : IRequestHandler<UpdateTelephoneComm
         }
 
         var validator = new UpdateTelephoneCommandValidator();
-        var validationResult = validator.Validate(request);
-        if(!validationResult.IsValid)
+        var validationResult = await validator.ValidateAsync(request);
+        if (!validationResult.IsValid)
         {
             response.ErrorType = Error.ValidationProblem;
-            response.Errors.Add("Telephone", new[]{"Telephone number is not valid"});
+            response.FillErrors(validationResult);
             return response;
         }
 

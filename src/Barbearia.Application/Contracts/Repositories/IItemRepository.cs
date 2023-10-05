@@ -10,7 +10,6 @@ public interface IItemRepository
     Task<Product?> GetProductByIdAsync(int productId);
     void AddProduct(Product product);
     void DeleteProduct(Product product);
-
     public Task<IEnumerable<StockHistory>> GetAllStockHistoriesAsync();
     public Task<StockHistory?> GetStockHistoryByIdAsync(int stockHistoryId);
     public Task<StockHistoryOrder?> GetStockHistoryOrderByIdAsync(int stockHistoryId);
@@ -18,9 +17,12 @@ public interface IItemRepository
     public void AddStockHistory(StockHistory stockHistory);
     public void RemoveStockHistory(StockHistory stockHistory);
     Task<bool> SaveChangesAsync();
-
     public Task<IEnumerable<ProductCategory>> GetAllProductCategoriesAsync();
     public Task<ProductCategory?> GetProductCategoryByIdAsync(int productCategoryId);
     public void AddProductCategory(ProductCategory productCategory);
     public void RemoveProductCategory(ProductCategory productCategory);
+    void AddService(Service service);
+    void DeleteService(Service service);
+    Task<Service?> GetServiceByIdAsync(int serviceId);
+    Task<(IEnumerable<Service>, PaginationMetadata)> GetAllServicesAsync(string? searchQuery, int pageNumber, int pageSize);
 }

@@ -68,6 +68,11 @@ using Barbearia.Application.Features.ProductCategories.Commands.UpdateProductCat
 using Barbearia.Application.Features.ProductCategories.Commands.DeleteProductCategory;
 using Barbearia.Application.Features.ProductCategories.Commands.CreateProductCategory;
 using Barbearia.Application.Features.ProductCategories.Queries.GetProductCategoryById;
+using Barbearia.Application.Features.Services.Queries.GetServiceById;
+using Barbearia.Application.Features.Services.Commands.UpdateService;
+using Barbearia.Application.Features.Services.Commands.CreateService;
+using Barbearia.Application.Features.Services.Commands.DeleteService;
+using Barbearia.Application.Features.ServicesCollection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -190,23 +195,31 @@ builder.Services.AddScoped<IValidator<CreateProductCategoryCommand>,CreateProduc
 builder.Services.AddScoped<IRequestHandler<DeleteProductCategoryCommand, bool>, DeleteProductCategoryCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<UpdateProductCategoryCommand, UpdateProductCategoryCommandResponse>, UpdateProductCategoryCommandHandler>();
 builder.Services.AddScoped<IValidator<UpdateProductCategoryCommand>, UpdateProductCategoryCommandValidator>();
+// Service commands and queries
+builder.Services.AddScoped<IRequestHandler<GetServiceByIdQuery, GetServiceByIdDto>, GetServiceByIdQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<UpdateServiceCommand,UpdateServiceCommandResponse>,UpdateServiceCommandHandler>();
+builder.Services.AddScoped<IValidator<UpdateServiceCommand>, UpdateServiceCommandValidator>();
+builder.Services.AddScoped<IRequestHandler<CreateServiceCommand, CreateServiceCommandResponse>, CreateServiceCommandHandler>();
+builder.Services.AddScoped<IValidator<CreateServiceCommand>, CreateServiceCommandValidator>();
+builder.Services.AddScoped<IRequestHandler<DeleteServiceCommand, bool>, DeleteServiceCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<GetServicesCollectionQuery, GetServicesCollectionQueryResponse>, GetServicesCollectionQueryHandler>();
 
 //config banco de dados
 builder.Services.AddDbContext<PersonContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=1973");
 }
 );
 
 builder.Services.AddDbContext<OrderContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=1973");
 }
 );
 
 builder.Services.AddDbContext<ItemContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678;Include Error Detail=true");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=1973;Include Error Detail=true");
 }
 );
 

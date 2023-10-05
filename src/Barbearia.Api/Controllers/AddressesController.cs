@@ -23,7 +23,7 @@ public class AddressesController : MainController
     public async Task<ActionResult<IEnumerable<AddressDto>>> GetAddress(int customerId)
     {
         var getAddressQuery = new GetAddressQuery { PersonId = customerId };
-        var addressToReturn = await _mediator.Send(getAddressQuery);
+        IEnumerable<GetAddressDto>? addressToReturn = await _mediator.Send(getAddressQuery);
 
         if (!addressToReturn.Any()) return NotFound();
 

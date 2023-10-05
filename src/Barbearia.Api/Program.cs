@@ -194,19 +194,19 @@ builder.Services.AddScoped<IValidator<UpdateProductCategoryCommand>, UpdateProdu
 //config banco de dados
 builder.Services.AddDbContext<PersonContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=123456");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678");
 }
 );
 
 builder.Services.AddDbContext<OrderContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=123456");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678");
 }
 );
 
 builder.Services.AddDbContext<ItemContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=123456;Include Error Detail=true");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678;Include Error Detail=true");
 }
 );
 

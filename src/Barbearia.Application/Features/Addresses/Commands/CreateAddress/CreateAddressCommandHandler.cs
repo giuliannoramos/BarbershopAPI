@@ -24,15 +24,15 @@ public class CreateAddressCommandHandler : IRequestHandler<CreateAddressCommand,
     {
         CreateAddressCommandResponse response = new();
 
-        var customerFromDatabase = await _personRepository.GetCustomerByIdAsync(request.PersonId);
-        if (customerFromDatabase == null)
+        var personFromDatabase = await _personRepository.GetPersonByIdAsync(request.PersonId);
+        if (personFromDatabase == null)
         {
             response.ErrorType = Error.NotFoundProblem;
-            response.Errors.Add("PersonId", new[] { "Customer not found in the database." });
+            response.Errors.Add("PersonId", new[] { "Person not found in the database." });
             return response;
         }
 
-        if (customerFromDatabase.Addresses.Any())
+        if (personFromDatabase.Addresses.Any())
         {
             response.ErrorType = Error.ValidationProblem;
             response.Errors.Add("Addresses", new[] { "Only one address is allowed." });
@@ -63,7 +63,7 @@ public class CreateAddressCommandHandler : IRequestHandler<CreateAddressCommand,
             return response;
         }
 
-        _personRepository.AddAddress(customerFromDatabase, addressEntity);
+        _personRepository.AddAddress(personFromDatabase, addressEntity);
         await _personRepository.SaveChangesAsync();
 
         response.Address = _mapper.Map<CreateAddressDto>(addressEntity);

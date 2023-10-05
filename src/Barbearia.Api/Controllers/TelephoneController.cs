@@ -10,34 +10,36 @@ using Barbearia.Application.Features.Telephones.Commands.UpdateTelephone;
 namespace Barbearia.Api.Controllers;
 
 [ApiController]
-[Route("api/customers/{customerId}/telephones")]
+[Route("api/persons/{personId}/telephones")]
 public class TelephoneController : MainController
 {
     private readonly IMediator _mediator;
 
-    public TelephoneController(IMediator mediator){
+    public TelephoneController(IMediator mediator)
+    {
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
     }
 
     [HttpGet(Name = "GetTelephone")]
-    public async Task<ActionResult<IEnumerable<TelephoneDto>>> GetTelephone(int customerId)
+    public async Task<ActionResult<IEnumerable<TelephoneDto>>> GetTelephone(int personId)
     {
-        var getTelephoneQuery = new GetTelephoneQuery{PersonId = customerId};
+        var getTelephoneQuery = new GetTelephoneQuery { PersonId = personId };
         var telephoneToReturn = await _mediator.Send(getTelephoneQuery);
 
-        if(!telephoneToReturn.Any()) return NotFound();
+        if (!telephoneToReturn.Any()) return NotFound();
 
         return Ok(telephoneToReturn);
     }
 
     [HttpPost]
-    public async Task<ActionResult<CreateTelephoneCommandResponse>> CreateTelephone(int customerId, CreateTelephoneCommand createTelephoneCommand)
+    public async Task<ActionResult<CreateTelephoneCommandResponse>> CreateTelephone(int personId, CreateTelephoneCommand createTelephoneCommand)
     {
-        if(customerId != createTelephoneCommand.PersonId) return BadRequest();
+        if (personId != createTelephoneCommand.PersonId) return BadRequest();
 
-        var createTelephoneCommandResponse = await _mediator.Send(createTelephoneCommand); 
+        var createTelephoneCommandResponse = await _mediator.Send(createTelephoneCommand);
 
-        if(!createTelephoneCommandResponse.IsSuccess){
+        if (!createTelephoneCommandResponse.IsSuccess)
+        {
             return RequestValidationProblem(createTelephoneCommandResponse, ModelState);
         }
 
@@ -45,35 +47,37 @@ public class TelephoneController : MainController
 
         return CreatedAtRoute(
             "GetTelephone",
-            new{
-                customerId
+            new
+            {
+                personId
             }, telephoneToReturn
-            
+
         );
     }
 
     [HttpPut]
-    public async Task<ActionResult> UpdateTelephone(int customerId, UpdateTelephoneCommand updateTelephoneCommand)
+    public async Task<ActionResult> UpdateTelephone(int personId, UpdateTelephoneCommand updateTelephoneCommand)
     {
-        if(customerId != updateTelephoneCommand.PersonId) return BadRequest();
+        if (personId != updateTelephoneCommand.PersonId) return BadRequest();
 
         var updateAddressCommandResponse = await _mediator.Send(updateTelephoneCommand);
 
-        if(!updateAddressCommandResponse.IsSuccess){
+        if (!updateAddressCommandResponse.IsSuccess)
+        {
             return RequestValidationProblem(updateAddressCommandResponse, ModelState);
         }
         return NoContent();
 
     }
 
-    [HttpDelete ("{telephoneId}")]
-    public async Task<ActionResult> DeleteTelephone(int customerId, int telephoneId)
+    [HttpDelete("{telephoneId}")]
+    public async Task<ActionResult> DeleteTelephone(int personId, int telephoneId)
     {
-        var deleteTelephoneCommand = new DeleteTelephoneCommand{PersonId = customerId, TelefoneId = telephoneId};
+        var deleteTelephoneCommand = new DeleteTelephoneCommand { PersonId = personId, TelefoneId = telephoneId };
         var result = await _mediator.Send(deleteTelephoneCommand);
 
-        if(!result) return NotFound();
-        
+        if (!result) return NotFound();
+
         return NoContent();
     }
 }

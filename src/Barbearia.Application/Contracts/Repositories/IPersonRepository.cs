@@ -5,7 +5,7 @@ namespace Barbearia.Application.Contracts.Repositories;
 
 public interface IPersonRepository
 {
-    Task<(IEnumerable<Customer>, PaginationMetadata)> GetAllCustomersAsync( string? searchQuery,
+    Task<(IEnumerable<Customer>, PaginationMetadata)> GetAllCustomersAsync(string? searchQuery,
      int pageNumber, int pageSize);
     Task<IEnumerable<Customer>> GetAllCustomersAsync();
     Task<Customer?> GetCustomerByIdAsync(int customerId);
@@ -17,17 +17,17 @@ public interface IPersonRepository
     void AddSupplier(Supplier supplier);
     void DeleteSupplier(Supplier supplier);
     Task<bool> SaveChangesAsync();
-    Task<IEnumerable<Address>?> GetAddressAsync(int customerId);
-    void AddAddress(Customer customer, Address address);   
-    void DeleteAddress(Customer customer, Address address);
-    Task<IEnumerable<Telephone>?> GetTelephoneAsync(int customerId);
-    void AddTelephone(Customer customer, Telephone telephone);
-    void DeleteTelephone(Customer customer, Telephone telephone);
+    Task<IEnumerable<Address>?> GetAddressAsync(int personId);
+    void AddAddress(Person person, Address address);
+    void DeleteAddress(Person person, Address address);
+    Task<IEnumerable<Telephone>?> GetTelephoneAsync(int personId);
+    void AddTelephone(Person person, Telephone telephone);
+    void DeleteTelephone(Person person, Telephone telephone);
     Task<Customer?> GetCustomerWithOrdersByIdAsync(int customerId);
     Task<Employee?> GetEmployeeByIdAsync(int employeeId);
     void AddEmployee(Employee employee);
     void DeleteEmployee(Employee employee);
-    Task<(IEnumerable<Employee>, PaginationMetadata)> GetAllEmployeesAsync( string? searchQuery,
+    Task<(IEnumerable<Employee>, PaginationMetadata)> GetAllEmployeesAsync(string? searchQuery,
      int pageNumber, int pageSize);
 
     Task<(IEnumerable<Schedule>, PaginationMetadata)> GetAllSchedulesAsync(string? searchQuery,
@@ -36,4 +36,5 @@ public interface IPersonRepository
     Task<IEnumerable<Schedule>> GetAllSchedulesAsync();
     public void DeleteSchedule(Schedule schedule);
     public void AddSchedule(Schedule schedule);
+    Task<Person?> GetPersonByIdAsync(int personId);
 }

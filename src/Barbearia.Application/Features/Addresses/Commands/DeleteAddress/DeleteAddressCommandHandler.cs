@@ -14,15 +14,15 @@ public class DeleteAddressCommandHandler : IRequestHandler<DeleteAddressCommand,
 
     public async Task<bool> Handle(DeleteAddressCommand request, CancellationToken cancellationToken)
     {
-        var customerFromDatabase = await _personRepository.GetCustomerByIdAsync(request.PersonId);
+        var personFromDatabase = await _personRepository.GetPersonByIdAsync(request.PersonId);
 
-        if(customerFromDatabase == null) return false;
+        if(personFromDatabase == null) return false;
 
-        var addressToDelete = customerFromDatabase.Addresses.FirstOrDefault(a => a.AddressId == request.AddressId);
+        var addressToDelete = personFromDatabase.Addresses.FirstOrDefault(a => a.AddressId == request.AddressId);
 
         if (addressToDelete == null) return false;
 
-        _personRepository.DeleteAddress(customerFromDatabase, addressToDelete);
+        _personRepository.DeleteAddress(personFromDatabase, addressToDelete);
 
         return await _personRepository.SaveChangesAsync();
     }

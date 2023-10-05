@@ -10,7 +10,7 @@ using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
 namespace Barbearia.Api.Controllers;
 
-[Route("api/customers/{customerId}/addresses")]
+[Route("api/persons/{personId}/addresses")]
 public class AddressesController : MainController
 {
     private readonly IMediator _mediator;
@@ -20,9 +20,9 @@ public class AddressesController : MainController
     }
 
     [HttpGet(Name = "GetAddress")]
-    public async Task<ActionResult<IEnumerable<AddressDto>>> GetAddress(int customerId)
+    public async Task<ActionResult<IEnumerable<AddressDto>>> GetAddress(int personId)
     {
-        var getAddressQuery = new GetAddressQuery { PersonId = customerId };
+        var getAddressQuery = new GetAddressQuery { PersonId = personId };
         IEnumerable<GetAddressDto>? addressToReturn = await _mediator.Send(getAddressQuery);
 
         if (!addressToReturn.Any()) return NotFound();
@@ -31,9 +31,9 @@ public class AddressesController : MainController
     }
 
     [HttpPost]
-    public async Task<ActionResult<CreateAddressCommandResponse>> CreateAddress(int customerId, [FromBody] CreateAddressCommand createAddressCommand)
+    public async Task<ActionResult<CreateAddressCommandResponse>> CreateAddress(int personId, [FromBody] CreateAddressCommand createAddressCommand)
     {
-        if (customerId != createAddressCommand.PersonId) return BadRequest();
+        if (personId != createAddressCommand.PersonId) return BadRequest();
 
         var createAddressCommandResponse = await _mediator.Send(createAddressCommand);
 
@@ -47,7 +47,7 @@ public class AddressesController : MainController
             "GetAddress",
             new
             {
-                customerId,
+                personId,
                 addressId = addressForReturn.AddressId
             },
             addressForReturn
@@ -55,9 +55,9 @@ public class AddressesController : MainController
     }
 
     [HttpPut]
-    public async Task<ActionResult> UpdateAddress(int customerId, UpdateAddressCommand updateAddressCommand)
+    public async Task<ActionResult> UpdateAddress(int personId, UpdateAddressCommand updateAddressCommand)
     {
-        if (updateAddressCommand.PersonId != customerId) return BadRequest();
+        if (updateAddressCommand.PersonId != personId) return BadRequest();
 
         var updateAddressCommandResponse = await _mediator.Send(updateAddressCommand);
 
@@ -68,9 +68,9 @@ public class AddressesController : MainController
     }
 
     [HttpDelete("{addressId}")]
-    public async Task<ActionResult> DeleteAddress(int customerId, int addressId)
+    public async Task<ActionResult> DeleteAddress(int personId, int addressId)
     {
-        var result = await _mediator.Send(new DeleteAddressCommand { PersonId = customerId, AddressId = addressId });
+        var result = await _mediator.Send(new DeleteAddressCommand { PersonId = personId, AddressId = addressId });
 
         if (!result) return NotFound();
 

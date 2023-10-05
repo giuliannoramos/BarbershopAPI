@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.Dynamic;
 using System.Security;
 
@@ -15,7 +16,9 @@ public class Payment
     public int? CouponId { get; set; }
     public Coupon? Coupon { get; set; }
     public int? OrderId { get; set; }
-    public Order? Order { get; set; } 
+    public Order? Order { get; set; }
+
+
 
 
     private void CheckBuyDate()
@@ -24,7 +27,7 @@ public class Payment
         {
             throw new ArgumentException("A data deve ser válida.");
         }
-        if (parsedDate > DateTime.Now)
+        if (parsedDate > DateTime.UtcNow)
         {
             throw new ArgumentException("A data não pode ser no futuro.");
         }

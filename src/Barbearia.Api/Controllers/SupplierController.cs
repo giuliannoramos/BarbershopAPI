@@ -25,7 +25,7 @@ public class SupplierController : MainController
     {
         var getSupplierByIdQuery = new GetSupplierByIdQuery { PersonId = supplierId };
 
-        var supplierToReturn = await _mediator.Send(getSupplierByIdQuery);
+        GetSupplierByIdDto? supplierToReturn = await _mediator.Send(getSupplierByIdQuery);
 
         if (supplierToReturn == null) return NotFound();
 

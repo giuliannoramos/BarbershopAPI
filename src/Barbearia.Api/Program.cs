@@ -184,8 +184,8 @@ builder.Services.AddScoped<IRequestHandler<DeleteEmployeeCommand, bool>, DeleteE
 builder.Services.AddScoped<IRequestHandler<GetEmployeesCollectionQuery, GetEmployeesCollectionQueryResponse>, GetEmployeesCollectionQueryHandler>();
 // Coupon commands and queries
 builder.Services.AddScoped<IRequestHandler<GetCouponByIdQuery, GetCouponByIdDto>, GetCouponByIdQueryHandler>();
-builder.Services.AddScoped<IRequestHandler<GetAllCouponsQuery,IEnumerable<GetAllCouponsDto>>,GetAllCouponsQueryHandler>();
-builder.Services.AddScoped<IRequestHandler<UpdateCouponCommand,UpdateCouponCommandResponse>,UpdateCouponCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<GetAllCouponsQuery, IEnumerable<GetAllCouponsDto>>, GetAllCouponsQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<UpdateCouponCommand, UpdateCouponCommandResponse>, UpdateCouponCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<CreateCouponCommand, CreateCouponCommandResponse>, CreateCouponCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<DeleteCouponCommand, bool>, DeleteCouponCommandHandler>();
 
@@ -196,24 +196,24 @@ builder.Services.AddScoped<IRequestHandler<UpdateStockHistoryCommand, UpdateStoc
 builder.Services.AddScoped<IRequestHandler<DeleteStockHistoryCommand, bool>, DeleteStockHistoryCommandHandler>();
 // Schedule commands and queries
 builder.Services.AddScoped<IRequestHandler<GetSchedulesCollectionQuery, GetSchedulesCollectionQueryResponse>, GetSchedulesCollectionQueryHandler>();
-builder.Services.AddScoped<IRequestHandler<GetAllSchedulesQuery,IEnumerable<GetAllSchedulesDto>>, GetAllSchedulesQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<GetAllSchedulesQuery, IEnumerable<GetAllSchedulesDto>>, GetAllSchedulesQueryHandler>();
 builder.Services.AddScoped<IRequestHandler<GetScheduleByIdQuery, GetScheduleByIdDto>, GetScheduleByIdQueryHandler>();
-builder.Services.AddScoped<IRequestHandler<CreateScheduleCommand,CreateScheduleCommandResponse>,CreateScheduleCommandHandler>();
-builder.Services.AddScoped<IValidator<CreateScheduleCommand>,CreateScheduleCommandValidator>();
+builder.Services.AddScoped<IRequestHandler<CreateScheduleCommand, CreateScheduleCommandResponse>, CreateScheduleCommandHandler>();
+builder.Services.AddScoped<IValidator<CreateScheduleCommand>, CreateScheduleCommandValidator>();
 builder.Services.AddScoped<IRequestHandler<DeleteScheduleCommand, bool>, DeleteScheduleCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<UpdateScheduleCommand, UpdateScheduleCommandResponse>, UpdateScheduleCommandHandler>();
 builder.Services.AddScoped<IValidator<UpdateScheduleCommand>, UpdateScheduleCommandValidator>();
 // Product Category commands and queries
-builder.Services.AddScoped<IRequestHandler<GetAllProductCategoriesQuery,IEnumerable<GetAllProductCategoriesDto>>, GetAllProductCategoriesQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<GetAllProductCategoriesQuery, IEnumerable<GetAllProductCategoriesDto>>, GetAllProductCategoriesQueryHandler>();
 builder.Services.AddScoped<IRequestHandler<GetProductCategoryByIdQuery, GetProductCategoryByIdDto>, GetProductCategoryByIdQueryHandler>();
-builder.Services.AddScoped<IRequestHandler<CreateProductCategoryCommand,CreateProductCategoryCommandResponse>,CreateProductCategoryCommandHandler>();
-builder.Services.AddScoped<IValidator<CreateProductCategoryCommand>,CreateProductCategoryCommandValidator>();
+builder.Services.AddScoped<IRequestHandler<CreateProductCategoryCommand, CreateProductCategoryCommandResponse>, CreateProductCategoryCommandHandler>();
+builder.Services.AddScoped<IValidator<CreateProductCategoryCommand>, CreateProductCategoryCommandValidator>();
 builder.Services.AddScoped<IRequestHandler<DeleteProductCategoryCommand, bool>, DeleteProductCategoryCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<UpdateProductCategoryCommand, UpdateProductCategoryCommandResponse>, UpdateProductCategoryCommandHandler>();
 builder.Services.AddScoped<IValidator<UpdateProductCategoryCommand>, UpdateProductCategoryCommandValidator>();
 // Service commands and queries
 builder.Services.AddScoped<IRequestHandler<GetServiceByIdQuery, GetServiceByIdDto>, GetServiceByIdQueryHandler>();
-builder.Services.AddScoped<IRequestHandler<UpdateServiceCommand,UpdateServiceCommandResponse>,UpdateServiceCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<UpdateServiceCommand, UpdateServiceCommandResponse>, UpdateServiceCommandHandler>();
 builder.Services.AddScoped<IValidator<UpdateServiceCommand>, UpdateServiceCommandValidator>();
 builder.Services.AddScoped<IRequestHandler<CreateServiceCommand, CreateServiceCommandResponse>, CreateServiceCommandHandler>();
 builder.Services.AddScoped<IValidator<CreateServiceCommand>, CreateServiceCommandValidator>();
@@ -221,14 +221,14 @@ builder.Services.AddScoped<IRequestHandler<DeleteServiceCommand, bool>, DeleteSe
 builder.Services.AddScoped<IRequestHandler<GetServicesCollectionQuery, GetServicesCollectionQueryResponse>, GetServicesCollectionQueryHandler>();
 //Role commands and queries
 builder.Services.AddScoped<IRequestHandler<GetRoleByIdQuery, GetRoleByIdDto>, GetRoleByIdQueryHandler>();
-builder.Services.AddScoped<IRequestHandler<GetAllRolesQuery,IEnumerable<GetAllRolesDto>>,GetAllRolesQueryHandler>();
-builder.Services.AddScoped<IRequestHandler<UpdateRoleCommand,UpdateRoleCommandResponse>,UpdateRoleCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<GetAllRolesQuery, IEnumerable<GetAllRolesDto>>, GetAllRolesQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<UpdateRoleCommand, UpdateRoleCommandResponse>, UpdateRoleCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<CreateRoleCommand, CreateRoleCommandResponse>, CreateRoleCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<DeleteRoleCommand, bool>, DeleteRoleCommandHandler>();
 //ServiceCategory commands and queries
 builder.Services.AddScoped<IRequestHandler<GetServiceCategoryByIdQuery, GetServiceCategoryByIdDto>, GetServiceCategoryByIdQueryHandler>();
-builder.Services.AddScoped<IRequestHandler<GetAllServiceCategoriesQuery,IEnumerable<GetAllServiceCategoriesDto>>,GetAllServiceCategoriesQueryHandler>();
-builder.Services.AddScoped<IRequestHandler<UpdateServiceCategoryCommand,UpdateServiceCategoryCommandResponse>,UpdateServiceCategoryCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<GetAllServiceCategoriesQuery, IEnumerable<GetAllServiceCategoriesDto>>, GetAllServiceCategoriesQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<UpdateServiceCategoryCommand, UpdateServiceCategoryCommandResponse>, UpdateServiceCategoryCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<CreateServiceCategoryCommand, CreateServiceCategoryCommandResponse>, CreateServiceCategoryCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<DeleteServiceCategoryCommand, bool>, DeleteServiceCategoryCommandHandler>();
 // Appointments Commands and Queries
@@ -244,19 +244,19 @@ builder.Services.AddScoped<IRequestHandler<GetAppointmentsCollectionQuery, GetAp
 //config banco de dados
 builder.Services.AddDbContext<PersonContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=123456");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=1973");
 }
 );
 
 builder.Services.AddDbContext<OrderContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=123456");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=1973");
 }
 );
 
 builder.Services.AddDbContext<ItemContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=123456;Include Error Detail=true");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=1973;Include Error Detail=true");
 }
 );
 

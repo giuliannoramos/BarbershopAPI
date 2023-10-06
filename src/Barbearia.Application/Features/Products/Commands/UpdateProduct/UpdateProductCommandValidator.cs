@@ -58,7 +58,7 @@ public class UpdateProductCommandValidator : AbstractValidator<UpdateProductComm
 
     private bool CheckQuantityInStock(int QuantityInStock)
     {
-        if (QuantityInStock <= 0)
+        if (QuantityInStock < 0)
         {
             return false;
         }
@@ -67,7 +67,7 @@ public class UpdateProductCommandValidator : AbstractValidator<UpdateProductComm
 
     private bool CheckQuantityReserved(int QuantityReserved)
     {
-        if (QuantityReserved <= 0)
+        if (QuantityReserved < 0)
         {
             return false;
         }

@@ -51,14 +51,14 @@ public class CreateProductCommandValidator : AbstractValidator<CreateProductComm
 
         RuleFor(p => p.QuantityReserved)
             .NotEmpty()
-                .WithMessage("Quantity reserved cannot be empty")
+                .WithMessage("You should fill out quantity reserved")
             .Must(CheckQuantityReserved)
                 .WithMessage("Quantity reserved should be zero or more");
     }
 
     private bool CheckQuantityInStock(int QuantityInStock)
     {
-        if (QuantityInStock <= 0)
+        if (QuantityInStock < 0)
         {
             return false;
         }
@@ -67,7 +67,7 @@ public class CreateProductCommandValidator : AbstractValidator<CreateProductComm
 
     private bool CheckQuantityReserved(int QuantityReserved)
     {
-        if (QuantityReserved <= 0)
+        if (QuantityReserved < 0)
         {
             return false;
         }

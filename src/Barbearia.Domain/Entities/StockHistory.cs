@@ -12,7 +12,7 @@ public abstract class StockHistory{
 
     private void CheckOperation()
         {
-            if (Operation <= 0)
+            if (Operation < 0)
             {
                 throw new ArgumentException("Operação inválida. A operação deve ser maior que zero.");
             }
@@ -20,7 +20,7 @@ public abstract class StockHistory{
 
         private void CheckCurrentPrice()
         {
-            if (CurrentPrice <= 0)
+            if (CurrentPrice < 0)
             {
                 throw new ArgumentException("Preço atual inválido. O preço atual deve ser maior que zero.");
             }
@@ -28,7 +28,7 @@ public abstract class StockHistory{
 
         private void CheckAmount()
         {
-            if (Amount <= 0)
+            if (Amount < 0)
             {
                 throw new ArgumentException("Quantidade inválida. A quantidade deve ser maior que zero.");
             }
@@ -36,7 +36,7 @@ public abstract class StockHistory{
 
         private void CheckTimestamp()
         {
-            if (Timestamp > DateTime.Now)
+            if (Timestamp > DateTime.UtcNow)
             {
                 throw new ArgumentException("O registro de histórico não pode estar no futuro.");
             }

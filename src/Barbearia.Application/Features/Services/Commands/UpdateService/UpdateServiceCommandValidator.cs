@@ -7,21 +7,23 @@ public class UpdateServiceCommandValidator : AbstractValidator<UpdateServiceComm
 {
     public UpdateServiceCommandValidator()
     {
-        RuleFor(s => s.ItemId)
-            .NotEmpty()
-                .WithMessage("You should fill out a Item id");
-
         RuleFor(s => s.ServiceCategoryId)
             .NotEmpty()
-                .WithMessage("You should fill out a Service category");
+                .WithMessage("You should fill out a Service category")
+            .GreaterThan(0)
+                .WithMessage("The id must be positive");
 
         RuleFor(s => s.DurationMinutes)
             .NotEmpty()
-                .WithMessage("You should fill out a Duration minutes");        
+                .WithMessage("You should fill out a Duration minutes")
+            .GreaterThan(0)
+                .WithMessage("Duration must be greater than 0");        
 
         RuleFor(s => s.Price)
             .NotEmpty()
-                .WithMessage("You should fill out a Price");
+                .WithMessage("You should fill out a Price")
+            .Must(CheckPrice)
+                .WithMessage("Price must be zero or more");
 
         RuleFor(s => s.Description)
             .NotEmpty()
@@ -30,5 +32,14 @@ public class UpdateServiceCommandValidator : AbstractValidator<UpdateServiceComm
         RuleFor(s => s.Name)
             .NotEmpty()
                 .WithMessage("You should fill out a Name");
+    }
+
+    private bool CheckPrice(Decimal Price)
+    {
+        if (Price <= 0)
+        {
+            return false;
+        }
+        return true;
     }
 }

@@ -37,13 +37,18 @@ public class Order
         }
     }
 
+    private void CheckStatus()
+    {
+        if(Status <1 || Status>3) throw new ArgumentException("Status não suportado");
+    }
+
     private void CheckBuyDate()
     {
         if (!DateTime.TryParse(BuyDate.ToString(), out DateTime parsedDate))
         {
             throw new ArgumentException("A data de compra não está em um formato válido.");
         }
-        if (parsedDate > DateTime.Now)
+        if (parsedDate > DateTime.UtcNow)
         {
             throw new ArgumentException("A data de compra não pode ser no futuro.");
         }
@@ -51,6 +56,7 @@ public class Order
 
     public void ValidateOrder()
     {
+        CheckStatus();
         CheckNumber();
         CheckCustomer();
         CheckBuyDate();

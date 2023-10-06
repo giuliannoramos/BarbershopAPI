@@ -14,33 +14,49 @@ namespace Barbearia.Application.Features.Appointments.Commands.UpdateAppointment
             RuleFor(a => a.ScheduleId)
                 .NotEmpty()
                     .WithMessage("Should have a schedule");
+
             RuleFor(a => a.CustomerId)
                 .NotEmpty()
                     .WithMessage("Should have a customer");
+
             RuleFor(a => a.StartDate)
                 .NotEmpty()
                     .WithMessage("start date cannot be empty");
+
             RuleFor(a => a.FinishDate)
                 .NotEmpty()
-                    .WithMessage("finish date cannot be empty");
+                    .WithMessage("finish date cannot be empty")
+                .GreaterThan(a=>a.StartDate)
+                    .WithMessage("Finish time cant come before start time");
+
             RuleFor(a => a.Status)
                 .NotEmpty()
-                    .WithMessage("status cannot be empty");
+                    .WithMessage("status cannot be empty")
+                .Must(CheckStatus)
+                    .WithMessage("Accepted status are between 1 to 3");
+
             RuleFor(a => a.StartServiceDate)
                 .NotEmpty()
                     .WithMessage("start service date cannot be empty");
+
             RuleFor(a => a.FinishServiceDate)
                 .NotEmpty()
-                    .WithMessage("finish service date cannot be empty");
-            RuleFor(a => a.CancellationDate)
-                .NotEmpty()
-                    .WithMessage("cancellation date cannot be empty");
-            RuleFor(a => a.ConfirmedDate)
-                .NotEmpty()
-                    .WithMessage("confirmed date cannot be empty");
+                    .WithMessage("finish service date cannot be empty")
+                .GreaterThan(a=>a.StartServiceDate)
+                    .WithMessage("Finish time cant come before start time");
+                    
             RuleFor(a => a.ServicesId)
                 .NotEmpty()
                     .WithMessage("Should have at least one service");
+
+        }
+        private bool CheckStatus(int Status)
+        {
+            if (Status < 1 || Status > 3)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

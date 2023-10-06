@@ -13,8 +13,45 @@ public class StockHistorySupplier : StockHistory
         }
     }
 
+    private void CheckOperation()
+    {
+        if (Operation < 0)
+        {
+            throw new ArgumentException("Operação inválida. A operação deve ser maior que zero.");
+        }
+    }
+
+    private void CheckCurrentPrice()
+    {
+        if (CurrentPrice < 0)
+        {
+            throw new ArgumentException("Preço atual inválido. O preço atual deve ser maior que zero.");
+        }
+    }
+
+    private void CheckAmount()
+    {
+        if (Amount < 0)
+        {
+            throw new ArgumentException("Quantidade inválida. A quantidade deve ser maior que zero.");
+        }
+    }
+
+    private void CheckTimestamp()
+    {
+        if (Timestamp > DateTime.UtcNow)
+        {
+            throw new ArgumentException("O registro de histórico não pode estar no futuro.");
+        }
+    }
+
+
     public void ValidateStockHistorySupplier()
     {
         CheckPersonId();
+        CheckOperation();
+        CheckCurrentPrice();
+        CheckAmount();
+        CheckTimestamp();
     }
 }

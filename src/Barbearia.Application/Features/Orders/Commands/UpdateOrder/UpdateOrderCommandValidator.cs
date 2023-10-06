@@ -6,33 +6,61 @@ namespace Barbearia.Application.Features.Orders.Commands.UpdateOrder
     {
         public UpdateOrderCommandValidator()
         {
-            RuleFor(o => o.PersonId)
-                .NotEmpty()
-                .WithMessage("PersonId cannot be empty");
-
             RuleFor(o => o.Number)
                 .NotEmpty()
-                .WithMessage("Number cannot be empty");
+                    .WithMessage("You should fill out a number")
+                .Must(CheckNumber)
+                    .WithMessage("Number cannot be negative");
 
             RuleFor(o => o.Status)
                 .NotEmpty()
-                .WithMessage("Status cannot be empty");
+                    .WithMessage("Status cannot be empty")
+                .Must(CheckStatus)
+                    .WithMessage("Unsuported Status: Must be between 1 and 3");
+
+            RuleFor(o => o.PersonId)
+                .NotEmpty()
+                    .WithMessage("You should fill out a person");
 
             RuleFor(o => o.BuyDate)
                 .NotEmpty()
-                .WithMessage("BuyDate cannot be empty")
-                .Must(IsDateTimeValid)
-                .WithMessage("BuyDate must be a valid DateTime");
+                    .WithMessage("BuyDate cannot be empty")
+                .Must(CheckBuyDate)
+                    .WithMessage("Date must be valid and not in the future");
         }
 
-        public bool IsDateTimeValid(DateTime buyDate)
+        private bool CheckNumber(int Number)
         {
-            if (buyDate.Kind == DateTimeKind.Utc)
+            if (Number == 0)
             {
-                return true; //Exemplo valido no banco -> "BuyDate": "2023-09-22T10:00:00Z"
+                return false;
             }
+            if (Number <= 0)
+            {
+                return false;
+            }
+            return true;
+        }
 
-            return false;
+
+        private bool CheckStatus(int Status)
+        {
+            if (Status < 1 || Status > 3) return false;
+
+            return true;
+        }
+
+        private bool CheckBuyDate(DateTime BuyDate)
+        {
+            if (!DateTime.TryParse(BuyDate.ToString(), out DateTime parsedDate))
+            {
+                return false;
+            }
+            if (parsedDate > DateTime.UtcNow)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

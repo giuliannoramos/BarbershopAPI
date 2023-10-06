@@ -35,9 +35,9 @@ public class Payment
 
     private void CheckGrossTotal()
     {
-        if (GrossTotal < 0)
+        if (GrossTotal <= 0)
         {
-            throw new ArgumentException("O valor bruto total deve ser maior que 0.");
+            throw new ArgumentException("O valor bruto total deve ser maior ou igual a 0.");
         }
     }
 
@@ -51,9 +51,9 @@ public class Payment
 
     private void CheckNetTotal()
     {
-        if (NetTotal < 0)
+        if (NetTotal <= 0)
         {
-            throw new ArgumentException("O valor líquido total deve ser maior que 0.");
+            throw new ArgumentException("O valor líquido total deve ser maior ou igual a 0.");
         }
     }
 

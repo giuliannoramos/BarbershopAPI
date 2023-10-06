@@ -7,46 +7,70 @@ public class UpdateProductCommandValidator : AbstractValidator<UpdateProductComm
 {
     public UpdateProductCommandValidator()
     {
-        RuleFor(p=>p.Name)
+        RuleFor(p => p.Name)
             .NotEmpty()
                 .WithMessage("You should fill out a name")
             .MaximumLength(50)
                 .WithMessage("The name can only have 50 characters at most");
-        
-        RuleFor(p=> p.Price)
+
+        RuleFor(p => p.Price)
             .NotEmpty()
-                .WithMessage("You should fill out a price");
-        
+                .WithMessage("You should fill out a price")
+            .GreaterThan(0)
+                .WithMessage("The price must be greater than 0");
+
         RuleFor(p => p.Description)
             .NotEmpty()
                 .WithMessage("You should fill out a description")
             .MaximumLength(200)
                 .WithMessage("The description can only have 200 characters at most");
 
-        RuleFor(p=>p.Brand)
+        RuleFor(p => p.Brand)
             .NotEmpty()
                 .WithMessage("You should fill out a brand")
             .MaximumLength(50)
                 .WithMessage("The brand can only have 50 characters at most");
-        
-        RuleFor(p=>p.Status)
+
+        RuleFor(p => p.Status)
             .NotEmpty()
                 .WithMessage("Status cannot be empty");
 
-        RuleFor(p=> p.SKU)
+        RuleFor(p => p.SKU)
             .NotEmpty()
                 .WithMessage("SKU cannot be empty");
 
-        RuleFor(p=>p.QuantityInStock)
+        RuleFor(p => p.QuantityInStock)
             .NotEmpty()
-                .WithMessage("You should fill out a quantity in stock");
+                .WithMessage("You should fill out a quantity in stock")
+            .Must(CheckQuantityInStock)
+                .WithMessage("Quantity in stock should be zero or more");
 
-        RuleFor(p=>p.ProductCategoryId)
+        RuleFor(p => p.ProductCategoryId)
             .NotEmpty()
                 .WithMessage("You should fill out a product category");
 
-        RuleFor(p=>p.QuantityReserved)
+        RuleFor(p => p.QuantityReserved)
             .NotEmpty()
-                .WithMessage("Quantity reserved cannot be empty");
+                .WithMessage("Quantity reserved cannot be empty")
+            .Must(CheckQuantityReserved)
+                .WithMessage("Quantity reserved should be zero or more");
+    }
+
+    private bool CheckQuantityInStock(int QuantityInStock)
+    {
+        if (QuantityInStock <= 0)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    private bool CheckQuantityReserved(int QuantityReserved)
+    {
+        if (QuantityReserved <= 0)
+        {
+            return false;
+        }
+        return true;
     }
 }

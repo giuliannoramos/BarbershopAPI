@@ -10,6 +10,8 @@ public class AppointmentService
     public int DurationMinutes { get; set; }
     public Decimal CurrentPrice { get; set; }
 
+    //Não tivemos tempo para descobrir como adicionar essas coisas a tabela associativa
+
     private void CheckServiceId()
     {
         if (ServiceId <= 0)

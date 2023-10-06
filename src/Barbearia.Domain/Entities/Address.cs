@@ -5,7 +5,7 @@ namespace Barbearia.Domain.Entities;
 public class Address
 {
     public int AddressId { get; set; }
-    public string Street { get; set; } = string.Empty;    
+    public string Street { get; set; } = string.Empty;
     public int Number { get; set; }
     public string District { get; set; } = string.Empty;
     public string City { get; set; } = string.Empty;
@@ -53,9 +53,9 @@ public class Address
 
     private void CheckState()
     {
-        if (string.IsNullOrWhiteSpace(State))
+        if (State.Length != 2)
         {
-            throw new ArgumentException("Estado não pode estar vazio.");
+            throw new ArgumentException("O estado deve ter exatamente 2 caracteres (UF).");
         }
     }
 
@@ -90,5 +90,5 @@ public class Address
         CheckCity();
         CheckState();
         CheckCep();
-    }  
+    }
 }

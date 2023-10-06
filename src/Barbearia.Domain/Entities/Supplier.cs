@@ -77,14 +77,7 @@ public class Supplier : Person
             throw new Exception("Fornecedor não pode ter pedidos");
         }
     }
-
-    private void CheckCnpj()
-    {
-        if (string.IsNullOrWhiteSpace(Cnpj))
-        {
-            throw new Exception("Fornecedor deve CNPJ");
-        }
-    }
+    
 
     private void CheckGender()
     {
@@ -97,8 +90,7 @@ public class Supplier : Person
     public void ValidateSupplier()
     {
         //CheckCnpj();
-        CheckOrder();
-        CheckCnpj();
+        CheckOrder();        
         CheckGender();
     }
 }

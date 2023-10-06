@@ -83,6 +83,12 @@ using Barbearia.Application.Features.ServiceCategories.Queries.GetAllServiceCate
 using Barbearia.Application.Features.ServiceCategories.Commands.CreateServiceCategory;
 using Barbearia.Application.Features.ServiceCategories.Commands.UpdateServiceCategory;
 using Barbearia.Application.Features.ServiceCategories.Commands.DeleteServiceCategory;
+using Barbearia.Application.Features.Appointments.Commands.UpdateAppointment;
+using Barbearia.Application.Features.Appointments.Commands.DeleteAppointment;
+using Barbearia.Application.Features.Appointments.Commands.CreateAppointment;
+using Barbearia.Application.Features.Appointments.Queries.GetAppointmentById;
+using Barbearia.Application.Features.Appointments.Queries.GetAllAppointments;
+using Barbearia.Application.Features.AppointmentsCollection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -225,24 +231,32 @@ builder.Services.AddScoped<IRequestHandler<GetAllServiceCategoriesQuery,IEnumera
 builder.Services.AddScoped<IRequestHandler<UpdateServiceCategoryCommand,UpdateServiceCategoryCommandResponse>,UpdateServiceCategoryCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<CreateServiceCategoryCommand, CreateServiceCategoryCommandResponse>, CreateServiceCategoryCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<DeleteServiceCategoryCommand, bool>, DeleteServiceCategoryCommandHandler>();
-
+// Appointments Commands and Queries
+builder.Services.AddScoped<IRequestHandler<GetAllAppointmentsQuery, IEnumerable<GetAllAppointmentsDto>>, GetAllAppointmentsQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<GetAppointmentByIdQuery, GetAppointmentByIdDto>, GetAppointmentByIdQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<CreateAppointmentCommand, CreateAppointmentCommandResponse>, CreateAppointmentCommandHandler>();
+builder.Services.AddScoped<IValidator<CreateAppointmentCommand>, CreateAppointmentCommandValidator>();
+builder.Services.AddScoped<IRequestHandler<DeleteAppointmentCommand, bool>, DeleteAppointmentCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<UpdateAppointmentCommand, UpdateAppointmentCommandResponse>, UpdateAppointmentCommandHandler>();
+builder.Services.AddScoped<IValidator<UpdateAppointmentCommand>, UpdateAppointmentCommandValidator>();
+builder.Services.AddScoped<IRequestHandler<GetAppointmentsCollectionQuery, GetAppointmentsCollectionQueryResponse>, GetAppointmentsCollectionQueryHandler>();
 
 //config banco de dados
 builder.Services.AddDbContext<PersonContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=1973");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=123456");
 }
 );
 
 builder.Services.AddDbContext<OrderContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=1973");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=123456");
 }
 );
 
 builder.Services.AddDbContext<ItemContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=1973;Include Error Detail=true");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=123456;Include Error Detail=true");
 }
 );
 

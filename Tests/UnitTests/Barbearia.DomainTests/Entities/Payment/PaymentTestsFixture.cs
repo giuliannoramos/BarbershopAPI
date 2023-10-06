@@ -19,7 +19,7 @@ public class PaymentTestsFixture
         };
     }
 
-    public Payment GenerateInValidPayment()
+    public Payment GenerateInvalidPayment()
     {
         return new Payment()
         {
@@ -31,6 +31,21 @@ public class PaymentTestsFixture
             Status = 400,
             NetTotal = 70000000000000000000m,
             OrderId = 7
+        };
+    }
+
+    public Payment GerenatePaymentsWithTheory(string paymentMethod)
+    {
+        return new Payment()
+        {
+            PaymentId = 1,
+            BuyDate = DateTime.UtcNow,
+            GrossTotal = 80,
+            PaymentMethod = paymentMethod,
+            Description = "Hora de testar",
+            Status = 1,
+            NetTotal = 60,
+            OrderId = 1
         };
     }
 

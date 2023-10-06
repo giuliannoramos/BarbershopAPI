@@ -1,4 +1,5 @@
 using Barbearia.Domain.Entities;
+using FluentAssertions;
 using Xunit.Abstractions;
 
 namespace UnitTests.Barbearia.DomainTests;
@@ -6,60 +7,87 @@ namespace UnitTests.Barbearia.DomainTests;
 public class PaymentTests : IClassFixture<PaymentTestsFixture>
 {
     private PaymentTestsFixture _fixture;
-    readonly ITestOutputHelper _outputHelper;
 
     public PaymentTests(PaymentTestsFixture fixture, ITestOutputHelper outputHelper)
     {
         _fixture = fixture;
-        _outputHelper = outputHelper;
     }
 
-    [Fact(DisplayName = "new Valid Payment")]
-    [Trait("Category", "Payment Entity Unit Tests")]
-    public void IsValid_WhenPaymentIsValid_ShouldReturnTrueAndHaveNoErrors()
+    [Fact(DisplayName = "New valid Payment")]
+    [Trait("Category", "Payment Unit Tests")]
+    public void ValidatePayment_WhenPaymentIsValid_ShouldRaiseNoExeptions()
     {
-        //Arrange
+        // Arrange
         var payment = _fixture.GenerateValidPayment();
 
-        //Act
+        // Act        
         Action act = () => payment.ValidatePayment();
 
-
-        //Assert
-
-
+        // Assert        
+        act.Should().NotThrow();
     }
 
-    //[Fact(DisplayName = "new Valid Customer Bogus")]
-    //[Trait("Category", "Customer Entity Unit Tests")]
-    //public void IsValid_WhenCustomerIsValid_ShouldReturnTrueAndHaveNoErrors_Bogus()
-    //{
-    //    //Arrange
-    //    var customer = _fixture.GenerateValidCustomerBogus();
+    [Fact(DisplayName = "New invalid Payment")]
+    [Trait("Category", "Payment Unit Tests")]
+    public void ValidatePayment_WhenPaymentNumberNotValid_ShouldRaiseExeptions()
+    {
+        // Arrange
+        var payment = _fixture.GenerateInvalidPayment();
 
-    //    //Act
-    //    var validationResult = customer.IsValid();
+        // Act
+        Action act = () => payment.ValidatePayment();
 
-    //    //Assert
-    //    Assert.True(validationResult);
-    //    Assert.Empty(customer.ValidationResult.Errors);
-    //}
+        // Assert
+        Assert.Throws<ArgumentException>(act);
+    }
 
-    //[Fact(DisplayName = "new InValid Customer Bogus")]
-    //[Trait("Category", "Customer Entity Unit Tests")]
-    //public void IsValid_WhenCustomerIsNotOfAge_ShouldReturnFalseAndHaveErrors_Bogus()
-    //{
-    //    //Arrange
-    //    var customer = _fixture.GenerateInvalidCustomerBogus();
+    [Theory(DisplayName = "valid Payment Numbers")]
+    [Trait("Category", "Payment Unit Tests")]
+    [InlineData("Crédito")]
+    [InlineData("Dinheiro")]
+    [InlineData("Débito")]
+    public void ValidatePayment_WhenPaymentsMethodValid_ShouldRaiseNoExeptions(string paymentMethod)
+    {
+        // Arrange
+        var Payment = _fixture.GerenatePaymentsWithTheory(paymentMethod);
 
-    //    //Act
-    //    var validationResult = customer.IsValid();
+        // Act
+        Action act = () => Payment.ValidatePayment();
 
-    //    //Assert
-    //    validationResult.Should().BeFalse();
-    //    customer.ValidationResult.Errors.Should().HaveCountGreaterThanOrEqualTo(1);
+        // Assert
+        act.Should().NotThrow();
+    }
 
-    //    _outputHelper.WriteLine($"Error found{customer.ValidationResult.Errors.FirstOrDefault()}");
-    //}
+    [Theory(DisplayName = "Invalid Payment Numbers")]
+    [Trait("Category", "Payment Unit Tests")]
+    [InlineData("Boleto")]
+    [InlineData("Pix")]
+    [InlineData("Criptomoeda")]
+    public void ValidatePayment_WhenPaymentsMethodNotValid_ShouldRaiseExeptions(string paymentMethod)
+    {
+        // Arrange
+        var Payment = _fixture.GerenatePaymentsWithTheory(paymentMethod);
+
+        // Act
+        Action act = () => Payment.ValidatePayment();
+
+        // Assert
+        Assert.Throws<ArgumentException>(act);
+    }
+
+    // [Fact(DisplayName = "New invalid Payment with bogus")]
+    // [Trait("Category", "Payment Unit Tests")]
+    // public void ValidatePayment_WhenPaymentNumberNotValidWhithBogus_ShouldRaiseExeptions()
+    // {
+    //     // Arrange
+    //     var Payment = _fixture.BogusGeneratePaymentsWithInvalidNumber(1).FirstOrDefault();
+
+    //     // Act
+    //     Action act = () => Payment?.ValidatePayment();
+
+    //     // Assert
+    //     Assert.Throws<ArgumentException>(act);
+    // }   
+
 }
 

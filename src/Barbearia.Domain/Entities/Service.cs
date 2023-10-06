@@ -18,9 +18,18 @@ public class Service:Item
         if(ServiceCategoryId <=0 ) throw new Exception("A service needs a category");
     }
 
+    private void CheckPrice()
+    {
+        if (Price <= 0)
+        {
+            throw new Exception("The price must not be negative");
+        }
+    }
+
     public void ValidateService()
     {   
         CheckDurationMinutes();
         CheckServiceCategory();
+        CheckPrice();
     }
 }

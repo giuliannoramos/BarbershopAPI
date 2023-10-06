@@ -8,7 +8,9 @@ public class UpdateStockHistoryCommandValidator : AbstractValidator<UpdateStockH
     {
         RuleFor(o=>o.Operation)
             .NotEmpty()
-                .WithMessage("You should fill out an operation");
+                .WithMessage("You should fill out an operation")
+            .GreaterThan(0)
+                .WithMessage("A operação tem que ser maior que zero");
         
         RuleFor(o=>o.CurrentPrice)
             .NotEmpty()
@@ -18,37 +20,43 @@ public class UpdateStockHistoryCommandValidator : AbstractValidator<UpdateStockH
 
         RuleFor(o=>o.Amount)
             .NotEmpty()
-                .WithMessage("You should fill out an amount");
+                .WithMessage("You should fill out an amount")
+            .GreaterThan(0)
+                .WithMessage("Amount must be more than zero");
 
         RuleFor(o=>o.Timestamp)
             .NotEmpty()
-                .WithMessage("Timestamp cannot be empty");
-            
+                .WithMessage("Timestamp cannot be empty")
+            .Must(CheckTimestamp)
+                .WithMessage("TimeStamp cant be on the future");
 
         RuleFor(o=>o.LastStockQuantity)
             .NotEmpty()
                 .WithMessage("Last stock quantity cannot be empty");
 
-        // RuleFor(o=>o.PersonId)
-        //     .NotEmpty()
-        //         .WithMessage("Person id cannot be empty");
-
         RuleFor(o=>o.ProductId)
             .NotEmpty()
                 .WithMessage("Product id cannot be empty");
 
-        // RuleFor(o=>o.OrderId)
-        //     .NotEmpty()
-        //         .WithMessage("Order id cannot be empty");
+        RuleFor(o=>o.OrderId)
+            .Empty()
+                .When(o=>o.PersonId != 0 )
+                    	.WithMessage("You must person or order id");
+
+        RuleFor(o=>o.PersonId)
+            .Empty()
+                .When(o=>o.OrderId != 0 )
+                    .WithMessage("You must person or order id");   
     }
 
-    public bool IsTimestampValid(DateTime timestamp)
-    {
-        if (timestamp.Kind == DateTimeKind.Utc)
+
+
+        private bool CheckTimestamp(DateTime TimeStamp)
         {
-            return true; //Exemplo valido no banco -> "BuyDate": "2023-09-22T10:00:00Z"
+            if (TimeStamp > DateTime.UtcNow)
+            {
+                return false;
+            }
+            return true;
         }
-
-        return false;
-    }
 }

@@ -9,6 +9,8 @@ public class UpdateRoleCommandValidator : AbstractValidator<UpdateRoleCommand>
             .NotEmpty()
                 .WithMessage("You should fill out a name")
             .MaximumLength(80)
-                .WithMessage("The name can only have 80 characters at most");
+                .WithMessage("The name can only have 80 characters at most")
+            .MinimumLength(1)
+                .WithMessage("The name cannot be empty");
     }
 }

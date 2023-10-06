@@ -26,7 +26,7 @@ public class Appointment
 
     private void CheckDateSequence()
     {
-        if (StartDate > FinishDate || StartServiceDate > FinishServiceDate || ConfirmedDate > CancellationDate)
+        if (StartDate > FinishDate || StartServiceDate > FinishServiceDate)
         {
             throw new Exception("Datas do agendamento estão em uma sequência inválida.");
         }

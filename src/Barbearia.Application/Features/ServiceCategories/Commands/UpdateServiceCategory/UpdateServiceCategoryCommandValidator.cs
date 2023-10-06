@@ -9,6 +9,8 @@ public class UpdateServiceCategoryCommandValidator : AbstractValidator<UpdateSer
             .NotEmpty()
                 .WithMessage("You should fill out a name")
             .MaximumLength(80)
-                .WithMessage("The name can only have 80 characters at most");
+                .WithMessage("The name can only have 80 characters at most")
+            .MinimumLength(1)
+                .WithMessage("Service name cannot be empty");
     }
 }

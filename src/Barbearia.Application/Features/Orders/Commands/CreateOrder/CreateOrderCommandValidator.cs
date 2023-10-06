@@ -1,5 +1,6 @@
 using System.Data;
 using FluentValidation;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
 namespace Barbearia.Application.Features.Orders.Commands.CreateOrder;
 
@@ -7,20 +8,60 @@ public class CreateOrderCommandValidator : AbstractValidator<CreateOrderCommand>
 {
     public CreateOrderCommandValidator()
     {
-        RuleFor(o=>o.Number)
+        RuleFor(o => o.Number)
             .NotEmpty()
-                .WithMessage("You should fill out a number");
-        
-        RuleFor(o=>o.Status)
-            .NotEmpty()
-                .WithMessage("Status cannot be empty");
+                .WithMessage("You should fill out a number")
+            .Must(CheckNumber)
+                .WithMessage("Number cannot be negative");
 
-        RuleFor(o=>o.PersonId)
+        RuleFor(o => o.Status)
+            .NotEmpty()
+                .WithMessage("Status cannot be empty")
+            .Must(CheckStatus)
+                .WithMessage("Unsuported Status: Must be between 1 and 3");
+
+        RuleFor(o => o.PersonId)
             .NotEmpty()
                 .WithMessage("You should fill out a person");
 
-        RuleFor(o=>o.BuyDate)
+        RuleFor(o => o.BuyDate)
             .NotEmpty()
-                .WithMessage("BuyDate cannot be empty");
+                .WithMessage("BuyDate cannot be empty")
+            .Must(CheckBuyDate)
+                .WithMessage("Date must be valid and not in the future");
+    }
+
+    private bool CheckNumber(int Number)
+    {
+        if (Number == 0)
+        {
+            return false;
+        }
+        if (Number <= 0)
+        {
+            return false;
+        }
+        return true;
+    }
+
+
+    private bool CheckStatus(int Status)
+    {
+        if (Status < 1 || Status > 3) return false;
+
+        return true;
+    }
+
+    private bool CheckBuyDate(DateTime BuyDate)
+    {
+        if (!DateTime.TryParse(BuyDate.ToString(), out DateTime parsedDate))
+        {
+            return false;
+        }
+        if (parsedDate > DateTime.UtcNow)
+        {
+            return false;
+        }
+        return true;
     }
 }

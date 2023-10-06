@@ -2,18 +2,22 @@ using FluentValidation;
 
 namespace Barbearia.Application.Features.Payments.Commands.CreatePayment;
 
- public class CreatePaymentCommandValidator : AbstractValidator<CreatePaymentCommand>
- {
-    public CreatePaymentCommandValidator(){
+public class CreatePaymentCommandValidator : AbstractValidator<CreatePaymentCommand>
+{
+    public CreatePaymentCommandValidator()
+    {
         RuleFor(p => p.BuyDate)
             .NotEmpty()
-                .WithMessage("The buy date cannot be empty");
+                .WithMessage("The buy date cannot be empty")
+            .Must(CheckBuyDate)
+                .WithMessage("The buy date must be valid and not in the future");
 
-        // RuleFor(p => p.GrossTotal)
-        //     .NotEmpty()
-        //         .WithMessage("The gross total cannot be empty");
+        RuleFor(p => p.GrossTotal)
+            .NotEmpty()
+                .WithMessage("The gross total cannot be empty")
+            .Must(CheckGrossTotal)
+                .WithMessage("The gross total must be positive");
 
-        //acho que o sistema deva preencher isso sozinho, assim como o net total
 
         RuleFor(p => p.PaymentMethod)
             .NotEmpty()
@@ -29,9 +33,11 @@ namespace Barbearia.Application.Features.Payments.Commands.CreatePayment;
             .NotEmpty()
                 .WithMessage("The status cannot be empty");
 
-        // RuleFor(p => p.NetTotal)
-        //     .NotEmpty()
-        //         .WithMessage("The net total cannot be empty");
+        RuleFor(p => p.NetTotal)
+            .NotEmpty()
+                .WithMessage("The net total cannot be empty")
+            .Must(CheckNetTotal)
+                .WithMessage("The net total must be positive");
 
         // RuleFor(p => p.CouponId)
         //     .NotEmpty()
@@ -48,13 +54,45 @@ namespace Barbearia.Application.Features.Payments.Commands.CreatePayment;
     bool IsPaymentValid(string paymentMethod)
     {
 
-        if(paymentMethod != "Débito" && paymentMethod != "Crédito" && paymentMethod != "Dinheiro")
+        if (paymentMethod != "Débito" && paymentMethod != "Crédito" && paymentMethod != "Dinheiro")
         {
             return false;
         }
 
         return true;
-        
+
     }
 
- }
+    private bool CheckBuyDate(DateTime BuyDate)
+    {
+        if (!DateTime.TryParse(BuyDate.ToString(), out DateTime parsedDate))
+        {
+            return false;
+        }
+        if (parsedDate > DateTime.UtcNow)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    private bool CheckGrossTotal(Decimal GrossTotal)
+    {
+        if (GrossTotal <= 0)
+        {
+            return false;
+        }
+        return true;
+    }
+
+
+    private bool CheckNetTotal(Decimal NetTotal)
+    {
+        if (NetTotal <= 0)
+        {
+            return false;
+        }
+        return true;
+    }
+
+}

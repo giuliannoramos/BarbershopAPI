@@ -13,6 +13,7 @@ public class EmployeeProfile : Profile
     public EmployeeProfile()
     {
         CreateMap<Employee, GetEmployeeByIdDto>();
+        CreateMap<Employee, EmployeeDto>().ReverseMap();
         CreateMap<CreateEmployeeCommand, Employee>();
         CreateMap<Employee, CreateEmployeeDto>();
         CreateMap<UpdateEmployeeCommand, Employee>();

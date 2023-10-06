@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Barbearia.Persistence.Migrations.Item
 {
     /// <inheritdoc />
-    public partial class itemMigration : Migration
+    public partial class Correcao : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -145,30 +145,6 @@ namespace Barbearia.Persistence.Migrations.Item
                         column: x => x.ProductCategoryId,
                         principalTable: "ProductCategory",
                         principalColumn: "ProductCategoryId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RoleServiceCategory",
-                columns: table => new
-                {
-                    RoleId = table.Column<int>(type: "integer", nullable: false),
-                    ServiceCategoryId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RoleServiceCategory", x => new { x.RoleId, x.ServiceCategoryId });
-                    table.ForeignKey(
-                        name: "FK_RoleServiceCategory_Role_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "Role",
-                        principalColumn: "RoleId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_RoleServiceCategory_ServiceCategory_ServiceCategoryId",
-                        column: x => x.ServiceCategoryId,
-                        principalTable: "ServiceCategory",
-                        principalColumn: "ServiceCategoryId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -350,7 +326,7 @@ namespace Barbearia.Persistence.Migrations.Item
             migrationBuilder.InsertData(
                 table: "Appointment",
                 columns: new[] { "AppointmentId", "CancellationDate", "ConfirmedDate", "CustomerId", "FinishDate", "FinishServiceDate", "ScheduleId", "StartDate", "StartServiceDate", "Status" },
-                values: new object[] { 1, new DateTime(2023, 10, 4, 0, 9, 7, 605, DateTimeKind.Utc).AddTicks(6944), new DateTime(2023, 10, 4, 0, 9, 7, 605, DateTimeKind.Utc).AddTicks(6944), 2, new DateTime(2023, 10, 4, 0, 9, 7, 605, DateTimeKind.Utc).AddTicks(6941), new DateTime(2023, 10, 4, 0, 9, 7, 605, DateTimeKind.Utc).AddTicks(6943), 1, new DateTime(2023, 10, 4, 0, 9, 7, 605, DateTimeKind.Utc).AddTicks(6939), new DateTime(2023, 10, 4, 0, 9, 7, 605, DateTimeKind.Utc).AddTicks(6942), 1 });
+                values: new object[] { 1, new DateTime(2023, 10, 6, 2, 14, 2, 479, DateTimeKind.Utc).AddTicks(8659), new DateTime(2023, 10, 6, 2, 14, 2, 479, DateTimeKind.Utc).AddTicks(8659), 2, new DateTime(2023, 10, 6, 2, 14, 2, 479, DateTimeKind.Utc).AddTicks(8657), new DateTime(2023, 10, 6, 2, 14, 2, 479, DateTimeKind.Utc).AddTicks(8659), 1, new DateTime(2023, 10, 6, 2, 14, 2, 479, DateTimeKind.Utc).AddTicks(8656), new DateTime(2023, 10, 6, 2, 14, 2, 479, DateTimeKind.Utc).AddTicks(8658), 1 });
 
             migrationBuilder.InsertData(
                 table: "Item",
@@ -391,11 +367,6 @@ namespace Barbearia.Persistence.Migrations.Item
                 });
 
             migrationBuilder.InsertData(
-                table: "RoleServiceCategory",
-                columns: new[] { "RoleId", "ServiceCategoryId" },
-                values: new object[] { 1, 1 });
-
-            migrationBuilder.InsertData(
                 table: "Service",
                 columns: new[] { "ItemId", "DurationMinutes", "ServiceCategoryId" },
                 values: new object[] { 3, 30, 1 });
@@ -420,8 +391,8 @@ namespace Barbearia.Persistence.Migrations.Item
                 columns: new[] { "StockHistoryId", "Amount", "CurrentPrice", "LastStockQuantity", "Operation", "ProductId", "Timestamp" },
                 values: new object[,]
                 {
-                    { 1, 20, 23.5m, 10, 1, 1, new DateTime(2023, 10, 4, 0, 9, 7, 606, DateTimeKind.Utc).AddTicks(1560) },
-                    { 2, 40, 200.2m, 32, 3, 2, new DateTime(2023, 10, 4, 0, 9, 7, 606, DateTimeKind.Utc).AddTicks(1573) }
+                    { 1, 20, 23.5m, 10, 1, 1, new DateTime(2023, 10, 6, 2, 14, 2, 480, DateTimeKind.Utc).AddTicks(2483) },
+                    { 2, 40, 200.2m, 32, 3, 2, new DateTime(2023, 10, 6, 2, 14, 2, 480, DateTimeKind.Utc).AddTicks(2498) }
                 });
 
             migrationBuilder.InsertData(
@@ -480,11 +451,6 @@ namespace Barbearia.Persistence.Migrations.Item
                 column: "ProductCategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RoleServiceCategory_ServiceCategoryId",
-                table: "RoleServiceCategory",
-                column: "ServiceCategoryId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Service_ServiceCategoryId",
                 table: "Service",
                 column: "ServiceCategoryId");
@@ -519,9 +485,6 @@ namespace Barbearia.Persistence.Migrations.Item
 
             migrationBuilder.DropTable(
                 name: "OrderProduct");
-
-            migrationBuilder.DropTable(
-                name: "RoleServiceCategory");
 
             migrationBuilder.DropTable(
                 name: "StockHistoryOrder");

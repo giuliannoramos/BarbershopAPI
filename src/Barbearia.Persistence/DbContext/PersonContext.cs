@@ -39,7 +39,8 @@ namespace Barbearia.Persistence.DbContexts
             modelBuilder.Entity<Order>().ToTable("Order", t => t.ExcludeFromMigrations());
             modelBuilder.Entity<Item>().ToTable("Item", t => t.ExcludeFromMigrations());
             modelBuilder.Entity<Product>().ToTable("Product", t => t.ExcludeFromMigrations());
-            // modelBuilder.Entity<StockHistory>().ToTable("StockHistory", t => t.ExcludeFromMigrations());
+            modelBuilder.Entity<StockHistory>().ToTable("StockHistory", t => t.ExcludeFromMigrations());
+            modelBuilder.Entity<ServiceCategory>().ToTable("ServiceCategory", t => t.ExcludeFromMigrations());
             modelBuilder.Ignore<StockHistory>();
             modelBuilder.Ignore<StockHistoryOrder>();
             modelBuilder.Ignore<StockHistorySupplier>();
@@ -50,7 +51,7 @@ namespace Barbearia.Persistence.DbContexts
             modelBuilder.Ignore<OrderProduct>();
             modelBuilder.Ignore<Service>();
             modelBuilder.Ignore<Appointment>();
-            modelBuilder.Ignore<RoleServiceCategory>();
+            // modelBuilder.Ignore<RoleServiceCategory>();
             modelBuilder.Ignore<ServiceCategory>();
             modelBuilder.Ignore<AppointmentOrder>();
 
@@ -222,7 +223,15 @@ namespace Barbearia.Persistence.DbContexts
                 .IsRequired();
 
             role
-                .ToTable("Role");  
+                .ToTable("Role");
+
+            // roleEmployee
+            //     .Property(re => re.RoleId)
+            //     .HasColumnName("RoleId");
+
+            // roleEmployee
+            //     .Property(re => re.EmployeeId)
+            //     .HasColumnName("PersonId");  
 
             role
                 .Property(r => r.Name)
@@ -234,10 +243,10 @@ namespace Barbearia.Persistence.DbContexts
                 .WithMany(e => e.Roles)
                 .UsingEntity<RoleEmployee>();
 
-            role.
-                HasMany(r => r.RoleEmployees)
-                .WithOne(ro => ro.Role)
-                .HasForeignKey(ro => ro.RoleId);
+            // role.
+            //     HasMany(r => r.RoleEmployees)
+            //     .WithOne(ro => ro.Role)
+            //     .HasForeignKey(ro => ro.RoleId);
 
             schedule
                 .ToTable("Schedule");

@@ -39,7 +39,6 @@ namespace Barbearia.Persistence.DbContexts
             modelBuilder.Ignore<TimeOff>();
             modelBuilder.Ignore<Service>();
             modelBuilder.Ignore<Appointment>();
-            modelBuilder.Ignore<RoleServiceCategory>();
             modelBuilder.Ignore<ServiceCategory>();
             modelBuilder.Ignore<Service>();
             modelBuilder.Ignore<AppointmentOrder>();

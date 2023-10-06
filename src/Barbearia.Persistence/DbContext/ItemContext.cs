@@ -21,8 +21,8 @@ namespace Barbearia.Persistence.DbContexts
         public DbSet<AppointmentService> AppointmentServices { get; set; } = null!;
         public DbSet<Service> Services {get; set; } = null!;
         public DbSet<ServiceCategory> ServiceCategories{get; set; } = null!;
-        public DbSet<RoleServiceCategory> RoleServiceCategories{get; set;} = null!;
         public DbSet<AppointmentOrder> AppointmentOrders{get; set; } = null!;
+        // public DbSet<RoleServiceCategory> RoleServiceCategories{get; set;} = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,7 +36,7 @@ namespace Barbearia.Persistence.DbContexts
             var appointmentService = modelBuilder.Entity<AppointmentService>();
             var service = modelBuilder.Entity<Service>();
             var serviceCategory = modelBuilder.Entity<ServiceCategory>();
-            var roleServiceCategory = modelBuilder.Entity<RoleServiceCategory>();
+            // var roleServiceCategory = modelBuilder.Entity<RoleServiceCategory>();
             var appointmentOrder = modelBuilder.Entity<AppointmentOrder>();
 
             modelBuilder.Entity<Person>().ToTable("Person", t => t.ExcludeFromMigrations());
@@ -232,16 +232,6 @@ namespace Barbearia.Persistence.DbContexts
             serviceCategory
                 .Property(s => s.Name)
                 .IsRequired();
-
-            serviceCategory
-                .HasMany(s=> s.Roles)
-                .WithMany(r=>r.ServiceCategories)
-                .UsingEntity<RoleServiceCategory>();
-
-            roleServiceCategory
-                .ToTable("RoleServiceCategory");
-
-
         
             appointment
                 .HasData(
@@ -297,15 +287,6 @@ namespace Barbearia.Persistence.DbContexts
                             Name = "Corte",
                         }
                     );
-
-            roleServiceCategory
-                .HasData(
-                    new RoleServiceCategory()
-                    {
-                        RoleId =1,
-                        ServiceCategoryId =1
-                    }
-                );
 
             appointmentOrder
                 .HasData(

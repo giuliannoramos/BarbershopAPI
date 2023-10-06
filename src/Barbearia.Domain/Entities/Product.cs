@@ -33,7 +33,7 @@ public class Product : Item
 
     private void CheckQuantityInStock()
     {
-        if (QuantityInStock <= 0)
+        if (QuantityInStock < 0)
         {
             throw new ArgumentException("Quantidade em estoque inválida. Deve ser zero ou positiva");
         }
@@ -41,7 +41,7 @@ public class Product : Item
 
     private void CheckQuantityReserved()
     {
-        if (QuantityReserved <= 0)
+        if (QuantityReserved < 0)
         {
             throw new ArgumentException("Quantidade reservada inválida. Deve ser zero ou positiva");
         }

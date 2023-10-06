@@ -204,4 +204,58 @@ public class ItemRepository : IItemRepository
         _context.ServiceCategories.Remove(serviceCategory);
     }
 
+    public async Task<IEnumerable<Appointment>> GetAllAppointmentsAsync()
+    {
+        return await _context.Appointments
+            .Include(a => a.Schedule)
+            .Include(a => a.Person)
+            .Include(a => a.Services)
+            .Include(a => a.Orders)
+            .ToListAsync();
+    }
+    public async Task<Appointment?> GetAppointmentByIdAsync(int appointmentId)
+    {
+        return await _context.Appointments
+            .Include(a => a.Schedule)
+            .Include(a => a.Person)
+            .Include(a => a.Services)
+            .Include(a => a.Orders)
+            .FirstOrDefaultAsync(a => a.AppointmentId == appointmentId);
+    }
+    public void AddAppointment (Appointment appointment)
+    {
+        _context.Appointments.Add(appointment);
+    }
+    public void RemoveAppointment (Appointment appointment)
+    {
+        _context.Appointments.Remove(appointment);
+    }
+    public async Task<(IEnumerable<Appointment>, PaginationMetadata)> GetAllAppointmentsAsync(string? searchQuery, int pageNumber, int pageSize)
+    {
+        IQueryable<Appointment> collection = _context.Appointments
+            .Include(a => a.Schedule)
+            .Include(a => a.Person)
+            .Include(a => a.Services)
+            .Include(a => a.Orders);
+
+        if (!string.IsNullOrWhiteSpace(searchQuery))
+        {
+            var name = searchQuery.Trim().ToLower();
+            collection = collection.Where(
+               a=>a.Person != null && a.Person.Name.ToLower().Contains(name)
+            );
+        }
+
+        var totalItemCount = await collection.CountAsync();
+
+        var paginationMetadata = new PaginationMetadata(totalItemCount, pageSize, pageNumber);
+
+        var AppointmentToReturn = await collection
+            .OrderBy(s => s.AppointmentId)
+            .Skip(pageSize * (pageNumber - 1))
+            .Take(pageSize)
+            .ToListAsync();
+
+        return (AppointmentToReturn, paginationMetadata);
+    }
 }

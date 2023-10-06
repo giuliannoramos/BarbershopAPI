@@ -29,4 +29,9 @@ public interface IItemRepository
     public Task<ServiceCategory?> GetServiceCategoryByIdAsync(int serviceCategoryId);
     public void AddServiceCategory(ServiceCategory serviceCategory);
     public void DeleteServiceCategory(ServiceCategory serviceCategory);
+    public Task<IEnumerable<Appointment>> GetAllAppointmentsAsync();
+    public Task<Appointment?> GetAppointmentByIdAsync(int appointmentId);
+    void AddAppointment(Appointment appointment);
+    void RemoveAppointment(Appointment appointment);
+    Task<(IEnumerable<Appointment>, PaginationMetadata)> GetAllAppointmentsAsync(string? searchQuery, int pageNumber, int pageSize);
 }

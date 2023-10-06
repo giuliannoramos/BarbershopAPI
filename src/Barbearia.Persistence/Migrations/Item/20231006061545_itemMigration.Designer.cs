@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Barbearia.Persistence.Migrations.Item
 {
     [DbContext(typeof(ItemContext))]
-    [Migration("20231006021402_Correcao")]
-    partial class Correcao
+    [Migration("20231006061545_itemMigration")]
+    partial class itemMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,14 +72,14 @@ namespace Barbearia.Persistence.Migrations.Item
                         new
                         {
                             AppointmentId = 1,
-                            CancellationDate = new DateTime(2023, 10, 6, 2, 14, 2, 479, DateTimeKind.Utc).AddTicks(8659),
-                            ConfirmedDate = new DateTime(2023, 10, 6, 2, 14, 2, 479, DateTimeKind.Utc).AddTicks(8659),
+                            CancellationDate = new DateTime(2023, 10, 6, 6, 15, 45, 113, DateTimeKind.Utc).AddTicks(9616),
+                            ConfirmedDate = new DateTime(2023, 10, 6, 6, 15, 45, 113, DateTimeKind.Utc).AddTicks(9616),
                             CustomerId = 2,
-                            FinishDate = new DateTime(2023, 10, 6, 2, 14, 2, 479, DateTimeKind.Utc).AddTicks(8657),
-                            FinishServiceDate = new DateTime(2023, 10, 6, 2, 14, 2, 479, DateTimeKind.Utc).AddTicks(8659),
+                            FinishDate = new DateTime(2023, 10, 6, 6, 15, 45, 113, DateTimeKind.Utc).AddTicks(9614),
+                            FinishServiceDate = new DateTime(2023, 10, 6, 6, 15, 45, 113, DateTimeKind.Utc).AddTicks(9615),
                             ScheduleId = 1,
-                            StartDate = new DateTime(2023, 10, 6, 2, 14, 2, 479, DateTimeKind.Utc).AddTicks(8656),
-                            StartServiceDate = new DateTime(2023, 10, 6, 2, 14, 2, 479, DateTimeKind.Utc).AddTicks(8658),
+                            StartDate = new DateTime(2023, 10, 6, 6, 15, 45, 113, DateTimeKind.Utc).AddTicks(9610),
+                            StartServiceDate = new DateTime(2023, 10, 6, 6, 15, 45, 113, DateTimeKind.Utc).AddTicks(9615),
                             Status = 1
                         });
                 });
@@ -549,7 +549,7 @@ namespace Barbearia.Persistence.Migrations.Item
                             LastStockQuantity = 10,
                             Operation = 1,
                             ProductId = 1,
-                            Timestamp = new DateTime(2023, 10, 6, 2, 14, 2, 480, DateTimeKind.Utc).AddTicks(2483),
+                            Timestamp = new DateTime(2023, 10, 6, 6, 15, 45, 114, DateTimeKind.Utc).AddTicks(5228),
                             OrderId = 1
                         });
                 });
@@ -574,7 +574,7 @@ namespace Barbearia.Persistence.Migrations.Item
                             LastStockQuantity = 32,
                             Operation = 3,
                             ProductId = 2,
-                            Timestamp = new DateTime(2023, 10, 6, 2, 14, 2, 480, DateTimeKind.Utc).AddTicks(2498),
+                            Timestamp = new DateTime(2023, 10, 6, 6, 15, 45, 114, DateTimeKind.Utc).AddTicks(5245),
                             PersonId = 4
                         });
                 });

@@ -32,7 +32,7 @@ namespace Barbearia.Api.Controllers
             var getAppointmentsCollectionQueryResponse = await _mediator.Send(getAppointmentsCollectionQuery);
 
             if (!getAppointmentsCollectionQueryResponse.IsSuccess)
-                return RequestValidationProblem(getAppointmentsCollectionQueryResponse, ModelState);
+                return HandleRequestError(getAppointmentsCollectionQueryResponse);
 
             var appointmentsToReturn = getAppointmentsCollectionQueryResponse.Appointments;
             var paginationMetadata = getAppointmentsCollectionQueryResponse.PaginationMetadata;

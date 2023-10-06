@@ -46,7 +46,7 @@ public class ProductsController : MainController
         var CreateProductCommandResponse = await _mediator.Send(createProductCommand);
 
         if(!CreateProductCommandResponse.IsSuccess)
-            return RequestValidationProblem(CreateProductCommandResponse,ModelState);
+            return HandleRequestError(CreateProductCommandResponse);
 
         var productForReturn = CreateProductCommandResponse.Product;
 
@@ -66,7 +66,7 @@ public class ProductsController : MainController
         var updateProductCommandResponse = await _mediator.Send(updateProductCommand);
 
         if (!updateProductCommandResponse.IsSuccess)
-            return RequestValidationProblem(updateProductCommandResponse, ModelState);
+            return HandleRequestError(updateProductCommandResponse);
         
         return NoContent();
     }

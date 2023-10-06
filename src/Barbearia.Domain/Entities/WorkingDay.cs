@@ -11,13 +11,7 @@ public class WorkingDay
     public List<TimeOff> TimeOffs = new();
     public Schedule? Schedule{get; set;}
 
-    private void ValidateSchedule()
-    {
-        if(Schedule ==null)
-        {
-            throw new Exception("Working day must be part of an schedule");
-        }
-    }
+
 
     private void ValidatePerson()
     {
@@ -29,7 +23,7 @@ public class WorkingDay
 
     private void ValidateDates()
     {
-        if(StartTime<FinishTime)
+        if(StartTime>FinishTime)
         {
             throw new Exception("Start time must come before Finish time");
         }
@@ -37,7 +31,6 @@ public class WorkingDay
 
     public void ValidateWorkingDay()
     {
-        ValidateSchedule();
         ValidatePerson();
         ValidateDates();
     }

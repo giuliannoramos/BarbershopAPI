@@ -60,7 +60,7 @@ public class OrdersController : MainController
         var createOrderCommandResponse = await _mediator.Send(createOrderCommand);
 
         if(!createOrderCommandResponse.IsSuccess)
-            return RequestValidationProblem(createOrderCommandResponse,ModelState);
+            return HandleRequestError(createOrderCommandResponse);
 
         
 
@@ -82,7 +82,7 @@ public class OrdersController : MainController
         var updateOrderCommandResponse = await _mediator.Send(updateOrderCommand);
 
         if (!updateOrderCommandResponse.IsSuccess)
-            return RequestValidationProblem(updateOrderCommandResponse, ModelState);
+            return HandleRequestError(updateOrderCommandResponse);
         
         return NoContent();
     }

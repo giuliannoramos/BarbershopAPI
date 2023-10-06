@@ -37,7 +37,7 @@ public class ServicesController : MainController
         var CreateServiceCommandResponse = await _mediator.Send(createServiceCommand);
 
         if (!CreateServiceCommandResponse.IsSuccess)
-            return RequestValidationProblem(CreateServiceCommandResponse, ModelState);
+            return HandleRequestError(CreateServiceCommandResponse);
 
         var ServiceForReturn = CreateServiceCommandResponse.Service;
 
@@ -57,7 +57,7 @@ public class ServicesController : MainController
         var updateServiceCommandResponse = await _mediator.Send(updateServiceCommand);
 
         if (!updateServiceCommandResponse.IsSuccess)
-            return RequestValidationProblem(updateServiceCommandResponse, ModelState);
+            return HandleRequestError(updateServiceCommandResponse);
 
         return NoContent();
     }

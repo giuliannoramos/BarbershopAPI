@@ -39,7 +39,7 @@ public class EmployeesController : MainController
 
 
         if (!createEmployeeCommandResponse.IsSuccess)
-            return RequestValidationProblem(createEmployeeCommandResponse, ModelState);
+            return HandleRequestError(createEmployeeCommandResponse);
 
         var employeeToReturn = createEmployeeCommandResponse.Employee;
 
@@ -60,7 +60,7 @@ public class EmployeesController : MainController
         var updateEmployeeCommandResponse = await _mediator.Send(updateEmployeeCommand);
 
         if (!updateEmployeeCommandResponse.IsSuccess)
-            return RequestValidationProblem(updateEmployeeCommandResponse, ModelState);
+            return HandleRequestError(updateEmployeeCommandResponse);
 
         return NoContent();
     }

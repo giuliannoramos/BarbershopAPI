@@ -47,7 +47,7 @@ public class ServiceCategoriesController : MainController
         var CreateServiceCategoryCommandResponse = await _mediator.Send(createServiceCategoryCommand);
 
         if(!CreateServiceCategoryCommandResponse.IsSuccess)
-            return RequestValidationProblem(CreateServiceCategoryCommandResponse,ModelState);
+            return HandleRequestError(CreateServiceCategoryCommandResponse);
 
         var serviceCategoryForReturn = CreateServiceCategoryCommandResponse.ServiceCategory;
 
@@ -67,7 +67,7 @@ public class ServiceCategoriesController : MainController
         var updateServiceCategoryCommandResponse = await _mediator.Send(updateServiceCategoryCommand);
 
         if (!updateServiceCategoryCommandResponse.IsSuccess)
-            return RequestValidationProblem(updateServiceCategoryCommandResponse, ModelState);
+            return HandleRequestError(updateServiceCategoryCommandResponse);
         
         return NoContent();
     }

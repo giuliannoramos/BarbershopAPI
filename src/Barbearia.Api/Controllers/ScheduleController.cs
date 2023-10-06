@@ -49,7 +49,7 @@ public class ScheduleController : MainController
         var createScheduleCommandResponse = await _mediator.Send(createScheduleCommand);
 
         if(!createScheduleCommandResponse.IsSuccess)
-            return RequestValidationProblem(createScheduleCommandResponse, ModelState);
+            return HandleRequestError(createScheduleCommandResponse);
 
         var scheduleForReturn = createScheduleCommandResponse.Schedule;
 
@@ -69,7 +69,7 @@ public class ScheduleController : MainController
         var UpdateScheduleCommandResponse = await _mediator.Send(updateScheduleCommand);
 
         if(!UpdateScheduleCommandResponse.IsSuccess)
-            return RequestValidationProblem(UpdateScheduleCommandResponse, ModelState);
+            return HandleRequestError(UpdateScheduleCommandResponse);
 
         return NoContent();
     }

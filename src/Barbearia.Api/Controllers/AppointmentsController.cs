@@ -47,7 +47,7 @@ namespace Barbearia.Api.Controllers
             var createAppointmentCommandResponse = await _mediator.Send(createAppointmentCommand);
 
             if (!createAppointmentCommandResponse.IsSuccess)
-                return RequestValidationProblem(createAppointmentCommandResponse, ModelState);
+                return HandleRequestError(createAppointmentCommandResponse);
 
             var appointmentForReturn = createAppointmentCommandResponse.Appointment;
 
@@ -77,7 +77,7 @@ namespace Barbearia.Api.Controllers
             var updateAppointmentCommandResponse = await _mediator.Send(updateAppointmentCommand);
 
             if (!updateAppointmentCommandResponse.IsSuccess) 
-                return RequestValidationProblem(updateAppointmentCommandResponse, ModelState);
+                return HandleRequestError(updateAppointmentCommandResponse);
 
             return NoContent();
         }

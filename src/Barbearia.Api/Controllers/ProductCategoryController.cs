@@ -49,7 +49,7 @@ public class ProductCategoryController : MainController
         var createProductCategoryCommandResponse = await _mediator.Send(createProductCategoryCommand);
 
         if(!createProductCategoryCommandResponse.IsSuccess)
-            return RequestValidationProblem(createProductCategoryCommandResponse, ModelState);
+            return HandleRequestError(createProductCategoryCommandResponse);
 
         var ProductCategoryForReturn = createProductCategoryCommandResponse.ProductCategory;
 
@@ -69,7 +69,7 @@ public class ProductCategoryController : MainController
         var UpdateProductCategoryCommandResponse = await _mediator.Send(updateProductCategoryCommand);
 
         if(!UpdateProductCategoryCommandResponse.IsSuccess)
-            return RequestValidationProblem(UpdateProductCategoryCommandResponse, ModelState);
+            return HandleRequestError(UpdateProductCategoryCommandResponse);
 
         return NoContent();
     }

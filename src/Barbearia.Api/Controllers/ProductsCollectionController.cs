@@ -29,7 +29,7 @@ public class ProductsCollectionController : MainController
         var requestResponse = await _mediator.Send(getProductsCollectionQuery);
 
         if(!requestResponse.IsSuccess) 
-            return RequestValidationProblem(requestResponse, ModelState);
+            return HandleRequestError(requestResponse);
 
         var ProductsToReturn = requestResponse.Products;
         var paginationMetadata = requestResponse.PaginationMetadata;

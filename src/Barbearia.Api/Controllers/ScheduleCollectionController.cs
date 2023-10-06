@@ -32,7 +32,7 @@ public class SchedulesCollectionController:MainController
         var requestResponse = await _mediator.Send(getSchedulesCollectionQuery);
         
         if(!requestResponse.IsSuccess) 
-            return RequestValidationProblem(requestResponse, ModelState);
+            return HandleRequestError(requestResponse);
 
         var SchedulesToReturn = requestResponse.Schedules;
         var paginationMetadata = requestResponse.PaginationMetadata;

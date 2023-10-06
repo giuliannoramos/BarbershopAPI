@@ -51,7 +51,7 @@ public class StockHistoryController : MainController
         var createStockHistoryCommandResponse = await _mediator.Send(createStockHistoryCommand);
 
         if(!createStockHistoryCommandResponse.IsSuccess)
-            return RequestValidationProblem(createStockHistoryCommandResponse, ModelState);
+            return HandleRequestError(createStockHistoryCommandResponse);
 
         var stockHistoryForReturn = createStockHistoryCommandResponse.StockHistory;
 
@@ -72,7 +72,7 @@ public class StockHistoryController : MainController
         var updateStockHistoryCommandResponse = await _mediator.Send(updateStockHistoryCommand);
 
         if(!updateStockHistoryCommandResponse.IsSuccess)
-        return RequestValidationProblem(updateStockHistoryCommandResponse, ModelState);
+        return HandleRequestError(updateStockHistoryCommandResponse);
 
         return NoContent();
     }

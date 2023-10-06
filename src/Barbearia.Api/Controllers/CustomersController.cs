@@ -53,7 +53,7 @@ public class CustomersController : MainController
 
 
         if(!createCustomerCommandResponse.IsSuccess)
-            return RequestValidationProblem(createCustomerCommandResponse, ModelState);
+            return HandleRequestError(createCustomerCommandResponse);
 
         var customerForReturn = createCustomerCommandResponse.Customer;
 
@@ -74,7 +74,7 @@ public class CustomersController : MainController
         var updateCustomerCommandResponse = await _mediator.Send(updateCustomerCommand);
 
         if(!updateCustomerCommandResponse.IsSuccess)
-        return RequestValidationProblem(updateCustomerCommandResponse, ModelState);
+        return HandleRequestError(updateCustomerCommandResponse);
 
         return NoContent();
     }

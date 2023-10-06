@@ -40,7 +40,7 @@ public class TelephoneController : MainController
 
         if (!createTelephoneCommandResponse.IsSuccess)
         {
-            return RequestValidationProblem(createTelephoneCommandResponse, ModelState);
+            return HandleRequestError(createTelephoneCommandResponse);
         }
 
         var telephoneToReturn = createTelephoneCommandResponse.Telephone;
@@ -64,7 +64,7 @@ public class TelephoneController : MainController
 
         if (!updateAddressCommandResponse.IsSuccess)
         {
-            return RequestValidationProblem(updateAddressCommandResponse, ModelState);
+            return HandleRequestError(updateAddressCommandResponse);
         }
         return NoContent();
 

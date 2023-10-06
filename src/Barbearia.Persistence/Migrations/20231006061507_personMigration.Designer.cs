@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Barbearia.Persistence.Migrations
 {
     [DbContext(typeof(PersonContext))]
-    [Migration("20231006021330_Correcao")]
-    partial class Correcao
+    [Migration("20231006061507_personMigration")]
+    partial class personMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

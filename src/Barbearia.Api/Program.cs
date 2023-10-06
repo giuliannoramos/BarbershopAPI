@@ -73,6 +73,16 @@ using Barbearia.Application.Features.Services.Commands.UpdateService;
 using Barbearia.Application.Features.Services.Commands.CreateService;
 using Barbearia.Application.Features.Services.Commands.DeleteService;
 using Barbearia.Application.Features.ServicesCollection;
+using Barbearia.Application.Features.Roles.Queries.GetAllRoles;
+using Barbearia.Application.Features.Roles.Commands.CreateRole;
+using Barbearia.Application.Features.Roles.Queries.GetRoleById;
+using Barbearia.Application.Features.Roles.Commands.UpdateRole;
+using Barbearia.Application.Features.Roles.Commands.DeleteRole;
+using Barbearia.Application.Features.ServiceCategories.Queries.GetServiceCategoryById;
+using Barbearia.Application.Features.ServiceCategories.Queries.GetAllServiceCategories;
+using Barbearia.Application.Features.ServiceCategories.Commands.CreateServiceCategory;
+using Barbearia.Application.Features.ServiceCategories.Commands.UpdateServiceCategory;
+using Barbearia.Application.Features.ServiceCategories.Commands.DeleteServiceCategory;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -203,6 +213,19 @@ builder.Services.AddScoped<IRequestHandler<CreateServiceCommand, CreateServiceCo
 builder.Services.AddScoped<IValidator<CreateServiceCommand>, CreateServiceCommandValidator>();
 builder.Services.AddScoped<IRequestHandler<DeleteServiceCommand, bool>, DeleteServiceCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<GetServicesCollectionQuery, GetServicesCollectionQueryResponse>, GetServicesCollectionQueryHandler>();
+//Role commands and queries
+builder.Services.AddScoped<IRequestHandler<GetRoleByIdQuery, GetRoleByIdDto>, GetRoleByIdQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<GetAllRolesQuery,IEnumerable<GetAllRolesDto>>,GetAllRolesQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<UpdateRoleCommand,UpdateRoleCommandResponse>,UpdateRoleCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<CreateRoleCommand, CreateRoleCommandResponse>, CreateRoleCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<DeleteRoleCommand, bool>, DeleteRoleCommandHandler>();
+//ServiceCategory commands and queries
+builder.Services.AddScoped<IRequestHandler<GetServiceCategoryByIdQuery, GetServiceCategoryByIdDto>, GetServiceCategoryByIdQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<GetAllServiceCategoriesQuery,IEnumerable<GetAllServiceCategoriesDto>>,GetAllServiceCategoriesQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<UpdateServiceCategoryCommand,UpdateServiceCategoryCommandResponse>,UpdateServiceCategoryCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<CreateServiceCategoryCommand, CreateServiceCategoryCommandResponse>, CreateServiceCategoryCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<DeleteServiceCategoryCommand, bool>, DeleteServiceCategoryCommandHandler>();
+
 
 //config banco de dados
 builder.Services.AddDbContext<PersonContext>(options =>

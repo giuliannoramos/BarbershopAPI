@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Barbearia.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class personMigration : Migration
+    public partial class Correcao : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -32,19 +32,6 @@ namespace Barbearia.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Person", x => x.PersonId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Role",
-                columns: table => new
-                {
-                    RoleId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Role", x => x.RoleId);
                 });
 
             migrationBuilder.CreateTable(
@@ -71,6 +58,31 @@ namespace Barbearia.Persistence.Migrations
                         principalTable: "Person",
                         principalColumn: "PersonId",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Role",
+                columns: table => new
+                {
+                    RoleId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: false),
+                    CustomerPersonId = table.Column<int>(type: "integer", nullable: true),
+                    SupplierPersonId = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Role", x => x.RoleId);
+                    table.ForeignKey(
+                        name: "FK_Role_Person_CustomerPersonId",
+                        column: x => x.CustomerPersonId,
+                        principalTable: "Person",
+                        principalColumn: "PersonId");
+                    table.ForeignKey(
+                        name: "FK_Role_Person_SupplierPersonId",
+                        column: x => x.SupplierPersonId,
+                        principalTable: "Person",
+                        principalColumn: "PersonId");
                 });
 
             migrationBuilder.CreateTable(
@@ -196,11 +208,11 @@ namespace Barbearia.Persistence.Migrations
 
             migrationBuilder.InsertData(
                 table: "Role",
-                columns: new[] { "RoleId", "Name" },
+                columns: new[] { "RoleId", "CustomerPersonId", "Name", "SupplierPersonId" },
                 values: new object[,]
                 {
-                    { 1, "Barbeiro" },
-                    { 2, "Barbeiro Mestre?Sla" }
+                    { 1, null, "Barbeiro", null },
+                    { 2, null, "Barbeiro Mestre?Sla", null }
                 });
 
             migrationBuilder.InsertData(
@@ -265,6 +277,16 @@ namespace Barbearia.Persistence.Migrations
                 name: "IX_Address_PersonId",
                 table: "Address",
                 column: "PersonId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Role_CustomerPersonId",
+                table: "Role",
+                column: "CustomerPersonId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Role_SupplierPersonId",
+                table: "Role",
+                column: "SupplierPersonId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RoleEmployee_RoleId",

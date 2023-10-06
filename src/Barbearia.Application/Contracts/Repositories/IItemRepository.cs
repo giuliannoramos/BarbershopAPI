@@ -25,4 +25,8 @@ public interface IItemRepository
     void DeleteService(Service service);
     Task<Service?> GetServiceByIdAsync(int serviceId);
     Task<(IEnumerable<Service>, PaginationMetadata)> GetAllServicesAsync(string? searchQuery, int pageNumber, int pageSize);
+    public Task<IEnumerable<ServiceCategory?>> GetAllServiceCategory();
+    public Task<ServiceCategory?> GetServiceCategoryByIdAsync(int serviceCategoryId);
+    public void AddServiceCategory(ServiceCategory serviceCategory);
+    public void DeleteServiceCategory(ServiceCategory serviceCategory);
 }

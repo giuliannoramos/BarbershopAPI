@@ -4,9 +4,7 @@ public class Role
 {
     public int RoleId{get; set;}
     public string Name{get; set;} = string.Empty;
-    public List<Person> Employees = new();
-    public List<RoleEmployee> RoleEmployees{get; set;} = new();
-    public List<ServiceCategory>ServiceCategories{get; set;} = new();
+    public List<Employee> Employees = new();
 
     private void ValidateName()
     {

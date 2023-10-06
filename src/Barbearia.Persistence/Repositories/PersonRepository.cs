@@ -268,4 +268,30 @@ public class PersonRepository : IPersonRepository
             .Include(c => c.Addresses)
             .FirstOrDefaultAsync(p => p.PersonId == personId);
     }
+
+    public async Task<IEnumerable<Role?>> GetAllRoles()
+    {
+        return await _context.Roles
+            .Include(r => r.Employees)!
+            // .ThenInclude(e => e.Employee)
+            .ToListAsync();
+    }
+
+    public async Task<Role?> GetRoleByIdAsync(int roleId)
+    {
+        return await _context.Roles
+            .Include(r => r.Employees)!
+            // .ThenInclude(e => e.Employee)
+            .FirstOrDefaultAsync(r => r.RoleId == roleId);
+    }
+
+    public void AddRole(Role role)
+    {
+        _context.Roles.Add(role);
+    }
+
+    public void DeleteRole(Role role)
+    {
+        _context.Roles.Remove(role);
+    }
 }

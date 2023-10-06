@@ -176,4 +176,32 @@ public class ItemRepository : IItemRepository
         return (ServiceToReturn, paginationMetadata);
     }
 
+    public async Task<IEnumerable<ServiceCategory?>> GetAllServiceCategory()
+    {
+        return await _context.ServiceCategories
+            .Include(r => r.Services)         
+            .ToListAsync();
+    }
+
+    public async Task<ServiceCategory?> GetServiceCategoryByIdAsync(int serviceCategoryId)
+    {
+        var serviceCategory = await _context.ServiceCategories
+            // .Include(r => r.Roles)!
+            // .ThenInclude(e => e.Role)
+            .Include(r => r.Services)
+            .FirstOrDefaultAsync(r => r.ServiceCategoryId == serviceCategoryId);
+        // serviceCategory!.Services = await _itemContext.Services.Where(s => s.ServiceCategoryId == serviceCategoryId).ToListAsync();
+        return serviceCategory;
+    }
+
+    public void AddServiceCategory(ServiceCategory serviceCategory)
+    {
+        _context.ServiceCategories.Add(serviceCategory);
+    }
+
+    public void DeleteServiceCategory(ServiceCategory serviceCategory)
+    {
+        _context.ServiceCategories.Remove(serviceCategory);
+    }
+
 }

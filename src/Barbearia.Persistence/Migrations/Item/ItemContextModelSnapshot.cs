@@ -69,14 +69,14 @@ namespace Barbearia.Persistence.Migrations.Item
                         new
                         {
                             AppointmentId = 1,
-                            CancellationDate = new DateTime(2023, 10, 4, 0, 9, 7, 605, DateTimeKind.Utc).AddTicks(6944),
-                            ConfirmedDate = new DateTime(2023, 10, 4, 0, 9, 7, 605, DateTimeKind.Utc).AddTicks(6944),
+                            CancellationDate = new DateTime(2023, 10, 6, 2, 14, 2, 479, DateTimeKind.Utc).AddTicks(8659),
+                            ConfirmedDate = new DateTime(2023, 10, 6, 2, 14, 2, 479, DateTimeKind.Utc).AddTicks(8659),
                             CustomerId = 2,
-                            FinishDate = new DateTime(2023, 10, 4, 0, 9, 7, 605, DateTimeKind.Utc).AddTicks(6941),
-                            FinishServiceDate = new DateTime(2023, 10, 4, 0, 9, 7, 605, DateTimeKind.Utc).AddTicks(6943),
+                            FinishDate = new DateTime(2023, 10, 6, 2, 14, 2, 479, DateTimeKind.Utc).AddTicks(8657),
+                            FinishServiceDate = new DateTime(2023, 10, 6, 2, 14, 2, 479, DateTimeKind.Utc).AddTicks(8659),
                             ScheduleId = 1,
-                            StartDate = new DateTime(2023, 10, 4, 0, 9, 7, 605, DateTimeKind.Utc).AddTicks(6939),
-                            StartServiceDate = new DateTime(2023, 10, 4, 0, 9, 7, 605, DateTimeKind.Utc).AddTicks(6942),
+                            StartDate = new DateTime(2023, 10, 6, 2, 14, 2, 479, DateTimeKind.Utc).AddTicks(8656),
+                            StartServiceDate = new DateTime(2023, 10, 6, 2, 14, 2, 479, DateTimeKind.Utc).AddTicks(8658),
                             Status = 1
                         });
                 });
@@ -352,28 +352,6 @@ namespace Barbearia.Persistence.Migrations.Item
                         });
                 });
 
-            modelBuilder.Entity("Barbearia.Domain.Entities.RoleServiceCategory", b =>
-                {
-                    b.Property<int>("RoleId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ServiceCategoryId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("RoleId", "ServiceCategoryId");
-
-                    b.HasIndex("ServiceCategoryId");
-
-                    b.ToTable("RoleServiceCategory", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            RoleId = 1,
-                            ServiceCategoryId = 1
-                        });
-                });
-
             modelBuilder.Entity("Barbearia.Domain.Entities.Schedule", b =>
                 {
                     b.Property<int>("ScheduleId")
@@ -568,7 +546,7 @@ namespace Barbearia.Persistence.Migrations.Item
                             LastStockQuantity = 10,
                             Operation = 1,
                             ProductId = 1,
-                            Timestamp = new DateTime(2023, 10, 4, 0, 9, 7, 606, DateTimeKind.Utc).AddTicks(1560),
+                            Timestamp = new DateTime(2023, 10, 6, 2, 14, 2, 480, DateTimeKind.Utc).AddTicks(2483),
                             OrderId = 1
                         });
                 });
@@ -593,7 +571,7 @@ namespace Barbearia.Persistence.Migrations.Item
                             LastStockQuantity = 32,
                             Operation = 3,
                             ProductId = 2,
-                            Timestamp = new DateTime(2023, 10, 4, 0, 9, 7, 606, DateTimeKind.Utc).AddTicks(1573),
+                            Timestamp = new DateTime(2023, 10, 6, 2, 14, 2, 480, DateTimeKind.Utc).AddTicks(2498),
                             PersonId = 4
                         });
                 });
@@ -695,21 +673,6 @@ namespace Barbearia.Persistence.Migrations.Item
                     b.HasOne("Barbearia.Domain.Entities.Person", null)
                         .WithMany("Roles")
                         .HasForeignKey("PersonId");
-                });
-
-            modelBuilder.Entity("Barbearia.Domain.Entities.RoleServiceCategory", b =>
-                {
-                    b.HasOne("Barbearia.Domain.Entities.Role", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Barbearia.Domain.Entities.ServiceCategory", null)
-                        .WithMany()
-                        .HasForeignKey("ServiceCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.StockHistory", b =>

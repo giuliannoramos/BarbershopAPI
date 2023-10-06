@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Barbearia.Persistence.Migrations
 {
     [DbContext(typeof(PersonContext))]
-    [Migration("20231004000527_personMigration")]
-    partial class personMigration
+    [Migration("20231006021330_Correcao")]
+    partial class Correcao
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -212,12 +212,22 @@ namespace Barbearia.Persistence.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("RoleId"));
 
+                    b.Property<int?>("CustomerPersonId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(80)
                         .HasColumnType("character varying(80)");
 
+                    b.Property<int?>("SupplierPersonId")
+                        .HasColumnType("integer");
+
                     b.HasKey("RoleId");
+
+                    b.HasIndex("CustomerPersonId");
+
+                    b.HasIndex("SupplierPersonId");
 
                     b.ToTable("Role", (string)null);
 
@@ -577,16 +587,27 @@ namespace Barbearia.Persistence.Migrations
                     b.Navigation("Person");
                 });
 
+            modelBuilder.Entity("Barbearia.Domain.Entities.Role", b =>
+                {
+                    b.HasOne("Barbearia.Domain.Entities.Customer", null)
+                        .WithMany("Roles")
+                        .HasForeignKey("CustomerPersonId");
+
+                    b.HasOne("Barbearia.Domain.Entities.Supplier", null)
+                        .WithMany("Roles")
+                        .HasForeignKey("SupplierPersonId");
+                });
+
             modelBuilder.Entity("Barbearia.Domain.Entities.RoleEmployee", b =>
                 {
-                    b.HasOne("Barbearia.Domain.Entities.Person", "Employee")
-                        .WithMany("RoleEmployees")
+                    b.HasOne("Barbearia.Domain.Entities.Employee", "Employee")
+                        .WithMany()
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Barbearia.Domain.Entities.Role", "Role")
-                        .WithMany("RoleEmployees")
+                        .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -663,16 +684,9 @@ namespace Barbearia.Persistence.Migrations
 
                     b.Navigation("Products");
 
-                    b.Navigation("RoleEmployees");
-
                     b.Navigation("Telephones");
 
                     b.Navigation("WorkingDays");
-                });
-
-            modelBuilder.Entity("Barbearia.Domain.Entities.Role", b =>
-                {
-                    b.Navigation("RoleEmployees");
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.WorkingDay", b =>
@@ -680,6 +694,16 @@ namespace Barbearia.Persistence.Migrations
                     b.Navigation("Schedule");
 
                     b.Navigation("TimeOffs");
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.Customer", b =>
+                {
+                    b.Navigation("Roles");
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.Supplier", b =>
+                {
+                    b.Navigation("Roles");
                 });
 #pragma warning restore 612, 618
         }

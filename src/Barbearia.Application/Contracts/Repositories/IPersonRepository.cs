@@ -37,4 +37,8 @@ public interface IPersonRepository
     public void DeleteSchedule(Schedule schedule);
     public void AddSchedule(Schedule schedule);
     Task<Person?> GetPersonByIdAsync(int personId);
+    public Task<IEnumerable<Role?>> GetAllRoles();
+    public Task<Role?> GetRoleByIdAsync(int roleId);
+    public void AddRole(Role role);
+    public void DeleteRole(Role role);
 }

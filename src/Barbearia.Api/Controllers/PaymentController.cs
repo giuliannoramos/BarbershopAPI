@@ -38,7 +38,7 @@ public class PaymentController : MainController
         var createPaymentCommandResponse = await _mediator.Send(createPaymentCommand);
 
         if(!createPaymentCommandResponse.IsSuccess)
-            return RequestValidationProblem(createPaymentCommandResponse, ModelState);
+            return HandleRequestError(createPaymentCommandResponse);
 
         var PaymentForReturn = createPaymentCommandResponse.Payment;
 
@@ -72,7 +72,7 @@ public class PaymentController : MainController
         var updatePaymentCommandResponse = await _mediator.Send(updatePaymentCommand);
 
         if(!updatePaymentCommandResponse.IsSuccess){
-            return RequestValidationProblem(updatePaymentCommandResponse, ModelState);
+            return HandleRequestError(updatePaymentCommandResponse);
         }
         return NoContent();
 

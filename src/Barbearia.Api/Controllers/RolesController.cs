@@ -46,7 +46,7 @@ public class RolesController : MainController
         var CreateRoleCommandResponse = await _mediator.Send(createRoleCommand);
 
         if(!CreateRoleCommandResponse.IsSuccess)
-            return RequestValidationProblem(CreateRoleCommandResponse,ModelState);
+            return HandleRequestError(CreateRoleCommandResponse);
 
         var roleForReturn = CreateRoleCommandResponse.Role;
 
@@ -66,7 +66,7 @@ public class RolesController : MainController
         var updateRoleCommandResponse = await _mediator.Send(updateRoleCommand);
 
         if (!updateRoleCommandResponse.IsSuccess)
-            return RequestValidationProblem(updateRoleCommandResponse, ModelState);
+            return HandleRequestError(updateRoleCommandResponse);
         
         return NoContent();
     }

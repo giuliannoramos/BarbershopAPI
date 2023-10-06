@@ -29,7 +29,7 @@ public class OrdersCollectionController : MainController
         var requestResponse = await _mediator.Send(getOrdersCollectionQuery);
 
         if(!requestResponse.IsSuccess) 
-            return RequestValidationProblem(requestResponse, ModelState);
+            return HandleRequestError(requestResponse);
 
         var ordersToReturn = requestResponse.Orders;
         var paginationMetadata = requestResponse.PaginationMetadata;

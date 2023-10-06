@@ -48,7 +48,7 @@ public class CouponsController : MainController
         var createCouponCommandResponse = await _mediator.Send(createCouponCommand);
 
         if (!createCouponCommandResponse.IsSuccess)
-            return RequestValidationProblem(createCouponCommandResponse, ModelState);
+            return HandleRequestError(createCouponCommandResponse);
 
         var couponForReturn = createCouponCommandResponse.Coupon;
 
@@ -71,7 +71,7 @@ public class CouponsController : MainController
         var updateCouponCommandResponse = await _mediator.Send(updateCouponCommand);
 
         if (!updateCouponCommandResponse.IsSuccess)
-            return RequestValidationProblem(updateCouponCommandResponse, ModelState);
+            return HandleRequestError(updateCouponCommandResponse);
 
         return NoContent();
     }

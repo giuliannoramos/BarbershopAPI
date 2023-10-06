@@ -30,7 +30,7 @@ public class ServicesCollectionController : MainController
         var requestResponse = await _mediator.Send(getServicesCollectionQuery);
 
         if (!requestResponse.IsSuccess)
-            return RequestValidationProblem(requestResponse, ModelState);
+            return HandleRequestError(requestResponse);
 
         var servicesToReturn = requestResponse.Services;
         var paginationMetadata = requestResponse.PaginationMetadata;

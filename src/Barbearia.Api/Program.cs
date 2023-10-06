@@ -89,6 +89,14 @@ using Barbearia.Application.Features.Appointments.Commands.CreateAppointment;
 using Barbearia.Application.Features.Appointments.Queries.GetAppointmentById;
 using Barbearia.Application.Features.Appointments.Queries.GetAllAppointments;
 using Barbearia.Application.Features.AppointmentsCollection;
+using Barbearia.Application.Features.WorkingDays.Query.GetWorkingDay;
+using Barbearia.Application.Features.WorkingDays.Commands.CreateWorkingDay;
+using Barbearia.Application.Features.WorkingDays.Commands.UpdateWorkingDay;
+using Barbearia.Application.Features.WorkingDays.Commands.DeleteWorkingDay;
+using Barbearia.Application.Features.TimesOff.Queries.GetTimeOffById;
+using Barbearia.Application.Features.TimesOff.Commands.CreateTimeOff;
+using Barbearia.Application.Features.TimesOff.Commands.UpdateTimeOff;
+using Barbearia.Application.Features.TimesOff.Commands.DeleteTimeOff;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -240,23 +248,35 @@ builder.Services.AddScoped<IRequestHandler<DeleteAppointmentCommand, bool>, Dele
 builder.Services.AddScoped<IRequestHandler<UpdateAppointmentCommand, UpdateAppointmentCommandResponse>, UpdateAppointmentCommandHandler>();
 builder.Services.AddScoped<IValidator<UpdateAppointmentCommand>, UpdateAppointmentCommandValidator>();
 builder.Services.AddScoped<IRequestHandler<GetAppointmentsCollectionQuery, GetAppointmentsCollectionQueryResponse>, GetAppointmentsCollectionQueryHandler>();
+//WorkingDays Commands and queries
+builder.Services.AddScoped<IRequestHandler<GetWorkingDayQuery, IEnumerable<GetWorkingDayDto>>, GetWorkingDayQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<CreateWorkingDayCommand,CreateWorkingDayCommandResponse>,CreateWorkingDayCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<UpdateWorkingDayCommand, UpdateWorkingDayCommandResponse>, UpdateWorkingDayCommandHandler>();
+builder.Services.AddScoped<IValidator<UpdateWorkingDayCommand>, UpdateWorkingDayCommandValidator>();
+builder.Services.AddScoped<IRequestHandler<DeleteWorkingDayCommand, bool>, DeleteWorkingDayCommandHandler>();
+//TimeOffs Commands and queries
+builder.Services.AddScoped<IRequestHandler<GetTimeOffByIdQuery, GetTimeOffByIdDto>, GetTimeOffByIdQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<CreateTimeOffCommand,CreateTimeOffCommandResponse>,CreateTimeOffCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<UpdateTimeOffCommand, UpdateTimeOffCommandResponse>, UpdateTimeOffCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<DeleteTimeOffCommand, bool>, DeleteTimeOffCommandHandler>();
+
 
 //config banco de dados
 builder.Services.AddDbContext<PersonContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=1973");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678");
 }
 );
 
 builder.Services.AddDbContext<OrderContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=1973");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678");
 }
 );
 
 builder.Services.AddDbContext<ItemContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=1973;Include Error Detail=true");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678;Include Error Detail=true");
 }
 );
 

@@ -5,50 +5,217 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Options;
 
-namespace Barbearia.Api.Controllers
+namespace Barbearia.Api.Controllers;
+
+[ApiController]
+public abstract class MainController : ControllerBase
 {
-    [ApiController]
-    public abstract class MainController : ControllerBase
+    // protected const int maxPageSize = 6;
+
+    public ActionResult HandleRequestError(BaseResponse response)
     {
-        // Este método substitui o método padrão de tratamento de problemas de validação.
-        // Ele é chamado quando ocorrem erros de validação em uma ação do controlador.
-        public override ActionResult ValidationProblem(
-            [ActionResultObjectValue] ModelStateDictionary modelStateDictionary
-        )
-        {
-            // Obtém as opções de comportamento da API a partir do serviço de solicitação HTTP.
-            var options = HttpContext.RequestServices
-                .GetRequiredService<IOptions<ApiBehaviorOptions>>();
+        ConfigureModelState(response.Errors);
 
-            // Retorna uma resposta personalizada com base nas opções de comportamento da API.
-            return (ActionResult)options.Value
-                .InvalidModelStateResponseFactory(ControllerContext);
+        switch(response.ErrorType)
+        {
+            case Error.ValidationProblem:return UnprocessableEntity(ModelState);
+            case Error.NotFoundProblem:return NotFound(ModelState);
+            case Error.BadRequestProblem:return BadRequest(ModelState);
+            case Error.InternalServerErrorProblem:return InternalServerErrorProblem(ModelState);
+            default:
+                return StatusCode(StatusCodes.Status418ImATeapot);
         }
+    }
+    public override ActionResult ValidationProblem(
+    [ActionResultObjectValue] ModelStateDictionary modelStateDictionary)
+    {
+        // base.ValidationProblem();
+        var options = HttpContext.RequestServices
+            .GetRequiredService<IOptions<ApiBehaviorOptions>>();
 
-        // Este método é marcado como [NonAction], o que significa que não é uma ação do controlador
-        // e não pode ser acessado diretamente como uma rota da Web.
-        // Ele é usado para lidar com problemas de validação em respostas personalizadas.
-        [NonAction]
-        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-        protected ActionResult RequestValidationProblem(
-            BaseResponse requestResponse,
-            [ActionResultObjectValue] ModelStateDictionary modelStateDictionary
-        )
+        return (ActionResult)options.Value
+            .InvalidModelStateResponseFactory(ControllerContext);
+    }
+
+    public override NotFoundObjectResult NotFound([ActionResultObjectValue] object? value)
+    {
+        Console.WriteLine(ModelState.ErrorCount);
+        Console.WriteLine(ModelState.IsValid);
+        Console.WriteLine(ModelState == null);
+        Console.WriteLine(Activity.Current?.Id);
+
+        // Cria a fábrica de um objeto de detalhes de problema de validação
+        var problemDetailsFactory = HttpContext.RequestServices
+            .GetRequiredService<ProblemDetailsFactory>();
+
+        // Cria um objeto de detalhes de problema de validação
+        var validationProblemDetails = problemDetailsFactory
+            .CreateValidationProblemDetails(
+                HttpContext,
+                ModelState!);
+
+        // Adiciona informações adicionais não adicionadas por padrão
+        validationProblemDetails.Detail =
+            "See the errors field for details.";
+        validationProblemDetails.Instance =
+            HttpContext.Request.Path;
+
+        // Relata respostas do estado de modelo inválido como problemas de validação
+        validationProblemDetails.Type =
+            "https://courseunivali.com/notfoundproblem";
+        validationProblemDetails.Status =
+            StatusCodes.Status404NotFound;
+        validationProblemDetails.Title =
+            "One or more records were not found";
+        // validationProblemDetails.Extensions["traceId"] = HttpContext.TraceIdentifier;
+        return new NotFoundObjectResult(
+            validationProblemDetails)
         {
-            // Itera pelos erros na resposta personalizada e adiciona-os ao ModelStateDictionary
-            foreach (var error in requestResponse.Errors)
+            ContentTypes = { "application/problem+json" }
+        };
+
+    }
+
+    public override BadRequestObjectResult BadRequest(ModelStateDictionary modelStateDictionary)
+    {
+        Console.WriteLine(ModelState.ErrorCount);
+        Console.WriteLine(ModelState.IsValid);
+        Console.WriteLine(ModelState == null);
+        Console.WriteLine(Activity.Current?.Id);
+
+        // Cria a fábrica de um objeto de detalhes de problema de validação
+        var problemDetailsFactory = HttpContext.RequestServices
+            .GetRequiredService<ProblemDetailsFactory>();
+
+        // Cria um objeto de detalhes de problema de validação
+        var validationProblemDetails = problemDetailsFactory
+            .CreateValidationProblemDetails(
+                HttpContext,
+                ModelState!);
+
+        // Adiciona informações adicionais não adicionadas por padrão
+        validationProblemDetails.Detail =
+            "See the errors field for details.";
+        validationProblemDetails.Instance =
+            HttpContext.Request.Path;
+
+        // Relata respostas do estado de modelo inválido como problemas de validação
+        validationProblemDetails.Type =
+            "https://courseunivali.com/badrequestproblem";
+        validationProblemDetails.Status =
+            StatusCodes.Status400BadRequest;
+        validationProblemDetails.Title =
+            "One or more issues were found within the request body";
+        // validationProblemDetails.Extensions["traceId"] = HttpContext.TraceIdentifier;
+        return new BadRequestObjectResult(
+            validationProblemDetails)
+        {
+            ContentTypes = { "application/problem+json" }
+        };
+
+    }
+
+    public override UnprocessableEntityObjectResult UnprocessableEntity([
+        ActionResultObjectValue] ModelStateDictionary modelState)
+    {
+        // Cria a fábrica de um objeto de detalhes de problema de validação
+        var problemDetailsFactory = HttpContext.RequestServices
+            .GetRequiredService<ProblemDetailsFactory>();
+
+        // Cria um objeto de detalhes de problema de validação
+        var validationProblemDetails = problemDetailsFactory
+            .CreateValidationProblemDetails(
+                HttpContext,
+                ModelState);
+
+        // Adiciona informações adicionais não adicionadas por padrão
+        validationProblemDetails.Detail =
+            "See the errors field for details.";
+        validationProblemDetails.Instance =
+            HttpContext.Request.Path;
+
+        // Relata respostas do estado de modelo inválido como problemas de validação
+        validationProblemDetails.Type =
+            "https://courseunivali.com/modelvalidationproblem";
+        validationProblemDetails.Status =
+            StatusCodes.Status422UnprocessableEntity;
+        validationProblemDetails.Title =
+            "One or more validation errors occurred.";
+
+        return new UnprocessableEntityObjectResult(
+            validationProblemDetails)
+        {
+            ContentTypes = { "application/problem+json" }
+        };
+    }
+
+    public ObjectResult InternalServerErrorProblem([
+        ActionResultObjectValue] ModelStateDictionary modelState)
+    {
+        // Cria a fábrica de um objeto de detalhes de problema de validação
+        var problemDetailsFactory = HttpContext.RequestServices
+            .GetRequiredService<ProblemDetailsFactory>();
+
+        // Cria um objeto de detalhes de problema de validação
+        var validationProblemDetails = problemDetailsFactory
+            .CreateValidationProblemDetails(
+                HttpContext,
+                ModelState);
+
+        // Adiciona informações adicionais não adicionadas por padrão
+        validationProblemDetails.Detail =
+            "See the errors field for details.";
+        validationProblemDetails.Instance =
+            HttpContext.Request.Path;
+
+        // Relata respostas do estado de modelo inválido como problemas de validação
+        validationProblemDetails.Type =
+            "https://courseunivali.com/modelvalidationproblem";
+        validationProblemDetails.Status =
+            StatusCodes.Status500InternalServerError;
+        validationProblemDetails.Title =
+            "One or more validation errors occurred.";
+
+        return new UnprocessableEntityObjectResult(
+            validationProblemDetails)
+        {
+            ContentTypes = { "application/problem+json" }
+        };
+    }
+
+    public void ConfigureModelState(Dictionary<string, string[]> errors)
+    {
+        foreach (var error in errors)
+        {
+            string key = error.Key;
+            string[] values = error.Value;
+
+            foreach (var value in values)
             {
-                string key = error.Key;
-                string[] values = error.Value;
-
-                foreach (var value in values)
-                {
-                    modelStateDictionary.AddModelError(key, value);
-                }
+                ModelState.AddModelError(key, value);
             }
-
-            // Chama o método ValidationProblem padrão, passando o ModelStateDictionary.
-            return ValidationProblem(modelStateDictionary);
         }
+    }
+
+    // EXCLUIR DEPOIS
+    [NonAction]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+    protected ActionResult RequestValidationProblem(
+        BaseResponse requestResponse,
+        [ActionResultObjectValue] ModelStateDictionary modelStateDictionary
+    )
+    {
+        foreach(var error in requestResponse.Errors)
+        {
+            string key = error.Key;
+            string[] values = error.Value;
+            
+            foreach (var value in values)
+            {
+                modelStateDictionary.AddModelError(key, value);
+            }
+        }
+
+        return ValidationProblem(modelStateDictionary);
     }
 }

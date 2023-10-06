@@ -3,12 +3,12 @@ using Microsoft.Extensions.Logging;
 
 namespace Barbearia.Application.Features;
 
-public enum Error { ValidationProblem, NotFoundProblem, BadRequestProblem }
+public enum Error { ValidationProblem, NotFoundProblem, BadRequestProblem, InternalServerErrorProblem}
 public abstract class BaseResponse
 {
     public bool IsSuccess
     {
-        get {return Errors.Count == 0;}
+        get { return Errors.Count == 0; }
     }
     
     public Dictionary<string, string[]> Errors { get; set; } = new();
@@ -21,5 +21,16 @@ public abstract class BaseResponse
         {
             Errors.Add(error.Key, error.Value);
         }
+    }
+
+    private void FillErrorType(Error errorType)
+    {
+        ErrorType = errorType;
+    }
+
+    public void AddErrors(ValidationResult validationResult, Error errorType)
+    {
+        FillErrors(validationResult);
+        FillErrorType(errorType);
     }
 }

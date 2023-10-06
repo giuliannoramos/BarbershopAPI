@@ -32,7 +32,7 @@ public class Product : Item{// não entendi se o product tem o mesmo id do item 
 
         private void CheckQuantityInStock()
         {
-            if (QuantityInStock < 0)
+            if (QuantityInStock <= 0)
             {
                 throw new ArgumentException("Quantidade em estoque inválida. Deve ser maior ou igual a zero.");
             }
@@ -40,7 +40,7 @@ public class Product : Item{// não entendi se o product tem o mesmo id do item 
 
         private void CheckQuantityReserved()
         {
-            if (QuantityReserved < 0)
+            if (QuantityReserved <= 0)
             {
                 throw new ArgumentException("Quantidade reservada inválida. Deve ser maior ou igual a zero.");
             }

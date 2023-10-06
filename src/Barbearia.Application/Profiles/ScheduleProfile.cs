@@ -26,6 +26,8 @@ public class ScheduleProfile : Profile
 
         CreateMap<WorkingDayDto,WorkingDay>().ReverseMap();
         CreateMap<PersonDto,Employee>().ReverseMap();
+
+        CreateMap<Schedule,ScheduleForWorkingDayDto>().ReverseMap();
     }
     
 }

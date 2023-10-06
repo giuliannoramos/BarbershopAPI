@@ -38,7 +38,7 @@ public class AddressesController : MainController
         var createAddressCommandResponse = await _mediator.Send(createAddressCommand);
 
         if (!createAddressCommandResponse.IsSuccess)
-            return RequestValidationProblem(createAddressCommandResponse, ModelState);
+            return HandleRequestError(createAddressCommandResponse);
 
         var addressForReturn = createAddressCommandResponse.Address;
 
@@ -62,7 +62,7 @@ public class AddressesController : MainController
         var updateAddressCommandResponse = await _mediator.Send(updateAddressCommand);
 
         if (!updateAddressCommandResponse.IsSuccess)
-            return RequestValidationProblem(updateAddressCommandResponse, ModelState);
+            return HandleRequestError(updateAddressCommandResponse);
 
         return NoContent();
     }

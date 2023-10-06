@@ -18,7 +18,7 @@ public class TimeOff
 
     private void ValidateDates()
     {
-        if(StartTime<FinishTime)
+        if(StartTime>FinishTime)
         {
             throw new Exception("Start time must come before Finish time");
         }

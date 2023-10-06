@@ -31,7 +31,7 @@ public class EmployeesCollectionController : MainController
         var requestResponse = await _mediator.Send(getEmployeesCollectionQuery);
 
         if (!requestResponse.IsSuccess)
-            return RequestValidationProblem(requestResponse, ModelState);
+            return HandleRequestError(requestResponse);
 
         var employeesToReturn = requestResponse.Employees;
         var paginationMetadata = requestResponse.PaginationMetadata;

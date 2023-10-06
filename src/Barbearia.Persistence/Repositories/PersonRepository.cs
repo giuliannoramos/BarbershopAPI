@@ -79,6 +79,38 @@ public class PersonRepository : IPersonRepository
         _context.Persons.Remove(customer);
     }
 
+    public async Task<IEnumerable<WorkingDay>?> GetWorkingDayAsync(int employeeId)
+    {
+        var workingDaysFromDatabase = await GetEmployeeByIdAsync(employeeId);
+        return workingDaysFromDatabase?.WorkingDays;
+    }
+
+    public void AddWorkingDay(Employee employee, WorkingDay workingDay)
+    {
+        employee.WorkingDays.Add(workingDay);
+    }
+
+    public void DeleteWorkingDay(Employee employee, WorkingDay workingDay)
+    {
+        employee.WorkingDays.Remove(workingDay);
+    }
+
+        public async Task<TimeOff?> GetTimeOffByIdAsync(int timeOffId)
+    {
+        return await _context.TimeOffs.FirstOrDefaultAsync(t=>t.TimeOffId ==timeOffId);
+    }
+
+    
+    public void AddTimeOff(TimeOff timeOff)
+    {
+        _context.TimeOffs.Add(timeOff);
+    }
+
+    public void DeleteTimeOff(TimeOff timeOff)
+    {
+        _context.TimeOffs.Remove(timeOff);
+    }
+
     public async Task<Supplier?> GetSupplierByIdAsync(int supplierId)
     {
         return await _context.Persons.OfType<Supplier>()
@@ -170,6 +202,10 @@ public class PersonRepository : IPersonRepository
         return await _context.Persons.OfType<Employee>()
             .Include(c => c.Telephones)
             .Include(c => c.Addresses)
+            .Include(c =>c.WorkingDays)
+                .ThenInclude(w=>w.Schedule)
+            .Include(c =>c.WorkingDays)
+                .ThenInclude(w=>w.TimeOffs)
             .FirstOrDefaultAsync(p => p.PersonId == employeeId);
     }
 

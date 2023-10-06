@@ -32,7 +32,7 @@ public class CustomersCollectionController:MainController
         var requestResponse = await _mediator.Send(getCustomersCollectionQuery);
         
         if(!requestResponse.IsSuccess) 
-            return RequestValidationProblem(requestResponse, ModelState);
+            return HandleRequestError(requestResponse);
 
         var customersToReturn = requestResponse.Customers;
         var paginationMetadata = requestResponse.PaginationMetadata;

@@ -32,7 +32,7 @@ public class SuppliersCollectionController : MainController
         var requestResponse = await _mediator.Send(getSuppliersCollectionQuery);
 
         if (!requestResponse.IsSuccess)
-            return RequestValidationProblem(requestResponse, ModelState);
+            return HandleRequestError(requestResponse);
 
         var SuppliersToReturn = requestResponse.Suppliers;
         var paginationMetadata = requestResponse.PaginationMetadata;

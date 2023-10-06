@@ -16,6 +16,12 @@ public interface IPersonRepository
     Task<Supplier?> GetSupplierByIdAsync(int supplierId);
     void AddSupplier(Supplier supplier);
     void DeleteSupplier(Supplier supplier);
+    Task<IEnumerable<WorkingDay>?> GetWorkingDayAsync(int employeeId);
+    void AddWorkingDay(Employee employee, WorkingDay workingDay);
+    void DeleteWorkingDay(Employee employee, WorkingDay workingDay);
+    Task<TimeOff?> GetTimeOffByIdAsync(int timeOffId);
+    void AddTimeOff(TimeOff timeOff);
+    void DeleteTimeOff(TimeOff timeOff);
     Task<bool> SaveChangesAsync();
     Task<IEnumerable<Address>?> GetAddressAsync(int personId);
     void AddAddress(Person person, Address address);

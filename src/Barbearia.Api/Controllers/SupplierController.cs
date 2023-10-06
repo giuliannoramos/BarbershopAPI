@@ -39,7 +39,7 @@ public class SupplierController : MainController
 
 
         if(!createSupplierCommandResponse.IsSuccess)
-            return RequestValidationProblem(createSupplierCommandResponse, ModelState);
+            return HandleRequestError(createSupplierCommandResponse);
 
         var supplierForReturn = createSupplierCommandResponse.Supplier;
 
@@ -60,7 +60,7 @@ public class SupplierController : MainController
         var updateSupplierCommandResponse = await _mediator.Send(updateSupplierCommand);
 
         if(!updateSupplierCommandResponse.IsSuccess)
-        return RequestValidationProblem(updateSupplierCommandResponse, ModelState);
+        return HandleRequestError(updateSupplierCommandResponse);
 
         return NoContent();
     }

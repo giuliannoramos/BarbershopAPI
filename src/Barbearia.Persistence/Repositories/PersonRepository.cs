@@ -83,7 +83,7 @@ public class PersonRepository : IPersonRepository
     {
         var workingDaysFromDatabase = await GetEmployeeByIdAsync(employeeId);
         return workingDaysFromDatabase?.WorkingDays;
-    }    
+    }
 
     public async Task<WorkingDay?> GetWorkingDayByIdAsync(int workingDayId)
     {
@@ -91,6 +91,12 @@ public class PersonRepository : IPersonRepository
         .OfType<Employee>()
         .SelectMany(e => e.WorkingDays)
         .FirstOrDefaultAsync(workingDay => workingDay.WorkingDayId == workingDayId);
+    }
+
+    public async Task<bool> HasScheduleForWorkingDayAsync(int workingDayId)
+    {
+        return await _context.Schedules
+        .AnyAsync(schedule => schedule.WorkingDayId == workingDayId);
     }
 
     public void AddWorkingDay(Employee employee, WorkingDay workingDay)
@@ -103,12 +109,12 @@ public class PersonRepository : IPersonRepository
         employee.WorkingDays.Remove(workingDay);
     }
 
-        public async Task<TimeOff?> GetTimeOffByIdAsync(int timeOffId)
+    public async Task<TimeOff?> GetTimeOffByIdAsync(int timeOffId)
     {
-        return await _context.TimeOffs.FirstOrDefaultAsync(t=>t.TimeOffId ==timeOffId);
+        return await _context.TimeOffs.FirstOrDefaultAsync(t => t.TimeOffId == timeOffId);
     }
 
-    
+
     public void AddTimeOff(TimeOff timeOff)
     {
         _context.TimeOffs.Add(timeOff);
@@ -210,10 +216,10 @@ public class PersonRepository : IPersonRepository
         return await _context.Persons.OfType<Employee>()
             .Include(c => c.Telephones)
             .Include(c => c.Addresses)
-            .Include(c =>c.WorkingDays)
-                .ThenInclude(w=>w.Schedule)
-            .Include(c =>c.WorkingDays)
-                .ThenInclude(w=>w.TimeOffs)
+            .Include(c => c.WorkingDays)
+                .ThenInclude(w => w.Schedule)
+            .Include(c => c.WorkingDays)
+                .ThenInclude(w => w.TimeOffs)
             .FirstOrDefaultAsync(p => p.PersonId == employeeId);
     }
 
@@ -267,7 +273,9 @@ public class PersonRepository : IPersonRepository
     {
         return await _context.Schedules
             .Include(s => s.WorkingDay!)
-            .ThenInclude(w => w.Employee).ToListAsync();
+            .ThenInclude(w => w.Employee)
+            .OrderBy(s => s.ScheduleId)
+            .ToListAsync();
     }
 
     public async Task<Schedule?> GetScheduleByIdAsync(int scheduleId)

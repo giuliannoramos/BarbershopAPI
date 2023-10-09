@@ -48,7 +48,7 @@ public class UpdateServiceCategoryCommandHandler:IRequestHandler<UpdateServiceCa
         }
         catch (Exception ex)
         {
-            response.ErrorType = Error.ValidationProblem;
+            response.ErrorType = Error.InternalServerErrorProblem;
             response.Errors.Add("ServiceCategory_Validation", new[] { "Error in ServiceCategory validation" });
             _logger.LogError(ex, "erro de validação em update ServiceCategory");
             return response;

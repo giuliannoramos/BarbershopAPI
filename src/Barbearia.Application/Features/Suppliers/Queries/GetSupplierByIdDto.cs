@@ -18,5 +18,4 @@ public class GetSupplierByIdDto
     public List<AddressDto> Addresses { get; set; } = new();
     public List<TelephoneDto> Telephones { get; set; } = new();
     public List<ProductForSupplierDto> Products { get; set; } = new();
-    public List<StockHistoryForSupplierDto> StockHistories { get; set; } = new();
 }

@@ -130,7 +130,7 @@ public class UpdateStockHistoryCommandHandler : IRequestHandler<UpdateStockHisto
         }
         catch (Exception ex)
         {
-            response.ErrorType = Error.ValidationProblem;
+            response.ErrorType = Error.InternalServerErrorProblem;
             response.Errors.Add("StockHistory_Validation", new[] { "Error in stock history validation" });
             _logger.LogError(ex, "erro de validação em create stock history");
             return response;

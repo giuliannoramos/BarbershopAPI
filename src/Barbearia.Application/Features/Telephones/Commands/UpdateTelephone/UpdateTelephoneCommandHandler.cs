@@ -55,7 +55,7 @@ public class UpdateTelephoneCommandHandler : IRequestHandler<UpdateTelephoneComm
         }
         catch (Exception ex)
         {
-            response.ErrorType = Error.ValidationProblem;
+            response.ErrorType = Error.InternalServerErrorProblem;
             response.Errors.Add("Telephone_Validation", new[] { "Error in telephone validation" });
             _logger.LogError(ex, "erro de validação em create telephone");
             return response;

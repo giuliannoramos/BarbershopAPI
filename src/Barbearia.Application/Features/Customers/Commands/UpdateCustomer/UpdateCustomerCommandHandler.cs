@@ -53,7 +53,7 @@ public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerComman
         }
         catch (Exception ex)
         {
-            response.ErrorType = Error.ValidationProblem;
+            response.ErrorType = Error.InternalServerErrorProblem;
             response.Errors.Add("Customer_Validation", new[] { "Error in customer validation" });
             _logger.LogError(ex, "erro de validação em create customer");
             return response;
@@ -69,7 +69,7 @@ public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerComman
             }
             catch (Exception ex)
             {
-                response.ErrorType = Error.ValidationProblem;
+                response.ErrorType = Error.InternalServerErrorProblem;
                 response.Errors.Add("Telephone_Validation", new[] { "Error in telephone validation" });
                 _logger.LogError(ex, "erro de validação em create telephone");
                 return response;
@@ -86,7 +86,7 @@ public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerComman
             }
             catch (Exception ex)
             {
-                response.ErrorType = Error.ValidationProblem;
+                response.ErrorType = Error.InternalServerErrorProblem;
                 response.Errors.Add("Address_Validation", new[] { "Error in address validation" });
                 _logger.LogError(ex, "erro de validação em create address");
                 return response;

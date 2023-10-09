@@ -61,7 +61,7 @@ public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand, Upd
         }
         catch (Exception ex)
         {
-            response.ErrorType = Error.ValidationProblem;
+            response.ErrorType = Error.InternalServerErrorProblem;
             response.Errors.Add("Order_Validation", new[] { "Error in order validation" });
             _logger.LogError(ex, "erro de validação em update order");
             return response;

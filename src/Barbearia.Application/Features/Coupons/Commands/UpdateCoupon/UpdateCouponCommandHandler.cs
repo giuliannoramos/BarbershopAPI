@@ -48,7 +48,7 @@ public class UpdateCouponCommandHandler : IRequestHandler<UpdateCouponCommand, U
         }
         catch (Exception ex)
         {
-            response.ErrorType = Error.ValidationProblem;
+            response.ErrorType = Error.InternalServerErrorProblem;
             response.Errors.Add("Coupon_Validation", new[] { "Error in coupon validation" });
             _logger.LogError(ex, "Erro de validação em update coupon");
             return response;

@@ -53,7 +53,7 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Cre
         }
         catch(Exception ex)
         {
-            response.ErrorType = Error.ValidationProblem;
+            response.ErrorType = Error.InternalServerErrorProblem;
             response.Errors.Add("Order_Validation", new[] {"Error in order validation"});
             _logger.LogError(ex,"erro de validação em create order");
             return response;

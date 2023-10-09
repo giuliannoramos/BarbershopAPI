@@ -91,7 +91,11 @@ public class Employee: Person
         {
             throw new Exception("Employee cant have stock histories");
         }
-    }    
+    }  
+        private void CheckBirthDate()
+    {
+        if(BirthDate> DateOnly.FromDateTime(DateTime.UtcNow)) throw new ArgumentException("BirthDate de funcionário não pode ser no futuro");
+    } 
 
     public void ValidateEmployee()
     {
@@ -100,5 +104,6 @@ public class Employee: Person
         CheckCnpj();
         ValidateCPF();
         CheckPersonAttributes();
+        CheckBirthDate();
     }
 }

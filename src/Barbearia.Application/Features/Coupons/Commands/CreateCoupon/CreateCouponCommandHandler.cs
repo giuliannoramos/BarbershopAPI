@@ -50,7 +50,7 @@ public class CreateCouponCommandHandler : IRequestHandler<CreateCouponCommand, C
         }
         catch (Exception ex)
         {
-            response.ErrorType = Error.ValidationProblem;
+            response.ErrorType = Error.InternalServerErrorProblem;
             response.Errors.Add("Coupon_Validation", new[] { "Error in coupon validation" });
             _logger.LogError(ex, "Erro de validação em create coupon");
             return response;

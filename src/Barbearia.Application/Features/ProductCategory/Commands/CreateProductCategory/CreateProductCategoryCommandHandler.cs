@@ -36,6 +36,18 @@ public class CreateProductCategoryCommandHandler : IRequestHandler<CreateProduct
 
         var ProductCategoryEntity = _mapper.Map<ProductCategory>(request);
 
+        try
+        {
+            ProductCategoryEntity.ValidateProductCategory();
+        }
+        catch (Exception ex)
+        {
+            response.ErrorType = Error.InternalServerErrorProblem;
+            response.Errors.Add("ProductCategory_Validation", new[] { "Error in ProductCategory validation" });
+            _logger.LogError(ex, "erro de validação em update ProductCategory");
+            return response;
+        }
+
         _itemRepository.AddProductCategory(ProductCategoryEntity);
         await _itemRepository.SaveChangesAsync();
 

@@ -42,7 +42,20 @@ public class UpdateProductCategoryCommandHandler : IRequestHandler<UpdateProduct
             return response;
         }
 
-        _mapper.Map(request, ProductCategoryFromDatabase);
+        var ProductCategoryEntity = _mapper.Map(request, ProductCategoryFromDatabase);
+
+
+        try
+        {
+            ProductCategoryEntity.ValidateProductCategory();
+        }
+        catch (Exception ex)
+        {
+            response.ErrorType = Error.InternalServerErrorProblem;
+            response.Errors.Add("ProductCategory_Validation", new[] { "Error in ProductCategory validation" });
+            _logger.LogError(ex, "erro de validação em update ProductCategory");
+            return response;
+        }
 
         await _itemRepository.SaveChangesAsync();
 

@@ -61,7 +61,7 @@ public class UpdateTimeOffCommandHandler : IRequestHandler<UpdateTimeOffCommand,
         }
         catch (Exception ex)
         {
-            response.ErrorType = Error.ValidationProblem;
+            response.ErrorType = Error.InternalServerErrorProblem;
             response.Errors.Add("TimeOff_Validation", new[] { "Error in time off validation" });
             _logger.LogError(ex, "erro de validação em update time off");
             return response;

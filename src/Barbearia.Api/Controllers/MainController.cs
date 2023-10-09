@@ -176,7 +176,7 @@ public abstract class MainController : ControllerBase
         validationProblemDetails.Title =
             "One or more validation errors occurred.";
 
-        return new UnprocessableEntityObjectResult(
+        return new ObjectResult(
             validationProblemDetails)
         {
             ContentTypes = { "application/problem+json" }

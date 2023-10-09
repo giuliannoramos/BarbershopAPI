@@ -26,7 +26,9 @@ public class UpdateEmployeeCommandValidator : AbstractValidator<UpdateEmployeeCo
 
         RuleFor(e => e.BirthDate)
             .NotEmpty()
-                .WithMessage("Person BirthDate cannot be empty");
+                .WithMessage("Person BirthDate cannot be empty")
+            .LessThan(DateOnly.FromDateTime(DateTime.UtcNow))
+                .WithMessage("BirthDate cannot be in the future");
 
         RuleFor(e => e.Email)
             .NotEmpty()
@@ -65,7 +67,7 @@ public class UpdateEmployeeCommandValidator : AbstractValidator<UpdateEmployeeCo
 
                 telephone.RuleFor(t => t.Type)                    
                     .IsInEnum()
-                        .WithMessage("Tipo de telefone inválido. O tipo deve ser Móvel ou Fixo.");
+                        .WithMessage("Tipo de telefone inválido. O tipo deve ser Mobile[0] ou Landline[1].");
             });
 
         RuleFor(e => e.Addresses)

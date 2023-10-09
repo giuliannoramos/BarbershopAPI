@@ -47,7 +47,7 @@ public class CreateWorkingDayCommandHandler : IRequestHandler<CreateWorkingDayCo
         }
         catch (Exception ex)
         {
-            response.ErrorType = Error.ValidationProblem;
+            response.ErrorType = Error.InternalServerErrorProblem;
             response.Errors.Add("Working_Day_Validation", new[] { "Error in working day validation" });
             _logger.LogError(ex, "erro de validação em create workingday");
             return response;

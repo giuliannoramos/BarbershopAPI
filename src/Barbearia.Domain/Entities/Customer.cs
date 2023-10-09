@@ -94,6 +94,11 @@ public class Customer : Person
         }
     }
 
+    private void CheckBirthDate()
+    {
+        if(BirthDate> DateOnly.FromDateTime(DateTime.UtcNow)) throw new ArgumentException("BirthDate de cliente não pode ser no futuro");
+    }
+
     public void ValidateCustomer()
     {
         CheckCustomerTelephone();
@@ -101,5 +106,6 @@ public class Customer : Person
         CheckCnpj();
         CheckStatus();
         CheckCpf();
+        CheckBirthDate();
     }
 }

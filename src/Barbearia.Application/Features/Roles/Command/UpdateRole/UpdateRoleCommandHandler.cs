@@ -48,7 +48,7 @@ public class UpdateRoleCommandHandler : IRequestHandler<UpdateRoleCommand, Updat
         }
         catch (Exception ex)
         {
-            response.ErrorType = Error.ValidationProblem;
+            response.ErrorType = Error.InternalServerErrorProblem;
             response.Errors.Add("Role_Validation", new[] { "Error in Role validation" });
             _logger.LogError(ex, "erro de validação em update Role");
             return response;

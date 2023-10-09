@@ -24,8 +24,8 @@ public class CreateEmployeeCommandValidator : AbstractValidator<CreateEmployeeCo
         RuleFor(e => e.BirthDate)
             .NotEmpty()
                 .WithMessage("Person BirthDate cannot be empty")
-            .LessThan(DateOnly.FromDateTime(DateTime.UtcNow))
-                .WithMessage("BirthDate cannot be in the future");
+            .Must(CheckDate)
+                .WithMessage("birthdate cannot be any day after today");
 
         RuleFor(e => e.Email)
             .NotEmpty()
@@ -37,13 +37,15 @@ public class CreateEmployeeCommandValidator : AbstractValidator<CreateEmployeeCo
 
         RuleFor(e => e.Gender)
             .NotEmpty()
-                .WithMessage("Person Gender cannot be empty");
+                .WithMessage("Person Gender cannot be empty")
+            .Must(CheckGender)
+                .WithMessage("Person gender must be higher than 0 and less than 3");
 
         RuleFor(e => e.Status)
             .NotEmpty()
                 .WithMessage("Employee Status cannot be empty")
-            .NotEqual(0)
-                .WithMessage("Employee Status must be different from 0");
+            .Must(CheckStatus)
+                .WithMessage("Employee Status must be higher than 0 and less than 4");
 
         RuleFor(e => e.Telephones)
             .NotEmpty()
@@ -64,7 +66,7 @@ public class CreateEmployeeCommandValidator : AbstractValidator<CreateEmployeeCo
 
                 telephone.RuleFor(t => t.Type)                    
                     .IsInEnum()
-                        .WithMessage("Tipo de telefone inválido. O tipo deve ser Mobile[0] ou Landline[1].");
+                        .WithMessage("Tipo de telefone inválido. O tipo deve ser Móvel ou Fixo.");
             });
 
         RuleFor(e => e.Addresses)
@@ -87,14 +89,20 @@ public class CreateEmployeeCommandValidator : AbstractValidator<CreateEmployeeCo
                         .WithMessage("Número inválido. O Número deve ser maior que zero.");
 
                 address.RuleFor(a => a.District)
+                    .NotEmpty()
+                        .WithMessage("District cannot be empty")
                     .MaximumLength(60)
                         .WithMessage("District should have at most 60 characters");
 
                 address.RuleFor(a => a.City)
+                    .NotEmpty()
+                        .WithMessage("City cannot be empty")
                     .MaximumLength(60)
                         .WithMessage("City should have at most 60 characters");
 
                 address.RuleFor(a => a.State)
+                    .NotEmpty()
+                        .WithMessage("State cannot be empty")
                     .MaximumLength(2)
                         .WithMessage("State should have at most 2 characters");
 
@@ -202,6 +210,31 @@ public class CreateEmployeeCommandValidator : AbstractValidator<CreateEmployeeCo
     private bool CheckAddressNumber(int number)
     {
         if (number <= 0)
+        {
+            return false;
+        }
+        return true;
+    }
+    private bool CheckStatus(int status)
+    {
+        if(status > 3 || status < 1)
+        {
+            return false;
+        }
+        return true;
+    }
+    private bool CheckGender(int gender)
+    {
+        if(gender>2||gender<1)
+        {
+            return false;
+        }
+        return true;
+    }
+    private bool CheckDate(DateOnly date)
+    {
+        var datenow = DateOnly.FromDateTime(DateTime.UtcNow);
+        if(datenow < date)
         {
             return false;
         }

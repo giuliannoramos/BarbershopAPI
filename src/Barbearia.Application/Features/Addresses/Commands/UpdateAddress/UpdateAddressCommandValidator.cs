@@ -21,14 +21,20 @@ public class UpdateAddressCommandValidator : AbstractValidator<UpdateAddressComm
                 .WithMessage("Number cannot be empty");
 
         RuleFor(a => a.District)
+            .NotEmpty()
+                .WithMessage("District cannot be empty")
             .MaximumLength(60)
                 .WithMessage("District should have at most 60 characters");
 
         RuleFor(a => a.City)
+            .NotEmpty()
+                .WithMessage("City cannot be empty")
             .MaximumLength(60)
                 .WithMessage("City should have at most 60 characters");
 
         RuleFor(a => a.State)
+            .NotEmpty()
+                .WithMessage("State cannot be empty")
             .MaximumLength(2)
                 .WithMessage("State should have at most 2 characters");
 

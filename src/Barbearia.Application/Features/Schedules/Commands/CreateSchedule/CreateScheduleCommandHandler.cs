@@ -9,14 +9,12 @@ namespace Barbearia.Application.Features.Schedules.Commands.CreateSchedule;
 public class CreateScheduleCommandHandler : IRequestHandler<CreateScheduleCommand, CreateScheduleCommandResponse>
 {
     private readonly IPersonRepository _personRepository;
-    private readonly IPersonRepository _customerRepository;
     private readonly IMapper _mapper;
     private readonly ILogger<CreateScheduleCommandHandler> _logger;
 
-    public CreateScheduleCommandHandler(IPersonRepository personRepository, IPersonRepository customerRepository, IMapper mapper, ILogger<CreateScheduleCommandHandler> logger)
+    public CreateScheduleCommandHandler(IPersonRepository personRepository, IMapper mapper, ILogger<CreateScheduleCommandHandler> logger)
     {
         _personRepository = personRepository;
-        _customerRepository = customerRepository;
         _mapper = mapper;
         _logger = logger;
     }
@@ -25,10 +23,27 @@ public class CreateScheduleCommandHandler : IRequestHandler<CreateScheduleComman
     {
         CreateScheduleCommandResponse response = new();
 
+        var workingDayFromDatabase = await _personRepository.GetWorkingDayByIdAsync(request.WorkingDayId);
+        if (workingDayFromDatabase == null)
+        {
+            response.ErrorType = Error.NotFoundProblem;
+            response.Errors.Add("WorkingDayId", new[] { "WorkingDay not found in the database." });
+            return response;
+        }
+
+        var workingDayExists = await _personRepository.HasScheduleForWorkingDayAsync(request.WorkingDayId);
+
+        if (workingDayExists)
+        {
+            response.ErrorType = Error.ValidationProblem;
+            response.Errors.Add("WorkingDayId", new[] { "A Schedule with the specified WorkingDay already exists in the database." });
+            return response;
+        }
+
         var validator = new CreateScheduleCommandValidator();
         var validationResult = await validator.ValidateAsync(request);
 
-        if(!validationResult.IsValid)
+        if (!validationResult.IsValid)
         {
             response.ErrorType = Error.ValidationProblem;
             response.FillErrors(validationResult);
@@ -41,11 +56,11 @@ public class CreateScheduleCommandHandler : IRequestHandler<CreateScheduleComman
         {
             ScheduleEntity.ValidateSchedule();
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             response.ErrorType = Error.ValidationProblem;
-            response.Errors.Add("Schedule_Validation", new[] {"Error in Schedule validation"});
-            _logger.LogError(ex,"erro de validação em create Schedule");
+            response.Errors.Add("Schedule_Validation", new[] { "Error in Schedule validation" });
+            _logger.LogError(ex, "erro de validação em create Schedule");
             return response;
         }
 

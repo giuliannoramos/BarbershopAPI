@@ -17,7 +17,8 @@ public interface IPersonRepository
     void AddSupplier(Supplier supplier);
     void DeleteSupplier(Supplier supplier);
     Task<IEnumerable<WorkingDay>?> GetWorkingDayAsync(int employeeId);
-    Task<WorkingDay?> GetWorkingDayByIdAsync(int workingDayId);  
+    Task<WorkingDay?> GetWorkingDayByIdAsync(int workingDayId);
+    Task<bool> HasScheduleForWorkingDayAsync(int workingDayId);
     void AddWorkingDay(Employee employee, WorkingDay workingDay);
     void DeleteWorkingDay(Employee employee, WorkingDay workingDay);
     Task<TimeOff?> GetTimeOffByIdAsync(int timeOffId);

@@ -33,10 +33,27 @@ public class UpdateScheduleCommandHandler : IRequestHandler<UpdateScheduleComman
             return response;
         }
 
+        var workingDayFromDatabase = await _personRepository.GetWorkingDayByIdAsync(request.WorkingDayId);
+        if (workingDayFromDatabase == null)
+        {
+            response.ErrorType = Error.NotFoundProblem;
+            response.Errors.Add("WorkingDayId", new[] { "WorkingDay not found in the database." });
+            return response;
+        }
+
+        var workingDayExists = await _personRepository.HasScheduleForWorkingDayAsync(request.WorkingDayId);
+
+        if (workingDayExists)
+        {
+            response.ErrorType = Error.ValidationProblem;
+            response.Errors.Add("WorkingDayId", new[] { "A Schedule with the specified WorkingDay already exists in the database." });
+            return response;
+        }
+
         var validator = new UpdateScheduleCommandValidator();
         var validationResult = await validator.ValidateAsync(request);
 
-        if(!validationResult.IsValid)
+        if (!validationResult.IsValid)
         {
             response.ErrorType = Error.ValidationProblem;
             response.FillErrors(validationResult);
@@ -56,7 +73,7 @@ public class UpdateScheduleCommandHandler : IRequestHandler<UpdateScheduleComman
             _logger.LogError(ex, "erro de validação em update Schedule");
             return response;
         }
-        
+
         await _personRepository.SaveChangesAsync();
 
         return response;

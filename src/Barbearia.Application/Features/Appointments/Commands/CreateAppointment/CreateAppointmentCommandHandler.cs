@@ -83,7 +83,7 @@ namespace Barbearia.Application.Features.Appointments.Commands.CreateAppointment
             }
             catch (Exception ex)
             {
-                response.ErrorType = Error.ValidationProblem;
+                response.ErrorType = Error.InternalServerErrorProblem;
                 response.Errors.Add("Appointment_Validation", new[] { "Error in appointment validation" });
                 _logger.LogError(ex, "erro de validação em create appointment");
                 return response;

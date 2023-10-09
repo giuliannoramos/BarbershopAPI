@@ -53,7 +53,7 @@ public class UpdateServiceCommandHandler : IRequestHandler<UpdateServiceCommand,
         }
         catch (Exception ex)
         {
-            response.ErrorType = Error.ValidationProblem;
+            response.ErrorType = Error.InternalServerErrorProblem;
             response.Errors.Add("Service_Validation", new[] { "Error in Service validation" });
             _logger.LogError(ex, "erro de validação em update Service");
             return response;

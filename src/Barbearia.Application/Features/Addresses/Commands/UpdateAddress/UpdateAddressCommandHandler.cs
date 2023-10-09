@@ -58,7 +58,7 @@ public class UpdateAddressCommandHandler : IRequestHandler<UpdateAddressCommand,
         }
         catch (Exception ex)
         {
-            response.ErrorType = Error.ValidationProblem;
+            response.ErrorType = Error.InternalServerErrorProblem;
             response.Errors.Add("Address_Validation", new[] { "Error in address validation" });
             _logger.LogError(ex, "erro de validação em create address");
             return response;

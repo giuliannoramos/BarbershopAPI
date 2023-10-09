@@ -23,7 +23,9 @@ public class CreateCustomerCommandValidator : AbstractValidator<CreateCustomerCo
 
         RuleFor(c => c.BirthDate)
             .NotEmpty()
-                .WithMessage("Person BirthDate cannot be empty");
+                .WithMessage("Person BirthDate cannot be empty")
+            .LessThan(DateOnly.FromDateTime(DateTime.UtcNow))
+                .WithMessage("BirthDate cannot be in the future");
 
         RuleFor(c => c.Email)
             .NotEmpty()
@@ -54,7 +56,7 @@ public class CreateCustomerCommandValidator : AbstractValidator<CreateCustomerCo
 
                 telephone.RuleFor(t => t.Type)                    
                     .IsInEnum()
-                        .WithMessage("Tipo de telefone inválido. O tipo deve ser Móvel ou Fixo.");
+                        .WithMessage("Tipo de telefone inválido. O tipo deve ser Mobile[0] ou Landline[1].");
             });
 
         RuleFor(c => c.Addresses)
@@ -77,14 +79,20 @@ public class CreateCustomerCommandValidator : AbstractValidator<CreateCustomerCo
                         .WithMessage("Número inválido. O Número deve ser maior que zero.");
 
                 address.RuleFor(a => a.District)
+                    .NotEmpty()
+                        .WithMessage("District cannot be empty")
                     .MaximumLength(60)
                         .WithMessage("District should have at most 60 characters");
 
                 address.RuleFor(a => a.City)
+                    .NotEmpty()
+                        .WithMessage("City cannot be empty")
                     .MaximumLength(60)
                         .WithMessage("City should have at most 60 characters");
 
                 address.RuleFor(a => a.State)
+                    .NotEmpty()
+                        .WithMessage("State cannot be empty")
                     .MaximumLength(2)
                         .WithMessage("State should have at most 2 characters");
 

@@ -32,7 +32,9 @@ public class CreateSupplierCommandValidator : AbstractValidator<CreateSupplierCo
         RuleFor(s => s.BirthDate)
             .NotEmpty()
                 .When(s => string.IsNullOrEmpty(s.Cnpj))
-                    .WithMessage("you should fill out a birth date");
+                    .WithMessage("you should fill out a birth date")
+            .LessThan(DateOnly.FromDateTime(DateTime.UtcNow))
+                .WithMessage("Founding date cannot be in the future");
 
 
         RuleFor(s => s.Email)
@@ -72,7 +74,7 @@ public class CreateSupplierCommandValidator : AbstractValidator<CreateSupplierCo
 
                 telephone.RuleFor(t => t.Type)                    
                     .IsInEnum()
-                        .WithMessage("Tipo de telefone inválido. O tipo deve ser Móvel ou Fixo.");
+                        .WithMessage("Tipo de telefone inválido. O tipo deve ser Mobile[0] ou Landline[1].");
             });
 
         RuleFor(s => s.Addresses)

@@ -51,7 +51,7 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
         }
         catch(Exception ex)
         {
-            response.ErrorType = Error.ValidationProblem;
+            response.ErrorType = Error.InternalServerErrorProblem;
             response.Errors.Add("Product_Validation", new[] {"Error in Product validation"});
             _logger.LogError(ex,"erro de validação em create Product");
             return response;

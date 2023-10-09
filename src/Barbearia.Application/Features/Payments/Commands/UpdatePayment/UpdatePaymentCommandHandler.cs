@@ -59,7 +59,7 @@ public class UpdatePaymentCommandHandler : IRequestHandler<UpdatePaymentCommand,
         }
         catch (Exception ex)
         {
-            response.ErrorType = Error.ValidationProblem;
+            response.ErrorType = Error.InternalServerErrorProblem;
             response.Errors.Add("Payment_Validation", new[] { "Error in payment validation" });
             _logger.LogError(ex, "erro de validação em update payment");
             return response;

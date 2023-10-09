@@ -41,7 +41,7 @@ public class CreateServiceCategoryCommandHandler : IRequestHandler<CreateService
         }
         catch(Exception ex)
         {
-            response.ErrorType = Error.ValidationProblem;
+            response.ErrorType = Error.InternalServerErrorProblem;
             response.Errors.Add("ServiceCategory_Validation", new[] {"Error in ServiceCategory validation"});
             _logger.LogError(ex,"erro de validação em create ServiceCategory");
             return response;

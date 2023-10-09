@@ -61,7 +61,7 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand,
         }
         catch (Exception ex)
         {
-            response.ErrorType = Error.ValidationProblem;
+            response.ErrorType = Error.InternalServerErrorProblem;
             response.Errors.Add("Product_Validation", new[] { "Error in Product validation" });
             _logger.LogError(ex, "erro de validação em update Product");
             return response;

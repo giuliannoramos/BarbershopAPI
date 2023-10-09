@@ -53,7 +53,7 @@ public class UpdateSupplierCommandHandler : IRequestHandler<UpdateSupplierComman
         }
         catch (Exception ex)
         {
-            response.ErrorType = Error.ValidationProblem;
+            response.ErrorType = Error.InternalServerErrorProblem;
             response.Errors.Add("Supplier_Validation", new[] { "Error in supplier validation" });
             _logger.LogError(ex, "erro de validação em update supplier");
             return response;
@@ -69,7 +69,7 @@ public class UpdateSupplierCommandHandler : IRequestHandler<UpdateSupplierComman
             }
             catch (Exception ex)
             {
-                response.ErrorType = Error.ValidationProblem;
+                response.ErrorType = Error.InternalServerErrorProblem;
                 response.Errors.Add("Telephone_Validation", new[] { "Error in telephone validation" });
                 _logger.LogError(ex, "erro de validação em create telephone");
                 return response;
@@ -86,7 +86,7 @@ public class UpdateSupplierCommandHandler : IRequestHandler<UpdateSupplierComman
             }
             catch (Exception ex)
             {
-                response.ErrorType = Error.ValidationProblem;
+                response.ErrorType = Error.InternalServerErrorProblem;
                 response.Errors.Add("Address_Validation", new[] { "Error in address validation" });
                 _logger.LogError(ex, "erro de validação em create address");
                 return response;

@@ -58,7 +58,7 @@ public class CreateScheduleCommandHandler : IRequestHandler<CreateScheduleComman
         }
         catch (Exception ex)
         {
-            response.ErrorType = Error.ValidationProblem;
+            response.ErrorType = Error.InternalServerErrorProblem;
             response.Errors.Add("Schedule_Validation", new[] { "Error in Schedule validation" });
             _logger.LogError(ex, "erro de validação em create Schedule");
             return response;

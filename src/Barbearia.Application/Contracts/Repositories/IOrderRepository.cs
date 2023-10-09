@@ -5,8 +5,6 @@ namespace Barbearia.Application.Contracts.Repositories;
 
 public interface IOrderRepository
 {    
-
-    
     Task<(IEnumerable<Order>,PaginationMetadata)> GetAllOrdersAsync(string? searchQuery,
          int pageNumber, int pageSize);
     Task<IEnumerable<Order>> GetAllOrdersAsync();
@@ -30,7 +28,5 @@ public interface IOrderRepository
 
     Task<bool> CouponExists(string couponCode);
     // COUPONS
-    Task<bool> SaveChangesAsync();
-
-
+    Task<bool> SaveChangesAsync();    
 }

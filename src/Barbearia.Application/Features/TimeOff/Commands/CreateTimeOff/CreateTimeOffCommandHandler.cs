@@ -14,8 +14,6 @@ public class CreateTimeOffCommandHandler : IRequestHandler<CreateTimeOffCommand,
     private readonly IMapper _mapper;
     private readonly ILogger<CreateTimeOffCommandHandler> _logger;
 
-
-
     public CreateTimeOffCommandHandler(IPersonRepository personRepository, IMapper mapper, ILogger<CreateTimeOffCommandHandler> logger)
     {
         _personRepository = personRepository;
@@ -26,6 +24,14 @@ public class CreateTimeOffCommandHandler : IRequestHandler<CreateTimeOffCommand,
     public async Task<CreateTimeOffCommandResponse> Handle(CreateTimeOffCommand request, CancellationToken cancellationToken)
     {
         CreateTimeOffCommandResponse response = new();
+
+        var workingDayFromDatabase = await _personRepository.GetWorkingDayByIdAsync(request.WorkingDayId);
+        if (workingDayFromDatabase == null)
+        {
+            response.ErrorType = Error.NotFoundProblem;
+            response.Errors.Add("WorkingDayId", new[] { "WorkingDay not found in the database." });
+            return response;
+        }
 
         var validator = new CreateTimeOffCommandValidator();
         var validationResult = await validator.ValidateAsync(request, cancellationToken);

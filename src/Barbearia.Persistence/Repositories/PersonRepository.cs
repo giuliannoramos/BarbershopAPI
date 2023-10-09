@@ -83,6 +83,14 @@ public class PersonRepository : IPersonRepository
     {
         var workingDaysFromDatabase = await GetEmployeeByIdAsync(employeeId);
         return workingDaysFromDatabase?.WorkingDays;
+    }    
+
+    public async Task<WorkingDay?> GetWorkingDayByIdAsync(int workingDayId)
+    {
+        return await _context.Persons
+        .OfType<Employee>()
+        .SelectMany(e => e.WorkingDays)
+        .FirstOrDefaultAsync(workingDay => workingDay.WorkingDayId == workingDayId);
     }
 
     public void AddWorkingDay(Employee employee, WorkingDay workingDay)

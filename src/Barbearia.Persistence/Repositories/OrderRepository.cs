@@ -18,11 +18,11 @@ public class OrderRepository : IOrderRepository
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
-    public async Task<(IEnumerable<Order>,PaginationMetadata)> GetAllOrdersAsync(string? searchQuery,
+    public async Task<(IEnumerable<Order>, PaginationMetadata)> GetAllOrdersAsync(string? searchQuery,
          int pageNumber, int pageSize)
     {
         IQueryable<Order> collection = _context.Orders
-        .Include(o=>o.Person);
+        .Include(o => o.Person);
 
         if (!string.IsNullOrWhiteSpace(searchQuery))
         {
@@ -39,8 +39,8 @@ public class OrderRepository : IOrderRepository
         var paginationMetadata = new PaginationMetadata(totalItemCount, pageSize, pageNumber);
 
         var orderToReturn = await collection
-        .OrderBy(o=>o.OrderId)
-        .Skip(pageSize * (pageNumber-1))
+        .OrderBy(o => o.OrderId)
+        .Skip(pageSize * (pageNumber - 1))
         .Take(pageSize)
         .ToListAsync();
 
@@ -50,31 +50,31 @@ public class OrderRepository : IOrderRepository
     public async Task<IEnumerable<Order>> GetAllOrdersAsync()
     {
         return await _context.Orders
-        .Include(o=>o.Person)
-        .OrderBy(o=>o.OrderId)
+        .Include(o => o.Person)
+        .OrderBy(o => o.OrderId)
         .ToListAsync();
     }
 
     public async Task<Order?> GetOrderByIdAsync(int orderId)
     {
         return await _context.Orders
-        .Include(o=>o.Person)
-        .Include(o=>o.Payment)
-        .FirstOrDefaultAsync(o=>o.OrderId == orderId);
+        .Include(o => o.Person)
+        .Include(o => o.Payment)
+        .FirstOrDefaultAsync(o => o.OrderId == orderId);
     }
 
     public async Task<Order?> GetOrderByNumberAsync(int number)
     {
         return await _context.Orders
-        .Include(o=>o.Person)
-        .FirstOrDefaultAsync(o=>o.Number == number);
+        .Include(o => o.Person)
+        .FirstOrDefaultAsync(o => o.Number == number);
     }
 
     public async Task<Payment?> GetPaymentAsync(int orderId)
     {
         return await _context.Payments
-        .Include(p=>p.Coupon)
-        .FirstOrDefaultAsync(p=>p.OrderId == orderId);
+        .Include(p => p.Coupon)
+        .FirstOrDefaultAsync(p => p.OrderId == orderId);
     }
 
     public void AddOrder(Order order)
@@ -89,7 +89,7 @@ public class OrderRepository : IOrderRepository
 
     public void DeletePayment(Order order, Payment payment)
     {
-        if(order.Payment!=null)
+        if (order.Payment != null)
         {
             _context.Payments.Remove(order.Payment);
         }
@@ -105,7 +105,7 @@ public class OrderRepository : IOrderRepository
         _context.Orders.Remove(order);
     }
 
-        public async Task<Coupon?> GetCouponById(int couponId)
+    public async Task<Coupon?> GetCouponById(int couponId)
     {
         return await _context.Coupons.FirstOrDefaultAsync(c => c.CouponId == couponId);
     }
@@ -129,10 +129,10 @@ public class OrderRepository : IOrderRepository
     {
         return await _context.Coupons.AnyAsync(c => c.CouponCode == couponCode);
     }
-    
+
     public async Task<bool> CouponExistsAndIsActive(string couponCode)
     {
-        var couponFromDb =  await _context.Coupons.Where(c => c.CouponCode == couponCode && c.ExpirationDate > DateTime.UtcNow).FirstOrDefaultAsync();
+        var couponFromDb = await _context.Coupons.Where(c => c.CouponCode == couponCode && c.ExpirationDate > DateTime.UtcNow).FirstOrDefaultAsync();
         if (couponFromDb == null)
         {
             return false;
@@ -145,6 +145,5 @@ public class OrderRepository : IOrderRepository
     public async Task<bool> SaveChangesAsync()
     {
         return await _context.SaveChangesAsync() > 0;
-    }
-
+    }    
 }

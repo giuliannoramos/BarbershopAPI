@@ -34,6 +34,14 @@ public class UpdateTimeOffCommandHandler : IRequestHandler<UpdateTimeOffCommand,
             return response;
         }
 
+        var workingDayFromDatabase = await _personRepository.GetWorkingDayByIdAsync(request.WorkingDayId);
+        if (workingDayFromDatabase == null)
+        {
+            response.ErrorType = Error.NotFoundProblem;
+            response.Errors.Add("WorkingDayId", new[] { "WorkingDay not found in the database." });
+            return response;
+        }
+
         var validator = new UpdateTimeOffCommandValidator();
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
@@ -59,7 +67,7 @@ public class UpdateTimeOffCommandHandler : IRequestHandler<UpdateTimeOffCommand,
             return response;
         }
 
-        await _personRepository.SaveChangesAsync(); 
+        await _personRepository.SaveChangesAsync();
 
         return response;
     }

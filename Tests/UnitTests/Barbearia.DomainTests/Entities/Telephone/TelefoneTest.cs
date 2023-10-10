@@ -1,7 +1,7 @@
 using FluentAssertions;
 using Xunit.Abstractions;
 
-namespace UnitTests.Barbearia.DomainTests;
+namespace UnitTests.Barbearia.DomainTests.Entities.Telephone;
 public class TelephoneTests : IClassFixture<TelephoneTestsFixture>
 {
     private readonly TelephoneTestsFixture _fixture;    

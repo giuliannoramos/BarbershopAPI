@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "v8aQKPLhDI3H7GhW3NwC5RvaJ9Tv0OfM2MjDMSIU5Y1fDIe0j/AAPzD/9WOktkXS156y6ILGTK922f1pBRmkRw==",
+  "dgSpecHash": "K/WLdV2zgz1H9PNlKaR5okuCQj9d94KvYBgOL5r9PZnLJ2dGVL2PgmHYEIuLtEnUFaWcUDo6IZdAsr22qsH2mw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\giule\\dev\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "/home/miguel/Projects/Curso/BigApiFinal/barbershopapi/src/Barbearia.Domain/Barbearia.Domain.csproj",
+  "expectedPackageFiles": [
+    "/home/miguel/.nuget/packages/microsoft.aspnetcore.app.ref/7.0.11/microsoft.aspnetcore.app.ref.7.0.11.nupkg.sha512"
+  ],
   "logs": []
 }

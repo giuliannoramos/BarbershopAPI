@@ -23,11 +23,13 @@ public class PaymentController : MainController
     public async Task<ActionResult<PaymentDto>>GetPayment(int orderId)
     {
         var getPaymentQuery = new GetPaymentQuery{OrderId = orderId};
-        var paymentToReturn = await _mediator.Send(getPaymentQuery);
+        var paymentReponse = await _mediator.Send(getPaymentQuery);
 
-        if(paymentToReturn == null) return NotFound();
+        if(!paymentReponse.IsSuccess){
+            return HandleRequestError(paymentReponse);
+        } 
 
-        return Ok(paymentToReturn);
+        return Ok(paymentReponse.Payment);
     }
 
     [HttpPost]
@@ -57,9 +59,11 @@ public class PaymentController : MainController
     public async Task<ActionResult> DeletePayment(int orderId, int paymentId)
     {
         var deletePaymentCommand = new DeletePaymentCommand{OrderId = orderId, PaymentId = paymentId};
-        var result = await _mediator.Send(deletePaymentCommand);
+        var paymentResponse = await _mediator.Send(deletePaymentCommand);
 
-        if(!result) return NotFound();
+        if(!paymentResponse.IsSuccess){
+            return HandleRequestError(paymentResponse);
+        }
         
         return NoContent();
     }

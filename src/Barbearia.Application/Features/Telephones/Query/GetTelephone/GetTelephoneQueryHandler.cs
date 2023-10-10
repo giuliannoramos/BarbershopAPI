@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Barbearia.Application.Features.Telephones.Query.GetTelephone;
 
-public class GetTelephoneQueryHandler : IRequestHandler<GetTelephoneQuery, IEnumerable<GetTelephoneDto>>
+public class GetTelephoneQueryHandler : IRequestHandler<GetTelephoneQuery, GetTelephoneQueryResponse>
 {
     private readonly IPersonRepository _personRepository;
     private readonly IMapper _mapper;
@@ -14,9 +14,28 @@ public class GetTelephoneQueryHandler : IRequestHandler<GetTelephoneQuery, IEnum
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<GetTelephoneDto>> Handle(GetTelephoneQuery request, CancellationToken cancellationToken)
+    public async Task<GetTelephoneQueryResponse> Handle(GetTelephoneQuery request, CancellationToken cancellationToken)
     {
-        var telephoneFromDatabase = await _personRepository.GetTelephoneAsync(request.PersonId);
-        return _mapper.Map<IEnumerable<GetTelephoneDto>>(telephoneFromDatabase);
+        GetTelephoneQueryResponse response = new();
+
+        var personFromDatabase = await _personRepository.GetPersonByIdAsync(request.PersonId);
+        if (personFromDatabase == null)
+        {
+            response.ErrorType = Error.NotFoundProblem;
+            response.Errors.Add("PersonId", new[] { "Person Not found in database" });
+            return response;
+        }
+
+        var telephoneFromDatabase = personFromDatabase.Telephones;
+        if (!telephoneFromDatabase.Any())
+        {
+            response.ErrorType = Error.NotFoundProblem;
+            response.Errors.Add("Telephones", new[] { "Telephones Not found in database" });
+            return response;
+        }
+
+        response.Telephones = _mapper.Map<IEnumerable<GetTelephoneDto>>(telephoneFromDatabase);
+
+        return response;
     }
 }

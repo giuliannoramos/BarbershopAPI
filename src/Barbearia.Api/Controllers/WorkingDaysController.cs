@@ -1,7 +1,9 @@
+using Barbearia.Application.Features;
 using Barbearia.Application.Features.WorkingDays.Commands.CreateWorkingDay;
 using Barbearia.Application.Features.WorkingDays.Commands.DeleteWorkingDay;
 using Barbearia.Application.Features.WorkingDays.Commands.UpdateWorkingDay;
 using Barbearia.Application.Features.WorkingDays.Query.GetWorkingDay;
+using Barbearia.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,11 +23,13 @@ public class WorkingDaysController : MainController
     public async Task<ActionResult<IEnumerable<GetWorkingDayDto>>> GetWorkingDay(int employeeId)
     {
         var getWorkingDayQuery = new GetWorkingDayQuery{PersonId = employeeId};
-        var workingDayToReturn = await _mediator.Send(getWorkingDayQuery);
+        var workingDayToResponse = await _mediator.Send(getWorkingDayQuery);
 
-        if(workingDayToReturn == null) return NotFound();
+        if(!workingDayToResponse.IsSuccess){
+            return HandleRequestError(workingDayToResponse);
+        }
 
-        return Ok(workingDayToReturn);
+        return Ok(workingDayToResponse.WorkingDay);
     }
 
     [HttpPost]
@@ -69,9 +73,11 @@ public class WorkingDaysController : MainController
     public async Task<ActionResult> DeleteWorkingDay(int employeeId, int workingDayId)
     {
         var deleteWorkingDayCommand = new DeleteWorkingDayCommand{PersonId = employeeId, WorkingDayId = workingDayId};
-        var result = await _mediator.Send(deleteWorkingDayCommand);
+        var deleteWorkingDayResponse = await _mediator.Send(deleteWorkingDayCommand);
 
-        if(!result) return NotFound();
+        if(!deleteWorkingDayResponse.IsSuccess){
+            return HandleRequestError(deleteWorkingDayResponse);
+        } 
         
         return NoContent();
     }

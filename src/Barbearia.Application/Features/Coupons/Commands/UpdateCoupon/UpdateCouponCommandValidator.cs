@@ -10,6 +10,10 @@ public class UpdateCouponCommandValidator: AbstractValidator<UpdateCouponCommand
             .MaximumLength(30)
             .NotNull();
 
+        RuleFor(c => c.CouponCode)
+            .NotEmpty()
+                .WithMessage("CouponCode should not be empty");
+
         RuleFor(c => c.DiscountPercent)
             .GreaterThanOrEqualTo(1)
             .LessThanOrEqualTo(100)

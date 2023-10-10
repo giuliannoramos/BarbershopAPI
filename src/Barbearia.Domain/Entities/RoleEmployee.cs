@@ -11,7 +11,7 @@ public class RoleEmployee
     {
         if (EmployeeId <= 0)
         {
-            throw new ArgumentException("EmployeeId deve ser maior que zero.");
+            throw new ArgumentException("PersonId deve ser maior que zero.");
         }
     }
 

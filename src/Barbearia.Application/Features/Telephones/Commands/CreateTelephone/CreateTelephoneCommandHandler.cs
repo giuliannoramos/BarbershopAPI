@@ -29,7 +29,7 @@ public class CreateTelephoneCommandHandler : IRequestHandler<CreateTelephoneComm
             response.Errors.Add("PersonId", new[] { "Person Not found in database" });
             return response;
         }
-        if (personFromDatabase.Telephones.Any())
+        if (personFromDatabase.Telephones.Any() && (personFromDatabase.GetType() == typeof(Customer)))
         {
             response.ErrorType = Error.ValidationProblem;
             response.Errors.Add("Telephone", new[] { "Only one telephone per customer" });

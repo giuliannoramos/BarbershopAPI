@@ -15,9 +15,9 @@ public class StockHistoryOrder : StockHistory
 
     private void CheckOperation()
     {
-        if (Operation < 0)
+        if ((Operation != 2) || (Operation != 3))
         {
-            throw new ArgumentException("Operação inválida. A operação deve ser maior que zero.");
+            throw new ArgumentException("Operação inválida. As operações para Order só podem ser 2-Removal, 3-Reserved.");
         }
     }
 

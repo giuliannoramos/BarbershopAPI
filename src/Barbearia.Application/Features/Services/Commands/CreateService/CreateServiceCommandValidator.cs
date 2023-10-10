@@ -23,8 +23,10 @@ public class CreateServiceCommandValidator : AbstractValidator<CreateServiceComm
         RuleFor(s => s.Price)
             .NotEmpty()
                 .WithMessage("You should fill out a Price")
-            .Must(CheckPrice)
-                .WithMessage("Price must be zero or more");
+            .GreaterThan(0)
+                .WithMessage("Price should not be less than 1")
+            .LessThanOrEqualTo(999.99m)
+                .WithMessage("Current pricemust be less than 1000.00");
 
         RuleFor(s => s.Description)
             .NotEmpty()
@@ -35,12 +37,12 @@ public class CreateServiceCommandValidator : AbstractValidator<CreateServiceComm
                 .WithMessage("You should fill out a Name");
     }
 
-    private bool CheckPrice(Decimal Price)
-    {
-        if (Price <= 0)
-        {
-            return false;
-        }
-        return true;
-    }
+    // private bool CheckPrice(Decimal Price)
+    // {
+    //     if (Price <= 0)
+    //     {
+    //         return false;
+    //     }
+    //     return true;
+    // }
 }

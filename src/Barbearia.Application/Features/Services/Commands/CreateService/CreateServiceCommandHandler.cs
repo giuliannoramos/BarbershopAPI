@@ -24,7 +24,15 @@ public class CreateServiceCommandHandler : IRequestHandler<CreateServiceCommand,
         CreateServiceCommandResponse response = new();
 
         var validator = new CreateServiceCommandValidator();
-        var validationResult = await validator.ValidateAsync(request);        
+        var validationResult = await validator.ValidateAsync(request);
+
+        var sericeCategoryFromDatabase = await _ItemRepository.GetServiceCategoryByIdAsync(request.ServiceCategoryId);
+        if (sericeCategoryFromDatabase == null)
+        {
+            response.ErrorType = Error.NotFoundProblem;
+            response.Errors.Add("ServiceCategoryId", new[] { "ServiceCategory not found in the database." });
+            return response;
+        }
 
         if(!validationResult.IsValid)
         {

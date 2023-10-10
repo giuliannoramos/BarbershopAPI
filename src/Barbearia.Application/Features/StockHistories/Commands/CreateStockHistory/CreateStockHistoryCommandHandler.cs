@@ -117,7 +117,7 @@ public class CreateStockHistoryCommandHandler : IRequestHandler<CreateStockHisto
             string[] error = { "Necessary keys not informed or invalid operation" };
             response.Errors.Add("DocumentType", error);
 
-            response.ErrorType = Error.BadRequestProblem;
+            response.ErrorType = Error.ValidationProblem;
             return response;
         }
 

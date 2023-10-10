@@ -15,6 +15,8 @@ public class UpdateStockHistoryCommandValidator : AbstractValidator<UpdateStockH
         RuleFor(o=>o.CurrentPrice)
             .NotEmpty()
                 .WithMessage("Current price can not be empty")
+            .GreaterThan(0)
+                .WithMessage("Current price should not be less than 1")
             .LessThanOrEqualTo(999.99m)
                 .WithMessage("Current pricemust be less than 1000.00");
 

@@ -3,3 +3,4 @@ arquivo.txt
 .vs/
 configuration_*
 *.editorconfig
+*.cache

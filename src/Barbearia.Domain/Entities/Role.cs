@@ -4,7 +4,7 @@ public class Role
 {
     public int RoleId{get; set;}
     public string Name{get; set;} = string.Empty;
-    public List<Employee> Employees = new();
+    public List<Employee> Employees {get; set;} = new();
 
     private void ValidateName()
     {

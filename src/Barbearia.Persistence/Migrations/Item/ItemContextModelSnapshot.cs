@@ -69,14 +69,14 @@ namespace Barbearia.Persistence.Migrations.Item
                         new
                         {
                             AppointmentId = 1,
-                            CancellationDate = new DateTime(2023, 10, 6, 6, 15, 45, 113, DateTimeKind.Utc).AddTicks(9616),
-                            ConfirmedDate = new DateTime(2023, 10, 6, 6, 15, 45, 113, DateTimeKind.Utc).AddTicks(9616),
+                            CancellationDate = new DateTime(2023, 10, 10, 0, 49, 12, 604, DateTimeKind.Utc).AddTicks(3935),
+                            ConfirmedDate = new DateTime(2023, 10, 10, 0, 49, 12, 604, DateTimeKind.Utc).AddTicks(3921),
                             CustomerId = 2,
-                            FinishDate = new DateTime(2023, 10, 6, 6, 15, 45, 113, DateTimeKind.Utc).AddTicks(9614),
-                            FinishServiceDate = new DateTime(2023, 10, 6, 6, 15, 45, 113, DateTimeKind.Utc).AddTicks(9615),
+                            FinishDate = new DateTime(2023, 10, 10, 0, 49, 12, 604, DateTimeKind.Utc).AddTicks(3882),
+                            FinishServiceDate = new DateTime(2023, 10, 10, 0, 49, 12, 604, DateTimeKind.Utc).AddTicks(3911),
                             ScheduleId = 1,
-                            StartDate = new DateTime(2023, 10, 6, 6, 15, 45, 113, DateTimeKind.Utc).AddTicks(9610),
-                            StartServiceDate = new DateTime(2023, 10, 6, 6, 15, 45, 113, DateTimeKind.Utc).AddTicks(9615),
+                            StartDate = new DateTime(2023, 10, 10, 0, 49, 12, 604, DateTimeKind.Utc).AddTicks(3868),
+                            StartServiceDate = new DateTime(2023, 10, 10, 0, 49, 12, 604, DateTimeKind.Utc).AddTicks(3896),
                             Status = 1
                         });
                 });
@@ -275,6 +275,10 @@ namespace Barbearia.Persistence.Migrations.Item
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("text");
@@ -295,6 +299,10 @@ namespace Barbearia.Persistence.Migrations.Item
                         {
                             t.ExcludeFromMigrations();
                         });
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Person");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.ProductCategory", b =>
@@ -526,6 +534,18 @@ namespace Barbearia.Persistence.Migrations.Item
                         });
                 });
 
+            modelBuilder.Entity("Barbearia.Domain.Entities.Employee", b =>
+                {
+                    b.HasBaseType("Barbearia.Domain.Entities.Person");
+
+                    b.Property<int?>("RoleId")
+                        .HasColumnType("integer");
+
+                    b.HasIndex("RoleId");
+
+                    b.HasDiscriminator().HasValue("Employee");
+                });
+
             modelBuilder.Entity("Barbearia.Domain.Entities.StockHistoryOrder", b =>
                 {
                     b.HasBaseType("Barbearia.Domain.Entities.StockHistory");
@@ -546,7 +566,7 @@ namespace Barbearia.Persistence.Migrations.Item
                             LastStockQuantity = 10,
                             Operation = 1,
                             ProductId = 1,
-                            Timestamp = new DateTime(2023, 10, 6, 6, 15, 45, 114, DateTimeKind.Utc).AddTicks(5228),
+                            Timestamp = new DateTime(2023, 10, 10, 0, 49, 12, 604, DateTimeKind.Utc).AddTicks(7580),
                             OrderId = 1
                         });
                 });
@@ -571,7 +591,7 @@ namespace Barbearia.Persistence.Migrations.Item
                             LastStockQuantity = 32,
                             Operation = 3,
                             ProductId = 2,
-                            Timestamp = new DateTime(2023, 10, 6, 6, 15, 45, 114, DateTimeKind.Utc).AddTicks(5245),
+                            Timestamp = new DateTime(2023, 10, 10, 0, 49, 12, 604, DateTimeKind.Utc).AddTicks(7608),
                             PersonId = 4
                         });
                 });
@@ -728,6 +748,13 @@ namespace Barbearia.Persistence.Migrations.Item
                     b.Navigation("ServiceCategory");
                 });
 
+            modelBuilder.Entity("Barbearia.Domain.Entities.Employee", b =>
+                {
+                    b.HasOne("Barbearia.Domain.Entities.Role", null)
+                        .WithMany("Employees")
+                        .HasForeignKey("RoleId");
+                });
+
             modelBuilder.Entity("Barbearia.Domain.Entities.StockHistoryOrder", b =>
                 {
                     b.HasOne("Barbearia.Domain.Entities.Order", "Order")
@@ -785,6 +812,11 @@ namespace Barbearia.Persistence.Migrations.Item
             modelBuilder.Entity("Barbearia.Domain.Entities.ProductCategory", b =>
                 {
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.Role", b =>
+                {
+                    b.Navigation("Employees");
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Schedule", b =>

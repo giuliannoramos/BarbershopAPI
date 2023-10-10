@@ -15,9 +15,9 @@ public class StockHistorySupplier : StockHistory
 
     private void CheckOperation()
     {
-        if (Operation < 0)
+        if (Operation != 1)
         {
-            throw new ArgumentException("Operação inválida. A operação deve ser maior que zero.");
+            throw new ArgumentException("Operação inválida. A operação para Supplier só pode ser 1-Insertion.");
         }
     }
 

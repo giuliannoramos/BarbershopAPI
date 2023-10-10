@@ -176,7 +176,7 @@ namespace Barbearia.Persistence.DbContexts
             appointment
                 .HasOne(a => a.Person)
                 .WithMany(p => p.Appointments)
-                .HasForeignKey(a => a.CustomerId);
+                .HasForeignKey(a => a.PersonId);
 
             appointment
                 .HasMany(a => a.Services)
@@ -239,7 +239,7 @@ namespace Barbearia.Persistence.DbContexts
                     {
                         AppointmentId = 1,
                         ScheduleId = 1,
-                        CustomerId = 2,
+                        PersonId = 2,
                         StartDate = DateTime.UtcNow,
                         FinishDate = DateTime.UtcNow,
                         Status = 1,
@@ -357,6 +357,9 @@ namespace Barbearia.Persistence.DbContexts
 
              stockHistory
                 .HasKey(s=>s.StockHistoryId);
+
+            stockHistory
+            .ToTable("StockHistory");
 
             stockHistoryOrder
                 .ToTable("StockHistoryOrder");

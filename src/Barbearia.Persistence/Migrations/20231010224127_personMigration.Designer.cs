@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Barbearia.Persistence.Migrations
 {
     [DbContext(typeof(PersonContext))]
-    [Migration("20231010004849_Correcao")]
-    partial class Correcao
+    [Migration("20231010224127_personMigration")]
+    partial class personMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -153,6 +153,36 @@ namespace Barbearia.Persistence.Migrations
                         });
 
                     b.UseTptMappingStrategy();
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.Order", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("OrderId"));
+
+                    b.Property<DateTime>("BuyDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Number")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("PersonId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.HasKey("OrderId");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("Order", null, t =>
+                        {
+                            t.ExcludeFromMigrations();
+                        });
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Person", b =>
@@ -587,6 +617,15 @@ namespace Barbearia.Persistence.Migrations
                     b.Navigation("Person");
                 });
 
+            modelBuilder.Entity("Barbearia.Domain.Entities.Order", b =>
+                {
+                    b.HasOne("Barbearia.Domain.Entities.Person", "Person")
+                        .WithMany("Orders")
+                        .HasForeignKey("PersonId");
+
+                    b.Navigation("Person");
+                });
+
             modelBuilder.Entity("Barbearia.Domain.Entities.Role", b =>
                 {
                     b.HasOne("Barbearia.Domain.Entities.Customer", null)
@@ -681,6 +720,8 @@ namespace Barbearia.Persistence.Migrations
             modelBuilder.Entity("Barbearia.Domain.Entities.Person", b =>
                 {
                     b.Navigation("Addresses");
+
+                    b.Navigation("Orders");
 
                     b.Navigation("Products");
 

@@ -17,6 +17,7 @@ namespace Barbearia.Persistence.DbContexts
         public DbSet<TimeOff> TimeOffs { get; set; } = null!;
         public DbSet<Role> Roles { get; set; } = null!;
         public DbSet<Schedule> Schedules { get; set; } = null!;
+        public DbSet<Order> Orders {get;set;} = null!;
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -45,16 +46,27 @@ namespace Barbearia.Persistence.DbContexts
             modelBuilder.Ignore<StockHistoryOrder>();
             modelBuilder.Ignore<StockHistorySupplier>();
             modelBuilder.Ignore<Payment>();
-            modelBuilder.Ignore<Order>();
             modelBuilder.Ignore<Coupon>();
             modelBuilder.Ignore<ProductCategory>();
             modelBuilder.Ignore<OrderProduct>();
             modelBuilder.Ignore<Service>();
             modelBuilder.Ignore<Appointment>();
-            // modelBuilder.Ignore<RoleServiceCategory>();
             modelBuilder.Ignore<ServiceCategory>();
             modelBuilder.Ignore<AppointmentOrder>();
+            modelBuilder.Ignore<OrderProduct>();
 
+            
+
+            //Necessário para declarar order nesse contexto(sem criar nada a mais) corretamente
+            ////////////////////////////////////////////////////////////
+            modelBuilder.Entity<Product>()
+            .Ignore(p=>p.Orders)
+            .Ignore(p=>p.OrderProducts);
+
+            modelBuilder.Entity<Order>()
+            .Ignore(o=>o.Products)
+            .Ignore(o=>o.OrderProducts);
+            ///////////////////////////////////////////////////////////
 
             person
             .ToTable("Person")

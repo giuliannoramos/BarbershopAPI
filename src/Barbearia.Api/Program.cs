@@ -250,13 +250,13 @@ builder.Services.AddScoped<IValidator<UpdateAppointmentCommand>, UpdateAppointme
 builder.Services.AddScoped<IRequestHandler<GetAppointmentsCollectionQuery, GetAppointmentsCollectionQueryResponse>, GetAppointmentsCollectionQueryHandler>();
 //WorkingDays Commands and queries
 builder.Services.AddScoped<IRequestHandler<GetWorkingDayQuery, IEnumerable<GetWorkingDayDto>>, GetWorkingDayQueryHandler>();
-builder.Services.AddScoped<IRequestHandler<CreateWorkingDayCommand,CreateWorkingDayCommandResponse>,CreateWorkingDayCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<CreateWorkingDayCommand, CreateWorkingDayCommandResponse>, CreateWorkingDayCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<UpdateWorkingDayCommand, UpdateWorkingDayCommandResponse>, UpdateWorkingDayCommandHandler>();
 builder.Services.AddScoped<IValidator<UpdateWorkingDayCommand>, UpdateWorkingDayCommandValidator>();
 builder.Services.AddScoped<IRequestHandler<DeleteWorkingDayCommand, bool>, DeleteWorkingDayCommandHandler>();
 //TimeOffs Commands and queries
 builder.Services.AddScoped<IRequestHandler<GetTimeOffByIdQuery, GetTimeOffByIdDto>, GetTimeOffByIdQueryHandler>();
-builder.Services.AddScoped<IRequestHandler<CreateTimeOffCommand,CreateTimeOffCommandResponse>,CreateTimeOffCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<CreateTimeOffCommand, CreateTimeOffCommandResponse>, CreateTimeOffCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<UpdateTimeOffCommand, UpdateTimeOffCommandResponse>, UpdateTimeOffCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<DeleteTimeOffCommand, bool>, DeleteTimeOffCommandHandler>();
 
@@ -264,19 +264,19 @@ builder.Services.AddScoped<IRequestHandler<DeleteTimeOffCommand, bool>, DeleteTi
 //config banco de dados
 builder.Services.AddDbContext<PersonContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=1973");
 }
 );
 
 builder.Services.AddDbContext<OrderContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=1973");
 }
 );
 
 builder.Services.AddDbContext<ItemContext>(options =>
 {
-    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=5678;Include Error Detail=true");
+    options.UseNpgsql("Host=localhost;port=5432;Database=Barbearia;Username=postgres;Password=1973;Include Error Detail=true");
 }
 );
 

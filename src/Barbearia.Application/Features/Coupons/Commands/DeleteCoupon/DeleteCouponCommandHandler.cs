@@ -14,7 +14,7 @@ public class DeleteCouponCommandHandler : IRequestHandler<DeleteCouponCommand, b
     
     public async Task<bool> Handle(DeleteCouponCommand request, CancellationToken cancellationToken)
     {
-        var couponToDelete = await _orderRepository.GetCouponById(request.CouponId);
+        var couponToDelete = await _orderRepository.GetCouponByIdAsync(request.CouponId);
 
         if (couponToDelete == null) return false;
 

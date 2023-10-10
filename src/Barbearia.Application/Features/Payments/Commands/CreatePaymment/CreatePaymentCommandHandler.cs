@@ -27,10 +27,23 @@ public class CreatePaymentCommandHandler : IRequestHandler<CreatePaymentCommand,
         CreatePaymentCommandResponse response = new();
 
         var orderFromDatabase = await _orderRepository.GetOrderByIdAsync(request.OrderId);
-        if(orderFromDatabase == null){
-            response.ErrorType = Error.ValidationProblem;
-            response.Errors.Add("OrderId", new[]{"Order Not found in database"});
+        if (orderFromDatabase == null)
+        {
+            response.ErrorType = Error.NotFoundProblem;
+            response.Errors.Add("OrderId", new[] { "Order not found in the database." });
             return response;
+        }
+
+        if (request.CouponId.HasValue)
+        {
+            var couponFromDatabase = await _orderRepository.GetCouponByIdAsync(request.CouponId.Value);
+
+            if (couponFromDatabase == null)
+            {
+                response.ErrorType = Error.NotFoundProblem;
+                response.Errors.Add("CouponId", new[] { "Coupon not found in the database." });
+                return response;
+            }
         }
 
         if (orderFromDatabase.Payment != null)

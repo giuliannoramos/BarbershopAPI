@@ -20,7 +20,7 @@ public interface IOrderRepository
 
     // COUPONS
     Task<IEnumerable<Coupon>> GetAllCoupons();
-    Task<Coupon?> GetCouponById(int couponId);
+    Task<Coupon?> GetCouponByIdAsync(int couponId);
     void AddCoupon(Coupon coupon);
     void DeleteCoupon(Coupon coupon);
 

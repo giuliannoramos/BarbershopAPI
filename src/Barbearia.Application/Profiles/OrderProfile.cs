@@ -14,17 +14,18 @@ public class OrderProfile : Profile
 {
     public OrderProfile()
     {
-        CreateMap<UpdateOrderCommand, Order>(); 
-        CreateMap<Order,UpdateOrderDto>();
-        
+        CreateMap<UpdateOrderCommand, Order>();
+        CreateMap<Order, UpdateOrderDto>();
+
         CreateMap<Order, GetOrdersCollectionDto>();
         CreateMap<Order, GetAllOrdersDto>();
         CreateMap<Order, GetOrderByIdDto>();
         CreateMap<Order, GetOrderByNumberDto>();
 
-        CreateMap<CreateOrderCommand, Order>();        
+        CreateMap<CreateOrderCommand, Order>();
         CreateMap<Order, CreateOrderDto>();
 
-        CreateMap<PersonDto, Person>().ReverseMap();     
+        CreateMap<PersonDto, Person>().ReverseMap();
+        CreateMap<PaymentDto, Payment>().ReverseMap();
     }
 }

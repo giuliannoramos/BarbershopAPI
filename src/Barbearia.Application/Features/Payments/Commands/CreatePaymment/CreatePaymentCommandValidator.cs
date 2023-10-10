@@ -31,7 +31,9 @@ public class CreatePaymentCommandValidator : AbstractValidator<CreatePaymentComm
 
         RuleFor(p => p.Status)
             .NotEmpty()
-                .WithMessage("The status cannot be empty");
+                .WithMessage("The status cannot be empty")
+            .Must(CheckStatus)
+                .WithMessage("Status must be higher than 0 and less than 4");
 
         RuleFor(p => p.NetTotal)
             .NotEmpty()
@@ -89,6 +91,15 @@ public class CreatePaymentCommandValidator : AbstractValidator<CreatePaymentComm
     private bool CheckNetTotal(Decimal NetTotal)
     {
         if (NetTotal <= 0)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    private bool CheckStatus(int status)
+    {
+        if (status > 3 || status < 1)
         {
             return false;
         }

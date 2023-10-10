@@ -17,7 +17,7 @@ public class GetCouponByIdQueryHandler : IRequestHandler<GetCouponByIdQuery, Get
     
     public async Task<GetCouponByIdDto> Handle(GetCouponByIdQuery request, CancellationToken cancellationToken)
     {
-        var couponFromDatabase = await _orderRepository.GetCouponById(request.CouponId);
+        var couponFromDatabase = await _orderRepository.GetCouponByIdAsync(request.CouponId);
         return _mapper.Map<GetCouponByIdDto>(couponFromDatabase);
     }
 }

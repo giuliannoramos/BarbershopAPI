@@ -21,7 +21,7 @@ public class UpdateCouponCommandHandler : IRequestHandler<UpdateCouponCommand, U
     {
         var response = new UpdateCouponCommandResponse();
 
-        var couponToUpdate = await _orderRepository.GetCouponById(request.CouponId);
+        var couponToUpdate = await _orderRepository.GetCouponByIdAsync(request.CouponId);
 
         if (couponToUpdate == null)
         {

@@ -10,4 +10,5 @@ public class GetOrderByNumberDto
     public DateTime BuyDate { get; set; }
     public int PersonId { get; set; }
     public PersonDto? Person { get; set; }
+    public PaymentDto? Payment { get; set; }
 }

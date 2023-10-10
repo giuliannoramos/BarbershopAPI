@@ -28,8 +28,20 @@ public class UpdatePaymentCommandHandler : IRequestHandler<UpdatePaymentCommand,
         if (orderFromDatabase == null)
         {
             response.ErrorType = Error.NotFoundProblem;
-            response.Errors.Add("OrderId", new[] { "order not found in the database." });
+            response.Errors.Add("OrderId", new[] { "Order not found in the database." });
             return response;
+        }
+
+        if (request.CouponId.HasValue)
+        {
+            var couponFromDatabase = await _orderRepository.GetCouponByIdAsync(request.CouponId.Value);
+
+            if (couponFromDatabase == null)
+            {
+                response.ErrorType = Error.NotFoundProblem;
+                response.Errors.Add("CouponId", new[] { "Coupon not found in the database." });
+                return response;
+            }
         }
 
         var orderToUpdate = orderFromDatabase.Payment;

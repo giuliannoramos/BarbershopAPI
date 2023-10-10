@@ -105,7 +105,7 @@ public class OrderRepository : IOrderRepository
         _context.Orders.Remove(order);
     }
 
-    public async Task<Coupon?> GetCouponById(int couponId)
+    public async Task<Coupon?> GetCouponByIdAsync(int couponId)
     {
         return await _context.Coupons.FirstOrDefaultAsync(c => c.CouponId == couponId);
     }

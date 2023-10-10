@@ -923,32 +923,34 @@
     ]
   },
   "packageFolders": {
-    "/home/miguel/.nuget/packages/": {}
+    "C:\\Users\\Guilherme\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/miguel/Projects/Curso/BigApiFinal/barbershopapi/src/Barbearia.Application/Barbearia.Application.csproj",
+      "projectUniqueName": "C:\\Users\\Guilherme\\Desktop\\askdaks\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj",
       "projectName": "Barbearia.Application",
-      "projectPath": "/home/miguel/Projects/Curso/BigApiFinal/barbershopapi/src/Barbearia.Application/Barbearia.Application.csproj",
-      "packagesPath": "/home/miguel/.nuget/packages/",
-      "outputPath": "/home/miguel/Projects/Curso/BigApiFinal/barbershopapi/src/Barbearia.Application/obj/",
+      "projectPath": "C:\\Users\\Guilherme\\Desktop\\askdaks\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj",
+      "packagesPath": "C:\\Users\\Guilherme\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Guilherme\\Desktop\\askdaks\\barbershopapi\\src\\Barbearia.Application\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/miguel/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\Guilherme\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "/home/miguel/Projects/Curso/BigApiFinal/barbershopapi/src/Barbearia.Domain/Barbearia.Domain.csproj": {
-              "projectPath": "/home/miguel/Projects/Curso/BigApiFinal/barbershopapi/src/Barbearia.Domain/Barbearia.Domain.csproj"
+            "C:\\Users\\Guilherme\\Desktop\\askdaks\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj": {
+              "projectPath": "C:\\Users\\Guilherme\\Desktop\\askdaks\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj"
             }
           }
         }
@@ -991,18 +993,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[7.0.11, 7.0.11]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.111/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
       }
     }
   }

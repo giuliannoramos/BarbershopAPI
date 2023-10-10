@@ -14,4 +14,6 @@ public class UpdateEmployeeCommand : IRequest<UpdateEmployeeCommandResponse>
     public int Status { get; set; }
     public List<TelephoneDto> Telephones { get; set; } = new();
     public List<AddressDto> Addresses { get; set; } = new();
+    public List<int> RolesId {get;set;} = new();
+    public List<int> ServicesId {get;set;} = new();
 }

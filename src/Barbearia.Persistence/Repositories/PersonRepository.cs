@@ -216,6 +216,8 @@ public class PersonRepository : IPersonRepository
         return await _context.Persons.OfType<Employee>()
             .Include(c => c.Telephones)
             .Include(c => c.Addresses)
+            .Include(c=>c.Roles)
+            .Include(c=> c.Services)
             .Include(c => c.WorkingDays)
                 .ThenInclude(w => w.Schedule)
             .Include(c => c.WorkingDays)

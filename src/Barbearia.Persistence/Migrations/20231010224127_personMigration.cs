@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Barbearia.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class Correcao : Migration
+    public partial class personMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

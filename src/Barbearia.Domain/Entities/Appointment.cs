@@ -5,7 +5,7 @@ public class Appointment
     public int AppointmentId { get; set; }
     public int ScheduleId { get; set; }
     public Schedule? Schedule { get; set; }
-    public int CustomerId { get; set; }
+    public int PersonId { get; set; }
     public Person? Person { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime FinishDate { get; set; }
@@ -42,7 +42,7 @@ public class Appointment
 
     private void CheckCustomerId()
     {
-        if (CustomerId <= 0)
+        if (PersonId <= 0)
         {
             throw new Exception("CustomerId inválido.");
         }

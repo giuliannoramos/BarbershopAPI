@@ -36,14 +36,14 @@ namespace Barbearia.Persistence.Migrations.Item
                     b.Property<DateTime>("ConfirmedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("integer");
-
                     b.Property<DateTime>("FinishDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("FinishServiceDate")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("PersonId")
+                        .HasColumnType("integer");
 
                     b.Property<int>("ScheduleId")
                         .HasColumnType("integer");
@@ -59,7 +59,7 @@ namespace Barbearia.Persistence.Migrations.Item
 
                     b.HasKey("AppointmentId");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("PersonId");
 
                     b.HasIndex("ScheduleId");
 
@@ -69,14 +69,14 @@ namespace Barbearia.Persistence.Migrations.Item
                         new
                         {
                             AppointmentId = 1,
-                            CancellationDate = new DateTime(2023, 10, 10, 0, 49, 12, 604, DateTimeKind.Utc).AddTicks(3935),
-                            ConfirmedDate = new DateTime(2023, 10, 10, 0, 49, 12, 604, DateTimeKind.Utc).AddTicks(3921),
-                            CustomerId = 2,
-                            FinishDate = new DateTime(2023, 10, 10, 0, 49, 12, 604, DateTimeKind.Utc).AddTicks(3882),
-                            FinishServiceDate = new DateTime(2023, 10, 10, 0, 49, 12, 604, DateTimeKind.Utc).AddTicks(3911),
+                            CancellationDate = new DateTime(2023, 10, 10, 22, 42, 6, 152, DateTimeKind.Utc).AddTicks(8533),
+                            ConfirmedDate = new DateTime(2023, 10, 10, 22, 42, 6, 152, DateTimeKind.Utc).AddTicks(8532),
+                            FinishDate = new DateTime(2023, 10, 10, 22, 42, 6, 152, DateTimeKind.Utc).AddTicks(8530),
+                            FinishServiceDate = new DateTime(2023, 10, 10, 22, 42, 6, 152, DateTimeKind.Utc).AddTicks(8531),
+                            PersonId = 2,
                             ScheduleId = 1,
-                            StartDate = new DateTime(2023, 10, 10, 0, 49, 12, 604, DateTimeKind.Utc).AddTicks(3868),
-                            StartServiceDate = new DateTime(2023, 10, 10, 0, 49, 12, 604, DateTimeKind.Utc).AddTicks(3896),
+                            StartDate = new DateTime(2023, 10, 10, 22, 42, 6, 152, DateTimeKind.Utc).AddTicks(8528),
+                            StartServiceDate = new DateTime(2023, 10, 10, 22, 42, 6, 152, DateTimeKind.Utc).AddTicks(8531),
                             Status = 1
                         });
                 });
@@ -437,7 +437,7 @@ namespace Barbearia.Persistence.Migrations.Item
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("StockHistories");
+                    b.ToTable("StockHistory", (string)null);
 
                     b.UseTptMappingStrategy();
                 });
@@ -566,7 +566,7 @@ namespace Barbearia.Persistence.Migrations.Item
                             LastStockQuantity = 10,
                             Operation = 1,
                             ProductId = 1,
-                            Timestamp = new DateTime(2023, 10, 10, 0, 49, 12, 604, DateTimeKind.Utc).AddTicks(7580),
+                            Timestamp = new DateTime(2023, 10, 10, 22, 42, 6, 153, DateTimeKind.Utc).AddTicks(3179),
                             OrderId = 1
                         });
                 });
@@ -591,7 +591,7 @@ namespace Barbearia.Persistence.Migrations.Item
                             LastStockQuantity = 32,
                             Operation = 3,
                             ProductId = 2,
-                            Timestamp = new DateTime(2023, 10, 10, 0, 49, 12, 604, DateTimeKind.Utc).AddTicks(7608),
+                            Timestamp = new DateTime(2023, 10, 10, 22, 42, 6, 153, DateTimeKind.Utc).AddTicks(3196),
                             PersonId = 4
                         });
                 });
@@ -600,7 +600,7 @@ namespace Barbearia.Persistence.Migrations.Item
                 {
                     b.HasOne("Barbearia.Domain.Entities.Person", "Person")
                         .WithMany("Appointments")
-                        .HasForeignKey("CustomerId")
+                        .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

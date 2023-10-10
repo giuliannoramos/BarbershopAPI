@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Barbearia.Persistence.Migrations.Item
 {
     /// <inheritdoc />
-    public partial class Correcao : Migration
+    public partial class itemMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,7 +21,7 @@ namespace Barbearia.Persistence.Migrations.Item
                     AppointmentId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     ScheduleId = table.Column<int>(type: "integer", nullable: false),
-                    CustomerId = table.Column<int>(type: "integer", nullable: false),
+                    PersonId = table.Column<int>(type: "integer", nullable: false),
                     StartDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     FinishDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Status = table.Column<int>(type: "integer", nullable: false),
@@ -34,8 +34,8 @@ namespace Barbearia.Persistence.Migrations.Item
                 {
                     table.PrimaryKey("PK_Appointment", x => x.AppointmentId);
                     table.ForeignKey(
-                        name: "FK_Appointment_Person_CustomerId",
-                        column: x => x.CustomerId,
+                        name: "FK_Appointment_Person_PersonId",
+                        column: x => x.PersonId,
                         principalTable: "Person",
                         principalColumn: "PersonId",
                         onDelete: ReferentialAction.Cascade);
@@ -198,7 +198,7 @@ namespace Barbearia.Persistence.Migrations.Item
                 });
 
             migrationBuilder.CreateTable(
-                name: "StockHistories",
+                name: "StockHistory",
                 columns: table => new
                 {
                     StockHistoryId = table.Column<int>(type: "integer", nullable: false)
@@ -212,9 +212,9 @@ namespace Barbearia.Persistence.Migrations.Item
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StockHistories", x => x.StockHistoryId);
+                    table.PrimaryKey("PK_StockHistory", x => x.StockHistoryId);
                     table.ForeignKey(
-                        name: "FK_StockHistories_Product_ProductId",
+                        name: "FK_StockHistory_Product_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Product",
                         principalColumn: "ItemId",
@@ -292,9 +292,9 @@ namespace Barbearia.Persistence.Migrations.Item
                         principalColumn: "OrderId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_StockHistoryOrder_StockHistories_StockHistoryId",
+                        name: "FK_StockHistoryOrder_StockHistory_StockHistoryId",
                         column: x => x.StockHistoryId,
-                        principalTable: "StockHistories",
+                        principalTable: "StockHistory",
                         principalColumn: "StockHistoryId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -316,17 +316,17 @@ namespace Barbearia.Persistence.Migrations.Item
                         principalColumn: "PersonId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_StockHistorySupplier_StockHistories_StockHistoryId",
+                        name: "FK_StockHistorySupplier_StockHistory_StockHistoryId",
                         column: x => x.StockHistoryId,
-                        principalTable: "StockHistories",
+                        principalTable: "StockHistory",
                         principalColumn: "StockHistoryId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
                 table: "Appointment",
-                columns: new[] { "AppointmentId", "CancellationDate", "ConfirmedDate", "CustomerId", "FinishDate", "FinishServiceDate", "ScheduleId", "StartDate", "StartServiceDate", "Status" },
-                values: new object[] { 1, new DateTime(2023, 10, 10, 0, 49, 12, 604, DateTimeKind.Utc).AddTicks(3935), new DateTime(2023, 10, 10, 0, 49, 12, 604, DateTimeKind.Utc).AddTicks(3921), 2, new DateTime(2023, 10, 10, 0, 49, 12, 604, DateTimeKind.Utc).AddTicks(3882), new DateTime(2023, 10, 10, 0, 49, 12, 604, DateTimeKind.Utc).AddTicks(3911), 1, new DateTime(2023, 10, 10, 0, 49, 12, 604, DateTimeKind.Utc).AddTicks(3868), new DateTime(2023, 10, 10, 0, 49, 12, 604, DateTimeKind.Utc).AddTicks(3896), 1 });
+                columns: new[] { "AppointmentId", "CancellationDate", "ConfirmedDate", "FinishDate", "FinishServiceDate", "PersonId", "ScheduleId", "StartDate", "StartServiceDate", "Status" },
+                values: new object[] { 1, new DateTime(2023, 10, 10, 22, 42, 6, 152, DateTimeKind.Utc).AddTicks(8533), new DateTime(2023, 10, 10, 22, 42, 6, 152, DateTimeKind.Utc).AddTicks(8532), new DateTime(2023, 10, 10, 22, 42, 6, 152, DateTimeKind.Utc).AddTicks(8530), new DateTime(2023, 10, 10, 22, 42, 6, 152, DateTimeKind.Utc).AddTicks(8531), 2, 1, new DateTime(2023, 10, 10, 22, 42, 6, 152, DateTimeKind.Utc).AddTicks(8528), new DateTime(2023, 10, 10, 22, 42, 6, 152, DateTimeKind.Utc).AddTicks(8531), 1 });
 
             migrationBuilder.InsertData(
                 table: "Item",
@@ -387,12 +387,12 @@ namespace Barbearia.Persistence.Migrations.Item
                 });
 
             migrationBuilder.InsertData(
-                table: "StockHistories",
+                table: "StockHistory",
                 columns: new[] { "StockHistoryId", "Amount", "CurrentPrice", "LastStockQuantity", "Operation", "ProductId", "Timestamp" },
                 values: new object[,]
                 {
-                    { 1, 20, 23.5m, 10, 1, 1, new DateTime(2023, 10, 10, 0, 49, 12, 604, DateTimeKind.Utc).AddTicks(7580) },
-                    { 2, 40, 200.2m, 32, 3, 2, new DateTime(2023, 10, 10, 0, 49, 12, 604, DateTimeKind.Utc).AddTicks(7608) }
+                    { 1, 20, 23.5m, 10, 1, 1, new DateTime(2023, 10, 10, 22, 42, 6, 153, DateTimeKind.Utc).AddTicks(3179) },
+                    { 2, 40, 200.2m, 32, 3, 2, new DateTime(2023, 10, 10, 22, 42, 6, 153, DateTimeKind.Utc).AddTicks(3196) }
                 });
 
             migrationBuilder.InsertData(
@@ -406,9 +406,9 @@ namespace Barbearia.Persistence.Migrations.Item
                 values: new object[] { 2, 4 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Appointment_CustomerId",
+                name: "IX_Appointment_PersonId",
                 table: "Appointment",
-                column: "CustomerId");
+                column: "PersonId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Appointment_ScheduleId",
@@ -456,8 +456,8 @@ namespace Barbearia.Persistence.Migrations.Item
                 column: "ServiceCategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StockHistories_ProductId",
-                table: "StockHistories",
+                name: "IX_StockHistory_ProductId",
+                table: "StockHistory",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
@@ -499,7 +499,7 @@ namespace Barbearia.Persistence.Migrations.Item
                 name: "Service");
 
             migrationBuilder.DropTable(
-                name: "StockHistories");
+                name: "StockHistory");
 
             migrationBuilder.DropTable(
                 name: "ServiceCategory");

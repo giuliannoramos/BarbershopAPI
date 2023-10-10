@@ -25,7 +25,7 @@ public class CreateWorkingDayCommandHandler : IRequestHandler<CreateWorkingDayCo
         var employeeFromDatabase = await _personRepository.GetEmployeeByIdAsync(request.PersonId);
         if (employeeFromDatabase == null)
         {
-            response.ErrorType = Error.ValidationProblem;
+            response.ErrorType = Error.NotFoundProblem;
             response.Errors.Add("PersonId", new[] { "Person Not found in database" });
             return response;
         }

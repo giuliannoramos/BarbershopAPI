@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Barbearia.Application.Features.WorkingDays.Query.GetWorkingDay;
 
-public class GetWorkingDayQueryHandler : IRequestHandler<GetWorkingDayQuery, IEnumerable<GetWorkingDayDto>>
+public class GetWorkingDayQueryHandler : IRequestHandler<GetWorkingDayQuery, GetWorkingDayQueryResponse>
 {
     private readonly IPersonRepository _personRepository;
     private readonly IMapper _mapper;
@@ -14,16 +14,26 @@ public class GetWorkingDayQueryHandler : IRequestHandler<GetWorkingDayQuery, IEn
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<GetWorkingDayDto>> Handle(GetWorkingDayQuery request, CancellationToken cancellationToken)
+    public async Task<GetWorkingDayQueryResponse> Handle(GetWorkingDayQuery request, CancellationToken cancellationToken)
     {
-        var employeeFromDatabase = await _personRepository.GetEmployeeByIdAsync(request.PersonId);
+        GetWorkingDayQueryResponse response = new();
 
+        var employeeFromDatabase = await _personRepository.GetEmployeeByIdAsync(request.PersonId);
         if (employeeFromDatabase == null)
         {
-            return null!;
+            response.ErrorType = Error.NotFoundProblem;
+            response.Errors.Add("PersonId", new[] { "Employee Not found in database" });
+            return response;
+        }
+        if (!employeeFromDatabase.WorkingDays.Any())
+        {
+            response.ErrorType = Error.NotFoundProblem;
+            response.Errors.Add("WorkingDays", new[] { "WorkinDays Not found in database" });
+            return response;
         }
 
         var workingDaysFromDatabase = await _personRepository.GetWorkingDayAsync(request.PersonId);
-        return _mapper.Map<IEnumerable<GetWorkingDayDto>>(workingDaysFromDatabase);
+        response.WorkingDay = _mapper.Map<IEnumerable<GetWorkingDayDto>>(workingDaysFromDatabase);
+        return response;
     }
 }

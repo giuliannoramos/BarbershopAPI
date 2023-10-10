@@ -24,11 +24,13 @@ public class TelephoneController : MainController
     public async Task<ActionResult<IEnumerable<TelephoneDto>>> GetTelephone(int personId)
     {
         var getTelephoneQuery = new GetTelephoneQuery { PersonId = personId };
-        var telephoneToReturn = await _mediator.Send(getTelephoneQuery);
+        var telephoneResponse = await _mediator.Send(getTelephoneQuery);
 
-        if (!telephoneToReturn.Any()) return NotFound();
+        if (!telephoneResponse.IsSuccess){
+            return HandleRequestError(telephoneResponse);
+        }
 
-        return Ok(telephoneToReturn);
+        return Ok(telephoneResponse.Telephones);
     }
 
     [HttpPost]
@@ -74,9 +76,11 @@ public class TelephoneController : MainController
     public async Task<ActionResult> DeleteTelephone(int personId, int telephoneId)
     {
         var deleteTelephoneCommand = new DeleteTelephoneCommand { PersonId = personId, TelefoneId = telephoneId };
-        var result = await _mediator.Send(deleteTelephoneCommand);
+        var telephoneResponse = await _mediator.Send(deleteTelephoneCommand);
 
-        if (!result) return NotFound();
+        if (!telephoneResponse.IsSuccess){
+            return HandleRequestError(telephoneResponse);
+        }
 
         return NoContent();
     }

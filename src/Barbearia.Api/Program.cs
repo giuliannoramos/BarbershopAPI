@@ -153,12 +153,12 @@ builder.Services.AddScoped<IRequestHandler<UpdateAddressCommand, UpdateAddressCo
 builder.Services.AddScoped<IValidator<UpdateAddressCommand>, UpdateAddressCommandValidator>();
 builder.Services.AddScoped<IRequestHandler<DeleteAddressCommand, bool>, DeleteAddressCommandHandler>();
 // Telephone commands and queries
-builder.Services.AddScoped<IRequestHandler<GetTelephoneQuery, IEnumerable<GetTelephoneDto>>, GetTelephoneQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<GetTelephoneQuery, GetTelephoneQueryResponse>, GetTelephoneQueryHandler>();
 builder.Services.AddScoped<IRequestHandler<CreateTelephoneCommand, CreateTelephoneCommandResponse>, CreateTelephoneCommandHandler>();
 builder.Services.AddScoped<IValidator<CreateTelephoneCommand>, CreateTelephoneCommandValidator>();
 builder.Services.AddScoped<IRequestHandler<UpdateTelephoneCommand, UpdateTelephoneCommandResponse>, UpdateTelephoneCommandHandler>();
 builder.Services.AddScoped<IValidator<UpdateTelephoneCommand>, UpdateTelephoneCommandValidator>();
-builder.Services.AddScoped<IRequestHandler<DeleteTelephoneCommand, bool>, DeleteTelephoneCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<DeleteTelephoneCommand, DeleteTelephoneCommandResponse>, DeleteTelephoneCommandHandler>();
 // Order commands and queries
 builder.Services.AddScoped<IRequestHandler<GetOrdersCollectionQuery, GetOrdersCollectionQueryResponse>, GetOrdersCollectionQueryHandler>();
 builder.Services.AddScoped<IRequestHandler<GetAllOrdersQuery, IEnumerable<GetAllOrdersDto>>, GetAllOrdersQueryHandler>();
@@ -171,10 +171,10 @@ builder.Services.AddScoped<IValidator<UpdateOrderCommand>, UpdateOrderCommandVal
 builder.Services.AddScoped<IRequestHandler<DeleteOrderCommand, bool>, DeleteOrderCommandHandler>();
 // Payment commands and queries
 builder.Services.AddScoped<IRequestHandler<GetSuppliersCollectionQuery, GetSuppliersCollectionQueryResponse>, GetSuppliersCollectionQueryHandler>();
-builder.Services.AddScoped<IRequestHandler<GetPaymentQuery, GetPaymentDto>, GetPaymentQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<GetPaymentQuery, GetPaymentQueryResponse>, GetPaymentQueryHandler>();
 builder.Services.AddScoped<IRequestHandler<CreatePaymentCommand, CreatePaymentCommandResponse>, CreatePaymentCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<UpdatePaymentCommand, UpdatePaymentCommandResponse>, UpdatePaymentCommandHandler>();
-builder.Services.AddScoped<IRequestHandler<DeletePaymentCommand, bool>, DeletePaymentCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<DeletePaymentCommand, DeletePaymentCommandResponse>, DeletePaymentCommandHandler>();
 // Product commands and queries
 builder.Services.AddScoped<IRequestHandler<GetProductsCollectionQuery, GetProductsCollectionQueryResponse>, GetProductsCollectionQueryHandler>();
 builder.Services.AddScoped<IRequestHandler<GetAllProductsQuery, IEnumerable<GetAllProductsDto>>, GetAllProductsQueryHandler>();
@@ -249,11 +249,11 @@ builder.Services.AddScoped<IRequestHandler<UpdateAppointmentCommand, UpdateAppoi
 builder.Services.AddScoped<IValidator<UpdateAppointmentCommand>, UpdateAppointmentCommandValidator>();
 builder.Services.AddScoped<IRequestHandler<GetAppointmentsCollectionQuery, GetAppointmentsCollectionQueryResponse>, GetAppointmentsCollectionQueryHandler>();
 //WorkingDays Commands and queries
-builder.Services.AddScoped<IRequestHandler<GetWorkingDayQuery, IEnumerable<GetWorkingDayDto>>, GetWorkingDayQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<GetWorkingDayQuery, GetWorkingDayQueryResponse>, GetWorkingDayQueryHandler>();
 builder.Services.AddScoped<IRequestHandler<CreateWorkingDayCommand, CreateWorkingDayCommandResponse>, CreateWorkingDayCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<UpdateWorkingDayCommand, UpdateWorkingDayCommandResponse>, UpdateWorkingDayCommandHandler>();
 builder.Services.AddScoped<IValidator<UpdateWorkingDayCommand>, UpdateWorkingDayCommandValidator>();
-builder.Services.AddScoped<IRequestHandler<DeleteWorkingDayCommand, bool>, DeleteWorkingDayCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<DeleteWorkingDayCommand, DeleteWorkingDayCommandResponse>, DeleteWorkingDayCommandHandler>();
 //TimeOffs Commands and queries
 builder.Services.AddScoped<IRequestHandler<GetTimeOffByIdQuery, GetTimeOffByIdDto>, GetTimeOffByIdQueryHandler>();
 builder.Services.AddScoped<IRequestHandler<CreateTimeOffCommand, CreateTimeOffCommandResponse>, CreateTimeOffCommandHandler>();

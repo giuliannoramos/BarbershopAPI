@@ -1,8 +1,7 @@
-using Barbearia.Domain.Entities;
 using FluentAssertions;
 using Xunit.Abstractions;
 
-namespace UnitTests.Barbearia.DomainTests;
+namespace UnitTests.Barbearia.DomainTests.Entities.Payment;
 
 public class PaymentTests : IClassFixture<PaymentTestsFixture>
 {

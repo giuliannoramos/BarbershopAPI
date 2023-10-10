@@ -28,6 +28,4 @@
     <ProjectReference Include="..\..\..\src\Barbearia.Domain\Barbearia.Domain.csproj" />
   </ItemGroup>
 
-  
-
 </Project>

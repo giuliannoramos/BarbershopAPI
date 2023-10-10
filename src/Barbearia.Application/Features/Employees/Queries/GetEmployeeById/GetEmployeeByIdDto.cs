@@ -17,4 +17,6 @@ public class GetEmployeeByIdDto
     public TypeStatus Status { get; set; }
     public List<TelephoneDto> Telephones {get; set;} = new List<TelephoneDto>();
     public List<AddressDto> Addresses {get; set;} = new List<AddressDto>();
+    public List<RoleDto> Roles {get;set;} = new List<RoleDto>();
+    public List<ServiceDto> Services {get;set;} = new List<ServiceDto>();
 }

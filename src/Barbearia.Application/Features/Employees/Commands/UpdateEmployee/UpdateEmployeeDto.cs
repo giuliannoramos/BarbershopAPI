@@ -12,4 +12,6 @@ public class UpdateEmployeeDto
     public string Email { get; set; } = string.Empty;
     public List<TelephoneDto> Telephones { get; set; } = new();
     public List<AddressDto> Addresses { get; set; } = new();
+    public List<RoleDto> Roles {get;set;} = new();
+    public List<ServiceDto> Services {get;set;} = new();
 }

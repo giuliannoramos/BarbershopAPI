@@ -10,14 +10,16 @@ namespace Barbearia.Application.Features.Employees.Commands.CreateEmployee;
 public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeCommand, CreateEmployeeCommandResponse>
 {
     private readonly IPersonRepository _personRepository;
+    private readonly IItemRepository _itemRepository;
     private readonly IMapper _mapper;
     private readonly ILogger<CreateEmployeeCommandHandler> _logger;
 
 
 
-    public CreateEmployeeCommandHandler(IPersonRepository personRepository, IMapper mapper, ILogger<CreateEmployeeCommandHandler> logger)
+    public CreateEmployeeCommandHandler(IPersonRepository personRepository,IItemRepository itemRepository, IMapper mapper, ILogger<CreateEmployeeCommandHandler> logger)
     {
         _personRepository = personRepository;
+        _itemRepository = itemRepository;
         _mapper = mapper;
         _logger = logger;
     }
@@ -36,7 +38,43 @@ public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeComman
             return response;
         }
 
+        List<Role> Roles = new List<Role>();
+        List<Service> Services = new List<Service>();
+
+        foreach (int roles in request.RolesId)
+        {
+            var roleFromDatabase = await _personRepository.GetRoleByIdAsync(roles);
+            if (roleFromDatabase == null)
+            {
+                response.ErrorType = Error.NotFoundProblem;
+                response.Errors.Add("role", new[] { "role not found in the database." });
+                return response;
+            }
+            Roles.Add(roleFromDatabase!); 
+        }
+
+        foreach (int services in request.ServicesId)
+        {
+            var servicesFromDatabase = await _itemRepository.GetServiceByIdAsync(services);
+            if (servicesFromDatabase == null)
+            {
+                response.ErrorType = Error.NotFoundProblem;
+                response.Errors.Add("services", new[] { "services not found in the database." });
+                return response;
+            }
+            Services.Add(servicesFromDatabase!); 
+        }
+
         var employeeEntity = _mapper.Map<Employee>(request);
+
+        foreach (var role in Roles)
+        {
+            employeeEntity.Roles.Add(role);
+        }
+        foreach (var service in Services)
+        {
+            employeeEntity.Services.Add(service);
+        }
 
         // Validação do funcionario
         try

@@ -18,4 +18,6 @@ public class CreateEmployeeDto
     public TypeStatus Status { get; set; }
     public List<TelephoneDto> Telephones { get; set; } = new();
     public List<AddressDto> Addresses { get; set; } = new();
+    public List<RoleDto> Roles {get;set;} = new();
+    public List<ServiceDto> Services {get;set;} = new();
 }

@@ -21,7 +21,7 @@ public class CouponsController : MainController
     }
     
     [HttpGet("{couponId}",Name = "GetCouponById")]
-    public async Task<ActionResult<CouponDto>> GetCouponById(int couponId)
+    public async Task<ActionResult<GetCouponByIdDto>> GetCouponById(int couponId)
     {
         var getCouponQuery = new GetCouponByIdQuery() { CouponId = couponId };
         var couponToReturn = await _mediator.Send(getCouponQuery);
@@ -32,7 +32,7 @@ public class CouponsController : MainController
     }
     
     [HttpGet(Name = "GetAllCoupons")]
-    public async Task<ActionResult<IEnumerable<CouponDto>>> GetCoupons()
+    public async Task<ActionResult<IEnumerable<GetAllCouponsDto>>> GetCoupons()
     {
         var getCouponsQuery = new GetAllCouponsQuery();
         var couponsToReturn = await _mediator.Send(getCouponsQuery);

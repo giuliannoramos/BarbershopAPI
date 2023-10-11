@@ -18,7 +18,7 @@ public class CustomersCollectionController:MainController
     }
 
     [HttpGet]
-    public async Task<ActionResult <IEnumerable <GetCustomersCollectionDto>>> GetCustomersCollection(
+    public async Task<ActionResult <IEnumerable <GetCustomersCollectionQueryResponse>>> GetCustomersCollection(
     string? searchQuery = "", int pageNumber = 1, int pageSize = 5)
     {
         var getCustomersCollectionQuery =

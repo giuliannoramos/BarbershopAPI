@@ -18,7 +18,7 @@ public class SchedulesCollectionController:MainController
     }
 
     [HttpGet]
-    public async Task<ActionResult <IEnumerable <GetSchedulesCollectionDto>>> GetSchedulesCollection(
+    public async Task<ActionResult <IEnumerable <GetSchedulesCollectionQueryResponse>>> GetSchedulesCollection(
     string? searchQuery = "", int pageNumber = 1, int pageSize = 5)
     {
         var getSchedulesCollectionQuery =

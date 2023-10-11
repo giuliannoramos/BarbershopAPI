@@ -16,7 +16,7 @@ public class OrdersCollectionController : MainController
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<GetOrdersCollectionDto>>> GetOrdersCollection(string? searchQuery = "", int pageNumber = 1, int pageSize = 5)
+    public async Task<ActionResult<IEnumerable<GetOrdersCollectionQueryResponse>>> GetOrdersCollection(string? searchQuery = "", int pageNumber = 1, int pageSize = 5)
     {
         var getOrdersCollectionQuery = 
         new GetOrdersCollectionQuery

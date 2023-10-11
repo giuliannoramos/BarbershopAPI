@@ -2,5 +2,5 @@ namespace Barbearia.Application.Features.ServiceCategories.Commands.UpdateServic
 
 public class UpdateServiceCategoryCommandResponse : BaseResponse
 {
-    public UpdateServiceCategoryDto ServiceCategory{get;set;} = default!;
+    
 }

@@ -9,6 +9,6 @@ namespace Barbearia.Application.Features.Appointments.Commands.UpdateAppointment
 {
     public class UpdateAppointmentCommandResponse : BaseResponse
     {
-        public UpdateAppointmentDto? Appointment { get; set; }
+        
     }
 }

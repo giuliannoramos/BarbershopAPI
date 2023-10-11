@@ -2,5 +2,5 @@ namespace Barbearia.Application.Features.ProductCategories.Commands.UpdateProduc
 
 public class UpdateProductCategoryCommandResponse : BaseResponse
 {
-    public UpdateProductCategoryDto ProductCategory{get; set;} = default!;    
+       
 }

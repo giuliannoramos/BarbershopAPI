@@ -18,6 +18,7 @@ namespace Barbearia.Persistence.DbContexts
         public DbSet<Role> Roles { get; set; } = null!;
         public DbSet<Schedule> Schedules { get; set; } = null!;
         public DbSet<Order> Orders {get;set;} = null!;
+        public DbSet<Service> Services{get;set;} = null!;
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -36,12 +37,15 @@ namespace Barbearia.Persistence.DbContexts
             var schedule = modelBuilder.Entity<Schedule>();
             var employee = modelBuilder.Entity<Employee>();
             var roleEmployee = modelBuilder.Entity<RoleEmployee>();
+            var service = modelBuilder.Entity<Service>();
 
             modelBuilder.Entity<Order>().ToTable("Order", t => t.ExcludeFromMigrations());
             modelBuilder.Entity<Item>().ToTable("Item", t => t.ExcludeFromMigrations());
             modelBuilder.Entity<Product>().ToTable("Product", t => t.ExcludeFromMigrations());
             modelBuilder.Entity<StockHistory>().ToTable("StockHistory", t => t.ExcludeFromMigrations());
             modelBuilder.Entity<ServiceCategory>().ToTable("ServiceCategory", t => t.ExcludeFromMigrations());
+            modelBuilder.Entity<Service>().ToTable("Service", t => t.ExcludeFromMigrations());
+            modelBuilder.Entity<EmployeeService>().ToTable("EmployeeService", t => t.ExcludeFromMigrations());
             modelBuilder.Ignore<StockHistory>();
             modelBuilder.Ignore<StockHistoryOrder>();
             modelBuilder.Ignore<StockHistorySupplier>();
@@ -49,7 +53,6 @@ namespace Barbearia.Persistence.DbContexts
             modelBuilder.Ignore<Coupon>();
             modelBuilder.Ignore<ProductCategory>();
             modelBuilder.Ignore<OrderProduct>();
-            modelBuilder.Ignore<Service>();
             modelBuilder.Ignore<Appointment>();
             modelBuilder.Ignore<ServiceCategory>();
             modelBuilder.Ignore<AppointmentOrder>();
@@ -59,6 +62,12 @@ namespace Barbearia.Persistence.DbContexts
 
             //Necessário para declarar order nesse contexto(sem criar nada a mais) corretamente
             ////////////////////////////////////////////////////////////
+            
+            service
+                .HasMany(s => s.Persons)
+                .WithMany(e => e.Services)
+                .UsingEntity<EmployeeService>();
+
             modelBuilder.Entity<Product>()
             .Ignore(p=>p.Orders)
             .Ignore(p=>p.OrderProducts);

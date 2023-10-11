@@ -21,7 +21,7 @@ public class TelephoneController : MainController
     }
 
     [HttpGet(Name = "GetTelephone")]
-    public async Task<ActionResult<IEnumerable<TelephoneDto>>> GetTelephone(int personId)
+    public async Task<ActionResult<IEnumerable<GetTelephoneQueryResponse>>> GetTelephone(int personId)
     {
         var getTelephoneQuery = new GetTelephoneQuery { PersonId = personId };
         var telephoneResponse = await _mediator.Send(getTelephoneQuery);

@@ -43,7 +43,7 @@ public class OrdersController : MainController
     }
 
     [HttpGet("number/{number}", Name = "GetOrderByNumber")]
-    public async Task<ActionResult<GetOrderByIdDto>> GetOrderByNumber(int number)
+    public async Task<ActionResult<GetOrderByNumberDto>> GetOrderByNumber(int number)
     {
         var getOrderByNumberQuery = new GetOrderByNumberQuery { Number = number};
 

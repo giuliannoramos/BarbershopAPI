@@ -20,7 +20,7 @@ public class AddressesController : MainController
     }
 
     [HttpGet(Name = "GetAddress")]
-    public async Task<ActionResult<IEnumerable<AddressDto>>> GetAddress(int personId)
+    public async Task<ActionResult<IEnumerable<GetAddressDto>>> GetAddress(int personId)
     {
         var getAddressQuery = new GetAddressQuery { PersonId = personId };
         IEnumerable<GetAddressDto>? addressToReturn = await _mediator.Send(getAddressQuery);

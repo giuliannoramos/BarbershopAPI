@@ -22,7 +22,7 @@ namespace Barbearia.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AppointmentDto>>> GetAppointments ()
+        public async Task<ActionResult<IEnumerable<GetAllAppointmentsDto>>> GetAppointments ()
         {
             var getAllAppointmentsQuery = new GetAllAppointmentsQuery {  };
 
@@ -31,7 +31,7 @@ namespace Barbearia.Api.Controllers
             return Ok(appointmentsToReturn);
         }
         [HttpGet("{appointmentId}", Name = "getAppointmentById")]
-        public async Task<ActionResult<AppointmentDto?>> GetAppointmentById (int appointmentId)
+        public async Task<ActionResult<GetAppointmentByIdDto?>> GetAppointmentById (int appointmentId)
         {
             var getAppointmentByIdQuery = new GetAppointmentByIdQuery { AppointmentId = appointmentId };
 

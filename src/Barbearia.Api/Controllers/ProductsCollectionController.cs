@@ -16,7 +16,7 @@ public class ProductsCollectionController : MainController
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<GetProductsCollectionDto>>> GetProductsCollection(string? searchQuery = "", int pageNumber = 1, int pageSize = 5)
+    public async Task<ActionResult<IEnumerable<GetProductsCollectionQueryResponse>>> GetProductsCollection(string? searchQuery = "", int pageNumber = 1, int pageSize = 5)
     {
         var getProductsCollectionQuery = 
         new GetProductsCollectionQuery

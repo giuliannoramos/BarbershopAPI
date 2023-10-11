@@ -18,7 +18,7 @@ public class SuppliersCollectionController : MainController
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<GetSuppliersCollectionDto>>> GetSuppliersCollection(
+    public async Task<ActionResult<IEnumerable<GetSuppliersCollectionQueryResponse>>> GetSuppliersCollection(
     string? searchQuery = "", int pageNumber = 1, int pageSize = 5)
     {
         var getSuppliersCollectionQuery =

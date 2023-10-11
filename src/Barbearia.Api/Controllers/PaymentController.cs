@@ -20,7 +20,7 @@ public class PaymentController : MainController
     }
 
     [HttpGet(Name ="GetPayment")]
-    public async Task<ActionResult<PaymentDto>>GetPayment(int orderId)
+    public async Task<ActionResult<GetPaymentQueryResponse>>GetPayment(int orderId)
     {
         var getPaymentQuery = new GetPaymentQuery{OrderId = orderId};
         var paymentReponse = await _mediator.Send(getPaymentQuery);

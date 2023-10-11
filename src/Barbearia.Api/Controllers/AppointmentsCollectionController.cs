@@ -19,7 +19,7 @@ namespace Barbearia.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<GetAppointmentsCollectionDto>>> GetAppointmentsCollection(
+        public async Task<ActionResult<IEnumerable<GetAppointmentsCollectionQueryResponse>>> GetAppointmentsCollection(
             string? searchQuery = "", int pageNumber = 1, int pageSize = 5)
         {
             var getAppointmentsCollectionQuery = new GetAppointmentsCollectionQuery

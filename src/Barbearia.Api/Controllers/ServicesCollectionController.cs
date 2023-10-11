@@ -17,7 +17,7 @@ public class ServicesCollectionController : MainController
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<GetServicesCollectionDto>>> GetServicesCollection(string? searchQuery = "", int pageNumber = 1, int pageSize = 5)
+    public async Task<ActionResult<IEnumerable<GetServicesCollectionQueryResponse>>> GetServicesCollection(string? searchQuery = "", int pageNumber = 1, int pageSize = 5)
     {
         var getServicesCollectionQuery =
         new GetServicesCollectionQuery

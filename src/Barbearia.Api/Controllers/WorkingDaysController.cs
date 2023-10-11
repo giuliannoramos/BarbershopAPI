@@ -15,17 +15,19 @@ public class WorkingDaysController : MainController
 {
     private readonly IMediator _mediator;
 
-    public WorkingDaysController(IMediator mediator){
+    public WorkingDaysController(IMediator mediator)
+    {
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
     }
 
     [HttpGet(Name = "GetWorkingDays")]
-    public async Task<ActionResult<IEnumerable<GetWorkingDayDto>>> GetWorkingDay(int employeeId)
+    public async Task<ActionResult<IEnumerable<GetWorkingDayQueryResponse>>> GetWorkingDay(int employeeId)
     {
-        var getWorkingDayQuery = new GetWorkingDayQuery{PersonId = employeeId};
+        var getWorkingDayQuery = new GetWorkingDayQuery { PersonId = employeeId };
         var workingDayToResponse = await _mediator.Send(getWorkingDayQuery);
 
-        if(!workingDayToResponse.IsSuccess){
+        if (!workingDayToResponse.IsSuccess)
+        {
             return HandleRequestError(workingDayToResponse);
         }
 
@@ -35,11 +37,12 @@ public class WorkingDaysController : MainController
     [HttpPost]
     public async Task<ActionResult<CreateWorkingDayCommandResponse>> CreateWorkingDay(int employeeId, CreateWorkingDayCommand createWorkingDayCommand)
     {
-        if(employeeId != createWorkingDayCommand.PersonId) return BadRequest();
+        if (employeeId != createWorkingDayCommand.PersonId) return BadRequest();
 
-        var createWorkingDayCommandResponse = await _mediator.Send(createWorkingDayCommand); 
+        var createWorkingDayCommandResponse = await _mediator.Send(createWorkingDayCommand);
 
-        if(!createWorkingDayCommandResponse.IsSuccess){
+        if (!createWorkingDayCommandResponse.IsSuccess)
+        {
             return HandleRequestError(createWorkingDayCommandResponse);
         }
 
@@ -47,38 +50,41 @@ public class WorkingDaysController : MainController
 
         return CreatedAtRoute(
             "GetWorkingDays",
-            new{
+            new
+            {
                 employeeId
             }, workingDayToReturn
-            
+
         );
     }
 
-    [HttpPut ("{workingdayId}")]
+    [HttpPut("{workingdayId}")]
     public async Task<ActionResult> UpdateWorkingDay(int workingdayId, int employeeId, UpdateWorkingDayCommand updateWorkingDayCommand)
     {
-        if(employeeId != updateWorkingDayCommand.PersonId) return BadRequest();
+        if (employeeId != updateWorkingDayCommand.PersonId) return BadRequest();
 
-        if(workingdayId != updateWorkingDayCommand.WorkingDayId) return BadRequest();
+        if (workingdayId != updateWorkingDayCommand.WorkingDayId) return BadRequest();
         var updateWorkingDayCommandResponse = await _mediator.Send(updateWorkingDayCommand);
 
-        if(!updateWorkingDayCommandResponse.IsSuccess){
+        if (!updateWorkingDayCommandResponse.IsSuccess)
+        {
             return HandleRequestError(updateWorkingDayCommandResponse);
         }
         return NoContent();
 
     }
 
-    [HttpDelete ("{workingdayId}")]
+    [HttpDelete("{workingdayId}")]
     public async Task<ActionResult> DeleteWorkingDay(int employeeId, int workingDayId)
     {
-        var deleteWorkingDayCommand = new DeleteWorkingDayCommand{PersonId = employeeId, WorkingDayId = workingDayId};
+        var deleteWorkingDayCommand = new DeleteWorkingDayCommand { PersonId = employeeId, WorkingDayId = workingDayId };
         var deleteWorkingDayResponse = await _mediator.Send(deleteWorkingDayCommand);
 
-        if(!deleteWorkingDayResponse.IsSuccess){
+        if (!deleteWorkingDayResponse.IsSuccess)
+        {
             return HandleRequestError(deleteWorkingDayResponse);
-        } 
-        
+        }
+
         return NoContent();
     }
 }

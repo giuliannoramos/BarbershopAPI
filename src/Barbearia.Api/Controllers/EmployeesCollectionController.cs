@@ -17,7 +17,7 @@ public class EmployeesCollectionController : MainController
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<GetEmployeesCollectionDto>>> GetEmployeesCollection(
+    public async Task<ActionResult<IEnumerable<GetEmployeesCollectionQueryResponse>>> GetEmployeesCollection(
     string? searchQuery = "", int pageNumber = 1, int pageSize = 5)
     {
         var getEmployeesCollectionQuery =

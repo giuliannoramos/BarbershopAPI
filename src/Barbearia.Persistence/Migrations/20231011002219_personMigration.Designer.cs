@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Barbearia.Persistence.Migrations
 {
     [DbContext(typeof(PersonContext))]
-    [Migration("20231010224127_personMigration")]
+    [Migration("20231011002219_personMigration")]
     partial class personMigration
     {
         /// <inheritdoc />
@@ -123,6 +123,24 @@ namespace Barbearia.Persistence.Migrations
                             PersonId = 4,
                             State = "SC",
                             Street = "Rua micro"
+                        });
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.EmployeeService", b =>
+                {
+                    b.Property<int>("PersonId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("PersonId", "ServiceId");
+
+                    b.HasIndex("ServiceId");
+
+                    b.ToTable("EmployeeService", null, t =>
+                        {
+                            t.ExcludeFromMigrations();
                         });
                 });
 
@@ -513,6 +531,22 @@ namespace Barbearia.Persistence.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Barbearia.Domain.Entities.Service", b =>
+                {
+                    b.HasBaseType("Barbearia.Domain.Entities.Item");
+
+                    b.Property<int>("DurationMinutes")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ServiceCategoryId")
+                        .HasColumnType("integer");
+
+                    b.ToTable("Service", null, t =>
+                        {
+                            t.ExcludeFromMigrations();
+                        });
+                });
+
             modelBuilder.Entity("Barbearia.Domain.Entities.Customer", b =>
                 {
                     b.HasBaseType("Barbearia.Domain.Entities.Person");
@@ -617,6 +651,21 @@ namespace Barbearia.Persistence.Migrations
                     b.Navigation("Person");
                 });
 
+            modelBuilder.Entity("Barbearia.Domain.Entities.EmployeeService", b =>
+                {
+                    b.HasOne("Barbearia.Domain.Entities.Person", null)
+                        .WithMany()
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Barbearia.Domain.Entities.Service", null)
+                        .WithMany()
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Barbearia.Domain.Entities.Order", b =>
                 {
                     b.HasOne("Barbearia.Domain.Entities.Person", "Person")
@@ -715,6 +764,15 @@ namespace Barbearia.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Supplier");
+                });
+
+            modelBuilder.Entity("Barbearia.Domain.Entities.Service", b =>
+                {
+                    b.HasOne("Barbearia.Domain.Entities.Item", null)
+                        .WithOne()
+                        .HasForeignKey("Barbearia.Domain.Entities.Service", "ItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Person", b =>

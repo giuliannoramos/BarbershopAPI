@@ -326,7 +326,7 @@ namespace Barbearia.Persistence.Migrations.Item
             migrationBuilder.InsertData(
                 table: "Appointment",
                 columns: new[] { "AppointmentId", "CancellationDate", "ConfirmedDate", "FinishDate", "FinishServiceDate", "PersonId", "ScheduleId", "StartDate", "StartServiceDate", "Status" },
-                values: new object[] { 1, new DateTime(2023, 10, 10, 22, 42, 6, 152, DateTimeKind.Utc).AddTicks(8533), new DateTime(2023, 10, 10, 22, 42, 6, 152, DateTimeKind.Utc).AddTicks(8532), new DateTime(2023, 10, 10, 22, 42, 6, 152, DateTimeKind.Utc).AddTicks(8530), new DateTime(2023, 10, 10, 22, 42, 6, 152, DateTimeKind.Utc).AddTicks(8531), 2, 1, new DateTime(2023, 10, 10, 22, 42, 6, 152, DateTimeKind.Utc).AddTicks(8528), new DateTime(2023, 10, 10, 22, 42, 6, 152, DateTimeKind.Utc).AddTicks(8531), 1 });
+                values: new object[] { 1, new DateTime(2023, 10, 11, 0, 23, 13, 83, DateTimeKind.Utc).AddTicks(379), new DateTime(2023, 10, 11, 0, 23, 13, 83, DateTimeKind.Utc).AddTicks(379), new DateTime(2023, 10, 11, 0, 23, 13, 83, DateTimeKind.Utc).AddTicks(376), new DateTime(2023, 10, 11, 0, 23, 13, 83, DateTimeKind.Utc).AddTicks(378), 2, 1, new DateTime(2023, 10, 11, 0, 23, 13, 83, DateTimeKind.Utc).AddTicks(373), new DateTime(2023, 10, 11, 0, 23, 13, 83, DateTimeKind.Utc).AddTicks(377), 1 });
 
             migrationBuilder.InsertData(
                 table: "Item",
@@ -391,8 +391,8 @@ namespace Barbearia.Persistence.Migrations.Item
                 columns: new[] { "StockHistoryId", "Amount", "CurrentPrice", "LastStockQuantity", "Operation", "ProductId", "Timestamp" },
                 values: new object[,]
                 {
-                    { 1, 20, 23.5m, 10, 1, 1, new DateTime(2023, 10, 10, 22, 42, 6, 153, DateTimeKind.Utc).AddTicks(3179) },
-                    { 2, 40, 200.2m, 32, 3, 2, new DateTime(2023, 10, 10, 22, 42, 6, 153, DateTimeKind.Utc).AddTicks(3196) }
+                    { 1, 20, 23.5m, 10, 1, 1, new DateTime(2023, 10, 11, 0, 23, 13, 83, DateTimeKind.Utc).AddTicks(7493) },
+                    { 2, 40, 200.2m, 32, 3, 2, new DateTime(2023, 10, 11, 0, 23, 13, 83, DateTimeKind.Utc).AddTicks(7516) }
                 });
 
             migrationBuilder.InsertData(

@@ -49,4 +49,5 @@ public interface IPersonRepository
     public Task<Role?> GetRoleByIdAsync(int roleId);
     public void AddRole(Role role);
     public void DeleteRole(Role role);
+    public Task<Customer?> GetCustomerToOrderByIdAsync(int customerId);
 }

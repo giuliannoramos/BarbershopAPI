@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Barbearia.Persistence.Migrations.Order
 {
     [DbContext(typeof(OrderContext))]
-    [Migration("20231011002243_orderMigration")]
-    partial class orderMigration
+    [Migration("20231011220844_MigratiosOrder")]
+    partial class MigratiosOrder
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -167,9 +167,9 @@ namespace Barbearia.Persistence.Migrations.Order
                         {
                             CouponId = 1,
                             CouponCode = "teste3",
-                            CreationDate = new DateTime(2023, 10, 11, 0, 22, 43, 480, DateTimeKind.Utc).AddTicks(2359),
+                            CreationDate = new DateTime(2023, 10, 11, 22, 8, 43, 791, DateTimeKind.Utc).AddTicks(7018),
                             DiscountPercent = 10,
-                            ExpirationDate = new DateTime(2023, 10, 11, 0, 22, 43, 480, DateTimeKind.Utc).AddTicks(2360)
+                            ExpirationDate = new DateTime(2023, 10, 11, 22, 8, 43, 791, DateTimeKind.Utc).AddTicks(7019)
                         });
                 });
 
@@ -233,7 +233,7 @@ namespace Barbearia.Persistence.Migrations.Order
                         new
                         {
                             OrderId = 1,
-                            BuyDate = new DateTime(2023, 10, 11, 0, 22, 43, 480, DateTimeKind.Utc).AddTicks(2218),
+                            BuyDate = new DateTime(2023, 10, 11, 22, 8, 43, 791, DateTimeKind.Utc).AddTicks(6827),
                             Number = 500,
                             PersonId = 1,
                             Status = 2
@@ -241,7 +241,7 @@ namespace Barbearia.Persistence.Migrations.Order
                         new
                         {
                             OrderId = 2,
-                            BuyDate = new DateTime(2023, 10, 11, 0, 22, 43, 480, DateTimeKind.Utc).AddTicks(2223),
+                            BuyDate = new DateTime(2023, 10, 11, 22, 8, 43, 791, DateTimeKind.Utc).AddTicks(6831),
                             Number = 501,
                             PersonId = 2,
                             Status = 2
@@ -313,7 +313,7 @@ namespace Barbearia.Persistence.Migrations.Order
                         new
                         {
                             PaymentId = 1,
-                            BuyDate = new DateTime(2023, 10, 11, 0, 22, 43, 480, DateTimeKind.Utc).AddTicks(2346),
+                            BuyDate = new DateTime(2023, 10, 11, 22, 8, 43, 791, DateTimeKind.Utc).AddTicks(7003),
                             Description = "Para de ler isso aqui e vai programar",
                             GrossTotal = 80m,
                             NetTotal = 60m,

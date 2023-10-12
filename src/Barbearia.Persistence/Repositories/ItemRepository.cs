@@ -84,9 +84,15 @@ public class ItemRepository : IItemRepository
 
     public async Task<StockHistoryOrder?> GetStockHistoryOrderByIdAsync(int stockHistoryId)
     {
-        return await _context.StockHistories.OfType<StockHistoryOrder>()
+        return await _context.StockHistories.OfType<StockHistoryOrder>().AsNoTracking()
         .Include(s => s.Product)
         .Include(s => s.Order)
+        .FirstOrDefaultAsync(s => s.StockHistoryId == stockHistoryId);
+    }
+
+    public async Task<StockHistoryOrder?> GetStockHistoryOrderToOrderByIdAsync(int stockHistoryId)
+    {
+        return await _context.StockHistories.OfType<StockHistoryOrder>()
         .FirstOrDefaultAsync(s => s.StockHistoryId == stockHistoryId);
     }
 
@@ -206,7 +212,7 @@ public class ItemRepository : IItemRepository
 
     public async Task<IEnumerable<Appointment>> GetAllAppointmentsAsync()
     {
-        return await _context.Appointments
+        return await _context.Appointments.AsNoTracking()
             .Include(a => a.Schedule)
             .Include(a => a.Person)
             .Include(a => a.Services)
@@ -222,6 +228,13 @@ public class ItemRepository : IItemRepository
             .Include(a => a.Orders)
             .FirstOrDefaultAsync(a => a.AppointmentId == appointmentId);
     }
+
+    public async Task<Appointment?> GetAppointmentToOrderByIdAsync(int appointmentId)
+    {
+        return await _context.Appointments
+            .FirstOrDefaultAsync(a => a.AppointmentId == appointmentId);
+    }
+
     public void AddAppointment (Appointment appointment)
     {
         _context.Appointments.Add(appointment);

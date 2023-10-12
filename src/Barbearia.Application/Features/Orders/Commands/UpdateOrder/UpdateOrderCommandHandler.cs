@@ -1,5 +1,6 @@
 using AutoMapper;
 using Barbearia.Application.Contracts.Repositories;
+using Barbearia.Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualBasic;
@@ -10,15 +11,16 @@ public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand, Upd
 {
     private readonly IOrderRepository _orderRepository;
     private readonly IPersonRepository _personRepository;
+    private readonly IItemRepository _itemRepository;
     private readonly IMapper _mapper;
 
     private readonly ILogger<UpdateOrderCommandHandler> _logger;
 
-    public UpdateOrderCommandHandler(IOrderRepository orderRepository, IPersonRepository personRepository, IMapper mapper
-    , ILogger<UpdateOrderCommandHandler> logger)
+    public UpdateOrderCommandHandler(IOrderRepository orderRepository, IPersonRepository personRepository, IItemRepository itemRepository, IMapper mapper, ILogger<UpdateOrderCommandHandler> logger)
     {
         _orderRepository = orderRepository;
         _personRepository = personRepository;
+        _itemRepository = itemRepository;
         _mapper = mapper;
         _logger = logger;
     }
@@ -27,7 +29,7 @@ public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand, Upd
     {
         UpdateOrderCommandResponse response = new UpdateOrderCommandResponse();
 
-        var orderFromDatabase = await _orderRepository.GetOrderByIdAsync(request.OrderId);
+        var orderFromDatabase = await _orderRepository.GetOrderToOrderByIdAsync(request.OrderId);
         if (orderFromDatabase == null)
         {
             response.ErrorType = Error.NotFoundProblem;
@@ -53,7 +55,63 @@ public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand, Upd
             return response;
         }
 
+        List<StockHistoryOrder> stockHistoryOrders = new List<StockHistoryOrder>();
+        List<Product> Products = new List<Product>();
+        List<Appointment> Appointments = new List<Appointment>();
+
+        foreach (int stockHistoriesOrder in request.StockHistoriesOrderId)
+        {
+            var stockHistoryOrder = await _itemRepository.GetStockHistoryOrderToOrderByIdAsync(stockHistoriesOrder);
+            if (stockHistoryOrder == null)
+            {
+                response.ErrorType = Error.NotFoundProblem;
+                response.Errors.Add("stockHistoryOrder", new[] { "stockHistoryOrder not found in the database." });
+                return response;
+            }
+            stockHistoryOrders.Add(stockHistoryOrder!);
+
+        }
+
+        foreach (int products in request.ProductsId)
+        {
+            var product = await _itemRepository.GetProductByIdAsync(products);
+            if (product == null)
+            {
+                response.ErrorType = Error.NotFoundProblem;
+                response.Errors.Add("product", new[] { "product not found in the database." });
+                return response;
+            }
+            Products.Add(product!);
+
+        }
+
+        foreach (int appointments in request.AppointmentsId)
+        {
+            var appointment = await _itemRepository.GetAppointmentByIdAsync(appointments);
+            if (appointment == null)
+            {
+                response.ErrorType = Error.NotFoundProblem;
+                response.Errors.Add("appointment", new[] { "appointment not found in the database." });
+                return response;
+            }
+            Appointments.Add(appointment!);
+
+        }
+
         _mapper.Map(request, orderFromDatabase);
+
+        foreach (var stockHistoryOrder in stockHistoryOrders)
+        {
+            orderFromDatabase.StockHistoriesOrder.Add(stockHistoryOrder);
+        }
+        foreach (var product in Products)
+        {
+            orderFromDatabase.Products.Add(product);
+        }
+        foreach (var appointment in Appointments)
+        {
+            orderFromDatabase.Appointments.Add(appointment);
+        }
 
         try
         {
@@ -61,7 +119,7 @@ public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand, Upd
         }
         catch (Exception ex)
         {
-            response.ErrorType = Error.InternalServerErrorProblem;
+            response.ErrorType = Error.ValidationProblem;
             response.Errors.Add("Order_Validation", new[] { "Error in order validation" });
             _logger.LogError(ex, "erro de validação em update order");
             return response;

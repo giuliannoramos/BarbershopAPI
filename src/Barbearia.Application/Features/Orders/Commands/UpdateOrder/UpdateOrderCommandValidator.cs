@@ -27,6 +27,18 @@ namespace Barbearia.Application.Features.Orders.Commands.UpdateOrder
                     .WithMessage("BuyDate cannot be empty")
                 .Must(CheckBuyDate)
                     .WithMessage("Date must be valid and not in the future");
+        
+            RuleFor(o =>o.StockHistoriesOrderId)
+            .NotEmpty()
+                .WithMessage("stock history order id cannot be empty");
+
+            RuleFor(o => o.ProductsId)
+                .NotEmpty()
+                    .WithMessage("products id cannot be empty");
+            RuleFor(o => o.AppointmentsId)
+                .NotEmpty()
+                    .WithMessage("appointments id cannot be empty");
+
         }
 
         private bool CheckNumber(int Number)

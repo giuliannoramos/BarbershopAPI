@@ -1,4 +1,6 @@
 using Barbearia.Application.Models;
+using Barbearia.Application.Models.Products;
+using Barbearia.Application.Models.StockHistories;
 
 namespace Barbearia.Application.Features.Orders.Queries.GetOrderById;
 
@@ -10,4 +12,7 @@ public class GetOrderByIdDto
     public DateTime BuyDate { get; set; }
     public PersonDto? Person { get; set; }
     public PaymentDto? Payment { get; set; }
+    public List<StockHistoryOrderDto> StockHistoriesOrder { get; set; } = new();
+    public List<ProductDto> ProductsId { get; set; } = new();
+    public List<AppointmentDto> AppointmentsId { get; set; } = new();
 }

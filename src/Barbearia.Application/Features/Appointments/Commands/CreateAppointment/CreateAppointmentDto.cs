@@ -11,7 +11,7 @@ namespace Barbearia.Application.Features.Appointments.Commands.CreateAppointment
     {
         public int AppointmentId { get; set; }
         public int ScheduleId { get; set; }
-        public int CustomerId { get; set; }
+        public int PersonId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime FinishDate { get; set; }
         public int Status { get; set; }

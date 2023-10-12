@@ -34,4 +34,6 @@ public interface IItemRepository
     void AddAppointment(Appointment appointment);
     void RemoveAppointment(Appointment appointment);
     Task<(IEnumerable<Appointment>, PaginationMetadata)> GetAllAppointmentsAsync(string? searchQuery, int pageNumber, int pageSize);
+    public Task<StockHistoryOrder?> GetStockHistoryOrderToOrderByIdAsync(int stockHistoryId);
+    public Task<Appointment?> GetAppointmentToOrderByIdAsync(int appointmentId);
 }

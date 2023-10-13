@@ -51,10 +51,10 @@ public class OrderRepository : IOrderRepository
     {
         return await _context.Orders
         .Include(o => o.Person)
-        .Include(o=>o.Payment)
-        .Include(o=>o.Products)
-        .Include(o=>o.Appointments)
-        .Include(o=>o.StockHistoriesOrder)
+        .Include(o => o.Payment)
+        .Include(o => o.Products)
+        .Include(o => o.Appointments)
+        .Include(o => o.StockHistoriesOrder)
         .OrderBy(o => o.OrderId)
         .ToListAsync();
     }
@@ -63,10 +63,10 @@ public class OrderRepository : IOrderRepository
     {
         return await _context.Orders
         .Include(o => o.Person)
-        .Include(o=>o.Payment)
-        .Include(o=>o.Products)
-        .Include(o=>o.Appointments)
-        .Include(o=>o.StockHistoriesOrder)
+        .Include(o => o.Payment)
+        .Include(o => o.Products)
+        .Include(o => o.Appointments)
+        .Include(o => o.StockHistoriesOrder)
         .FirstOrDefaultAsync(o => o.OrderId == orderId);
     }
 
@@ -80,10 +80,10 @@ public class OrderRepository : IOrderRepository
     {
         return await _context.Orders
         .Include(o => o.Person)
-        .Include(o=>o.Payment)
-        .Include(o=>o.Products)
-        .Include(o=>o.Appointments)
-        .Include(o=>o.StockHistoriesOrder)
+        .Include(o => o.Payment)
+        .Include(o => o.Products)
+        .Include(o => o.Appointments)
+        .Include(o => o.StockHistoriesOrder)
         .FirstOrDefaultAsync(o => o.Number == number);
     }
 
@@ -158,10 +158,10 @@ public class OrderRepository : IOrderRepository
 
         return true;
 
-    }
+    }    
 
     public async Task<bool> SaveChangesAsync()
     {
         return await _context.SaveChangesAsync() > 0;
-    }    
+    }
 }

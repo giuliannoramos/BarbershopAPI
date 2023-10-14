@@ -30,7 +30,7 @@ namespace Barbearia.Application.Features.Appointments.Commands.UpdateAppointment
         {
             UpdateAppointmentCommandResponse response = new UpdateAppointmentCommandResponse();
 
-            var customerFromDatabase = await _personRepository.GetCustomerByIdAsync(request.CustomerId);
+            var customerFromDatabase = await _personRepository.GetCustomerByIdAsync(request.PersonId);
             if (customerFromDatabase == null)
             {
                 response.ErrorType = Error.NotFoundProblem;
@@ -42,7 +42,7 @@ namespace Barbearia.Application.Features.Appointments.Commands.UpdateAppointment
             if (scheduleFromDatabase == null)
             {
                 response.ErrorType = Error.NotFoundProblem;
-                response.Errors.Add("acheduleId", new[] { "schedule not found in the database." });
+                response.Errors.Add("scheduleId", new[] { "schedule not found in the database." });
                 return response;
             }
 

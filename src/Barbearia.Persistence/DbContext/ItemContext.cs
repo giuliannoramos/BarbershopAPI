@@ -38,6 +38,7 @@ namespace Barbearia.Persistence.DbContexts
             var serviceCategory = modelBuilder.Entity<ServiceCategory>();
             // var roleServiceCategory = modelBuilder.Entity<RoleServiceCategory>();
             var appointmentOrder = modelBuilder.Entity<AppointmentOrder>();
+            var person = modelBuilder.Entity<Person>();
 
             modelBuilder.Entity<Person>().ToTable("Person", t => t.ExcludeFromMigrations());
             modelBuilder.Entity<Order>().ToTable("Order", t => t.ExcludeFromMigrations());
@@ -52,7 +53,18 @@ namespace Barbearia.Persistence.DbContexts
             modelBuilder.Ignore<RoleEmployee>();
             modelBuilder.Ignore<WorkingDay>();
             modelBuilder.Ignore<TimeOff>();
+            modelBuilder.Ignore<Employee>();
 
+            //Esse context precisa saber que o discriminator se chama PersonType
+            //mas não pode saber do employee pois ele vai achar que tem roleId
+            person
+            .ToTable("Person")
+            .HasDiscriminator<int>("PersonType")
+            .HasValue<Person>(1)
+            .HasValue<Customer>(2)
+            .HasValue<Supplier>(3);
+            //.HasValue<Employee>(4)
+            //////////////////////////////////////////////////////////////////////
 
             item
                 .HasKey(p => p.ItemId);

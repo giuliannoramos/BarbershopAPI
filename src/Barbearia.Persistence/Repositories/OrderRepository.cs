@@ -22,6 +22,7 @@ public class OrderRepository : IOrderRepository
          int pageNumber, int pageSize)
     {
         IQueryable<Order> collection = _context.Orders
+        .Include(o => o.Payment)
         .Include(o => o.Person);
 
         if (!string.IsNullOrWhiteSpace(searchQuery))
@@ -51,6 +52,10 @@ public class OrderRepository : IOrderRepository
     {
         return await _context.Orders
         .Include(o => o.Person)
+        .Include(o => o.Payment)
+        .Include(o => o.Products)
+        .Include(o => o.Appointments)
+        .Include(o => o.StockHistoriesOrder)
         .OrderBy(o => o.OrderId)
         .ToListAsync();
     }
@@ -60,6 +65,15 @@ public class OrderRepository : IOrderRepository
         return await _context.Orders
         .Include(o => o.Person)
         .Include(o => o.Payment)
+        .Include(o => o.Products)
+        .Include(o => o.Appointments)
+        .Include(o => o.StockHistoriesOrder)
+        .FirstOrDefaultAsync(o => o.OrderId == orderId);
+    }
+
+    public async Task<Order?> GetOrderToOrderByIdAsync(int orderId)
+    {
+        return await _context.Orders
         .FirstOrDefaultAsync(o => o.OrderId == orderId);
     }
 
@@ -67,6 +81,10 @@ public class OrderRepository : IOrderRepository
     {
         return await _context.Orders
         .Include(o => o.Person)
+        .Include(o => o.Payment)
+        .Include(o => o.Products)
+        .Include(o => o.Appointments)
+        .Include(o => o.StockHistoriesOrder)
         .FirstOrDefaultAsync(o => o.Number == number);
     }
 
@@ -79,7 +97,7 @@ public class OrderRepository : IOrderRepository
 
     public void AddOrder(Order order)
     {
-        _context.Orders.Add(order);
+        _context.Orders.Attach(order);
     }
 
     public void AddPayment(Order order, Payment payment)
@@ -103,6 +121,7 @@ public class OrderRepository : IOrderRepository
         // _context.Payments.RemoveRange(pagamentosParaExcluir);
 
         _context.Orders.Remove(order);
+        _context.Entry(order).State = EntityState.Detached;
     }
 
     public async Task<Coupon?> GetCouponByIdAsync(int couponId)
@@ -140,10 +159,10 @@ public class OrderRepository : IOrderRepository
 
         return true;
 
-    }
+    }    
 
     public async Task<bool> SaveChangesAsync()
     {
         return await _context.SaveChangesAsync() > 0;
-    }    
+    }
 }

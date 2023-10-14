@@ -16,7 +16,7 @@ namespace Barbearia.Application.Features.Appointments.Commands.CreateAppointment
                 .NotEmpty()
                     .WithMessage("Should have a schedule");
 
-            RuleFor(a => a.CustomerId)
+            RuleFor(a => a.PersonId)
                 .NotEmpty()
                     .WithMessage("Should have a customer");
 

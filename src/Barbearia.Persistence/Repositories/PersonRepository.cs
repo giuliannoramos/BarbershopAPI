@@ -64,6 +64,12 @@ public class PersonRepository : IPersonRepository
             .FirstOrDefaultAsync(p => p.PersonId == customerId);
     }
 
+    public async Task<Customer?> GetCustomerToOrderByIdAsync(int customerId)
+    {
+        return await _context.Persons.OfType<Customer>()
+            .FirstOrDefaultAsync(p => p.PersonId == customerId);
+    }
+
     public void AddCustomer(Customer customer)
     {
         _context.Persons.Add(customer);
@@ -227,7 +233,7 @@ public class PersonRepository : IPersonRepository
 
     public void AddEmployee(Employee employee)
     {
-        _context.Persons.Add(employee);
+        _context.Persons.Attach(employee);
     }
 
     public void DeleteEmployee(Employee employee)

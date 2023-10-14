@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Barbearia.Persistence.Migrations.Item
 {
     [DbContext(typeof(ItemContext))]
-    [Migration("20231011002313_itemMigration")]
-    partial class itemMigration
+    [Migration("20231011220931_MigratiosItem")]
+    partial class MigratiosItem
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,14 +72,14 @@ namespace Barbearia.Persistence.Migrations.Item
                         new
                         {
                             AppointmentId = 1,
-                            CancellationDate = new DateTime(2023, 10, 11, 0, 23, 13, 83, DateTimeKind.Utc).AddTicks(379),
-                            ConfirmedDate = new DateTime(2023, 10, 11, 0, 23, 13, 83, DateTimeKind.Utc).AddTicks(379),
-                            FinishDate = new DateTime(2023, 10, 11, 0, 23, 13, 83, DateTimeKind.Utc).AddTicks(376),
-                            FinishServiceDate = new DateTime(2023, 10, 11, 0, 23, 13, 83, DateTimeKind.Utc).AddTicks(378),
+                            CancellationDate = new DateTime(2023, 10, 11, 22, 9, 30, 991, DateTimeKind.Utc).AddTicks(4321),
+                            ConfirmedDate = new DateTime(2023, 10, 11, 22, 9, 30, 991, DateTimeKind.Utc).AddTicks(4321),
+                            FinishDate = new DateTime(2023, 10, 11, 22, 9, 30, 991, DateTimeKind.Utc).AddTicks(4318),
+                            FinishServiceDate = new DateTime(2023, 10, 11, 22, 9, 30, 991, DateTimeKind.Utc).AddTicks(4320),
                             PersonId = 2,
                             ScheduleId = 1,
-                            StartDate = new DateTime(2023, 10, 11, 0, 23, 13, 83, DateTimeKind.Utc).AddTicks(373),
-                            StartServiceDate = new DateTime(2023, 10, 11, 0, 23, 13, 83, DateTimeKind.Utc).AddTicks(377),
+                            StartDate = new DateTime(2023, 10, 11, 22, 9, 30, 991, DateTimeKind.Utc).AddTicks(4315),
+                            StartServiceDate = new DateTime(2023, 10, 11, 22, 9, 30, 991, DateTimeKind.Utc).AddTicks(4319),
                             Status = 1
                         });
                 });
@@ -278,10 +278,6 @@ namespace Barbearia.Persistence.Migrations.Item
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("text");
@@ -293,6 +289,9 @@ namespace Barbearia.Persistence.Migrations.Item
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("PersonType")
+                        .HasColumnType("integer");
+
                     b.Property<int>("Status")
                         .HasColumnType("integer");
 
@@ -303,7 +302,7 @@ namespace Barbearia.Persistence.Migrations.Item
                             t.ExcludeFromMigrations();
                         });
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Person");
+                    b.HasDiscriminator<int>("PersonType").HasValue(1);
 
                     b.UseTphMappingStrategy();
                 });
@@ -537,16 +536,18 @@ namespace Barbearia.Persistence.Migrations.Item
                         });
                 });
 
-            modelBuilder.Entity("Barbearia.Domain.Entities.Employee", b =>
+            modelBuilder.Entity("Barbearia.Domain.Entities.Customer", b =>
                 {
                     b.HasBaseType("Barbearia.Domain.Entities.Person");
 
-                    b.Property<int?>("RoleId")
-                        .HasColumnType("integer");
+                    b.HasDiscriminator().HasValue(2);
+                });
 
-                    b.HasIndex("RoleId");
+            modelBuilder.Entity("Barbearia.Domain.Entities.Supplier", b =>
+                {
+                    b.HasBaseType("Barbearia.Domain.Entities.Person");
 
-                    b.HasDiscriminator().HasValue("Employee");
+                    b.HasDiscriminator().HasValue(3);
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.StockHistoryOrder", b =>
@@ -569,7 +570,7 @@ namespace Barbearia.Persistence.Migrations.Item
                             LastStockQuantity = 10,
                             Operation = 1,
                             ProductId = 1,
-                            Timestamp = new DateTime(2023, 10, 11, 0, 23, 13, 83, DateTimeKind.Utc).AddTicks(7493),
+                            Timestamp = new DateTime(2023, 10, 11, 22, 9, 30, 991, DateTimeKind.Utc).AddTicks(9787),
                             OrderId = 1
                         });
                 });
@@ -594,7 +595,7 @@ namespace Barbearia.Persistence.Migrations.Item
                             LastStockQuantity = 32,
                             Operation = 3,
                             ProductId = 2,
-                            Timestamp = new DateTime(2023, 10, 11, 0, 23, 13, 83, DateTimeKind.Utc).AddTicks(7516),
+                            Timestamp = new DateTime(2023, 10, 11, 22, 9, 30, 991, DateTimeKind.Utc).AddTicks(9807),
                             PersonId = 4
                         });
                 });
@@ -751,13 +752,6 @@ namespace Barbearia.Persistence.Migrations.Item
                     b.Navigation("ServiceCategory");
                 });
 
-            modelBuilder.Entity("Barbearia.Domain.Entities.Employee", b =>
-                {
-                    b.HasOne("Barbearia.Domain.Entities.Role", null)
-                        .WithMany("Employees")
-                        .HasForeignKey("RoleId");
-                });
-
             modelBuilder.Entity("Barbearia.Domain.Entities.StockHistoryOrder", b =>
                 {
                     b.HasOne("Barbearia.Domain.Entities.Order", "Order")
@@ -815,11 +809,6 @@ namespace Barbearia.Persistence.Migrations.Item
             modelBuilder.Entity("Barbearia.Domain.Entities.ProductCategory", b =>
                 {
                     b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("Barbearia.Domain.Entities.Role", b =>
-                {
-                    b.Navigation("Employees");
                 });
 
             modelBuilder.Entity("Barbearia.Domain.Entities.Schedule", b =>

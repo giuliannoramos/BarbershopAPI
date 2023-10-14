@@ -13,7 +13,7 @@ namespace Barbearia.Application.Features.Appointments.Queries.GetAllAppointments
         public int AppointmentId { get; set; }
         public int ScheduleId { get; set; }
         public ScheduleDto? Schedule { get; set; }
-        public int CustomerId { get; set; }
+        public int PersonId { get; set; }
         public PersonDto? Person { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime FinishDate { get; set; }

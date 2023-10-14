@@ -10,4 +10,5 @@ public class GetPaymentDto
     public int Status { get; set; }
     public decimal NetTotal { get; set; }
     public int? CouponId { get; set; }
+    
 }

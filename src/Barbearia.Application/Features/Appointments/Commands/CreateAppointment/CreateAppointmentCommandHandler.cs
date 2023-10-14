@@ -30,7 +30,7 @@ namespace Barbearia.Application.Features.Appointments.Commands.CreateAppointment
         {
             CreateAppointmentCommandResponse response = new();
 
-            var customerFromDatabase = await _personRepository.GetCustomerByIdAsync(request.CustomerId);
+            var customerFromDatabase = await _personRepository.GetCustomerByIdAsync(request.PersonId);
             if (customerFromDatabase == null)
             {
                 response.ErrorType = Error.NotFoundProblem;

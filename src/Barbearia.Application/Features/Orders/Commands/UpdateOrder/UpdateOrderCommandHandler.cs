@@ -68,6 +68,7 @@ public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand, Upd
                 response.Errors.Add("stockHistoryOrder", new[] { "stockHistoryOrder not found in the database." });
                 return response;
             }
+            stockHistoryOrders.Add(stockHistoryOrder!);
 
         }
 
@@ -80,6 +81,7 @@ public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand, Upd
                 response.Errors.Add("product", new[] { "product not found in the database." });
                 return response;
             }
+            Products.Add(product!);
 
         }
 
@@ -92,6 +94,7 @@ public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand, Upd
                 response.Errors.Add("appointment", new[] { "appointment not found in the database." });
                 return response;
             }
+            Appointments.Add(appointment!);
 
         }
 

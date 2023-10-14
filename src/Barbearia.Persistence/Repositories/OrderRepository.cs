@@ -22,6 +22,7 @@ public class OrderRepository : IOrderRepository
          int pageNumber, int pageSize)
     {
         IQueryable<Order> collection = _context.Orders
+        .Include(o => o.Payment)
         .Include(o => o.Person);
 
         if (!string.IsNullOrWhiteSpace(searchQuery))

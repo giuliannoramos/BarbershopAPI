@@ -48,8 +48,8 @@ public class CreateSupplierCommandValidator : AbstractValidator<CreateSupplierCo
         RuleFor(s => s.Status)
             .NotEmpty()
                 .WithMessage("Supplier Status cannot be empty")
-            .NotEqual(0)
-                .WithMessage("Supplier Status must be different from 0");
+            .LessThanOrEqualTo(2)
+                .WithMessage("Supplier Status must be 1 or 2");
 
         RuleFor(s => s.Telephones)
             .NotEmpty()
@@ -101,14 +101,20 @@ public class CreateSupplierCommandValidator : AbstractValidator<CreateSupplierCo
                         .WithMessage("Número inválido. O Número deve ser maior que zero.");
 
                 address.RuleFor(a => a.District)
+                    .NotEmpty()
+                        .WithMessage("District cannot be empty")
                     .MaximumLength(60)
                         .WithMessage("District should have at most 60 characters");
 
                 address.RuleFor(a => a.City)
+                    .NotEmpty()
+                        .WithMessage("City cannot be empty")
                     .MaximumLength(60)
                         .WithMessage("City should have at most 60 characters");
 
                 address.RuleFor(a => a.State)
+                    .NotEmpty()
+                        .WithMessage("State cannot be empty")
                     .MaximumLength(2)
                         .WithMessage("State should have at most 2 characters");
 

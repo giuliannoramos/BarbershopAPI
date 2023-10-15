@@ -23,11 +23,13 @@ public class AddressesController : MainController
     public async Task<ActionResult<IEnumerable<GetAddressDto>>> GetAddress(int personId)
     {
         var getAddressQuery = new GetAddressQuery { PersonId = personId };
-        IEnumerable<GetAddressDto>? addressToReturn = await _mediator.Send(getAddressQuery);
+        var addressResponse = await _mediator.Send(getAddressQuery);
 
-        if (!addressToReturn.Any()) return NotFound();
+        if (!addressResponse.IsSuccess){
+            return HandleRequestError(addressResponse);
+        }
 
-        return Ok(addressToReturn);
+        return Ok(addressResponse);
     }
 
     [HttpPost]
@@ -72,7 +74,9 @@ public class AddressesController : MainController
     {
         var result = await _mediator.Send(new DeleteAddressCommand { PersonId = personId, AddressId = addressId });
 
-        if (!result) return NotFound();
+        if (!result.IsSuccess){
+            return HandleRequestError(result);
+        }
 
         return NoContent();
     }

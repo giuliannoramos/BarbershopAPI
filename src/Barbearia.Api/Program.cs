@@ -146,12 +146,12 @@ builder.Services.AddScoped<IRequestHandler<CreateSupplierCommand, CreateSupplier
 builder.Services.AddScoped<IRequestHandler<UpdateSupplierCommand, UpdateSupplierCommandResponse>, UpdateSupplierCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<DeleteSupplierCommand, bool>, DeleteSupplierCommandHandler>();
 // Address commands and queries
-builder.Services.AddScoped<IRequestHandler<GetAddressQuery, IEnumerable<GetAddressDto>>, GetAddressQueryHandler>();
+builder.Services.AddScoped<IRequestHandler<GetAddressQuery, GetAddressQueryResponse>, GetAddressQueryHandler>();
 builder.Services.AddScoped<IRequestHandler<CreateAddressCommand, CreateAddressCommandResponse>, CreateAddressCommandHandler>();
 builder.Services.AddScoped<IValidator<CreateAddressCommand>, CreateAddressCommandValidator>();
 builder.Services.AddScoped<IRequestHandler<UpdateAddressCommand, UpdateAddressCommandResponse>, UpdateAddressCommandHandler>();
 builder.Services.AddScoped<IValidator<UpdateAddressCommand>, UpdateAddressCommandValidator>();
-builder.Services.AddScoped<IRequestHandler<DeleteAddressCommand, bool>, DeleteAddressCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<DeleteAddressCommand, DeleteAddressCommandResponse>, DeleteAddressCommandHandler>();
 // Telephone commands and queries
 builder.Services.AddScoped<IRequestHandler<GetTelephoneQuery, GetTelephoneQueryResponse>, GetTelephoneQueryHandler>();
 builder.Services.AddScoped<IRequestHandler<CreateTelephoneCommand, CreateTelephoneCommandResponse>, CreateTelephoneCommandHandler>();

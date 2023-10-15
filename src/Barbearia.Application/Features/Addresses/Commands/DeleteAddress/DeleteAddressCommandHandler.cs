@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Barbearia.Application.Features.Addresses.Commands.DeleteAddress;
 
-public class DeleteAddressCommandHandler : IRequestHandler<DeleteAddressCommand, bool>
+public class DeleteAddressCommandHandler : IRequestHandler<DeleteAddressCommand, DeleteAddressCommandResponse>
 {
     private readonly IPersonRepository _personRepository;
 
@@ -12,18 +12,30 @@ public class DeleteAddressCommandHandler : IRequestHandler<DeleteAddressCommand,
         _personRepository = personRepository;
     }
 
-    public async Task<bool> Handle(DeleteAddressCommand request, CancellationToken cancellationToken)
+    public async Task<DeleteAddressCommandResponse> Handle(DeleteAddressCommand request, CancellationToken cancellationToken)
     {
+        DeleteAddressCommandResponse response = new();
+
         var personFromDatabase = await _personRepository.GetPersonByIdAsync(request.PersonId);
+        if (personFromDatabase == null)
+        {
+            response.ErrorType = Error.NotFoundProblem;
+            response.Errors.Add("PersonId", new[] { "Person Not found in database" });
+            return response;
+        }
 
-        if(personFromDatabase == null) return false;
+        var addressFromDatabase = personFromDatabase.Addresses.FirstOrDefault(a => a.AddressId == request.AddressId);
+        if (addressFromDatabase == null)
+        {
+            response.ErrorType = Error.NotFoundProblem;
+            response.Errors.Add("Addresses", new[] { "Addresses Not found in database" });
+            return response;
+        }
 
-        var addressToDelete = personFromDatabase.Addresses.FirstOrDefault(a => a.AddressId == request.AddressId);
+        _personRepository.DeleteAddress(personFromDatabase, addressFromDatabase);
 
-        if (addressToDelete == null) return false;
-
-        _personRepository.DeleteAddress(personFromDatabase, addressToDelete);
-
-        return await _personRepository.SaveChangesAsync();
+        await _personRepository.SaveChangesAsync();
+        
+        return response;
     }
 }

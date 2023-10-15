@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Barbearia.Application.Features.Addresses.Queries.GetAddress;
 
-public class GetAddressQueryHandler : IRequestHandler<GetAddressQuery, IEnumerable<GetAddressDto>>
+public class GetAddressQueryHandler : IRequestHandler<GetAddressQuery, GetAddressQueryResponse>
 {
     private readonly IPersonRepository _personRepository;
     private readonly IMapper _mapper;
@@ -14,9 +14,28 @@ public class GetAddressQueryHandler : IRequestHandler<GetAddressQuery, IEnumerab
         _personRepository = personRepository;
         _mapper = mapper;
     }
-    public async Task<IEnumerable<GetAddressDto>> Handle(GetAddressQuery request, CancellationToken cancellationToken)
+    public async Task<GetAddressQueryResponse> Handle(GetAddressQuery request, CancellationToken cancellationToken)
     {
-        var addressFromDatabase = await _personRepository.GetAddressAsync(request.PersonId);
-        return _mapper.Map<IEnumerable<GetAddressDto>>(addressFromDatabase);
+        GetAddressQueryResponse response = new();
+        
+        var personFromDatabase = await _personRepository.GetPersonByIdAsync(request.PersonId);
+        if (personFromDatabase == null)
+        {
+            response.ErrorType = Error.NotFoundProblem;
+            response.Errors.Add("PersonId", new[] { "Person Not found in database" });
+            return response;
+        }
+
+        var addressFromDatabase = personFromDatabase.Addresses;
+        if (!addressFromDatabase.Any())
+        {
+            response.ErrorType = Error.NotFoundProblem;
+            response.Errors.Add("Addresses", new[] { "Addresses Not found in database" });
+            return response;
+        }
+        
+        response.Addresses = _mapper.Map<IEnumerable<GetAddressDto>>(addressFromDatabase);
+
+        return response;
     }
 }

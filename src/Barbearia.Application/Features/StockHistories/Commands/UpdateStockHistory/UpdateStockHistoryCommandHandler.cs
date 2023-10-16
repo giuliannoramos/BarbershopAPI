@@ -10,14 +10,14 @@ public class UpdateStockHistoryCommandHandler : IRequestHandler<UpdateStockHisto
 {
     private readonly IOrderRepository _orderRepository;
     private readonly IItemRepository _itemRepository;
-    private readonly IPersonRepository _customerRepository;
+    private readonly IPersonRepository _personRepository;
     private readonly IMapper _mapper;
     private readonly ILogger<UpdateStockHistoryCommandHandler> _logger;
 
-    public UpdateStockHistoryCommandHandler(IOrderRepository orderRepository, IPersonRepository customerRepository, IItemRepository itemRepository, IMapper mapper, ILogger<UpdateStockHistoryCommandHandler> logger)
+    public UpdateStockHistoryCommandHandler(IOrderRepository orderRepository, IPersonRepository personRepository, IItemRepository itemRepository, IMapper mapper, ILogger<UpdateStockHistoryCommandHandler> logger)
     {
         _orderRepository = orderRepository;
-        _customerRepository = customerRepository;
+        _personRepository = personRepository;
         _itemRepository = itemRepository;
         _mapper = mapper;
         _logger = logger;
@@ -96,7 +96,7 @@ public class UpdateStockHistoryCommandHandler : IRequestHandler<UpdateStockHisto
                 return response;
             }
 
-            var supplierFromDatbase = await _customerRepository.GetCustomerByIdAsync(request.PersonId);
+            var supplierFromDatbase = await _personRepository.GetSupplierByIdAsync(request.PersonId);
 
             if (supplierFromDatbase == null)
             {

@@ -222,8 +222,8 @@ public class PersonRepository : IPersonRepository
         return await _context.Persons.OfType<Employee>()
             .Include(c => c.Telephones)
             .Include(c => c.Addresses)
-            .Include(c=>c.Roles)
-            .Include(c=> c.Services)
+            .Include(c => c.Roles)
+            .Include(c => c.Services)
             .Include(c => c.WorkingDays)
                 .ThenInclude(w => w.Schedule)
             .Include(c => c.WorkingDays)
@@ -353,5 +353,11 @@ public class PersonRepository : IPersonRepository
     public void DeleteRole(Role role)
     {
         _context.Roles.Remove(role);
+    }
+
+    public async Task<Service?> GetServiceByIdAsync(int serviceId)
+    {
+        return await _context.Services
+        .FirstOrDefaultAsync(s => s.ItemId == serviceId);
     }
 }

@@ -9,14 +9,14 @@ namespace Barbearia.Application.Features.Products.Commands.CreateProduct;
 public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, CreateProductCommandResponse>
 {
     private readonly IItemRepository _ItemRepository;
-    private readonly IPersonRepository _customerRepository;
+    private readonly IPersonRepository _personRepository;
     private readonly IMapper _mapper;
     private readonly ILogger<CreateProductCommandHandler> _logger;
 
-    public CreateProductCommandHandler(IItemRepository ItemRepository, IPersonRepository customerRepository, IMapper mapper, ILogger<CreateProductCommandHandler> logger)
+    public CreateProductCommandHandler(IItemRepository ItemRepository, IPersonRepository personRepository, IMapper mapper, ILogger<CreateProductCommandHandler> logger)
     {
         _ItemRepository = ItemRepository;
-        _customerRepository = customerRepository;
+        _personRepository = personRepository;
         _mapper = mapper;
         _logger = logger;
     }
@@ -28,7 +28,7 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
         var validator = new CreateProductCommandValidator();
         var validationResult = await validator.ValidateAsync(request);
 
-        var supplierFromDatabase = await _customerRepository.GetSupplierByIdAsync(request.PersonId);
+        var supplierFromDatabase = await _personRepository.GetSupplierByIdAsync(request.PersonId);
         if (supplierFromDatabase == null)
         {
             response.ErrorType = Error.NotFoundProblem;

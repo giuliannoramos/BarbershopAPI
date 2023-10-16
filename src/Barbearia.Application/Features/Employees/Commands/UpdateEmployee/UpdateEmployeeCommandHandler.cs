@@ -17,7 +17,7 @@ public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeComman
 
 
 
-    public UpdateEmployeeCommandHandler(IPersonRepository personRepository,IItemRepository itemRepository, IMapper mapper, ILogger<UpdateEmployeeCommandHandler> logger)
+    public UpdateEmployeeCommandHandler(IPersonRepository personRepository, IItemRepository itemRepository, IMapper mapper, ILogger<UpdateEmployeeCommandHandler> logger)
     {
         _personRepository = personRepository;
         _itemRepository = itemRepository;
@@ -66,14 +66,14 @@ public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeComman
 
         foreach (int services in request.ServicesId)
         {
-            var servicesFromDatabase = await _itemRepository.GetServiceByIdAsync(services);
+            var servicesFromDatabase = await _personRepository.GetServiceByIdAsync(services);
             if (servicesFromDatabase == null)
             {
                 response.ErrorType = Error.NotFoundProblem;
                 response.Errors.Add("services", new[] { "services not found in the database." });
                 return response;
             }
-            Services.Add(servicesFromDatabase!); 
+            Services.Add(servicesFromDatabase!);
         }
 
         _mapper.Map(request, employeeFromDatabase);

@@ -33,7 +33,9 @@ public class UpdateProductCommandValidator : AbstractValidator<UpdateProductComm
 
         RuleFor(p => p.Status)
             .NotEmpty()
-                .WithMessage("Status cannot be empty");
+                .WithMessage("Status cannot be empty")
+            .Must(CheckStatus)
+                .WithMessage("Status must be higher than 0 and less than 4");
 
         RuleFor(p => p.SKU)
             .NotEmpty()
@@ -68,6 +70,15 @@ public class UpdateProductCommandValidator : AbstractValidator<UpdateProductComm
     private bool CheckQuantityReserved(int QuantityReserved)
     {
         if (QuantityReserved < 0)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    private bool CheckStatus(int status)
+    {
+        if(status > 3 || status < 1)
         {
             return false;
         }

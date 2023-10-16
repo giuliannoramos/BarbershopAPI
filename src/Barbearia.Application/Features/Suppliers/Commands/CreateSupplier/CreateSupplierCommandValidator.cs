@@ -47,9 +47,9 @@ public class CreateSupplierCommandValidator : AbstractValidator<CreateSupplierCo
 
         RuleFor(s => s.Status)
             .NotEmpty()
-                .WithMessage("Supplier Status cannot be empty")
-            .LessThanOrEqualTo(2)
-                .WithMessage("Supplier Status must be 1 or 2");
+                .WithMessage("Status cannot be empty")
+            .Must(CheckStatus)
+                .WithMessage("Status must be higher than 0 and less than 3");
 
         RuleFor(s => s.Telephones)
             .NotEmpty()
@@ -222,6 +222,14 @@ public class CreateSupplierCommandValidator : AbstractValidator<CreateSupplierCo
     private bool CheckAddressNumber(int number)
     {
         if (number <= 0)
+        {
+            return false;
+        }
+        return true;
+    }
+    private bool CheckStatus(int status)
+    {
+        if(status > 2 || status < 1)
         {
             return false;
         }

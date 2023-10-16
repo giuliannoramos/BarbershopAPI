@@ -23,9 +23,9 @@ public class Person
 
     public enum TypeStatus
     {
-        NoStatus = 1,
-        Active = 2,
-        Inactive = 3
+        NoStatus,
+        Active,
+        Inactive
     }
 
     

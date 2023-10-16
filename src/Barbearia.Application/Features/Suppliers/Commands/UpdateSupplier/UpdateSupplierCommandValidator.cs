@@ -49,7 +49,9 @@ public class UpdateSupplierCommandValidator : AbstractValidator<UpdateSupplierCo
 
         RuleFor(s => s.Status)
             .NotEmpty()
-                .WithMessage("Supplier Status cannot be empty");
+                .WithMessage("Status cannot be empty")
+            .Must(CheckStatus)
+                .WithMessage("Status must be higher than 0 and less than 3");
 
         RuleFor(s => s.Telephones)
             .NotEmpty()
@@ -72,7 +74,7 @@ public class UpdateSupplierCommandValidator : AbstractValidator<UpdateSupplierCo
                     .Must(CheckNumber)
                         .WithMessage("Número de telefone inválido. Use o formato: 47988887777.");
 
-                telephone.RuleFor(t => t.Type)                    
+                telephone.RuleFor(t => t.Type)
                     .IsInEnum()
                         .WithMessage("Tipo de telefone inválido. O tipo deve ser Mobile[0] ou Landline[1].");
             });
@@ -183,6 +185,14 @@ public class UpdateSupplierCommandValidator : AbstractValidator<UpdateSupplierCo
     private bool CheckNumber(string number)
     {
         if (!(number.Length == 11 && number.All(char.IsDigit)))
+        {
+            return false;
+        }
+        return true;
+    }
+    private bool CheckStatus(int status)
+    {
+        if (status > 2 || status < 1)
         {
             return false;
         }

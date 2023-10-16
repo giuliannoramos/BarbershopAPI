@@ -204,5 +204,5 @@ public class CreateCustomerCommandValidator : AbstractValidator<CreateCustomerCo
             return false;
         }
         return true;
-    }
+    }    
 }

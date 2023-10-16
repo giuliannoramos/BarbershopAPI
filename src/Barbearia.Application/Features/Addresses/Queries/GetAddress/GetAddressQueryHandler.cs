@@ -27,13 +27,6 @@ public class GetAddressQueryHandler : IRequestHandler<GetAddressQuery, GetAddres
         }
 
         var addressFromDatabase = personFromDatabase.Addresses;
-        if (!addressFromDatabase.Any())
-        {
-            response.ErrorType = Error.NotFoundProblem;
-            response.Errors.Add("Addresses", new[] { "Addresses Not found in database" });
-            return response;
-        }
-        
         response.Addresses = _mapper.Map<IEnumerable<GetAddressDto>>(addressFromDatabase);
 
         return response;

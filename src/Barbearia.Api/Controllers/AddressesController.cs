@@ -29,7 +29,7 @@ public class AddressesController : MainController
             return HandleRequestError(addressResponse);
         }
 
-        return Ok(addressResponse);
+        return Ok(addressResponse.Addresses);
     }
 
     [HttpPost]

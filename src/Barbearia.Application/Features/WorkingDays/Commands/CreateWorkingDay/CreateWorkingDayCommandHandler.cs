@@ -35,7 +35,7 @@ public class CreateWorkingDayCommandHandler : IRequestHandler<CreateWorkingDayCo
         if (!validationResult.IsValid)
         {
             response.ErrorType = Error.ValidationProblem;
-            response.Errors.Add("WorkingDay", new[] { "Working day is not valid" });
+            response.FillErrors(validationResult);
             return response;
         }
 

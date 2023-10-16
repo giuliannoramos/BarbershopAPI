@@ -53,7 +53,7 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Cre
 
         foreach (int stockHistoriesOrder in request.StockHistoriesOrderId)
         {
-            var stockHistoryOrder = await _itemRepository.GetStockHistoryOrderByIdAsync(stockHistoriesOrder);
+            var stockHistoryOrder = await _orderRepository.GetStockHistoryOrderToOrderByIdAsync(stockHistoriesOrder);
             if (stockHistoryOrder == null)
             {
                 response.ErrorType = Error.NotFoundProblem;
@@ -66,7 +66,7 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Cre
 
         foreach (int products in request.ProductsId)
         {
-            var product = await _itemRepository.GetProductByIdAsync(products);
+            var product = await _orderRepository.GetProductToOrderByIdAsync(products);
             if (product == null)
             {
                 response.ErrorType = Error.NotFoundProblem;
@@ -79,7 +79,7 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Cre
 
         foreach (int appointments in request.AppointmentsId)
         {
-            var appointment = await _itemRepository.GetAppointmentByIdAsync(appointments);
+            var appointment = await _orderRepository.GetAppointmentToOrderByIdAsync(appointments);
             if (appointment == null)
             {
                 response.ErrorType = Error.NotFoundProblem;

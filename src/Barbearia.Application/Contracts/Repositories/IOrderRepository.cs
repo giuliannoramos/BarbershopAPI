@@ -29,5 +29,10 @@ public interface IOrderRepository
     Task<bool> CouponExists(string couponCode);
     // COUPONS
     Task<bool> SaveChangesAsync();    
+    
+    //outros contexts
     public Task<Order?> GetOrderToOrderByIdAsync(int orderId);
+    public Task<StockHistoryOrder?> GetStockHistoryOrderToOrderByIdAsync(int stockHistoryId);
+    public Task<Appointment?> GetAppointmentToOrderByIdAsync(int appointmentId);
+    public Task<Product?> GetProductToOrderByIdAsync(int productId);
 }

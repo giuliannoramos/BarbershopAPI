@@ -11,16 +11,14 @@ public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand, Upd
 {
     private readonly IOrderRepository _orderRepository;
     private readonly IPersonRepository _personRepository;
-    private readonly IItemRepository _itemRepository;
     private readonly IMapper _mapper;
 
     private readonly ILogger<UpdateOrderCommandHandler> _logger;
 
-    public UpdateOrderCommandHandler(IOrderRepository orderRepository, IPersonRepository personRepository, IItemRepository itemRepository, IMapper mapper, ILogger<UpdateOrderCommandHandler> logger)
+    public UpdateOrderCommandHandler(IOrderRepository orderRepository, IPersonRepository personRepository, IMapper mapper, ILogger<UpdateOrderCommandHandler> logger)
     {
         _orderRepository = orderRepository;
         _personRepository = personRepository;
-        _itemRepository = itemRepository;
         _mapper = mapper;
         _logger = logger;
     }
@@ -29,7 +27,7 @@ public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand, Upd
     {
         UpdateOrderCommandResponse response = new UpdateOrderCommandResponse();
 
-        var orderFromDatabase = await _orderRepository.GetOrderToOrderByIdAsync(request.OrderId);
+        var orderFromDatabase = await _orderRepository.GetOrderByIdAsync(request.OrderId);
         if (orderFromDatabase == null)
         {
             response.ErrorType = Error.NotFoundProblem;
@@ -37,7 +35,7 @@ public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand, Upd
             return response;
         }
 
-        var customerFromDatabase = await _personRepository.GetCustomerByIdAsync(request.PersonId);
+        var customerFromDatabase = await _personRepository.GetCustomerToOrderByIdAsync(request.PersonId);
         if (customerFromDatabase == null)
         {
             response.ErrorType = Error.NotFoundProblem;
@@ -61,7 +59,7 @@ public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand, Upd
 
         foreach (int stockHistoriesOrder in request.StockHistoriesOrderId)
         {
-            var stockHistoryOrder = await _itemRepository.GetStockHistoryOrderToOrderByIdAsync(stockHistoriesOrder);
+            var stockHistoryOrder = await _orderRepository.GetStockHistoryOrderToOrderByIdAsync(stockHistoriesOrder);
             if (stockHistoryOrder == null)
             {
                 response.ErrorType = Error.NotFoundProblem;
@@ -74,7 +72,7 @@ public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand, Upd
 
         foreach (int products in request.ProductsId)
         {
-            var product = await _itemRepository.GetProductByIdAsync(products);
+            var product = await _orderRepository.GetProductToOrderByIdAsync(products);
             if (product == null)
             {
                 response.ErrorType = Error.NotFoundProblem;
@@ -87,7 +85,7 @@ public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand, Upd
 
         foreach (int appointments in request.AppointmentsId)
         {
-            var appointment = await _itemRepository.GetAppointmentByIdAsync(appointments);
+            var appointment = await _orderRepository.GetAppointmentToOrderByIdAsync(appointments);
             if (appointment == null)
             {
                 response.ErrorType = Error.NotFoundProblem;
@@ -100,18 +98,9 @@ public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand, Upd
 
         _mapper.Map(request, orderFromDatabase);
 
-        foreach (var stockHistoryOrder in stockHistoryOrders)
-        {
-            orderFromDatabase.StockHistoriesOrder.Add(stockHistoryOrder);
-        }
-        foreach (var product in Products)
-        {
-            orderFromDatabase.Products.Add(product);
-        }
-        foreach (var appointment in Appointments)
-        {
-            orderFromDatabase.Appointments.Add(appointment);
-        }
+        orderFromDatabase.Appointments = Appointments;
+        orderFromDatabase.StockHistoriesOrder = stockHistoryOrders;
+        orderFromDatabase.Products = Products;
 
         try
         {

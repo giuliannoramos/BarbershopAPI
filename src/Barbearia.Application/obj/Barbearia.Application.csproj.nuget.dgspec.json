@@ -1,33 +1,41 @@
 {
   "format": 1,
   "restore": {
-    "/home/miguel/Projects/Curso/BigApiFinal/barbershopapi/src/Barbearia.Application/Barbearia.Application.csproj": {}
+    "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\projetoAtualizado\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj": {}
   },
   "projects": {
-    "/home/miguel/Projects/Curso/BigApiFinal/barbershopapi/src/Barbearia.Application/Barbearia.Application.csproj": {
+    "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\projetoAtualizado\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/miguel/Projects/Curso/BigApiFinal/barbershopapi/src/Barbearia.Application/Barbearia.Application.csproj",
+        "projectUniqueName": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\projetoAtualizado\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj",
         "projectName": "Barbearia.Application",
-        "projectPath": "/home/miguel/Projects/Curso/BigApiFinal/barbershopapi/src/Barbearia.Application/Barbearia.Application.csproj",
-        "packagesPath": "/home/miguel/.nuget/packages/",
-        "outputPath": "/home/miguel/Projects/Curso/BigApiFinal/barbershopapi/src/Barbearia.Application/obj/",
+        "projectPath": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\projetoAtualizado\\barbershopapi\\src\\Barbearia.Application\\Barbearia.Application.csproj",
+        "packagesPath": "C:\\Users\\lucas\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\projetoAtualizado\\barbershopapi\\src\\Barbearia.Application\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Users\\lucas\\AppData\\Roaming\\Godot\\mono\\GodotNuGetFallbackFolder",
+          "D:\\visual studio componentes e ferramentas\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/home/miguel/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\lucas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\lucas\\AppData\\Roaming\\NuGet\\config\\Godot.Offline.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "/home/miguel/Projects/Curso/BigApiFinal/barbershopapi/src/Barbearia.Domain/Barbearia.Domain.csproj": {
-                "projectPath": "/home/miguel/Projects/Curso/BigApiFinal/barbershopapi/src/Barbearia.Domain/Barbearia.Domain.csproj"
+              "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\projetoAtualizado\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj": {
+                "projectPath": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\projetoAtualizado\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj"
               }
             }
           }
@@ -70,37 +78,39 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[7.0.11, 7.0.11]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.111/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/miguel/Projects/Curso/BigApiFinal/barbershopapi/src/Barbearia.Domain/Barbearia.Domain.csproj": {
+    "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\projetoAtualizado\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/miguel/Projects/Curso/BigApiFinal/barbershopapi/src/Barbearia.Domain/Barbearia.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\projetoAtualizado\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj",
         "projectName": "Barbearia.Domain",
-        "projectPath": "/home/miguel/Projects/Curso/BigApiFinal/barbershopapi/src/Barbearia.Domain/Barbearia.Domain.csproj",
-        "packagesPath": "/home/miguel/.nuget/packages/",
-        "outputPath": "/home/miguel/Projects/Curso/BigApiFinal/barbershopapi/src/Barbearia.Domain/obj/",
+        "projectPath": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\projetoAtualizado\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj",
+        "packagesPath": "C:\\Users\\lucas\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\projetoAtualizado\\barbershopapi\\src\\Barbearia.Domain\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Users\\lucas\\AppData\\Roaming\\Godot\\mono\\GodotNuGetFallbackFolder",
+          "D:\\visual studio componentes e ferramentas\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/home/miguel/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\lucas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\lucas\\AppData\\Roaming\\NuGet\\config\\Godot.Offline.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -129,18 +139,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[7.0.11, 7.0.11]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.111/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }

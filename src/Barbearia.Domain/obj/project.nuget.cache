@@ -1,10 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "K/WLdV2zgz1H9PNlKaR5okuCQj9d94KvYBgOL5r9PZnLJ2dGVL2PgmHYEIuLtEnUFaWcUDo6IZdAsr22qsH2mw==",
+  "dgSpecHash": "2EG//z0YoIXKQu8yidAAvVeNt72MZ8GjhbMLzucXip8p+/l+0+lcoi1gEWe+DivOGfqNZrAvOJYulOAD8U/yIw==",
   "success": true,
-  "projectFilePath": "/home/miguel/Projects/Curso/BigApiFinal/barbershopapi/src/Barbearia.Domain/Barbearia.Domain.csproj",
-  "expectedPackageFiles": [
-    "/home/miguel/.nuget/packages/microsoft.aspnetcore.app.ref/7.0.11/microsoft.aspnetcore.app.ref.7.0.11.nupkg.sha512"
-  ],
+  "projectFilePath": "C:\\Users\\lucas\\Documents\\conteudoFaculdade\\enterAllog\\projetoBarberShop\\projetoAtualizado\\barbershopapi\\src\\Barbearia.Domain\\Barbearia.Domain.csproj",
+  "expectedPackageFiles": [],
   "logs": []
 }

@@ -77,6 +77,24 @@ public class OrderRepository : IOrderRepository
         .FirstOrDefaultAsync(o => o.OrderId == orderId);
     }
 
+    public async Task<StockHistoryOrder?> GetStockHistoryOrderToOrderByIdAsync(int stockHistoryId)
+    {
+        return await _context.StockHistories.OfType<StockHistoryOrder>()
+        .FirstOrDefaultAsync(s => s.StockHistoryId == stockHistoryId);
+    }
+
+    public async Task<Appointment?> GetAppointmentToOrderByIdAsync(int appointmentId)
+    {
+        return await _context.Appointments
+            .FirstOrDefaultAsync(a => a.AppointmentId == appointmentId);
+    }
+
+    public async Task<Product?> GetProductToOrderByIdAsync(int productId)
+    {
+        return await _context.Products
+        .FirstOrDefaultAsync(p => p.ItemId == productId);
+    }
+
     public async Task<Order?> GetOrderByNumberAsync(int number)
     {
         return await _context.Orders

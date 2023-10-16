@@ -1,4 +1,5 @@
 using Barbearia.Application.Models;
+using Barbearia.Application.Models.Appointments;
 using Barbearia.Application.Models.Products;
 using Barbearia.Application.Models.StockHistories;
 
@@ -14,5 +15,5 @@ public class GetOrderByIdDto
     public PaymentDto? Payment { get; set; }
     public List<StockHistoryOrderDto> StockHistoriesOrder { get; set; } = new();
     public List<ProductDto> Products { get; set; } = new();
-    public List<AppointmentDto> Appointments { get; set; } = new();
+    public List<AppointmentForGetOrderDto> Appointments { get; set; } = new();
 }

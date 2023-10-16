@@ -96,6 +96,7 @@ public class PersonRepository : IPersonRepository
         return await _context.Persons
         .OfType<Employee>()
         .SelectMany(e => e.WorkingDays)
+        .Include(w=>w.TimeOffs)
         .FirstOrDefaultAsync(workingDay => workingDay.WorkingDayId == workingDayId);
     }
 

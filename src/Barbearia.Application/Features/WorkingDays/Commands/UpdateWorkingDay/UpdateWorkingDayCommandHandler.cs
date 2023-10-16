@@ -41,7 +41,7 @@ public class UpdateWorkingDayCommandHandler : IRequestHandler<UpdateWorkingDayCo
         if(!validationResult.IsValid)
         {
             response.ErrorType = Error.ValidationProblem;
-            response.Errors.Add("Working Day", new[]{"Working day is not valid"});
+            response.FillErrors(validationResult);
             return response;
         }
 

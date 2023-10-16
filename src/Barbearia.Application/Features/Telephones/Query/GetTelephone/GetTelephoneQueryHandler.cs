@@ -27,12 +27,6 @@ public class GetTelephoneQueryHandler : IRequestHandler<GetTelephoneQuery, GetTe
         }
 
         var telephoneFromDatabase = personFromDatabase.Telephones;
-        if (!telephoneFromDatabase.Any())
-        {
-            response.ErrorType = Error.NotFoundProblem;
-            response.Errors.Add("Telephones", new[] { "Telephones Not found in database" });
-            return response;
-        }
 
         response.Telephones = _mapper.Map<IEnumerable<GetTelephoneDto>>(telephoneFromDatabase);
 

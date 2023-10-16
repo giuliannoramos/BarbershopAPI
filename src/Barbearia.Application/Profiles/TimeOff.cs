@@ -13,6 +13,7 @@ public class TimeOffProfile : Profile
     public TimeOffProfile(){
 
         CreateMap<TimeOff, GetTimeOffByIdDto>().ReverseMap();
+        CreateMap<TimeOff,TimeOffForWorkingDayDto>().ReverseMap();
 
         CreateMap<CreateTimeOffCommand,TimeOff>().ReverseMap();
         CreateMap<TimeOff,CreateTimeOffDto>().ReverseMap();

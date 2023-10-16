@@ -25,12 +25,6 @@ public class GetWorkingDayQueryHandler : IRequestHandler<GetWorkingDayQuery, Get
             response.Errors.Add("PersonId", new[] { "Employee Not found in database" });
             return response;
         }
-        if (!employeeFromDatabase.WorkingDays.Any())
-        {
-            response.ErrorType = Error.NotFoundProblem;
-            response.Errors.Add("WorkingDays", new[] { "WorkinDays Not found in database" });
-            return response;
-        }
 
         var workingDaysFromDatabase = await _personRepository.GetWorkingDayAsync(request.PersonId);
         response.WorkingDay = _mapper.Map<IEnumerable<GetWorkingDayDto>>(workingDaysFromDatabase);

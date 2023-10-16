@@ -45,7 +45,7 @@ public class CreateEmployeeCommandValidator : AbstractValidator<CreateEmployeeCo
             .NotEmpty()
                 .WithMessage("Employee Status cannot be empty")
             .Must(CheckStatus)
-                .WithMessage("Employee Status must be higher than 0 and less than 4");
+                .WithMessage("Employee Status must be higher than 0 and less than 3");
 
         RuleFor(e => e.Telephones)
             .NotEmpty()
@@ -217,7 +217,7 @@ public class CreateEmployeeCommandValidator : AbstractValidator<CreateEmployeeCo
     }
     private bool CheckStatus(int status)
     {
-        if(status > 3 || status < 1)
+        if(status > 2 || status < 1)
         {
             return false;
         }

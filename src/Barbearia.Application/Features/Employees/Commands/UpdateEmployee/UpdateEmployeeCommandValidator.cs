@@ -220,7 +220,7 @@ public class UpdateEmployeeCommandValidator : AbstractValidator<UpdateEmployeeCo
     }
     private bool CheckStatus(int status)
     {
-        if(status > 3 || status < 1)
+        if(status > 2 || status < 1)
         {
             return false;
         }

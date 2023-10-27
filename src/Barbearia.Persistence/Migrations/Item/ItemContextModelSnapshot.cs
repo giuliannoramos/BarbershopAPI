@@ -69,14 +69,14 @@ namespace Barbearia.Persistence.Migrations.Item
                         new
                         {
                             AppointmentId = 1,
-                            CancellationDate = new DateTime(2023, 10, 11, 22, 9, 30, 991, DateTimeKind.Utc).AddTicks(4321),
-                            ConfirmedDate = new DateTime(2023, 10, 11, 22, 9, 30, 991, DateTimeKind.Utc).AddTicks(4321),
-                            FinishDate = new DateTime(2023, 10, 11, 22, 9, 30, 991, DateTimeKind.Utc).AddTicks(4318),
-                            FinishServiceDate = new DateTime(2023, 10, 11, 22, 9, 30, 991, DateTimeKind.Utc).AddTicks(4320),
+                            CancellationDate = new DateTime(2023, 10, 26, 23, 58, 47, 446, DateTimeKind.Utc).AddTicks(7373),
+                            ConfirmedDate = new DateTime(2023, 10, 26, 23, 58, 47, 446, DateTimeKind.Utc).AddTicks(7372),
+                            FinishDate = new DateTime(2023, 10, 26, 23, 58, 47, 446, DateTimeKind.Utc).AddTicks(7369),
+                            FinishServiceDate = new DateTime(2023, 10, 26, 23, 58, 47, 446, DateTimeKind.Utc).AddTicks(7371),
                             PersonId = 2,
                             ScheduleId = 1,
-                            StartDate = new DateTime(2023, 10, 11, 22, 9, 30, 991, DateTimeKind.Utc).AddTicks(4315),
-                            StartServiceDate = new DateTime(2023, 10, 11, 22, 9, 30, 991, DateTimeKind.Utc).AddTicks(4319),
+                            StartDate = new DateTime(2023, 10, 26, 23, 58, 47, 446, DateTimeKind.Utc).AddTicks(7365),
+                            StartServiceDate = new DateTime(2023, 10, 26, 23, 58, 47, 446, DateTimeKind.Utc).AddTicks(7370),
                             Status = 1
                         });
                 });
@@ -567,7 +567,7 @@ namespace Barbearia.Persistence.Migrations.Item
                             LastStockQuantity = 10,
                             Operation = 1,
                             ProductId = 1,
-                            Timestamp = new DateTime(2023, 10, 11, 22, 9, 30, 991, DateTimeKind.Utc).AddTicks(9787),
+                            Timestamp = new DateTime(2023, 10, 26, 23, 58, 47, 447, DateTimeKind.Utc).AddTicks(4162),
                             OrderId = 1
                         });
                 });
@@ -592,7 +592,7 @@ namespace Barbearia.Persistence.Migrations.Item
                             LastStockQuantity = 32,
                             Operation = 3,
                             ProductId = 2,
-                            Timestamp = new DateTime(2023, 10, 11, 22, 9, 30, 991, DateTimeKind.Utc).AddTicks(9807),
+                            Timestamp = new DateTime(2023, 10, 26, 23, 58, 47, 447, DateTimeKind.Utc).AddTicks(4195),
                             PersonId = 4
                         });
                 });

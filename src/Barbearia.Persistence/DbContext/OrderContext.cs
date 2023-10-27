@@ -20,6 +20,11 @@ namespace Barbearia.Persistence.DbContexts
 
         public DbSet<Appointment> Appointments{get;set;} = null!;
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 

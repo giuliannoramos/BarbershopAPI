@@ -44,7 +44,7 @@ public class ProductCategoryController : MainController
     }
 
     [HttpPost]
-    public async Task<ActionResult<CreateProductCategoryCommandResponse>> CreateProductCategory(CreateProductCategoryCommand createProductCategoryCommand)
+    public async Task<ActionResult<CreateProductCategoryDto>> CreateProductCategory(CreateProductCategoryCommand createProductCategoryCommand)
     {
         var createProductCategoryCommandResponse = await _mediator.Send(createProductCategoryCommand);
 

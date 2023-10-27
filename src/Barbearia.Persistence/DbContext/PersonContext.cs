@@ -20,6 +20,11 @@ namespace Barbearia.Persistence.DbContexts
         public DbSet<Order> Orders {get;set;} = null!;
         public DbSet<Service> Services{get;set;} = null!;
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            
+        }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

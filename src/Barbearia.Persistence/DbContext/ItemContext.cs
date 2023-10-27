@@ -8,9 +8,7 @@ namespace Barbearia.Persistence.DbContexts
     public class ItemContext : DbContext
     {
         public ItemContext(DbContextOptions<ItemContext> options)
-        : base(options) { }
-
-        
+        : base(options) { }        
 
         public DbSet<Product> Products { get; set; } = null!;
         public DbSet<Item> Item { get; set; } = null!;
@@ -23,6 +21,11 @@ namespace Barbearia.Persistence.DbContexts
         public DbSet<ServiceCategory> ServiceCategories{get; set; } = null!;
         public DbSet<AppointmentOrder> AppointmentOrders{get; set; } = null!;
         // public DbSet<RoleServiceCategory> RoleServiceCategories{get; set;} = null!;
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
